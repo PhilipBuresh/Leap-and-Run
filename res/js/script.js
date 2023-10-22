@@ -9,7 +9,7 @@ canvas.height = 576;
 let y = 500;
 let x = 10;
 let height = 40;
-let width = 25;
+let width = 30;
 
 let gravityId;
 let platfromId;
@@ -85,8 +85,8 @@ drawPlatform()
 
 //----------------------------------------Vykreslení hráče
 
-const playerImage = new Image();
-playerImage.src = "./res/img/steev.png";
+let playerImage = new Image();
+playerImage.src = "./res/img/player1_right.png";
 
 playerImage.onload = () => {
     drawPlayer();
@@ -307,6 +307,8 @@ let jump = () => {
 //----------------------------------------Funkce hráče CHOZENÍ DO PRAVA
 
 let moveRight = () => {
+    playerImage.src = "./res/img/player1_right.png";
+    drawPlayer();
     let velocityStart = 0.1;
     const movingRight = () => {
         animationIdRight = requestAnimationFrame(movingRight);
@@ -362,6 +364,8 @@ let moveRight = () => {
 //----------------------------------------Funkce hráče CHOZENÍ DO LEVA
 
 let moveLeft = () => {
+    playerImage.src = "./res/img/player1_left.png";
+    drawPlayer();
     let velocityStart = 0.1;
     const movingLeft = () => {
         animationIdLeft = requestAnimationFrame(movingLeft);
