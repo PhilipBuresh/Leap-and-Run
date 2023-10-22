@@ -1,0 +1,26 @@
+body {
+    background-color: black;
+}
+canvas {
+    background-color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#text{
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    font-size: 40px;
+}
+#wasd{
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    padding: 10px;
+    font-family: 'Pixelify Sans', sans-serif;
+    
+}
