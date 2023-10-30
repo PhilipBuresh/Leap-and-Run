@@ -12,7 +12,6 @@ let height = 40;
 let width = 30;
 
 let gravityId;
-let platfromId;
 let jumpingId;
 let animationIdRight;
 let animationIdLeft;
@@ -22,28 +21,39 @@ let gravityOn = false;
 let isMovingRight = false;
 let isMovingLeft = false;
 
+let turnedRight = false;
+let turnedLeft = false;
+
+let fps = 60;
+let interval = 1000/fps;
+let now;
+let then = Date.now();
+let delta;
+
 //Lokace platform
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
-const platfromLevel1 = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                        1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 3, 1, 0, 0, 0, 2, 0, 0, 1, 1, 1,  
-                        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 2, 0, 0, 1, 0, 0, 1, 1, 1,
-                        1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1,
-                        1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-                        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-                        1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1,
-                        1, 0, 0, 0, 0, 0, 0, 2, 1, 3, 1, 4, 0, 4, 4, 1, 3, 3, 3, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1,
-                        1, 1, 2, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1,
-                        1, 1, 1, 1, 2, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1,
-                        1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-                        1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1,
-                        1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 2, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1,
-                        0, 0, 0, 4, 0, 0, 1, 3, 3, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1,
-                        0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 1, 2, 1, 1, 1,
+let platformLevel1 =    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+                        1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                        1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 1, 1, 1, 1, 3, 1, 0, 0, 0, 2, 0, 0, 1, 1, 1,  
+                        1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 3, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 2, 0, 0, 1, 0, 0, 1, 1, 1,
+                        1, 0, 0, 0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1,
+                        1, 1, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+                        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+                        1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1,
+                        1, 0, 0, 0, 0, 0, 0, 2, 1, 3, 1, 0, 4, 4, 4, 1, 3, 3, 3, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 4, 1,
+                        1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1,
+                        1, 1, 3, 1, 2, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                        1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 4, 0, 0, 6, 0, 0, 0, 0, 0, 0, 1, 1, 1,
+                        1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 5, 0, 0, 0, 1,
+                        1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+                        0, 0, 0, 0, 0, 0, 0, 2, 0, 5, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1,
+                        0, 0, 0, 0, 0, 0, 2, 1, 3, 3, 3, 1, 3, 3, 1, 1, 1, 1, 3, 1, 1, 2, 1, 2, 1, 3, 3, 3, 3, 3, 3, 1,
                         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 //1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 //0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+
+const originalPlatform1 = [...platformLevel1];
 
 //----------------------------------------Vykreslení platform a překážek
 
@@ -59,18 +69,28 @@ spikeFlipImage.src = "./res/img/spike_flip.png";
 const lavaImage = new Image();
 lavaImage.src = "./res/img/lava.png";
 
+const orbImage = new Image();
+orbImage.src = "./res/img/orb.png";
+
+const crackedImage = new Image();
+crackedImage.src = "./res/img/cracked.png";
+
 let drawPlatform = () => {
     xBlock = 0;
     yBlock = 0;
-    for (let index = 0; index < platfromLevel1.length; index++) {
-        if(platfromLevel1[index] == 1){
+    for (let index = 0; index < platformLevel1.length; index++) {
+        if(platformLevel1[index] == 1){
             p.drawImage(platformImage, xBlock,yBlock,32,32)
-        }else if(platfromLevel1[index] == 2){
+        }else if(platformLevel1[index] == 2){
             p.drawImage(spikeImage, xBlock,yBlock,32,32)
-        }else if(platfromLevel1[index] == 3){
+        }else if(platformLevel1[index] == 3){
             p.drawImage(lavaImage, xBlock,yBlock,32,32)
-        }else if(platfromLevel1[index] == 4){
+        }else if(platformLevel1[index] == 4){
             p.drawImage(spikeFlipImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 5){
+            p.drawImage(orbImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 6){
+            p.drawImage(crackedImage, xBlock, yBlock, 32, 32)
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -95,7 +115,8 @@ playerImage.onload = () => {
 let drawPlayer = () => {
     c.clearRect(0, 0, canvas.width, canvas.height);
     c.drawImage(playerImage, x, y, width, height);
-    deathCollision();
+    objectsCollision();
+    orbCollision();
     drawPlatform();
 };
 
@@ -107,13 +128,15 @@ const dead = () => {
     if(crouched == true){
         unCrouch();
     }
+    platformLevel1 = [...originalPlatform1];
+    drawPlatform();
 }
 
-//----------------------------------------Death kolize
+//----------------------------------------Kolize OBJEKTŮ
 
-const deathCollision = () => {
-    for (let i = 0; i < platfromLevel1.length; i++) {
-        if (platfromLevel1[i] == 2) {
+const objectsCollision = () => {
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if (platformLevel1[i] == 2) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -125,7 +148,7 @@ const deathCollision = () => {
                 dead();
             }
         }
-        if (platfromLevel1[i] == 3) {
+        if (platformLevel1[i] == 3) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -137,7 +160,7 @@ const deathCollision = () => {
                 dead();
             }
         }
-        if (platfromLevel1[i] == 4) {
+        if (platformLevel1[i] == 4) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -147,6 +170,30 @@ const deathCollision = () => {
                 x <= platformX + 22
             ) {
                 dead();
+            }
+        }
+    }
+}
+
+//----------------------------------------Kolize ORBŮ
+let canOrbJump = false;
+let orbUsed = false;
+
+const orbCollision = () => {
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if (platformLevel1[i] == 5) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                y + height >= platformY &&
+                y + height <= platformY + 32 + height &&
+                x + width >= platformX &&
+                x <= platformX + 32
+            ) {
+                canOrbJump = true;
+                break;
+            } else {
+                canOrbJump = false; 
             }
         }
     }
@@ -162,8 +209,8 @@ let underCollision;
 let aboveHeadCollision = () => {
     ahCollision = requestAnimationFrame(aboveHeadCollision);
     if (crouched == true) {
-        for (let i = 0; i < platfromLevel1.length; i++) {
-            if (platfromLevel1[i] == 1) {
+        for (let i = 0; i < platformLevel1.length; i++) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -218,87 +265,112 @@ let under = () => {
 
 let velocity = 0;
 let stillJumping = false;
+let nowDown;
+let thenDown = Date.now();
+let deltaDown;
 
 let gravity = () => {
-    if(crouched == true && velocity >= 0.1){
-        unCrouch();
-    }
-    deathCollision();
-    drawPlayer();
-    velocity += 0.1;
-    y += velocity;
-    gravityId = window.requestAnimationFrame(gravity);
-    for (let i = 0; i < platfromLevel1.length; i++) {
-        if (platfromLevel1[i] == 1) {
-            let platformX = (i % 32) * 32;
-            let platformY = Math.floor(i / 32) * 32;
-            if (
-                y + height >= platformY &&
-                y + height <= platformY + 32 &&
-                x + width >= platformX &&
-                x <= platformX + 32
-            ) {
-                //console.log("X: " + platformX);
-                //console.log("Y: " + platformY);
-                stillJumping = false;
-                y = platformY - height;
-                velocity = 0;
-                cancelAnimationFrame(gravityId);
-                break;
+    gravityId = requestAnimationFrame(gravity);
+    nowDown = Date.now();
+    deltaDown = nowDown - thenDown;
+    if (deltaDown > interval) {
+        thenDown = nowDown - (deltaDown % interval);
+        if(crouched == true && velocity >= 0.1){
+            unCrouch();
+        }
+        objectsCollision();
+        orbCollision();
+        drawPlayer();
+        velocity += 0.3;
+        y += velocity;
+        for (let i = 0; i < platformLevel1.length; i++) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                let platformX = (i % 32) * 32;
+                let platformY = Math.floor(i / 32) * 32;
+                if (
+                    y + height >= platformY &&
+                    y + height <= platformY + 32 &&
+                    x + width >= platformX &&
+                    x <= platformX + 32
+                ) {
+                    stillJumping = false;
+                    y = platformY - height;
+                    velocity = 0;
+                    orbUsed = false;
+                    cancelAnimationFrame(gravityId);
+                    break;
+                }
             }
         }
+        if (canvas.height - height < y) {
+            y = canvas.height - height;
+            velocity = 0;
+            orbUsed = false;
+            stillJumping = false;
+            cancelAnimationFrame(gravityId);
+        }
+        drawPlatform();
     }
-    if (canvas.height - height < y) {
-        y = canvas.height - height;
-        velocity = 0;
-        stillJumping = false;
-        cancelAnimationFrame(gravityId);
-    }
-    drawPlatform();
+    
 }
 gravity();
 
 //----------------------------------------Funkce SKÁKÁNÍ hráče
 
+let velocityJump
+let nowUp;
+let thenUp = Date.now();
+let deltaUp;
+
 let jump = () => {
-    if(stillJumping == false){
+    if(stillJumping == false || canOrbJump == true && orbUsed == false){
+        if(canOrbJump == true && velocity >= 0){
+            cancelAnimationFrame(gravityId);
+            cancelAnimationFrame(jumpingId);
+            velocity = 0;
+            velocityJump = 0;
+            orbUsed = true;
+        }
         let headHit = false;
-        let velocityJump = 8;
+        velocityJump = 16;
         stillJumping = true;
         const jumping = () => {
-            velocityJump = velocityJump/1.11
-            y = y - velocityJump;
-            drawPlayer();
-            drawPlatform()
-            //gravityOn = false;
             jumpingId = requestAnimationFrame(jumping);
-            for (let i = 0; i < platfromLevel1.length; i++) {
-                if (platfromLevel1[i] == 1) {
-                    let platformX = (i % 32) * 32;
-                    let platformY = Math.floor(i / 32) * 32 + 40;
-                    if (
-                        y + height >= platformY &&
-                        y + height <= platformY + 32 &&
-                        x + width >= platformX &&
-                        x <= platformX + 32
-                    ) {
-                        y = platformY - 39 - velocityJump + height;
-                        //console.log("Y: " + platformY);
-                        stillJumping == false;
-                        headHit = true;
-                        velocityJump = 0;
-                        velocity = 0;
-                        cancelAnimationFrame(jumpingId);
-                        cancelAnimationFrame(gravityId);
-                        gravity();
-                        break;
+            now = Date.now();
+            delta = now - then;
+            if (delta > interval) {
+                then = now - (delta % interval);
+                velocityJump = velocityJump/1.22
+                y = y - velocityJump;
+                drawPlayer();
+                drawPlatform()
+                for (let i = 0; i < platformLevel1.length; i++) {
+                    if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                        let platformX = (i % 32) * 32;
+                        let platformY = Math.floor(i / 32) * 32 + 40;
+                        if (
+                            y + height >= platformY &&
+                            y + height <= platformY + 32 &&
+                            x + width >= platformX &&
+                            x <= platformX + 32
+                        ) {
+                            y = platformY - 39 - velocityJump + height;
+                            stillJumping == false;
+                            headHit = true;
+                            velocityJump = 0;
+                            velocity = 0;
+                            cancelAnimationFrame(jumpingId);
+                            cancelAnimationFrame(gravityId);
+                            gravity();
+                            break;
+                        }
                     }
                 }
-            }
-            if(velocityJump <= 0.35 && headHit == false){
-                headHit = true;
-                cancelAnimationFrame(jumpingId);
-                gravity();
+                if(velocityJump <= 0.35 && headHit == false){
+                    headHit = true;
+                    cancelAnimationFrame(jumpingId);
+                    gravity();
+                }
             }
         }
         jumping();
@@ -306,55 +378,66 @@ let jump = () => {
 }
 //----------------------------------------Funkce hráče CHOZENÍ DO PRAVA
 
+let velocityRight = 0.1;
+let nowRight;
+let thenRight = Date.now();
+let deltaRight;
+
 let moveRight = () => {
+    turnedRight = true;
+    turnedLeft = false;
     playerImage.src = "./res/img/player1_right.png";
     drawPlayer();
-    let velocityStart = 0.1;
+    velocityRight = 0.2;
     const movingRight = () => {
         animationIdRight = requestAnimationFrame(movingRight);
-        if(crouched == true && velocityStart >= 1){
-            velocityStart = velocityStart - 0.06;
-        }else{
-            if(isMovingRight == true){
-                if(velocityStart <= 2 && crouched == false){
-                    velocityStart += 0.06;
-                }else if(velocityStart <= 1 && crouched == true){
-                    velocityStart += 0.06;
-                }
-            }else if(isMovingRight == false){
-                velocityStart = velocityStart - 0.06;
-                if(velocityStart <= 0.1){
-                    cancelAnimationFrame(animationIdRight);
-                }
-            }
-        }
-        
-        for (let i = 0; i < platfromLevel1.length; i++) {
-            if (platfromLevel1[i] == 1) {
-                let platformX = (i % 32) * 32;
-                let platformY = Math.floor(i / 32) * 32;
-                if (
-                    y + height > platformY &&
-                    y < platformY + 32 &&
-                    x + width + velocityStart > platformX &&
-                    x < platformX + 32
-                ) {
-                    velocityStart = 0;
-                    break;
+        nowRight = Date.now();
+        deltaRight = nowRight - thenRight;
+        if (deltaRight > interval) {
+            thenRight = nowRight - (deltaRight % interval);
+            if(crouched == true && velocityRight >= 1){
+                velocityRight -= 0.12;
+            }else{
+                if(isMovingRight == true){
+                    if(velocityRight <= 4 && crouched == false){
+                        velocityRight += 0.12;
+                    }else if(velocityRight <= 1 && crouched == true){
+                        velocityRight += 0.12;
+                    }
+                }else if(isMovingRight == false){
+                    velocityRight -= 0.2;
+                    if(velocityRight <= 0.1){
+                        cancelAnimationFrame(animationIdRight);
+                    }
                 }
             }
-        }
-        x += velocityStart;
-        drawPlayer();
-        drawPlatform();
-        if (x >= canvas.width - width) {
-            cancelAnimationFrame(animationIdRight);
-            x -= velocityStart;
-        }
-        if(stillJumping == false){
-            stillJumping = true;
-            cancelAnimationFrame(gravityId);
-            gravity();
+            for (let i = 0; i < platformLevel1.length; i++) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                    let platformX = (i % 32) * 32;
+                    let platformY = Math.floor(i / 32) * 32;
+                    if (
+                        y + height > platformY &&
+                        y < platformY + 32 &&
+                        x + width + velocityRight > platformX &&
+                        x < platformX + 32
+                    ) {
+                        velocityRight = 0;
+                        break;
+                    }
+                }
+            }
+            x += velocityRight;
+            drawPlayer();
+            drawPlatform();
+            if (x >= canvas.width - width) {
+                cancelAnimationFrame(animationIdRight);
+                x -= velocityRight;
+            }
+            if(stillJumping == false){
+                stillJumping = true;
+                cancelAnimationFrame(gravityId);
+                gravity();
+            }
         }
     };
     movingRight();
@@ -363,65 +446,109 @@ let moveRight = () => {
 
 //----------------------------------------Funkce hráče CHOZENÍ DO LEVA
 
+let velocityLeft = 0.1;
+let nowLeft;
+let thenLeft = Date.now();
+let deltaLeft;
+
 let moveLeft = () => {
+    turnedLeft = true;
+    turnedRight = false;
     playerImage.src = "./res/img/player1_left.png";
     drawPlayer();
-    let velocityStart = 0.1;
+    velocityLeft = 0.2;
     const movingLeft = () => {
         animationIdLeft = requestAnimationFrame(movingLeft);
-        if(crouched == true && velocityStart >= 1){
-            velocityStart = velocityStart - 0.06;
-        }else{
-            if(isMovingLeft == true){
-                if(velocityStart <= 2 && crouched == false){
-                    velocityStart += 0.06;
-                }else if(velocityStart <= 1 && crouched == true){
-                    velocityStart += 0.06;
-                }
-            }else if(isMovingLeft == false){
-                velocityStart = velocityStart - 0.06;
-                if(velocityStart <= 0.1){
-                    cancelAnimationFrame(animationIdLeft);
-                }
-            }
-        }
-        for (let i = 0; i < platfromLevel1.length; i++) {
-            if (platfromLevel1[i] == 1) {
-                let platformX = (i % 32) * 32;
-                let platformY = Math.floor(i / 32) * 32;
-                if (
-                    y + height > platformY &&
-                    y < platformY + 32 &&
-                    x - velocityStart < platformX + 32 &&
-                    x > platformX
-                ) {
-                    velocityStart = 0;
-                    break;
+        nowLeft = Date.now();
+        deltaLeft = nowLeft - thenLeft;
+        if (deltaLeft > interval) {
+            thenLeft = nowLeft - (deltaLeft % interval);
+            if(crouched == true && velocityLeft >= 1){
+                velocityLeft -= 0.12;
+            }else{
+                if(isMovingLeft == true){
+                    if(velocityLeft <= 4 && crouched == false){
+                        velocityLeft += 0.12;
+                    }else if(velocityLeft <= 1 && crouched == true){
+                        velocityLeft += 0.12;
+                    }
+                }else if(isMovingLeft == false){
+                    velocityLeft -= 0.2;
+                    if(velocityLeft <= 0.1){
+                        cancelAnimationFrame(animationIdLeft);
+                    }
                 }
             }
-        }
-        x -= velocityStart;
-        drawPlayer();
-        drawPlatform();
-        if (x <= 0) {
-            cancelAnimationFrame(animationIdLeft);
-            x += velocityStart;
-        }
-        if(stillJumping == false){
-            stillJumping = true;
-            cancelAnimationFrame(gravityId);
-            gravity();
+            for (let i = 0; i < platformLevel1.length; i++) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                    let platformX = (i % 32) * 32;
+                    let platformY = Math.floor(i / 32) * 32;
+                    if (
+                        y + height > platformY &&
+                        y < platformY + 32 &&
+                        x - velocityLeft < platformX + 32 &&
+                        x > platformX
+                    ) {
+                        velocityLeft = 0;
+                        break;
+                    }
+                }
+            }
+            x -= velocityLeft;
+            drawPlayer();
+            drawPlatform();
+            if (x <= 0) {
+                cancelAnimationFrame(animationIdLeft);
+                x += velocityLeft;
+            }
+            if(stillJumping == false){
+                stillJumping = true;
+                cancelAnimationFrame(gravityId);
+                gravity();
+            }
         }
     };
     movingLeft();
 };
+
+//--------------------------Attack/Níčení funkce
+
+const attack = () => {
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if (platformLevel1[i] == 6) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                y + height > platformY&&
+                y < platformY + 32 && 
+                x + width > platformX - 10 &&
+                x < platformX && turnedRight
+            ) {
+                platformLevel1[i] = 0;
+                drawPlayer();
+                gravity();
+            } else if (
+                y + height > platformY &&
+                y < platformY + 32 &&
+                x < platformX + 42 &&
+                x > platformX + 32 && turnedLeft
+            ) {
+                platformLevel1[i] = 0;
+                drawPlayer();
+                gravity();
+            }
+        }
+    }
+}
+
 
 //--------------------------Stlačení kláves
 let up = "w";
 let down = "s";
 let right = "d";
 let left = "a";
-
+let space = " ";
+ 
 let downPressed = false;
 
 window.addEventListener('keydown', (event) => {
@@ -444,8 +571,9 @@ window.addEventListener('keydown', (event) => {
             crouch();
         }
         downPressed = true;
-        
-    }
+    } else if (event.key == space) {
+        attack();
+    } 
 });
 
 //--------------------------Pouštění kláves
