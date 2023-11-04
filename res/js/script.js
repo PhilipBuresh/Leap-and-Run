@@ -821,30 +821,36 @@ let up = "w";
 let down = "s";
 let right = "d";
 let left = "a";
+
+let UP = "W";
+let DOWN = "S";
+let RIGHT = "D";
+let LEFT = "A";
+
 let space = " ";
  
 let downPressed = false;
 
 window.addEventListener('keydown', (event) => {
-    if (event.key == up && isJumping == false && canStandUp == true) {
+    if ((event.key == up || event.key == UP) && isJumping == false && canStandUp == true) {
         currentFrame = 0;
         isJumping = true;
         jump();
-    } else if (event.key == right && isMovingRight == false) {
+    } else if ((event.key == right || event.key == RIGHT) && isMovingRight == false) {
         currentFrame = 0;
         isMovingRight = true;
         turnedRight = true;
         turnedLeft = false;
         cancelAnimationFrame(animationIdRight);
         moveRight();
-    } else if (event.key == left && isMovingLeft == false) {
+    } else if ((event.key == left || event.key == LEFT) && isMovingLeft == false) {
         currentFrame = 0;
         isMovingLeft = true;
         turnedRight = false;
         turnedLeft = true;
         cancelAnimationFrame(animationIdLeft);
         moveLeft();
-    } else if (event.key == down && !punched) {
+    } else if ((event.key == down ||event.key == DOWN) && !punched) {
         if(crouched == false && stillJumping == false && downPressed == false){
             crouch();
             currentFrame = 0;            
