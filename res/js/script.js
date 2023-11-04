@@ -7,8 +7,15 @@ const wasd = document.getElementById("wasd");
 canvas.width = 1024 ;
 canvas.height = 576;
 
-let y = 500;
-let x = 10;
+let x;
+let y;
+
+let spawnCords = () => {
+    x = 10;
+    y = 500;
+}
+spawnCords();
+
 let height = 40;
 let width = 30;
 
@@ -35,39 +42,43 @@ let delta;
 
 //Lokace platform
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
-let platformLevel1 =   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-                        1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0,
-                        1, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0,
-                        1, 0, 0, 0, 0, 0, 4, 0, 0, 2, 0, 0, 0, 6, 0, 0, 0, 1, 1, 1, 1, 3, 1, 0, 0, 2, 0, 0, 1, 1, 1, 1,  
-                        1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 3, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 2, 1, 1, 1, 1,
-                        1, 0, 5, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 6, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1,
-                        1, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 6, 0, 0, 0, 4, 1, 0, 0, 0, 0, 0, 1, 1, 1,
-                        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-                        1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 0, 0, 4, 1, 1,
-                        1, 0, 0, 0, 0, 0, 0, 2, 1, 3, 1, 0, 4, 4, 0, 1, 3, 3, 3, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 4, 1,
-                        1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 1,
-                        1, 1, 3, 1, 2, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                        1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 1,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-                        0, 0, 0, 0, 2, 2, 1, 1, 3, 3, 1, 3, 1, 1, 1, 1, 1, 1, 3, 1, 1, 2, 1, 2, 1, 3, 3, 3, 3, 3, 3, 1,
-                        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-//0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+                         4,  0,  0,  0,  0,  4,  0,  0,  0,  4,  1,  0,  0,  0,  8,  0,  8,  0,  0,  1,  4,  4,  4,  1,  4,  4,  4,  4,  1,  0,  0,  30,
+                         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  8,  2,  8,  0,  0,  6,  0,  0,  0,  4,  0,  0,  0,  0,  4,  0,  0,  30,
+                         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  4,  0,  0,  0,  7,  7,  7,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0, 10,  0,  0,  30,
+                         0,  0,  0,  0,  9,  0,  0,  2,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  1,  2,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,
+                         1,  0,  0,  0,  9,  9,  0,  1,  0,  1,  1,  1,  0,  0,  0, 10,  0,  0,  7,  1,  1,  1,  0,  0,  0,  0,  0,  8,  0,  0,  8,  0,
+                         1,  0,  0,  0,  9,  9,  0,  0,  0,  8,  0,  8,  0,  0, 10,  1, 10,  0,  0,  1,  4,  0,  0,  1,  0,  0,  7,  7,  7,  7,  7,  7,
+                         4,  0,  0,  1,  1,  1,  0,  0,  0,  7,  7,  7,  0,  1,  1,  1,  1,  1,  0,  1,  0,  0,  0,  4,  0,  0,  0,  0,  0,  4,  4,  4,
+                         0,  5,  0,  1,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                         2,  0,  0,  6,  0,  0,  9,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  9,  9,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,
+                         1,  0,  0, 10,  0,  0,  1,  1,  1,  0,  7,  7,  0,  1,  1,  2,  0,  0,  1,  0,  1,  1,  1,  1,  1,  0,  1,  0,  5,  0,  0,  0,
+                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4,  0,  0,  8,  1,  1,  1,  0,  4,  0,  0,  4,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0,  7,
+                         0,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  1,  0,  0,  7,  7,  7,  7,  0,  0,  0,  1,  0,  5,  0,  1,
+                         0,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  0,  0,  0,  7,  7,  0,  0,  1,  0,  0,  0,  0,  0,  1,
+                         0,  0,  0,  9,  9,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  1,  2,  2,  7,  7,  2,  2,  1,  3,  3,  3,  3,  3,  1,
+                         7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
+
+//1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+// 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 
 const originalPlatform1 = [...platformLevel1];
 
 //----------------------------------------Vykreslení platform a překážek
 
 const platformImage = new Image();
-platformImage.src = "./res/img/block.png";
+platformImage.src = "./res/img/block3.png";
 
 const spikeImage = new Image();
 spikeImage.src = "./res/img/spike.png";
 
 const spikeFlipImage = new Image();
 spikeFlipImage.src = "./res/img/spike_flip.png";
+
+const spikeMoveImage = new Image();
+spikeMoveImage.src = "./res/img/spike_move.png";
 
 const lavaImage = new Image();
 lavaImage.src = "./res/img/lava.png";
@@ -78,6 +89,62 @@ orbImage.src = "./res/img/orb.png";
 const crackedImage = new Image();
 crackedImage.src = "./res/img/cracked.png";
 
+const woodImage = new Image();
+woodImage.src = "./res/img/wood.png";
+
+const chainImage = new Image();
+chainImage.src = "./res/img/chain.png";
+
+const bookImage = new Image();
+bookImage.src = "./res/img/bookshelf.png";
+
+
+let currentFrame = 0;
+let currentFramePunch = 0;
+let currentFrameLava = 0;
+
+let animateTickLava = 0;
+let animateTickSpike = 0;
+
+let frameLava = 0;
+let intervalLava = 0;
+let frameSpike = 0;
+let intervalSpike = 0;
+
+const frameWidth = 30;
+const frameHeight = 40;
+
+let sWidth = 30;
+let sHeight = 40;
+let sX = 30;
+let sY = 40;
+
+const animateLava = () => {
+    animateTickLava++;
+        if(animateTickLava == 10){
+            setTimeout(() => {
+                currentFrameLava++
+                if(currentFrameLava % 4 == 0){
+                currentFrameLava = 0;
+                }
+            });
+            animateTickLava = 0;
+        }
+}
+
+const aniamteSpike = () => {
+    animateTickSpike++;
+        if(animateTickSpike == 2){
+            setTimeout(() => {
+                currentFrameSpike++
+                if(currentFrameSpike % 4 == 0){
+                currentFrameSpike = 0;
+                }
+            });
+            animateTickSpike = 0;
+        }
+}
+
 let drawPlatform = () => {
     xBlock = 0;
     yBlock = 0;
@@ -87,13 +154,23 @@ let drawPlatform = () => {
         }else if(platformLevel1[index] == 2){
             p.drawImage(spikeImage, xBlock,yBlock,32,32)
         }else if(platformLevel1[index] == 3){
-            p.drawImage(lavaImage, xBlock,yBlock,32,32)
+            p.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            animateLava();
         }else if(platformLevel1[index] == 4){
             p.drawImage(spikeFlipImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 5){
             p.drawImage(orbImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 6){
             p.drawImage(crackedImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 7){
+            p.drawImage(woodImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 8){
+            p.drawImage(chainImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 9){
+            p.drawImage(bookImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 10){
+            p.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            animateLava();
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -105,25 +182,42 @@ let drawPlatform = () => {
     }  
 }
 drawPlatform()
+
 //----------------------------------------Vykreslení hráče
 
 let playerImage = new Image();
 playerImage.src = "./res/img/player.png";
 
-const frameWidth = 30;
-const frameHeight = 40;
+let canDieOnSpike = false;
 
-let sWidth = 30;
-let sHeight = 40;
-let sX = 30;
-let sY = 40;
-
-let currentFrame = 0;
-let currentFramePunch = 0;
-
-playerImage.onload = () => {
+//Vykreslení hráče + Animace objektů
+setInterval(() => {
+    //Hráč
     drawPlayer();
-};
+    //Lava
+    intervalLava++;
+    if(intervalLava == 70){
+        frameLava++;
+        intervalLava = 0;
+        if(frameLava == 3){
+            frameLava = 0;
+        }
+    }
+    //Spike
+    intervalSpike++;
+    if(intervalSpike == 30){
+        frameSpike++;
+        intervalSpike = 0;
+        if(frameSpike == 0 || frameSpike >= 10){
+            canDieOnSpike = false;
+        }else{
+            canDieOnSpike = true;
+        }
+        if(frameSpike == 17){
+            frameSpike = 0;
+        }
+    }
+}, 1);
 
 let animateTick = 0;
 let animateTickStand = 0;
@@ -132,7 +226,7 @@ let animateTickCrouch = 0;
 
 const animate24 = () => {
     animateTickStand++;
-    if(animateTickStand == 50){
+    if(animateTickStand == 30){
         setTimeout(() => {
             currentFrame++
             if(currentFrame % 24 == 0){
@@ -240,31 +334,37 @@ let drawPlayer = () => {
     orbCollision();
     drawPlatform();
 };
+//----------------------------------------SHAKE funkce
 
-/*const playerImage = new Image();
-playerImage.src = "./res/img/player1_right.png";
 
-playerImage.onload = () => {
-    drawPlayer();
-};
-
-let drawPlayer = () => {
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    c.drawImage(playerImage, x, y, width, height);
-    objectsCollision();
-    drawPlatform();
-    orbCollision();
-};*/
+const shake = () => {
+    setTimeout(() => {
+        canvas.style.top = "50.5%";canvas.style.left = "50.5%";
+        setTimeout(() => {
+            canvas.style.top = "49.5%";canvas.style.left = "49.5%";
+            setTimeout(() => {
+                canvas.style.top = "50.5%";canvas.style.left = "49.5%";
+                setTimeout(() => {
+                    canvas.style.top = "49.5%";canvas.style.left = "50.5%";
+                    setTimeout(() => {
+                        canvas.style.top = "50%";canvas.style.left = "50%"; 
+                    }, 50);
+                }, 50);
+            }, 50);
+        }, 50);
+    }, 50);
+}
 
 //----------------------------------------Death funkce
 
 const dead = () => {
     canvas.style.backgroundImage = "url(./res/img/wall.png)";
-    y = 500;
-    x = 10;
+    spawnCords();
     unCrouch();
     platformLevel1 = [...originalPlatform1];
     drawPlatform();
+    frameSpike = 0;
+    frameLava = 0;
 }
 
 //----------------------------------------Kolize OBJEKTŮ
@@ -272,6 +372,18 @@ const dead = () => {
 const objectsCollision = () => {
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 2) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                y + height >= platformY + 10 &&
+                y + height <= platformY + 32 &&
+                x + width >= platformX + 10 &&
+                x <= platformX + 22
+            ) {
+                dead();
+            }
+        }
+        if (platformLevel1[i] == 10 && canDieOnSpike == true) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -307,7 +419,7 @@ const objectsCollision = () => {
                 dead();
             }
         }
-        if (platformLevel1[i] == 9) {
+        if (platformLevel1[i] == 30) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -322,10 +434,6 @@ const objectsCollision = () => {
             }
         }
     }
-}
-
-let theEnd = () => {
-    
 }
 
 //----------------------------------------Kolize ORBŮ
@@ -363,7 +471,7 @@ let aboveHeadCollision = () => {
     ahCollision = requestAnimationFrame(aboveHeadCollision);
     if (crouched == true) {
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -436,7 +544,7 @@ let gravity = () => {
         velocity += 0.3;
         y += velocity;
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -497,11 +605,10 @@ let jump = () => {
                 then = now - (delta % interval);
                 velocityJump = velocityJump/1.22
                 y -= velocityJump;
-                //console.log(y)
                 drawPlayer();
                 drawPlatform()
                 for (let i = 0; i < platformLevel1.length; i++) {
-                    if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                    if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
                         let platformX = (i % 32) * 32;
                         let platformY = Math.floor(i / 32) * 32 + 40;
                         if (
@@ -552,6 +659,9 @@ let moveRight = () => {
             thenRight = nowRight - (deltaRight % interval);
             if(crouched == true && velocityRight >= 1){
                 velocityRight -= 0.12;
+                if(crouched == true){
+                    gravity();
+                }
             }else{
                 if(isMovingRight == true){
                     if(velocityRight <= 4 && crouched == false){
@@ -568,7 +678,7 @@ let moveRight = () => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -619,6 +729,9 @@ let moveLeft = () => {
             thenLeft = nowLeft - (deltaLeft % interval);
             if(crouched == true && velocityLeft >= 1){
                 velocityLeft -= 0.12;
+                if(crouched == true){
+                    gravity();
+                }
             }else{
                 if(isMovingLeft == true){
                     if(velocityLeft <= 4 && crouched == false){
@@ -635,7 +748,7 @@ let moveLeft = () => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -773,4 +886,3 @@ window.addEventListener('keyup', (event) => {
         alreadyPunched = false;
     }
 });
-
