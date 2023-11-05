@@ -1,5 +1,5 @@
 # Leap-and-Run
-<div style = "border: 3px solid black, padding: 5px"><b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b></div><br>
+<b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
 Last Update: <br>
  - Opravené <b>animace</b> hráče<br>
  - Přidaný krutopřísný <b>GHOST</b><br>
