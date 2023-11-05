@@ -1,7 +1,6 @@
 const canvas = document.getElementById('cnv');
-const g = canvas.getContext('2d');
-const p = canvas.getContext('2d');
-const c = canvas.getContext('2d');
+const p = canvas.getContext('2d'); //Platform
+const c = canvas.getContext('2d'); //Character
 const text = document.getElementById("text");
 const wasd = document.getElementById("wasd");
 
@@ -50,21 +49,21 @@ let portalCordsY2 = 0;
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
 let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
                          4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0,  1,  4,  4,  4,  1,  4,  4,  4,  4,  1,  0,  0,  0,
-                         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0,  1,  0,  0,  0,
-                         0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0,  4,  0, 30,  0,
-                         0,  0,  0,  0,  9,  0,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  1,  9,  2,  0,  8,  0,  0,  0,  0, 10,  0,  0,  0,
-                         9,  0,  0,  0,  9,  9,  0,  1,  1,  8,  9, 12,  0,  0,  0, 10,  0,  0,  9,  1,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
-                         1,  0,  0,  0,  9,  9,  0,  0,  0,  8,  9,  0,  0,  0, 10,  1, 10,  0,  9,  1,  4,  8,  0,  7,  0,  0,  0,  4,  0,  0,  8,  0,
-                         4,  0,  0,  1,  1,  1,  0,  0,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  7,  0,
-                         0,  5,  0,  1,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  8,  0,  8,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  4,  0,
-                         2,  0,  0,  6,  0,  0,  9,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  8,  0,  8,  0,  8,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,
-                         1,  0,  0, 10,  0,  0,  1,  1,  1,  0,  7,  7,  0,  1,  1,  0,  0,  7,  0,  8,  0,  8,  0,  0,  9,  0,  1,  0,  5,  0,  0,  0,
-                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4,  0,  0,  8,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0,  0,  0,
-                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0,  7,
-                         0,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0,  0,  0,  1,  0,  5,  0,  1,
-                         9,  0,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9,  0,  0,  7,  7,  0,  0,  1,  0,  0,  0,  0,  0,  1,
-                         9,  0,  0,  9,  9,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9,  0,  7,  7,  0,  9,  1,  3,  3,  3,  3,  3,  1,
+                         0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0,  1,  0,  0,  0,
+                         0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
+                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14,  1,  9,  2,  0,  8,  0,  0,  0,  0, 10,  0,  0,  0,
+                         9,  0,  0, 17,  9,  9,  0,  1,  1,  8,  9, 12,  0, 16,  0, 10,  0,  0,  9,  1,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
+                         1,  0,  0, 17,  9,  9,  0,  0,  0,  8,  9,  0,  0,  0, 10,  1, 10, 17,  9,  1,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
+                         4,  0,  0,  1,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
+                         0,  5,  0,  1,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
+                         2,  0,  0,  6,  0, 17,  9,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 17,  0,  2,  0,  0,  0,  0,  0,
+                         1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1,  1,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
+                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4, 15,  0,  8,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
+                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 14,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                        14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0,  7,
+                         9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  1,
+                         9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17,  7,  7, 17, 17,  1,  0,  0,  0,  0,  0,  1,
+                         9, 17, 17,  9,  9,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17,  7,  7, 17,  9,  1,  3,  3,  3,  3,  3,  1,
                          7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
 
 //1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
@@ -112,6 +111,21 @@ portal1Image.src = "./res/img/portal1.png";
 
 const portal2Image = new Image();
 portal2Image.src = "./res/img/portal2.png";
+
+const blockBackImage = new Image();
+blockBackImage.src = "./res/img/block_back.png";
+
+const lanternImage = new Image();
+lanternImage.src = "./res/img/lantern.png";
+
+const chainBackImage = new Image();
+chainBackImage.src = "./res/img/chain_back.png";
+
+const torchImage = new Image();
+torchImage.src = "./res/img/torch.png"
+
+const bookshelfBackImage = new Image();
+bookshelfBackImage.src = "./res/img/bookshelf_back.png"
 
 let currentFrame = 0;
 let currentFramePunch = 0;
@@ -177,7 +191,7 @@ let cordsPortalY1 = 0;
 let cordsPortalX2 = 0;
 let cordsPortalY2 = 0;
 
-let drawPlatform = () => {
+const drawPlatform = () => {
     xBlock = 0;
     yBlock = 0;
     for (let index = 0; index < platformLevel1.length; index++) {
@@ -221,12 +235,34 @@ let drawPlatform = () => {
             yBlock += 32;
         }else{
             xBlock += 32;
-        }
-            
+        }      
     }  
 }
-drawPlatform()
 
+const drawBackBlocks = () => {
+    xBlock = 0;
+    yBlock = 0;
+    for (let index = 0; index < platformLevel1.length; index++) {
+        if(platformLevel1[index] == 13){
+            p.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 14){
+            p.drawImage(lanternImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 15){
+            p.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 16){
+            p.drawImage(torchImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 17){
+            p.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
+        }
+        if((index + 1) % 32 == 0){
+            xBlock = 0;
+            yBlock += 32;
+        }else{
+            xBlock += 32;
+        } 
+    }
+     
+}
 //----------------------------------------Vykreslení Hráče a Ducha
 
 let playerImage = new Image();
@@ -266,9 +302,9 @@ const drawGhost = () => {
     ghostImage.src = "./res/img/ghost.png";
     xGhost += ghostVelocity;
     if(ghostVelocity == 0.25){
-        g.drawImage(ghostImage, ghostFrame1 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
+        c.drawImage(ghostImage, ghostFrame1 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
     }else{
-        g.drawImage(ghostImage, ghostFrame2 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
+        c.drawImage(ghostImage, ghostFrame2 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
     }
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
@@ -302,8 +338,9 @@ const drawGhost = () => {
 
 setInterval(() => {
     //Hráč
-    drawPlayer(); 
-    //Ghost
+    drawPlayer();
+    //Platformy
+    drawPlatform();
     //Lava
     intervalLava++;
     if(intervalLava == 70){
@@ -392,59 +429,73 @@ let drawPlayer = () => {
     playerImage.src = "./res/img/player.png";
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched){ //Right Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFrame * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         animate24();
     }else if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedLeft && !punched && !crouched){ //Left Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFrame * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         animate24();
     }else if(velocity > 0 && turnedRight && !punched && !crouched){ //Right Fall
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
     }else if(velocity > 0 && turnedLeft && !punched && !crouched){ //Left Fall
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
     }else if(velocityJump > 0 && turnedRight && !punched && !crouched){ //Right Jump
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 4 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
     }else if(velocityJump > 0 && turnedLeft && !punched && !crouched){ //Left Jump
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 5 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
     }else if(velocity == 0 && velocityJump == 0 && isMovingRight && !punched && !crouched ){ //Right Run
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFrame * sX, 2 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         animate8();
     }else if(velocity == 0 && velocityJump == 0 && isMovingLeft && !punched && !crouched){ //Left Run
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFrame * sX, 3 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         animate8();
     }else if(punched && turnedRight){ //Right Punch
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFramePunch * sX, 8 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         animate6();
     }else if(punched && turnedLeft){ //Left Punch
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFramePunch * sX, 9 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         animate6();
     }else if(crouched && !isMovingRight && !isMovingLeft && turnedRight){ //Crouched Right
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
     }else if(crouched && !isMovingRight && !isMovingLeft && turnedLeft){ //Crouched Left
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
     }else if(crouched && isMovingRight && !isMovingLeft){ //Crouched Right Moving
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFrame * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         animate4();
     }else if(crouched && isMovingLeft && !isMovingRight){ //Crouched Left Moving
         c.clearRect(0, 0, canvas.width, canvas.height);
+        drawBackBlocks();
         c.drawImage(playerImage, currentFrame * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         animate4();
     }
+    drawPlatform();
     drawGhost();
     objectsCollision();
     orbCollision();
-    drawPlatform();
 };
 //----------------------------------------SHAKE funkce
 
