@@ -45,25 +45,26 @@ let portalCordsY1 = 0;
 let portalCordsX2 = 0;
 let portalCordsY2 = 0;
 
+
 //Lokace platform
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
 let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
                          4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0,  1,  4,  4,  4,  1,  4,  4,  4,  4,  1,  0,  0,  0,
                          0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0,  1,  0,  0,  0,
-                         0,  0,  0,  0,  0,  0,  0,  0,  0,  2,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
-                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14,  1,  9,  2,  0,  8,  0,  0,  0,  0, 10,  0,  0,  0,
-                         9,  0,  0, 17,  9,  9,  0,  1,  1,  8,  9, 12,  0, 16,  0, 10,  0,  0,  9,  1,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
-                         1,  0,  0, 17,  9,  9,  0,  0,  0,  8,  9,  0,  0,  0, 10,  1, 10, 17,  9,  1,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
+                         0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
+                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14,  1, 18,  2,  0,  8,  0,  0,  0,  0, 10,  0,  0,  0,
+                        18,  0,  0, 17,  9,  9,  0,  1,  1,  8, 18, 12,  0, 16,  0, 10,  0,  0,  9,  1,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
+                         1,  0,  0, 17,  9,  9,  0,  0,  0, 18, 18,  0,  0,  0, 10,  1, 10, 17,  9,  1,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
                          4,  0,  0,  1,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
                          0,  5,  0,  1,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
                          2,  0,  0,  6,  0, 17,  9,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 17,  0,  2,  0,  0,  0,  0,  0,
-                         1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1,  1,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
-                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4, 15,  0,  8,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
+                         1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
+                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4, 15,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
                          0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 14,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                        14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0,  7,
-                         9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  1,
-                         9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17,  7,  7, 17, 17,  1,  0,  0,  0,  0,  0,  1,
-                         9, 17, 17,  9,  9,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17,  7,  7, 17,  9,  1,  3,  3,  3,  3,  3,  1,
+                        14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0, 18,
+                         9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  7,
+                         9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17,  7,  7,  0,  0,  1,  0,  0,  0,  0,  0,  1,
+                         9, 17, 17,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17,  7,  7,  0, 18,  1,  3,  3,  3,  3,  3,  1,
                          7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
 
 //1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
@@ -126,6 +127,9 @@ torchImage.src = "./res/img/torch.png"
 
 const bookshelfBackImage = new Image();
 bookshelfBackImage.src = "./res/img/bookshelf_back.png"
+
+const barrelImage = new Image();
+barrelImage.src = "./res/img/barrel.png"
 
 let currentFrame = 0;
 let currentFramePunch = 0;
@@ -227,6 +231,8 @@ const drawPlatform = () => {
             cordsPortalY2 = yBlock + 32;
             p.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
             aniamtePortal();
+        }else if(platformLevel1[index] == 18){
+            p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 30){
             p.drawImage(doorImage, xBlock, yBlock, 64, 64)
         }
@@ -307,7 +313,7 @@ const drawGhost = () => {
         c.drawImage(ghostImage, ghostFrame2 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
     }
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
+        if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -317,7 +323,7 @@ const drawGhost = () => {
                 xGhost < platformX + 32
             ) {
                 ghostVelocity = -0.25
-            }else if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
+            }else if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -747,7 +753,7 @@ let gravity = () => {
         velocity += 0.3;
         y += velocity;
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -811,7 +817,7 @@ let jump = () => {
                 //drawPlayer();
                 drawPlatform()
                 for (let i = 0; i < platformLevel1.length; i++) {
-                    if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
+                    if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
                         let platformX = (i % 32) * 32;
                         let platformY = Math.floor(i / 32) * 32 + 40;
                         if (
@@ -881,7 +887,7 @@ let moveRight = () => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -950,7 +956,7 @@ let moveLeft = () => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
