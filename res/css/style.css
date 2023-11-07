@@ -1,6 +1,9 @@
 body {
     background-color: black;
 }
+html, body{
+    user-select: none;
+}
 canvas {
     width: 70%;
     height: auto;
@@ -8,14 +11,6 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
-img{
-    user-select: none;
-    -webkit-user-drag: none;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
 }
 #background {
     width: 70%;
@@ -63,8 +58,8 @@ img{
 }
 
 #button_up, #button_punch, #button_down {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border:5px solid rgba(255, 255, 255, 0.6);
     background-color:rgba(0, 0, 0, 0.6);
     margin-bottom: 10px;
@@ -72,8 +67,8 @@ img{
 }
 
 #button_right, #button_left {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border:5px solid rgba(255, 255, 255, 0.6);
     background-color:rgba(0, 0, 0, 0.6);
     margin-left: 10px;
@@ -91,11 +86,10 @@ img{
 
 #buttons img{
     opacity: 60%;
+    width: 60px;
+    height: 60px;
+    pointer-events: none
 }
-
-#buttons img:hover{
-    opacity: 20%;
-  }
 
 @media (max-width: 800px) {
     canvas{
