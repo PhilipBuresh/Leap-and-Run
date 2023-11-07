@@ -3,6 +3,12 @@ const p = canvas.getContext('2d'); //Platform
 const c = canvas.getContext('2d'); //Character
 const text = document.getElementById("text");
 const wasd = document.getElementById("wasd");
+const buttons = document.getElementById("buttons");
+
+const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+if (deviceDetect == true) {
+    buttons.style.display = "block";
+}
 
 let x;
 let y;
@@ -527,7 +533,6 @@ const shake = () => {
 //----------------------------------------Death funkce
 
 const dead = () => {
-    canvas.style.backgroundImage = "url(./res/img/wall.png)";
     spawnCords();
     unCrouch();
     platformLevel1 = [...originalPlatform1];
@@ -1076,14 +1081,14 @@ window.addEventListener('keydown', (event) => {
 //--------------------------Pouštění kláves
 
 window.addEventListener('keyup', (event) => {
+    if (event.key == up) {
+        isJumping = false;
+    }
     if (event.key == right) {
         isMovingRight = false;
     }
     if (event.key == left) {
         isMovingLeft = false;
-    }
-    if (event.key == up) {
-        isJumping = false;
     }
     if (event.key == down) {
         downPressed = false;
@@ -1100,3 +1105,62 @@ window.addEventListener('keyup', (event) => {
         alreadyPunched = false;
     }
 });
+
+const go_up = () => {
+    if (isJumping == false && canStandUp == true) {
+        currentFrame = 0;
+        isJumping = true;
+        jump();
+    }
+}
+
+const go_punch = () => {
+    if(!alreadyPunched){
+        punch();
+    }
+    alreadyPunched = true;
+}
+
+const go_down = () => {
+    if (!punched) {
+        if(crouched == false && stillJumping == false && downPressed == false){
+            crouch();
+            currentFrame = 0;            
+        }
+        downPressed = true;
+    }
+}
+
+const go_down_return = () => {
+    downPressed = false;
+    if(velocity <= 0.35 && crouched == true && canStandUp == true){
+        unCrouch();
+    }else if(canStandUp == false){
+        if(wasUnder == true){
+            wasUnder = false;
+            under();
+        }
+    }
+}
+
+const go_right = () => {
+    if (isMovingRight == false) {
+        currentFrame = 0;
+        isMovingRight = true;
+        turnedRight = true;
+        turnedLeft = false;
+        cancelAnimationFrame(animationIdRight);
+        moveRight();
+    }
+}
+
+const go_left = () => {
+    if (isMovingLeft == false) {
+        currentFrame = 0;
+        isMovingLeft = true;
+        turnedRight = false;
+        turnedLeft = true;
+        cancelAnimationFrame(animationIdLeft);
+        moveLeft();
+    }
+}

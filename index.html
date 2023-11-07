@@ -13,9 +13,19 @@
     <div id="container">
         <div id="text">Leap&Run</div>
         <div id="wasd">Play with: WASD and Space</div>
-        <img src="./res/img/wall.png" alt="hej">
+        <img id="background" src="./res/img/wall.png" alt="wall">
         <canvas id="cnv" width="1024" height="576" ></canvas>
-        
+        <div id="buttons">
+            <div id="left_buttons">
+                <div id="button_up" onmousedown = "go_up()" onmouseup = "isJumping = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="button_punch" onmousedown = "go_punch()" onmouseup = "alreadyPunched = false;"><img src="./res/img/punch.png" alt="punch"></div>
+                <div id="button_down" onmousedown = "go_down()" onmouseup = "go_down_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+            </div>
+            <div id="right_buttons">
+                <div id="button_left" onmousedown = "go_left()" onmouseup = "isMovingLeft = false"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="button_right" onmousedown = "go_right()" onmouseup = "isMovingRight = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
+            </div>
+        </div>
     </div>
     <script src="./res/js/script.js"></script>
 </body>
