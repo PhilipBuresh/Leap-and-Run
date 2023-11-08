@@ -42,9 +42,6 @@ let turnedLeft = false;
 
 let fps = 55;
 let interval = 1000/fps;
-let now;
-let then = Date.now();
-let delta;
 
 let portalCordsX1 = 0;
 let portalCordsY1 = 0;
@@ -82,6 +79,9 @@ const originalPlatform1 = [...platformLevel1];
 
 const platformImage = new Image();
 platformImage.src = "./res/img/block.png";
+
+const darknessImage = new Image();
+darknessImage.src = "./res/img/darkness.png";
 
 const spikeImage = new Image();
 spikeImage.src = "./res/img/spike.png";
@@ -137,33 +137,6 @@ bookshelfBackImage.src = "./res/img/bookshelf_back.png"
 const barrelImage = new Image();
 barrelImage.src = "./res/img/barrel.png"
 
-let currentFrame = 0;
-let currentFramePunch = 0;
-
-let currentFrameLava = 0;
-let currentFrameSpike = 0;
-let currentFramePortal = 0;
-let currentFrameTorch = 0;
-let currentFrameLantern = 0;
-
-let animateTickLava = 0;
-let animateTickSpike = 0;
-let animateTickPortal = 0;
-let animateTickTorch = 0;
-let animateTickLantern = 0;
-
-let frameLava = 0;
-let intervalLava = 0;
-let frameSpike = 0;
-let intervalSpike = 0;
-let framePortal = 0;
-let intervalPortal = 0;
-let frameTorch = 0;
-let intervalTorch = 0;
-let frameLantern = 0;
-let intervalLantern = 0;
-
-
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -171,61 +144,6 @@ let sWidth = 30;
 let sHeight = 40;
 let sX = 30;
 let sY = 40;
-
-const animateLava = () => {
-    animateTickLava++;
-        if(animateTickLava == 10){
-            currentFrameLava++
-            if(currentFrameLava % 4 == 0){
-                currentFrameLava = 0;
-            }
-            animateTickLava = 0;
-        }
-}
-
-const aniamteSpike = () => {
-    animateTickSpike++;
-        if(animateTickSpike == 2){
-            currentFrameSpike++
-            if(currentFrameSpike % 4 == 0){
-                currentFrameSpike = 0;
-            }
-            animateTickSpike = 0;
-        }
-}
-
-const aniamtePortal = () => {
-    animateTickPortal++;
-        if(animateTickPortal == 10){
-            currentFramePortal++
-            if(currentFramePortal % 2 == 0){
-                currentFramePortal = 0;
-            }
-            animateTickPortal = 0;
-        }
-}
-
-const aniamteTorch = () => {
-    animateTickTorch++;
-        if(animateTickTorch == 10){
-            currentFrameTorch++
-            if(currentFrameTorch % 5 == 0){
-                currentFrameTorch = 0;
-            }
-            animateTickTorch = 0;
-        }
-}
-
-const aniamteLantern = () => {
-    animateTickLantern++;
-        if(animateTickLantern == 10){
-            currentFrameLantern++
-            if(currentFrameLantern % 4 == 0){
-                currentFrameLantern = 0;
-            }
-            animateTickLantern = 0;
-        }
-}
 
 let cordsPortalX1 = 0;
 let cordsPortalY1 = 0;
@@ -242,7 +160,6 @@ const drawPlatform = () => {
             p.drawImage(spikeImage, xBlock,yBlock,32,32)
         }else if(platformLevel1[index] == 3){
             p.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            animateLava();
         }else if(platformLevel1[index] == 4){
             p.drawImage(spikeFlipImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 5){
@@ -257,17 +174,14 @@ const drawPlatform = () => {
             p.drawImage(bookImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 10){
             p.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            animateLava();
         }else if(platformLevel1[index] == 11){
             cordsPortalX1 = xBlock - 32;
             cordsPortalY1 = yBlock + 32;
             p.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-            aniamtePortal();
         }else if(platformLevel1[index] == 12){
             cordsPortalX2 = xBlock + 32;
             cordsPortalY2 = yBlock + 32;
             p.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-            aniamtePortal();
         }else if(platformLevel1[index] == 18){
             p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 30){
@@ -278,8 +192,9 @@ const drawPlatform = () => {
             yBlock += 32;
         }else{
             xBlock += 32;
-        }      
-    }  
+        }
+    }
+    dark();
 }
 
 const drawBackBlocks = () => {
@@ -302,36 +217,20 @@ const drawBackBlocks = () => {
             yBlock += 32;
         }else{
             xBlock += 32;
-        } 
+        }
     }
-     
+    
 }
 
-const drawBackgroundBlocks = () => {
-    xBlock = 0;
-    yBlock = 0;
-    for (let index = 0; index < platformLevel1.length; index++) {
-        if(platformLevel1[index] == 13){
-            p.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 14){
-            p.drawImage(lanternImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 15){
-            p.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 16){
-            p.drawImage(torchImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 17){
-            p.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
-        }
-        if((index + 1) % 32 == 0){
-            xBlock = 0;
-            yBlock += 32;
-        }else{
-            xBlock += 32;
-        } 
-    }
-     
-}
 //----------------------------------------Vykreslení Hráče a Ducha
+
+let darkness = false;
+
+const dark = () => {
+    if(darkness == true){
+        c.drawImage(darknessImage, x - 1487, y - 990, 3000, 2000);
+    }
+}
 
 let playerImage = new Image();
 playerImage.src = "./res/img/player.png";
@@ -351,20 +250,6 @@ spawnGhostCords();
 
 let ghostFrame1 = 0;
 let ghostFrame2 = 2;
-
-setInterval(() => {
-    if (ghostVelocity == 0.25) {
-        ghostFrame1++;
-        if(ghostFrame1 == 2){
-            ghostFrame1 = 0;
-        }
-    }else{
-        ghostFrame2++;
-        if(ghostFrame2 == 4){
-            ghostFrame2 = 2;
-        }
-    }
-}, 300);
 
 const drawGhost = () => {
     ghostImage.src = "./res/img/ghost.png";
@@ -399,30 +284,66 @@ const drawGhost = () => {
             }
         }
     }
+    cancelAnimationFrame(drawingId);
+    drawing();
 }
 
 
 //Vykreslení hráče + Animace objektů + Ghost
 
-setInterval(() => {
-    //Hráč
-    drawPlayer();
-    //Platformy
-    drawPlatform();
+let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, now24, now6, now8, now4, nowGhost;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, delta24, delta6, delta8, delta4, deltaGhost;
+let thenPlayer = Date.now();
+let thenLava = Date.now();
+let thenSpike = Date.now();
+let thenPortal = Date.now();
+let thenTorch = Date.now();
+let thenLantern = Date.now();
+let then24 = Date.now();
+let then6 = Date.now();
+let then8 = Date.now();
+let then4 = Date.now();
+let thenGhost = Date.now();
+
+let drawingId;
+
+let currentFrame = 0;
+let currentFrameStand = 0;
+let currentFrameRun = 0;
+let currentFramePunch = 0;
+let currentFrameCrouch = 0;
+
+let frameLava = 0;
+let frameSpike = 0;
+let framePortal = 0;
+let frameTorch = 0;
+let frameLantern = 0;
+
+const drawing = () => {
+    drawingId = requestAnimationFrame(drawing);
+    //Player
+    nowPlayer = Date.now();
+    deltaPlayer = nowPlayer - thenPlayer;
+    if (deltaPlayer > 1) {
+        thenPlayer = nowPlayer - (deltaPlayer % 1);
+        drawPlayer();
+    }
     //Lava
-    intervalLava++;
-    if(intervalLava == 70){
-        frameLava++;
-        intervalLava = 0;
+    nowLava = Date.now();
+    deltaLava = nowLava - thenLava;
+    if (deltaLava > 150) {
+        thenLava = nowLava - (deltaLava % 150);
+        frameLava++
         if(frameLava == 3){
             frameLava = 0;
         }
     }
     //Spike
-    intervalSpike++;
-    if(intervalSpike == 30){
+    nowSpike = Date.now();
+    deltaSpike = nowSpike - thenSpike;
+    if (deltaSpike > 175) {
+        thenSpike = nowSpike - (deltaSpike % 175);
         frameSpike++;
-        intervalSpike = 0;
         if(frameSpike == 0 || frameSpike >= 10){
             canDieOnSpike = false;
         }else{
@@ -432,156 +353,191 @@ setInterval(() => {
             frameSpike = 0;
         }
     }
-    //Portaly
-    intervalPortal++;
-    if(intervalPortal == 70){
+    //Portals
+    nowPortal = Date.now();
+    deltaPortal = nowPortal - thenPortal;
+    if (deltaPortal > 200) {
+        thenPortal = nowPortal - (deltaPortal % 200);
         framePortal++;
-        intervalPortal = 0;
         if(framePortal == 2){
             framePortal = 0;
         }
     }
     //Torch
-    intervalTorch++;
-    if(intervalTorch == 50){
+    nowTorch = Date.now();
+    deltaTorch = nowTorch - thenTorch;
+    if (deltaTorch > 200) {
+        thenTorch = nowTorch - (deltaTorch % 200);
         frameTorch++;
-        intervalTorch = 0;
         if(frameTorch == 5){
             frameTorch = 0;
         }
     }
     //Lantern
-    intervalLantern++;
-    if(intervalLantern == 70){
+    nowLantern = Date.now();
+    deltaLantern = nowLantern - thenLantern;
+    if (deltaLantern > 200) {
+        thenLantern = nowLantern - (deltaLantern % 200);
         frameLantern++;
-        intervalLantern = 0;
         if(frameLantern == 4){
             frameLantern = 0;
         }
     }
-}, 1);
+    //----Sprite sheet Player
+    //Animate24 (Stand)
+    now24 = Date.now();
+    delta24 = now24 - then24;
+    if (delta24 > 100) {
+        then24 = now24 - (delta24 % 100);
+        currentFrameStand++
+        if(currentFrameStand % 24 == 0){
+            currentFrameStand = 0;
+        }
+    }
+    //Animate6 (Punch)
+    now6 = Date.now();
+    delta6 = now6 - then6;
+    if (delta6 > 100) {
+        then6 = now6 - (delta6 % 100);
+        currentFramePunch++;
+        if(currentFramePunch % 6 == 0){
+            currentFramePunch = 0;
+            punched = false;
+        }
+    }
+    //Animate8 (Run)
+    now8 = Date.now();
+    delta8 = now8 - then8;
+    if (delta8 > 80) {
+        then8 = now8 - (delta8 % 80);
+        currentFrameRun++
+        if(currentFrameRun % 8 == 0){
+            currentFrameRun = 0;
+        }
+    }
+    //Animate4 (Crouch)
+    now4 = Date.now();
+    delta4 = now4 - then4;
+    if (delta4 > 100) {
+        then4 = now4 - (delta4 % 100);
+        currentFrameCrouch++;
+        if(currentFrameCrouch % 4 == 0){
+            currentFrameCrouch = 0;
+        }
+    }
+
+    //---Ghost
+    nowGhost = Date.now();
+    deltaGhost = nowGhost - thenGhost;
+    if (deltaGhost > 500) {
+        thenGhost = nowGhost - (deltaGhost % 500);
+        if (ghostVelocity == 0.25) {
+            ghostFrame1++;
+            if(ghostFrame1 == 2){
+                ghostFrame1 = 0;
+            }
+        }else{
+            ghostFrame2++;
+            if(ghostFrame2 == 4){
+                ghostFrame2 = 2;
+            }
+        }
+    }
+}
+
+drawing();
 
 let animateTick = 0;
 let animateTickStand = 0;
 let animateTickPunch = 0;
 let animateTickCrouch = 0;
 
-const animate24 = () => {
-    animateTickStand++;
-    if(animateTickStand == 30){
-            currentFrame++
-            if(currentFrame % 24 == 0){
-                currentFrame = 0;
-            }
-        animateTickStand = 0;
-    }
-}
-
-const animate8 = () => {
-    animateTick++;
-        if(animateTick == 20){
-                currentFrame++
-                if(currentFrame % 8 == 0){
-                currentFrame = 0;
-                }
-            animateTick = 0;
-        }
-}
-
-const animate6 = () => {
-    animateTickPunch++;
-        if(animateTickPunch == 15){
-                currentFramePunch++
-                if(currentFramePunch % 6 == 0){
-                currentFramePunch = 0;
-                punched = false;
-                }
-            animateTickPunch = 0;
-        }
-}
-
-const animate4 = () => {
-    animateTickCrouch++;
-        if(animateTickCrouch == 30){
-                currentFrame++
-                if(currentFrame % 4 == 0){
-                currentFrame = 0;
-                }
-            animateTickCrouch = 0;
-        }
-}
-
 let drawPlayer = () => {
     playerImage.src = "./res/img/player.png";
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched){ //Right Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
-        c.drawImage(playerImage, currentFrame * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
-        animate24();
+        c.drawImage(playerImage, currentFrameStand * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight)
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedLeft && !punched && !crouched){ //Left Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
-        c.drawImage(playerImage, currentFrame * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
-        animate24();
+        c.drawImage(playerImage, currentFrameStand * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(velocity > 0 && turnedRight && !punched && !crouched){ //Right Fall
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(velocity > 0 && turnedLeft && !punched && !crouched){ //Left Fall
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(velocityJump > 0 && turnedRight && !punched && !crouched){ //Right Jump
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 4 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(velocityJump > 0 && turnedLeft && !punched && !crouched){ //Left Jump
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 5 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(velocity == 0 && velocityJump == 0 && isMovingRight && !punched && !crouched ){ //Right Run
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
-        c.drawImage(playerImage, currentFrame * sX, 2 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
-        animate8();
+        c.drawImage(playerImage, currentFrameRun * sX, 2 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(velocity == 0 && velocityJump == 0 && isMovingLeft && !punched && !crouched){ //Left Run
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
-        c.drawImage(playerImage, currentFrame * sX, 3 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
-        animate8();
+        c.drawImage(playerImage, currentFrameRun * sX, 3 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(punched && turnedRight){ //Right Punch
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFramePunch * sX, 8 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
-        animate6();
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(punched && turnedLeft){ //Left Punch
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFramePunch * sX, 9 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
-        animate6();
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(crouched && !isMovingRight && !isMovingLeft && turnedRight){ //Crouched Right
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(crouched && !isMovingRight && !isMovingLeft && turnedLeft){ //Crouched Left
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(crouched && isMovingRight && !isMovingLeft){ //Crouched Right Moving
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
-        c.drawImage(playerImage, currentFrame * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
-        animate4();
+        c.drawImage(playerImage, currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+        drawing();
     }else if(crouched && isMovingLeft && !isMovingRight){ //Crouched Left Moving
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
-        c.drawImage(playerImage, currentFrame * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
-        animate4();
+        c.drawImage(playerImage, currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+        drawing();
     }
-    drawPlatform();
     drawGhost();
+    drawPlatform();
     objectsCollision();
     orbCollision();
+    dark();
 };
 //----------------------------------------SHAKE funkce
 
@@ -591,7 +547,7 @@ const shake = () => {
         canvas.style.top = "50.5%";canvas.style.left = "50.5%";
         setTimeout(() => {
             canvas.style.top = "49.5%";canvas.style.left = "49.5%";
-            setTimeout(() => {
+            setTimeout(() => {av
                 canvas.style.top = "50.5%";canvas.style.left = "49.5%";
                 setTimeout(() => {
                     canvas.style.top = "49.5%";canvas.style.left = "50.5%";
@@ -888,10 +844,10 @@ let jump = () => {
         stillJumping = true;
         const jumping = () => {
             jumpingId = requestAnimationFrame(jumping);
-            now = Date.now();
-            delta = now - then;
-            if (delta > interval) {
-                then = now - (delta % interval);
+            nowUp = Date.now();
+            deltaUp = nowUp - thenUp;
+            if (deltaUp > interval) {
+                thenUp = nowUp - (deltaUp % interval);
                 velocityJump = velocityJump/1.22
                 y -= velocityJump;
                 //drawPlayer();
