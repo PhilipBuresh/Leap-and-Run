@@ -58,7 +58,7 @@ let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 
                          4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0,  1,  4,  4,  4,  1,  4,  4,  4,  4,  1,  0,  0,  0,
                          0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0,  1,  0,  0,  0,
                          0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
-                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14,  1, 18,  2,  0,  8,  0,  0,  0,  0, 10,  0,  0,  0,
+                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14,  1, 18,  2,  0,  8,  0,  0,  0,  0, 10, 14,  0,  0,
                         18,  0,  0, 17,  9,  9,  0,  1,  1,  8, 18, 12,  0, 16,  0, 10,  0,  0,  9,  1,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
                          1,  0,  0, 17,  9,  9,  0,  0,  0, 18, 18,  0,  0,  0, 10,  1, 10, 17,  9,  1,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
                          4,  0,  0,  1,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
@@ -143,10 +143,14 @@ let currentFramePunch = 0;
 let currentFrameLava = 0;
 let currentFrameSpike = 0;
 let currentFramePortal = 0;
+let currentFrameTorch = 0;
+let currentFrameLantern = 0;
 
 let animateTickLava = 0;
 let animateTickSpike = 0;
 let animateTickPortal = 0;
+let animateTickTorch = 0;
+let animateTickLantern = 0;
 
 let frameLava = 0;
 let intervalLava = 0;
@@ -154,6 +158,11 @@ let frameSpike = 0;
 let intervalSpike = 0;
 let framePortal = 0;
 let intervalPortal = 0;
+let frameTorch = 0;
+let intervalTorch = 0;
+let frameLantern = 0;
+let intervalLantern = 0;
+
 
 const frameWidth = 30;
 const frameHeight = 40;
@@ -193,6 +202,28 @@ const aniamtePortal = () => {
                 currentFramePortal = 0;
             }
             animateTickPortal = 0;
+        }
+}
+
+const aniamteTorch = () => {
+    animateTickTorch++;
+        if(animateTickTorch == 10){
+            currentFrameTorch++
+            if(currentFrameTorch % 5 == 0){
+                currentFrameTorch = 0;
+            }
+            animateTickTorch = 0;
+        }
+}
+
+const aniamteLantern = () => {
+    animateTickLantern++;
+        if(animateTickLantern == 10){
+            currentFrameLantern++
+            if(currentFrameLantern % 4 == 0){
+                currentFrameLantern = 0;
+            }
+            animateTickLantern = 0;
         }
 }
 
@@ -252,6 +283,31 @@ const drawPlatform = () => {
 }
 
 const drawBackBlocks = () => {
+    xBlock = 0;
+    yBlock = 0;
+    for (let index = 0; index < platformLevel1.length; index++) {
+        if(platformLevel1[index] == 13){
+            p.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 14){
+            p.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 15){
+            p.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 16){
+            p.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 17){
+            p.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
+        }
+        if((index + 1) % 32 == 0){
+            xBlock = 0;
+            yBlock += 32;
+        }else{
+            xBlock += 32;
+        } 
+    }
+     
+}
+
+const drawBackgroundBlocks = () => {
     xBlock = 0;
     yBlock = 0;
     for (let index = 0; index < platformLevel1.length; index++) {
@@ -383,6 +439,24 @@ setInterval(() => {
         intervalPortal = 0;
         if(framePortal == 2){
             framePortal = 0;
+        }
+    }
+    //Torch
+    intervalTorch++;
+    if(intervalTorch == 50){
+        frameTorch++;
+        intervalTorch = 0;
+        if(frameTorch == 5){
+            frameTorch = 0;
+        }
+    }
+    //Lantern
+    intervalLantern++;
+    if(intervalLantern == 70){
+        frameLantern++;
+        intervalLantern = 0;
+        if(frameLantern == 4){
+            frameLantern = 0;
         }
     }
 }, 1);
@@ -533,6 +607,7 @@ const shake = () => {
 //----------------------------------------Death funkce
 
 const dead = () => {
+    //shake();
     spawnCords();
     unCrouch();
     platformLevel1 = [...originalPlatform1];
