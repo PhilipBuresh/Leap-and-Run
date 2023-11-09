@@ -37,6 +37,11 @@ canvas {
     padding: 10px;
     font-family: 'Pixelify Sans', sans-serif;   
 }
+#menuMusic{
+    left: 0;
+    top: 0; 
+    height: 0;
+}
 #buttons{
     display:none;
 }

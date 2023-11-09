@@ -4,6 +4,15 @@ const c = canvas.getContext('2d'); //Character
 const text = document.getElementById("text");
 const wasd = document.getElementById("wasd");
 const buttons = document.getElementById("buttons");
+const menuMusic = document.getElementById("menuMusic");
+
+const setVolume = (volume) => {
+    if (menuMusic) {
+      menuMusic.volume = volume;
+    }
+}
+
+setVolume(0.1);
 
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect == true) {
@@ -19,6 +28,7 @@ let yMob;
 let spawnCords = () => {
     x = 40;
     y = 500;
+    
 }
 spawnCords();
 
@@ -62,8 +72,8 @@ let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 
                          0,  5,  0, 19,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
                          2,  0,  0,  6,  0, 17,  9,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 17,  0,  2,  0,  0,  0,  0,  0,
                          1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
-                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4, 15,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
-                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 14,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+                         0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4,  0,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
+                         0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
                         14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0, 18,
                          9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  7,
                          9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17, 19, 19,  0,  0,  1,  0,  0,  0,  0,  0,  1,
@@ -137,8 +147,8 @@ bookshelfBackImage.src = "./res/img/bookshelf_back.png"
 const barrelImage = new Image();
 barrelImage.src = "./res/img/barrel.png"
 
-const logImage = new Image();
-logImage.src = "./res/img/log1.png"
+const woodFlipImage = new Image();
+woodFlipImage.src = "./res/img/wood_flip.png"
 
 const frameWidth = 30;
 const frameHeight = 40;
@@ -188,7 +198,7 @@ const drawPlatform = () => {
         }else if(platformLevel1[index] == 18){
             p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 19){
-            p.drawImage(logImage, xBlock, yBlock, 32, 32)
+            p.drawImage(woodFlipImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 30){
             p.drawImage(doorImage, xBlock, yBlock, 64, 64)
         }
@@ -245,7 +255,7 @@ ghostImage.src = "./res/img/ghost.png";
 
 let canDieOnSpike = false;
 
-let ghostVelocity = 1
+let ghostVelocity = 2
 
 let spawnGhostCords = () => {
     xGhost = 630;
@@ -258,8 +268,7 @@ let ghostFrame2 = 2;
 
 const drawGhost = () => {
     ghostImage.src = "./res/img/ghost.png";
-    xGhost += ghostVelocity;
-    if(ghostVelocity == 1){
+    if(ghostVelocity == 2){
         c.drawImage(ghostImage, ghostFrame1 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
     }else{
         c.drawImage(ghostImage, ghostFrame2 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
@@ -274,7 +283,7 @@ const drawGhost = () => {
                 xGhost + width + ghostVelocity > platformX &&
                 xGhost < platformX + 32
             ) {
-                ghostVelocity = -1;
+                ghostVelocity = -2;
             }else if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18|| platformLevel1[i] == 19) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
@@ -284,7 +293,7 @@ const drawGhost = () => {
                     xGhost + ghostVelocity < platformX + 32 &&
                     xGhost > platformX
                 ) {
-                    ghostVelocity = 1;
+                    ghostVelocity = 2;
                 }
             }
         }
@@ -296,8 +305,8 @@ const drawGhost = () => {
 
 //Vykreslení hráče + Animace objektů + Ghost
 
-let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost;
-let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost;
+let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost, nowGhostS;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS;
 let thenPlayer = Date.now();
 let thenLava = Date.now();
 let thenSpike = Date.now();
@@ -310,6 +319,8 @@ let then6 = Date.now();
 let then8 = Date.now();
 let then4 = Date.now();
 let thenGhost = Date.now();
+let thenGhostS = Date.now();
+
 
 let drawingId;
 
@@ -416,10 +427,12 @@ const drawing = () => {
     delta6 = now6 - then6;
     if (delta6 > 100) {
         then6 = now6 - (delta6 % 100);
-        currentFramePunch++;
-        if(currentFramePunch % 6 == 0){
-            currentFramePunch = 0;
-            punched = false;
+        if(punched){
+            currentFramePunch++;
+            if(currentFramePunch % 6 == 0){
+                currentFramePunch = 0;
+                punched = false;
+            }
         }
     }
     //Animate8 (Run)
@@ -442,13 +455,20 @@ const drawing = () => {
             currentFrameCrouch = 0;
         }
     }
-
     //---Ghost
+    //Ghost Velocity
     nowGhost = Date.now();
     deltaGhost = nowGhost - thenGhost;
-    if (deltaGhost > 100) {
-        thenGhost = nowGhost - (deltaGhost % 100);
-        if (ghostVelocity == 1) {
+    if (deltaGhost > 25) {
+        thenGhost = nowGhost - (deltaGhost % 25);
+        xGhost += ghostVelocity;
+    }
+    //Ghost Sprite sheet
+    nowGhostS = Date.now();
+    deltaGhostS = nowGhostS - thenGhostS;
+    if (deltaGhostS > 200) {
+        thenGhostS = nowGhostS - (deltaGhostS % 200);
+        if (ghostVelocity == 2) {
             ghostFrame1++;
             if(ghostFrame1 == 2){
                 ghostFrame1 = 0;
@@ -527,23 +547,23 @@ let drawPlayer = () => {
         c.drawImage(playerImage, currentFramePunch * sX, 9 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
-    }else if(crouched && !isMovingRight && !isMovingLeft && turnedRight){ //Crouched Right
+    }else if(crouched && !isMovingRight && !isMovingLeft && turnedRight && !punched){ //Crouched Right
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-    }else if(crouched && !isMovingRight && !isMovingLeft && turnedLeft){ //Crouched Left
+    }else if(crouched && !isMovingRight && !isMovingLeft && turnedLeft && !punched){ //Crouched Left
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-    }else if(crouched && isMovingRight && !isMovingLeft){ //Crouched Right Moving
+    }else if(crouched && isMovingRight && !isMovingLeft && !punched){ //Crouched Right Moving
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
-    }else if(crouched && isMovingLeft && !isMovingRight){ //Crouched Left Moving
+    }else if(crouched && isMovingLeft && !isMovingRight && !punched){ //Crouched Left Moving
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
