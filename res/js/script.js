@@ -52,22 +52,22 @@ let portalCordsY2 = 0;
 //Lokace platform
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
 let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-                         4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0,  1,  4,  4,  4,  1,  4,  4,  4,  4,  1,  0,  0,  0,
-                         0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0,  1,  0,  0,  0,
+                         4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0, 19,  4,  4,  4,  1,  4,  4,  4,  4, 19,  0,  0,  0,
+                         0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0, 19,  0,  0,  0,
                          0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
-                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14,  1, 18,  2,  0,  8,  0,  0,  0,  0, 10, 14,  0,  0,
-                        18,  0,  0, 17,  9,  9,  0,  1,  1,  8, 18, 12,  0, 16,  0, 10,  0,  0,  9,  1,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
-                         1,  0,  0, 17,  9,  9,  0,  0,  0, 18, 18,  0,  0,  0, 10,  1, 10, 17,  9,  1,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
-                         4,  0,  0,  1,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
-                         0,  5,  0,  1,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
+                        14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14, 19, 18,  2,  0,  8,  0,  0,  0,  0, 10, 14,  0,  0,
+                        18,  0,  0, 17,  9,  9,  0,  1,  1,  8, 18, 12,  0, 16,  0, 10,  0,  0,  9, 19,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
+                         1,  0,  0, 17,  9,  9,  0,  0,  0, 18, 18,  0,  0,  0, 10, 19, 10, 17,  9, 19,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
+                         4,  0,  0, 19,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
+                         0,  5,  0, 19,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
                          2,  0,  0,  6,  0, 17,  9,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 17,  0,  2,  0,  0,  0,  0,  0,
                          1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
                          0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4, 15,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
                          0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 14,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
                         14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0, 18,
                          9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  7,
-                         9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17,  7,  7,  0,  0,  1,  0,  0,  0,  0,  0,  1,
-                         9, 17, 17,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17,  7,  7,  0, 18,  1,  3,  3,  3,  3,  3,  1,
+                         9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17, 19, 19,  0,  0,  1,  0,  0,  0,  0,  0,  1,
+                         9, 17, 17,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17, 19, 19,  0, 18,  1,  3,  3,  3,  3,  3,  1,
                          7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
 
 //1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
@@ -137,6 +137,9 @@ bookshelfBackImage.src = "./res/img/bookshelf_back.png"
 const barrelImage = new Image();
 barrelImage.src = "./res/img/barrel.png"
 
+const logImage = new Image();
+logImage.src = "./res/img/log1.png"
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -163,7 +166,7 @@ const drawPlatform = () => {
         }else if(platformLevel1[index] == 4){
             p.drawImage(spikeFlipImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 5){
-            p.drawImage(orbImage, xBlock, yBlock, 32, 32)
+            p.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 6){
             p.drawImage(crackedImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 7){
@@ -184,6 +187,8 @@ const drawPlatform = () => {
             p.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
         }else if(platformLevel1[index] == 18){
             p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 19){
+            p.drawImage(logImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 30){
             p.drawImage(doorImage, xBlock, yBlock, 64, 64)
         }
@@ -240,7 +245,7 @@ ghostImage.src = "./res/img/ghost.png";
 
 let canDieOnSpike = false;
 
-let ghostVelocity = 0.25
+let ghostVelocity = 1
 
 let spawnGhostCords = () => {
     xGhost = 630;
@@ -254,7 +259,7 @@ let ghostFrame2 = 2;
 const drawGhost = () => {
     ghostImage.src = "./res/img/ghost.png";
     xGhost += ghostVelocity;
-    if(ghostVelocity == 0.25){
+    if(ghostVelocity == 1){
         c.drawImage(ghostImage, ghostFrame1 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
     }else{
         c.drawImage(ghostImage, ghostFrame2 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
@@ -269,7 +274,7 @@ const drawGhost = () => {
                 xGhost + width + ghostVelocity > platformX &&
                 xGhost < platformX + 32
             ) {
-                ghostVelocity = -0.25
+                ghostVelocity = -1;
             }else if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
@@ -279,7 +284,7 @@ const drawGhost = () => {
                     xGhost + ghostVelocity < platformX + 32 &&
                     xGhost > platformX
                 ) {
-                    ghostVelocity = 0.25;
+                    ghostVelocity = 1;
                 }
             }
         }
@@ -291,14 +296,15 @@ const drawGhost = () => {
 
 //Vykreslení hráče + Animace objektů + Ghost
 
-let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, now24, now6, now8, now4, nowGhost;
-let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, delta24, delta6, delta8, delta4, deltaGhost;
+let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost;
 let thenPlayer = Date.now();
 let thenLava = Date.now();
 let thenSpike = Date.now();
 let thenPortal = Date.now();
 let thenTorch = Date.now();
 let thenLantern = Date.now();
+let thenOrb = Date.now();
 let then24 = Date.now();
 let then6 = Date.now();
 let then8 = Date.now();
@@ -318,6 +324,7 @@ let frameSpike = 0;
 let framePortal = 0;
 let frameTorch = 0;
 let frameLantern = 0;
+let frameOrb = 0;
 
 const drawing = () => {
     drawingId = requestAnimationFrame(drawing);
@@ -383,6 +390,16 @@ const drawing = () => {
             frameLantern = 0;
         }
     }
+    //Orb
+    nowOrb = Date.now();
+    deltaOrb = nowOrb - thenOrb;
+    if (deltaOrb > 200) {
+        thenOrb = nowOrb - (deltaOrb % 200);
+        frameOrb++;
+        if(frameOrb == 2){
+            frameOrb = 0;
+        }
+    }
     //----Sprite sheet Player
     //Animate24 (Stand)
     now24 = Date.now();
@@ -429,9 +446,9 @@ const drawing = () => {
     //---Ghost
     nowGhost = Date.now();
     deltaGhost = nowGhost - thenGhost;
-    if (deltaGhost > 500) {
-        thenGhost = nowGhost - (deltaGhost % 500);
-        if (ghostVelocity == 0.25) {
+    if (deltaGhost > 100) {
+        thenGhost = nowGhost - (deltaGhost % 100);
+        if (ghostVelocity == 1) {
             ghostFrame1++;
             if(ghostFrame1 == 2){
                 ghostFrame1 = 0;

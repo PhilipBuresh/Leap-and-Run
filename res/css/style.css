@@ -42,6 +42,7 @@ canvas {
 }
 #left_buttons, #right_buttons {
     position: absolute;
+    margin-left:40px;
     bottom: 10px;
 }
 
@@ -108,6 +109,11 @@ canvas {
         width: 60%;
     }
     #text, #wasd{
+        display:none;
+    }
+}
+@media (max-height: 1100px) {
+    #wasd{
         display:none;
     }
 }
