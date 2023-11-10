@@ -13,9 +13,13 @@
     <!-- 
         SONG: Video Game Castle Loop #1
         Author: SirKoto51
-     -->
-    <audio autoplay loop id="menuMusic" src="./res/music/menu.mp3" type="audio/mpeg"></audio>
+    -->
+    <audio loop id="menuMusic" src="./res/music/menu.mp3" type="audio/mpeg"></audio>
     <div id="container">
+        <div id="startMenu">
+            <div id="playButton">Play!</div>
+        </div>
+    <div id="game">
         <div id="text">Leap&Run</div>
         <div id="wasd">Play with: WASD and Space</div>
         <img id="background" src="./res/img/wall.png" alt="wall">
@@ -31,6 +35,8 @@
                 <div id="button_right" ontouchstart = "go_right()" ontouchend = "isMovingRight = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
             </div>
         </div>
+    </div>
+        
     </div>
     <script src="./res/js/script.js"></script>
 </body>

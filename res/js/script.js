@@ -5,6 +5,8 @@ const text = document.getElementById("text");
 const wasd = document.getElementById("wasd");
 const buttons = document.getElementById("buttons");
 const menuMusic = document.getElementById("menuMusic");
+const game = document.getElementById("game");
+const playButton = document.getElementById("playButton");
 
 const setVolume = (volume) => {
     if (menuMusic) {
@@ -12,11 +14,24 @@ const setVolume = (volume) => {
     }
 }
 
-setVolume(0.1);
+setVolume(0.05);
 
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect == true) {
     buttons.style.display = "block";
+}
+
+let doorsTime = 60000;
+let doorTimeout = false;
+let setTimeoutDoor;
+
+playButton.onclick = () => {
+    game.style.display = "block";
+    playButton.style.display = "none";
+    menuMusic.play();
+    setTimeoutDoor = setTimeout(() => {
+        doorTimeout = true;
+    }, doorsTime);
 }
 
 let x;
@@ -75,9 +90,9 @@ let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 
                          0,  0, 16,  0,  18, 0,  8,  0, 19,  8,  0,  0,  0, 15,  0,  8,  6,  8,  0, 10,  0, 17,  9,  9,  0,  0,  0, 24,  1,  1,  1,  1,
                         14,  0,  0,  0,  7,  0,  8,  0, 19,  8,  0,  0,  0, 14,  0,  8,  6,  8,  2,  1,  0, 17,  9,  9,  5,  0,  0,  0,  8,  0,  8, 11,
                          7,  0,  0,  0,  1,  0,  8, 16,  4,  8,  0,  0,  5,  0,  0,  7,  7,  7,  7,  7,  0, 17,  9,  9,  0,  0,  0,  0,  8,  0,  8,  0,
-                        17, 17,  0,  9,  1,  0,  8,  0,  0,  8,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0, 17,  9,  9,  2,  0,  0,  0,  8, 14,  8,  0,
-                        17, 17, 17,  9,  1,  0,  7,  7,  7,  7,  0,  0,  0,  0,  0,  0, 14, 12,  0,  6, 17, 17,  9,  9,  9,  0,  0,  7,  7,  7,  7,  0,
-                        17, 17,  9,  9,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6, 17,  9,  9,  9,  9,  2,  0,  0,  0,  0,  0,  0,
+                         0,  0,  0,  9,  1,  0,  8,  0,  0,  8,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0, 17,  9,  9,  2,  0,  0,  0,  8, 14,  8,  0,
+                        25,  0, 17,  9,  1,  0,  7,  7,  7,  7,  0,  0,  0,  0,  0,  0, 14, 12,  0,  6, 17, 17,  9,  9,  9,  0,  0,  7,  7,  7,  7,  0,
+                         0,  0,  9,  9,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6, 17,  9,  9,  9,  9,  2,  0,  0,  0,  0,  0,  0,
                          7,  7,  7,  7,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  7,  7,  7,  7,  7,  1,  3,  3,  3,  3,  3,  3,]
 
 //1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
@@ -112,7 +127,7 @@ const platformImage = new Image();
 platformImage.src = "./res/img/block.png";
 
 const darknessImage = new Image();
-darknessImage.src = "./res/img/darkness.png";
+darknessImage.src = "./res/img/darkness1.png";
 
 const spikeMoveImage = new Image();
 spikeMoveImage.src = "./res/img/spike_move.png";
@@ -137,6 +152,9 @@ bookImage.src = "./res/img/bookshelf.png";
 
 const doorImage = new Image();
 doorImage.src = "./res/img/door.png";
+
+const chainDoorImage = new Image();
+chainDoorImage.src = "./res/img/chain_doors.png";
 
 const portal1Image = new Image();
 portal1Image.src = "./res/img/portal1.png";
@@ -224,8 +242,6 @@ const drawPlatform = () => {
             p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 19){
             p.drawImage(woodFlipImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 30){
-            p.drawImage(doorImage, xBlock, yBlock, 64, 64)
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -234,7 +250,6 @@ const drawPlatform = () => {
             xBlock += 32;
         }
     }
-    dark();
 }
 
 const drawBackBlocks = () => {
@@ -251,6 +266,10 @@ const drawBackBlocks = () => {
             p.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 17){
             p.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 25){
+            p.drawImage(doorImage, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 30){
+            p.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -330,8 +349,8 @@ const drawGhost = () => {
 
 //Vykreslení hráče + Animace objektů + Ghost
 
-let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost, nowGhostS;
-let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS;
+let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost, nowGhostS, nowDoor;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor;
 let thenPlayer = Date.now();
 let thenLava = Date.now();
 let thenSpike = Date.now();
@@ -345,7 +364,7 @@ let then8 = Date.now();
 let then4 = Date.now();
 let thenGhost = Date.now();
 let thenGhostS = Date.now();
-
+let thenDoor = Date.now();
 
 let drawingId;
 
@@ -361,6 +380,7 @@ let framePortal = 0;
 let frameTorch = 0;
 let frameLantern = 0;
 let frameOrb = 0;
+let frameDoor = 0;
 
 const drawing = () => {
     drawingId = requestAnimationFrame(drawing);
@@ -435,6 +455,20 @@ const drawing = () => {
         if(frameOrb == 2){
             frameOrb = 0;
         }
+    }
+    //Chain Door
+    if(doorTimeout == true){
+        nowDoor = Date.now();
+        deltaDoor = nowDoor - thenDoor;
+        if (deltaDoor > 100) {
+            thenDoor = nowDoor - (deltaDoor % 100);
+            if(frameDoor != 3){
+                frameDoor++;
+            }else{
+                dead();
+            }
+        }
+
     }
     //----Sprite sheet Player
     //Animate24 (Stand)
@@ -625,13 +659,23 @@ const shake = () => {
 //----------------------------------------Death funkce
 
 const dead = () => {
+    clearTimeout(setTimeoutDoor)
+    setTimeoutDoor = setTimeout(() => {
+        doorTimeout = true;
+    }, doorsTime);
     //shake();
     spawnCords();
     unCrouch();
     platformLevel1 = [...originalPlatform1];
     drawPlatform();
+    dark();
     frameSpike = 0;
     frameLava = 0;
+    menuMusic.currentTime = 0;
+    if(frameDoor == 3){
+        doorTimeout = false;
+        frameDoor = 0;
+    }
 }
 
 //----------------------------------------Kolize OBJEKTŮ
@@ -711,6 +755,7 @@ const objectsCollision = () => {
                 x + width + velocityRight > platformX &&
                 x < platformX + 32
             ) {
+                clearTimeout(setTimeoutDoor);
                 canvas.style.display = "none";
                 text.innerText = "lol ty si to dal wp";
                 wasd.style.display = "none";
@@ -865,7 +910,6 @@ let gravity = () => {
             stillJumping = false;
             cancelAnimationFrame(gravityId);
         }
-        drawPlatform();
     }
     
 }
@@ -902,7 +946,6 @@ let jump = () => {
                 velocityJump = velocityJump/1.22
                 y -= velocityJump;
                 //drawPlayer();
-                drawPlatform()
                 for (let i = 0; i < platformLevel1.length; i++) {
                     if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
                         let platformX = (i % 32) * 32;
@@ -990,7 +1033,6 @@ let moveRight = () => {
             }
             x += velocityRight;
             //drawPlayer();
-            drawPlatform();
             if (x >= canvas.width - width) {
                 cancelAnimationFrame(animationIdRight);
                 x -= velocityRight;
@@ -1059,7 +1101,6 @@ let moveLeft = () => {
             }
             x -= velocityLeft;
             //drawPlayer();
-            drawPlatform();
             if (x <= 0) {
                 cancelAnimationFrame(animationIdLeft);
                 x += velocityLeft;
