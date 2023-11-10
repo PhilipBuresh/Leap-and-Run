@@ -26,7 +26,7 @@ let xMob;
 let yMob;
 
 let spawnCords = () => {
-    x = 40;
+    x = 10;
     y = 500;
     
 }
@@ -62,6 +62,31 @@ let portalCordsY2 = 0;
 //Lokace platform
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
 let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+                         0,  0,  0,  0,  0,  4,  0,  0,  0,  8,  0,  8,  0, 15,  0,  0,  0,  0, 21,  0,  8,  0,  8,  0,  0,  0, 21,  0,  4, 30,  0,  1,
+                        18,  0,  0,  0, 14,  6,  0,  0,  0,  8, 10,  8, 16, 15,  0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 10,  0, 10,  0,  0,  0,  1,
+                         1,  0,  0,  0,  1,  1,  1,  0,  0,  8, 19,  8,  0, 15,  0,  0,  0,  0, 10,  0,  8,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,  1,
+                        20,  0,  0,  1,  1,  0,  0,  0,  0,  7,  7,  7,  0, 15,  0, 14,  0, 18,  1,  0,  7,  0,  7,  0,  0,  0,  8,  0,  0,  0,  0,  0,
+                        20,  5,  0,  0,  0,  0,  0, 16,  0,  0, 15,  0,  0, 15, 24,  1,  7,  7,  1,  0,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0,  0,
+                        20,  0,  0,  0, 14,  9,  0,  0,  0,  0, 14,  0,  0, 15,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7, 14,  0,  0,
+                         0,  0,  0, 17,  9,  9, 17,  0,  0,  0,  0,  0,  0, 15,  0,  0,  6,  0, 10, 10,  0,  0, 14,  0,  0,  0,  0,  0,  1,  1,  0,  0,
+                         0, 16,  1,  1,  1,  1,  1,  1, 10,  0,  0,  0,  0, 15,  0, 14,  1,  7,  7,  1,  0,  0, 18,  0,  0,  0,  0,  0,  0,  0,  0,  5,
+                         0,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  0,  0, 15,  1,  7,  1,  8,  0, 21,  0,  0,  9,  0,  0,  0, 16,  0,  0,  0,  0,  0,
+                         0,  0,  0,  0,  0,  0,  8,  4, 19,  8,  0, 16,  0, 15,  0,  8,  0,  8,  0,  0,  0,  0,  9, 17,  0,  0,  0,  0,  0,  0, 10,  2,
+                         0,  0, 16,  0,  18, 0,  8,  0, 19,  8,  0,  0,  0, 15,  0,  8,  6,  8,  0, 10,  0, 17,  9,  9,  0,  0,  0, 24,  1,  1,  1,  1,
+                        14,  0,  0,  0,  7,  0,  8,  0, 19,  8,  0,  0,  0, 14,  0,  8,  6,  8,  2,  1,  0, 17,  9,  9,  5,  0,  0,  0,  8,  0,  8, 11,
+                         7,  0,  0,  0,  1,  0,  8, 16,  4,  8,  0,  0,  5,  0,  0,  7,  7,  7,  7,  7,  0, 17,  9,  9,  0,  0,  0,  0,  8,  0,  8,  0,
+                        17, 17,  0,  9,  1,  0,  8,  0,  0,  8,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0, 17,  9,  9,  2,  0,  0,  0,  8, 14,  8,  0,
+                        17, 17, 17,  9,  1,  0,  7,  7,  7,  7,  0,  0,  0,  0,  0,  0, 14, 12,  0,  6, 17, 17,  9,  9,  9,  0,  0,  7,  7,  7,  7,  0,
+                        17, 17,  9,  9,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6, 17,  9,  9,  9,  9,  2,  0,  0,  0,  0,  0,  0,
+                         7,  7,  7,  7,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  7,  7,  7,  7,  7,  1,  3,  3,  3,  3,  3,  3,]
+
+//1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+//0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+
+const originalPlatform1 = [...platformLevel1];
+
+/*Good old map :,)
+                        1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
                          4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0, 19,  4,  4,  4,  1,  4,  4,  4,  4, 19,  0,  0,  0,
                          0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0, 19,  0,  0,  0,
                          0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
@@ -78,12 +103,8 @@ let platformLevel1 =   [ 1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 
                          9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  7,
                          9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17, 19, 19,  0,  0,  1,  0,  0,  0,  0,  0,  1,
                          9, 17, 17,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17, 19, 19,  0, 18,  1,  3,  3,  3,  3,  3,  1,
-                         7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
-
-//1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-// 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-
-const originalPlatform1 = [...platformLevel1];
+                         7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+*/
 
 //----------------------------------------Vykreslení platform a překážek
 
@@ -92,12 +113,6 @@ platformImage.src = "./res/img/block.png";
 
 const darknessImage = new Image();
 darknessImage.src = "./res/img/darkness.png";
-
-const spikeImage = new Image();
-spikeImage.src = "./res/img/spike.png";
-
-const spikeFlipImage = new Image();
-spikeFlipImage.src = "./res/img/spike_flip.png";
 
 const spikeMoveImage = new Image();
 spikeMoveImage.src = "./res/img/spike_move.png";
@@ -170,11 +185,11 @@ const drawPlatform = () => {
         if(platformLevel1[index] == 1){
             p.drawImage(platformImage, xBlock,yBlock,32,32)
         }else if(platformLevel1[index] == 2){
-            p.drawImage(spikeImage, xBlock,yBlock,32,32)
+            p.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 3){
             p.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 4){
-            p.drawImage(spikeFlipImage, xBlock, yBlock, 32, 32)
+            p.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 5){
             p.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 6){
@@ -187,6 +202,16 @@ const drawPlatform = () => {
             p.drawImage(bookImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 10){
             p.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 20){
+            p.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 21){
+            p.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 22){
+            p.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 23){
+            p.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 24){
+            p.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 11){
             cordsPortalX1 = xBlock - 32;
             cordsPortalY1 = yBlock + 32;
@@ -258,8 +283,8 @@ let canDieOnSpike = false;
 let ghostVelocity = 2
 
 let spawnGhostCords = () => {
-    xGhost = 630;
-    yGhost = 310;
+    xGhost = 400;
+    yGhost = 240;
 }
 spawnGhostCords();
 
@@ -626,12 +651,12 @@ const objectsCollision = () => {
                 dead();
             }
         }
-        if (platformLevel1[i] == 10 && canDieOnSpike == true) {
+        if ((platformLevel1[i] == 2 || platformLevel1[i] == 4 || platformLevel1[i] == 23 || platformLevel1[i] == 24) || (platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22) && canDieOnSpike == true) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
                 y + height >= platformY + 10 &&
-                y + height <= platformY + 32 &&
+                y + height <= platformY + 27 + height &&
                 x + width >= platformX + 10 &&
                 x <= platformX + 22
             ) {
@@ -650,18 +675,7 @@ const objectsCollision = () => {
                 dead();
             }
         }
-        if (platformLevel1[i] == 4) {
-            let platformX = (i % 32) * 32;
-            let platformY = Math.floor(i / 32) * 32;
-            if (
-                y + height >= platformY + 10 &&
-                y + height <= platformY + 32 + height &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
-            ) {
-                dead();
-            }
-        }
+        
         if (platformLevel1[i] == 11) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
