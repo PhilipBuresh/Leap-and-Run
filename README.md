@@ -1,6 +1,6 @@
 # Leap-and-Run
 <b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
-<b>BETA 0.1</b><br>
+<b>BETA 0.1</b>
  - Cíl hry je takový, že se musíte dostat do dvěřích, něž se zavřou<br>
  - Máte na to 60 sekund<br>
  - Pokud to nestihnete, level se restartuje :)<br>
