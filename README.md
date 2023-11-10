@@ -3,5 +3,5 @@
 Last Update:
  - Přidané SPIKES na všechny strany<br>
  - Přidane MOVE SPIKES na všechny strany<br>
- - Restartovaná mapa
+ - Restartovaná mapa<br>
 ![gifmaker_me (1)](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c527e15d-dafc-43ba-9c7e-6b6fc1fb640c)
