@@ -1,14 +1,17 @@
 body {
     background-color: black;
 }
-html, body{
-    user-select: none;
-    box-sizing: border-box;
+* {
+   user-select: none;
+   box-sizing: border-box;
 }
 #container{
     overflow: hidden;
 }
 #game{
+    display:block;
+}
+#startMenu{
     display:none;
 }
 #playButton{
@@ -27,8 +30,16 @@ html, body{
     color: black;
     background-color: white;
 }
-canvas {
+#shake {
     width: 70%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+canvas {
+    width: 100%;
     height: auto;
     position: absolute;
     top: 50%;
@@ -37,13 +48,25 @@ canvas {
     border:3px solid white;
 }
 #background {
-    width: 70%;
+    width: 100%;
     height: auto;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
+}
+#black {
+    background-color: black;
+    width: 101%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    transition: opacity 0.3s;
+    opacity: 0;
 }
 #text{
     color: white;
