@@ -1,6 +1,7 @@
 # Leap-and-Run
 <b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
 <b>Last Update:</b>
+ - <b>NOVÁ FUNKCE: Lezení po žebříku</b>
  - LOBBY: Nachází se zde 15 dvěří (15 levelů)
  - Zatím fungujou jen 2 levely (nejsou to zatím oficiální levely)
  - <b>Press E to enter </b>
