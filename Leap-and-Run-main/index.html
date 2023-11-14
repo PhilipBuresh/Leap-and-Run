@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./res/css/style.css">
+    <title>Leap&Run</title>
+</head>
+<body>
+    <!-- 
+        SONG: Video Game Castle Loop #1
+        Author: SirKoto51
+    -->
+    <audio loop id="menuMusic" src="./res/music/menu.mp3" type="audio/mpeg"></audio>
+    <div id="container">
+        <div id="startMenu">
+            <div id="playButton">Play!</div>
+        </div>
+    <div id="game">
+        <div id="text">Leap&Run</div>
+        <div id="wasd">Play with: WASD and Space</div>
+        <div id="shake">
+            <img id="background" src="./res/img/wall.png" alt="wall">
+            <img id="black" src="./res/img/black.png" alt="black">
+            <canvas id="cnv" width="1024" height="576" ></canvas>
+        </div>
+        <div id="buttons">
+            <div id="left_buttons">
+                <div id="button_up" ontouchstart = "go_up()" ontouchend = "isJumping = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="button_punch" ontouchstart = "go_punch()" ontouchend = "alreadyPunched = false;"><img src="./res/img/punch.png" alt="punch"></div>
+                <div id="button_down" ontouchstart = "go_down()" ontouchend = "go_down_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+            </div>
+            <div id="right_buttons">
+                <div id="button_left" ontouchstart = "go_left()" ontouchend = "isMovingLeft = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="button_right" ontouchstart = "go_right()" ontouchend = "isMovingRight = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
+            </div>
+        </div>
+    </div>
+        
+    </div>
+    <script src="./res/js/script.js"></script>
+</body>
+</html>
