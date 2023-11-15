@@ -83,21 +83,21 @@ let portalCordsY2 = 0;
 //Lokace platform
 //                      1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32
 let platformLevel1 =   [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  7,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-                        0,  0,  0,  0, 15,  0,  0,  0,  0,  1,  0,  0, 15,  0,  0,  0,  8, 25,  0,  8,  0,  0,  0,  0,  0,  0, 17, 19, 25,  0,  0,  0,
-                       25,  0,  0,  0, 15,  0,  0, 25,  0,  1,  0, 16, 15,  0,  0,  0,  8,  0,  0,  8,  0,  0, 14, 26,  0, 17,  9, 19,  0,  0,  0, 26,
+                        0,  0,  0,  0, 15,  0,  0,  0,  0,  1,  0,  0, 15,  0,  0,  0,  8, 62,  0,  8,  0,  0,  0,  0,  0,  0, 17, 19, 64,  0,  0,  0,
+                       60,  0,  0,  0, 15,  0,  0, 61,  0,  1,  0, 16, 15,  0,  0,  0,  8,  0,  0,  8,  0,  0, 14, 26,  0, 17,  9, 19,  0,  0,  0, 26,
                         0,  0, 26,  0, 14,  0,  0,  0,  0, 13,  0,  0, 15,  0,  0,  0,  7,  7,  7,  7,  0,  0,  9, 26,  1,  1,  1,  1,  1,  1,  0, 26,
                         7,  7, 26,  0,  0,  0,  0,  1,  1,  1,  1,  0, 15,  0, 14,  0, 28,  0,  0, 28,  0,  9,  9, 26, 13,  0,  8,  0,  0,  8,  0, 26,
                         0,  0, 26,  0,  0,  5,  0,  0,  0,  0,  8,  0, 15,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1, 26, 13,  0,  8,  0,  0,  8,  5,  0,
-                        0,  0, 26,  0,  0,  0,  0,  0,  0,  0,  8,  0, 14,  0, 19,  0, 28,  0,  0,  0,  0, 19,  1,  1,  1,  0,  8, 25,  0,  8,  0,  0,
-                       25,  0,  0,  0,  0,  0, 16,  0,  0,  0, 19,  0,  0,  0, 19, 26, 28,  0,  0,  0,  0, 19,  0,  0,  0,  0,  8,  0,  0,  8,  0, 14,
-                        0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 19,  0, 25,  0,  0, 26, 19,  0, 25,  0,  0, 19,  0,  0, 16,  0,  7,  7,  7,  7,  7,  7,
-                        7,  7,  7,  0, 14,  0, 25,  0,  0, 14, 28,  0,  0,  0,  0, 26, 19, 18,  0,  0, 17, 17, 17,  0,  0,  0, 28, 25,  0, 28,  0,  11,
+                        0,  0, 26,  0,  0,  0,  0,  0,  0,  0,  8,  0, 14,  0, 19,  0, 28,  0,  0,  0,  0, 19,  1,  1,  1,  0,  8, 63,  0,  8,  0,  0,
+                       59,  0,  0,  0,  0,  0, 16,  0,  0,  0, 19,  0,  0,  0, 19, 26, 28,  0,  0,  0,  0, 19,  0,  0,  0,  0,  8,  0,  0,  8,  0, 14,
+                        0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 19,  0, 57,  0,  0, 26, 19,  0, 56,  0,  0, 19,  0,  0, 16,  0,  7,  7,  7,  7,  7,  7,
+                        7,  7,  7,  0, 14,  0, 58,  0,  0, 14, 28,  0,  0,  0,  0, 26, 19, 18,  0,  0, 17, 17, 17,  0,  0,  0, 28, 55,  0, 28,  0,  11,
                         9, 17, 28,  0, 18,  0,  0,  0,  0,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  9,  9, 17,  0,  0, 28,  0,  0, 28,  0,  0,
-                        9,  9, 28,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  0,  0,  0, 25,  0,  0, 19,  9,  9,  9, 17,  7,  7,  7,  7,  7,  7,  7,
-                        1,  1,  1,  1,  1,  0,  0,  0,  0, 51,  0,  0,  0,  1,  0, 16,  0,  0,  0, 26, 19,  7,  7,  7,  7,  7,  0,  8, 25,  0,  8,  0,
+                        9,  9, 28,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  1,  0,  0,  0, 52,  0,  0, 19,  9,  9,  9, 17,  7,  7,  7,  7,  7,  7,  7,
+                        1,  1,  1,  1,  1,  0,  0,  0,  0, 51,  0,  0,  0,  1,  0, 16,  0,  0,  0, 26, 19,  7,  7,  7,  7,  7,  0,  8, 54,  0,  8,  0,
                        14,  0,  0,  0,  0,  0, 16,  0, 14,  0,  0, 14,  0,  1,  0,  0,  0,  7,  7, 26, 19,  0,  0,  0,  0, 17,  0,  8,  0,  0,  8, 26,
                         9,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7,  7,  0,  1, 13,  5,  0, 19,  0, 26, 19,  0,  0, 16,  0, 17,  0,  7,  7,  7,  7, 26,
-                        9, 17,  0, 50,  0,  0,  7,  0, 28,  0,  0, 28,  0,  1, 13, 13, 14, 19, 17, 26, 28,  0, 25,  0,  0,  9,  9, 17,  0, 12,  0, 26,
+                        9, 17,  0, 50,  0,  0,  7,  0, 28,  0,  0, 28,  0,  1, 13, 13, 14, 19, 17, 26, 28,  0, 53,  0,  0,  9,  9, 17,  0, 12,  0, 26,
                         9, 17, 17,  0,  0, 18, 19,  0, 28,  0,  0, 28,  0, 13, 13, 13, 18, 19,  9, 26, 28, 14,  0,  0, 18,  9,  9,  9, 17,  0,  0, 26,
                         7,  7,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  7,  7,  7,  7,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1]
 
@@ -266,6 +266,9 @@ woodBackImage.src = "./res/img/wood_back.png"
 const woodBackFlipImage = new Image();
 woodBackFlipImage.src = "./res/img/wood_back_flip.png"
 
+const doorsImage = new Image();
+doorsImage.src = "./res/img/doors.png"
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -361,8 +364,36 @@ const drawBackBlocks = () => {
             p.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }
         //Doors
-        else if(platformLevel1[index] >= 50 && platformLevel1[index] <= 65){
-            p.drawImage(doorImage, xBlock, yBlock, 64, 64);
+        else if(platformLevel1[index] == 50){
+            p.drawImage(doorsImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 51){
+            p.drawImage(doorsImage, 1 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 52){
+            p.drawImage(doorsImage, 2 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 53){
+            p.drawImage(doorsImage, 3 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 54){
+            p.drawImage(doorsImage, 4 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 55){
+            p.drawImage(doorsImage, 5 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 56){
+            p.drawImage(doorsImage, 6 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 57){
+            p.drawImage(doorsImage, 7 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 58){
+            p.drawImage(doorsImage, 8 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 59){
+            p.drawImage(doorsImage, 9 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 60){
+            p.drawImage(doorsImage, 10 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 61){
+            p.drawImage(doorsImage, 11 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 62){
+            p.drawImage(doorsImage, 12 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 63){
+            p.drawImage(doorsImage, 13 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 64){
+            p.drawImage(doorsImage, 14 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -595,7 +626,7 @@ const drawing = () => {
     delta4 = now4 - then4;
     if (delta4 > 100) {
         then4 = now4 - (delta4 % 100);
-        if(ladderCol == true && velocityGoingDown == 0 && velocityGoingUp == 0 && velocityRight <= 0.1 && velocityLeft <= 0.1){
+        if(ladderCol == true && velocityGoingDown <= 0.1 && velocityGoingUp <= 0.1 && velocityRight <= 0.1 && velocityLeft <= 0.1){
             currentFrameCrouch = 0
         }else{
             currentFrameCrouch++;
@@ -940,7 +971,6 @@ let crouch = () => {
 
 let unCrouch = () => {
     if (canStandUp == true) {
-        console.log(1)
         height = 40;
         y -= 20;
         crouched = false;
@@ -1004,7 +1034,6 @@ const upCollision = () => {
         thenUp = nowUp - (deltaUp % interval);
         velocityJump = velocityJump/1.22
         y -= velocityJump;
-        //drawPlayer();
         for (let i = 0; i < platformLevel1.length; i++) {
             if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
                 let platformX = (i % 32) * 32;
@@ -1192,6 +1221,7 @@ let jump = () => {
                 upCollision(); //Podmínka
             }
         }
+        velocity = 0;
         jumping();
     }
 }
@@ -1249,6 +1279,7 @@ let moveRight = () => {
             x += velocityRight;
             if (x >= canvas.width - width) {
                 x = canvas.width - width;
+                velocityRight = 0;
                 cancelAnimationFrame(animationIdRight);
             }
             if(stillJumping == false && !crouched){
@@ -1314,11 +1345,10 @@ let moveLeft = () => {
                 }
             }
             x -= velocityLeft;
-            //drawPlayer();
             if (x <= 0) {
                 x = 0;
+                velocityLeft = 0;
                 cancelAnimationFrame(animationIdLeft);
-                x += velocityLeft;
             }
             if(stillJumping == false && !crouched){
                 stillJumping = true;
