@@ -9,13 +9,49 @@ body {
     overflow: hidden;
 }
 #game{
-    display:block;
-}
-#startMenu{
     display:none;
 }
+#josh{
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 5;
+    display:none;
+}
+#startMenu{
+    display:block;
+}
+#escape_button {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    height: 60px;
+    width: 60px;
+    border: 3px solid white;
+    border-radius: 0.5em;
+    z-index: 4;
+    cursor: pointer;
+}
+#escape_button div{
+    width: 15px;
+    height: 40px;
+    background-color: white;
+    margin: 5px;
+    border-radius: 0.2em;
+}
+#escape_button:hover{
+    border: 3px solid gray;
+}
 #playButton{
-    font-family: 'Pixelify Sans', sans-serif;
+    font-family: 'VT323', monospace;
+    font-size:30px;
     border:2px solid white;
     border-radius: 1em;
     color:white;
@@ -24,22 +60,27 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     padding:1em;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
     cursor: pointer;
+    animation-duration: 800ms;
+    animation-play-state: paused;
+    animation-name: blink;
+}
+@keyframes blink {
+    1% {padding: 0;color: transparent;background-color: white;height: 10px;}
+    15% {padding: 0;padding-left: 5em;padding-right: 5em;color: transparent;background-color: white;height: 5px;}
+    50% {padding: 0;padding-left: 2.5em;padding-right: 2.5em;color: transparent;background-color: rgb(126, 125, 125);border:rgb(126, 125, 125);height: 3px;}
+    80% {padding: 0;padding-left: 1em;padding-right: 1em;font-size: 0;color: transparent;background-color: rgb(54, 54, 54);;border:rgb(54, 54, 54);height: 3px;}
+    90% {padding: 0;padding-left: 1em;padding-right: 1em;font-size: 0;color: transparent;background-color: rgb(27, 27, 27);;border:rgb(27, 27, 27);height: 3px;}
+    100% {padding: 0;padding-left: 1em;padding-right: 1em;font-size: 0;color: transparent;background-color: black;border:rgb(0, 0, 0);height: 5px;}
 }
 #playButton:hover{
     color: black;
     background-color: white;
 }
-#shake {
-    width: 70%;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 canvas {
-    width: 100%;
+    width: 70%;
     height: auto;
     position: absolute;
     top: 50%;
@@ -48,7 +89,7 @@ canvas {
     border:3px solid white;
 }
 #background {
-    width: 100%;
+    width: 70%;
     height: auto;
     position: absolute;
     top: 50%;
@@ -56,9 +97,46 @@ canvas {
     transform: translate(-50%, -50%);
     z-index: -1;
 }
+#esc{
+    font-family: 'VT323', monospace;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border:3px solid white;
+    border-radius: 0.3em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color:rgba(0, 0, 0, 0.8);
+    display:none;
+}
+#esc div{
+    background-color:black;
+    text-align: center;
+    font-size: 19px;
+    width: 130px;
+    color:white;
+    margin:0.5em;
+    border: 2px solid white;
+    padding:0.5em;
+    border-radius: 0.3em;
+    cursor:pointer;
+}
+#button_menu{
+    display:none;
+}
+#esc div:hover{
+    color: black;
+    background-color: white;
+}
 #black {
     background-color: black;
-    width: 101%;
+    width: 71%;
     height: auto;
     position: absolute;
     top: 50%;
@@ -67,21 +145,23 @@ canvas {
     z-index: 2;
     transition: opacity 0.3s;
     opacity: 0;
+    pointer-events: none;
 }
 #text{
     color: white;
     margin: 0 auto;
     text-align: center;
     padding: 10px;
-    font-family: 'Pixelify Sans', sans-serif;
-    font-size: 30px;
+    font-family: 'VT323', monospace;
+    font-size: 50px;
 }
 #wasd{
     color: white;
     margin: 0 auto;
     text-align: center;
     padding: 10px;
-    font-family: 'Pixelify Sans', sans-serif;   
+    font-size: 30px;
+    font-family: 'VT323', monospace;   
 }
 #menuMusic{
     left: 0;
@@ -109,8 +189,17 @@ canvas {
 #right_buttons div {
     flex: 0 0 auto; 
 }
+#button_enter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:white;
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    display:none;
+}
 
-#button_up, #button_punch, #button_down {
+#button_up, #button_punch, #button_down, #button_enter {
     width: 60px;
     height: 60px;
     border:5px solid rgba(255, 255, 255, 0.6);
@@ -138,10 +227,9 @@ canvas {
 }
 
 #buttons img{
-    opacity: 60%;
-    width: 60px;
-    height: 60px;
-    pointer-events: none
+    width: 50px;
+    height: 50px;
+    pointer-events: none;
 }
 
 @media (max-width: 800px) {
@@ -151,6 +239,9 @@ canvas {
     #background{
         width: 90%;
     }
+    #black{
+        width: 61%;
+    }
 }
 @media (max-height: 600px) {
     canvas{
@@ -158,6 +249,9 @@ canvas {
     }
     #background{
         width: 60%;
+    }
+    #black{
+        width: 61%;
     }
     #text, #wasd{
         display:none;

@@ -6,9 +6,17 @@ const wasd = document.getElementById("wasd");
 const buttons = document.getElementById("buttons");
 const menuMusic = document.getElementById("menuMusic");
 const game = document.getElementById("game");
-const earthquake = document.getElementById("shake");
 const black = document.getElementById("black");
+const josh = document.getElementById("josh");
+const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
+const startMenu = document.getElementById("startMenu");
+const button_back = document.getElementById("button_back");
+const button_resume = document.getElementById("button_resume");
+const button_retry = document.getElementById("button_retry");
+const button_menu = document.getElementById("button_menu");
+const button_enter = document.getElementById("button_enter");
+const escape_button = document.getElementById("escape_button");
 
 const setVolume = (volume) => {
     if (menuMusic) {
@@ -16,24 +24,31 @@ const setVolume = (volume) => {
     }
 }
 
-setVolume(0.1);
+setVolume(0);
 
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect == true) {
     buttons.style.display = "block";
 }
 
-let doorsTime = 40000;
+let doorsTime = 50000;
 let doorTimeout = false;
 let setTimeoutDoor;
 
 playButton.onclick = () => {
-    game.style.display = "block";
-    playButton.style.display = "none";
-    menuMusic.play();
-    setTimeoutDoor = setTimeout(() => {
-        doorTimeout = true;
-    }, doorsTime);
+    playButton.style.animationName = "blink"
+    playButton.style.animationPlayState = "running";
+    black.style.opacity = "1";
+    setTimeout(() => {
+        game.style.display = "block";
+        startMenu.style.display = "none";
+        inGame = true;
+        playButton.style.animationName = "none"
+        playButton.style.animationPlayState = "none";
+        setTimeout(() => {
+            black.style.opacity = "0";
+        }, 50);
+    }, 800);
 }
 
 let x;
@@ -105,27 +120,31 @@ let platformLevel1 =   [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  7,  7,  7,  7,  
 //0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 
 let originalPlatform1 = [...platformLevel1];
+let lobby = [...platformLevel1];
 
-let map = new Array (14)
+let map = new Array (15)
 
-map[0] = [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-          4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0, 19,  4,  4,  4,  1,  4,  4,  4,  4, 19,  0,  0,  0,
-          0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0, 19,  0,  0,  0,
-          0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
-         14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14, 19, 18,  2,  0,  8,  0,  0,  0,  0, 10, 14,  0,  0,
-         18,  0,  0, 17,  9,  9,  0,  1,  1,  8, 18, 12,  0, 16,  0, 10,  0,  0,  9, 19,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
-          1,  0,  0, 17,  9,  9,  0,  0,  0, 18, 18,  0,  0,  0, 10, 19, 10, 17,  9, 19,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
-          4,  0,  0, 19,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
-          0,  5,  0, 19,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
-          2,  0,  0,  6,  0, 17,  9,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 17,  0,  2,  0,  0,  0,  0,  0,
-          1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
-          0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4,  0,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
-          0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-         14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0, 18,
-          9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  7,
-          9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17, 19, 19,  0,  0,  1,  0,  0,  0,  0,  0,  1,
-          9, 17, 17,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17, 19, 19,  0, 18,  1,  3,  3,  3,  3,  3,  1,
-          7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
+map[0] =    [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+             0,  0, 15,  0,  0,  0,  8,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+             0,  0, 14,  0,  0,  0,  8,  0,  1,  0,  0,  0, 16,  0,  0, 17,  0, 16,  0,  0, 17,  0,  0,  0, 16,  0,  0,  0,  0,  0, 11,  0,
+             0,  0,  0,  0, 16,  0,  8,  0,  1,  0, 30,  0,  0,  0, 17,  9,  0,  0,  0, 17,  9, 17,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+             0, 12,  0, 17,  0,  0,  8,  0,  1,  0,  0,  0,  0, 17,  9,  9,  2,  0, 17, 17,  9, 17,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0, 17,  9,  0,  0,  8,  0,  1,  1,  1,  1,  1,  1,  1,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,
+             0,  9,  9,  9, 17,  0,  7,  7,  1,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  0,  0,
+             9,  9,  9,  9, 17,  0,  0,  0,  0,  6,  0, 14,  0,  0,  1,  0,  0,  0, 18,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0, 17,  0,  0,
+             9,  9,  9,  9,  9, 17,  0,  0,  0,  6,  0, 18,  0,  0,  6,  0,  0,  0,  1,  0, 16,  0,  0,  8,  0,  8,  0,  0, 17, 17,  0, 26,
+             1,  1,  1,  1,  1,  7,  7,  7,  7,  7,  1,  1,  1,  0,  6, 14,  0,  0, 21,  0,  0,  0,  0,  8, 14,  8,  0,  1,  1,  1,  1, 26,
+             0,  0,  0,  0, 15,  0,  0,  0,  0,  0,  8,  0,  1,  1,  1,  1,  1,  0, 10,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  0, 26,
+             0,  0,  0,  0, 15,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0, 26,
+             0,  0,  0,  0, 15,  0,  0,  0, 16,  0,  8,  0,  0,  0, 16,  0,  0,  0,  8, 19, 19,  8,  0,  0,  0,  0, 16,  0,  0, 14,  0, 26,
+            14,  0,  0,  0, 15,  0,  0,  0,  0,  0,  8,  0, 17,  0,  0,  0,  0,  0,  8,  7,  7,  8,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7,
+             9,  0,  0,  0, 14,  0,  0,  0,  0,  0,  8, 17, 17,  2,  2,  0, 14,  0,  8,  0,  0,  8,  0, 14,  0,  0,  5,  0,  0,  0, 17,  9,
+             9, 25,  0,  0,  0,  0,  0,  0,  0, 14,  7,  7,  7,  7,  7,  7,  1,  1,  7,  7,  7,  7,  1,  1,  0,  0,  0,  0, 17, 17,  9,  9,
+             9,  0,  0,  0,  0,  0,  0,  0,  0, 18, 19, 28, 28, 28,  0,  0,  1,  1, 27, 27, 27, 27,  1,  1, 18,  0,  0,  17,  9,  9,  9,  9,
+             1,  1,  1,  1,  3,  3,  3,  1,  1,  1,  1,  1,  1,  1,  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
+
+//platformLevel1 = [...map[0]];
+//originalPlatform1 = [...platformLevel1];
 
 map[1] = [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
           0,  0,  0,  0,  0,  4,  0,  0,  0,  8,  0,  8,  0, 15,  0,  0,  0,  0, 21,  0,  8,  0,  8,  0,  0,  0, 21,  0,  4, 30,  0,  1,
@@ -145,6 +164,25 @@ map[1] = [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
           0, 25,  0,  9,  1,  0,  7,  7,  7,  7,  0,  0,  0,  0,  0,  0, 14, 12,  0,  6, 17, 17,  9,  9,  9,  0,  0,  7,  7,  7,  7,  0,
           0,  0,  0,  9,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6, 17,  9,  9,  9,  9,  2,  0,  0,  0,  0,  0,  0,
           7,  7,  7,  7,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  7,  7,  7,  7,  7,  1,  3,  3,  3,  3,  3,  3,]
+/*
+[1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+          4,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  6,  0, 11,  9,  4,  0, 19,  4,  4,  4,  1,  4,  4,  4,  4, 19,  0,  0,  0,
+          0,  0, 16,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  6,  0,  0,  9,  0,  0,  6,  0,  0,  0,  8,  0,  0,  0,  0, 19,  0,  0,  0,
+          0,  0,  0,  0,  0,  0,  0,  0,  0, 18,  1,  3,  1,  7,  7,  7,  7,  0,  0,  6,  0,  0,  0,  8,  0, 16,  0,  0,  4,  0, 30,  0,
+         14,  0,  0,  0,  9, 14,  0,  2,  1,  1,  1,  1,  1,  0,  0,  0,  0,  0, 14, 19, 18,  2,  0,  8,  0,  0,  0,  0, 10, 14,  0,  0,
+         18,  0,  0, 17,  9,  9,  0,  1,  1,  8, 18, 12,  0, 16,  0, 10,  0,  0,  9, 19,  1,  1,  0,  8,  0,  0,  1,  1,  1,  1,  1,  1,
+          1,  0,  0, 17,  9,  9,  0,  0,  0, 18, 18,  0,  0,  0, 10, 19, 10, 17,  9, 19,  4,  8,  0,  7,  0,  0,  0,  4, 15,  0,  8,  0,
+          4,  0,  0, 19,  1,  1,  0, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  0,  0,  0,  0,  0, 15,  0,  7,  0,
+          0,  5,  0, 19,  4,  0,  0,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16,  0,  0,  0,  0, 14,  0,  4,  0,
+          2,  0,  0,  6,  0, 17,  9,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0, 17,  0,  2,  0,  0,  0,  0,  0,
+          1,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  0,  0,  1,  0,  8, 14,  8,  0, 17,  9,  0,  1,  0,  5,  0,  0,  0,
+          0,  0,  7,  7,  7,  7,  1,  0,  8,  0,  4,  0,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
+          0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+         14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0, 16,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0,  0,  0, 18,
+          9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0,  5,  0,  7,
+          9, 17,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  1,  9, 17, 17, 19, 19,  0,  0,  1,  0,  0,  0,  0,  0,  1,
+          9, 17, 17,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  9,  9, 17, 19, 19,  0, 18,  1,  3,  3,  3,  3,  3,  1,
+          7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,] */
 
 //---------------------------------------- Kolize dvěří do levelů
 
@@ -165,35 +203,53 @@ const doorsCollision = () => {
             ) {
                 doorCol = true;
                 helpNum = platformLevel1[i] - 50;
+                c.font = "20px VT323, monospace";
+                c.fillStyle = "lime";
+                c.fillText("Enter [e]", platformX - 3, platformY);
+                if(deviceDetect && inGame){
+                    button_enter.style.display = "flex";
+                }
                 break;
             }
-        } 
+        }
     } 
 };
 
+//---------------------------------------Enter Funkce
+
 window.addEventListener('keydown', (event) => {
     if ((event.key == "e" || event.key == "E") && doorCol) {
-        black.style.opacity = "1";
-        setTimeout(() => {
-            platformLevel1 = [...map[helpNum]];
-            originalPlatform1 = [...platformLevel1];
-            spawnCords();
-            black.style.opacity = "0";
-            gravity();
-            menuMusic.play();
-            if(helpNum == 0){
-                xGhost = 700;
-                yGhost = 310;
-            }else if(helpNum == 1){
-                xGhost = 400;
-                yGhost = 240;
-            }
-            setTimeoutDoor = setTimeout(() => {
-                doorTimeout = true;
-            }, doorsTime);
-                }, 1300);
+        enterFunction();
     }
 })
+
+const enterFunction = () => {
+    console.log("hej")
+    inGame = false;
+    black.style.opacity = "1";
+    if(helpNum >= 2){
+        josh.style.display = "block";
+    }
+    setTimeout(() => {
+        inGame = true;
+        platformLevel1 = [...map[helpNum]];
+        originalPlatform1 = [...platformLevel1];
+        spawnCords();
+        black.style.opacity = "0";
+        gravity();
+        menuMusic.play();
+        if(helpNum == 0){
+            xGhost = 800;
+            yGhost = 120;
+        }else if(helpNum == 1){
+            xGhost = 400;
+            yGhost = 240;
+        }
+        setTimeoutDoor = setTimeout(() => {
+            doorTimeout = true;
+        }, doorsTime);
+            }, 1300);
+}
 
 //----------------------------------------Vykreslení platform a překážek
 
@@ -607,6 +663,7 @@ const drawing = () => {
             currentFramePunch++;
             if(currentFramePunch % 6 == 0){
                 currentFramePunch = 0;
+                punchCooldown = false;
                 punched = false;
             }
         }
@@ -670,6 +727,7 @@ let animateTickPunch = 0;
 let animateTickCrouch = 0;
 
 let drawPlayer = () => {
+    button_enter.style.display = "none";
     playerImage.src = "./res/img/player.png";
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched && !ladderCol){ //Right Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
@@ -769,19 +827,19 @@ let drawPlayer = () => {
 
 const shake = () => {
     setTimeout(() => {
-        earthquake.style.top = "50.5%";earthquake.style.left = "50.5%";
+        canvas.style.top = "50.5%";canvas.style.left = "50.5%";
     }, 50);
     setTimeout(() => {
-        earthquake.style.top = "49.5%";earthquake.style.left = "50.5%";
+        canvas.style.top = "49.5%";canvas.style.left = "50%";
     }, 100);
     setTimeout(() => {
-        earthquake.style.top = "49.5%";earthquake.style.left = "50%";
+        canvas.style.top = "50%";canvas.style.left = "50.5%";
     }, 150);
     setTimeout(() => {
-        earthquake.style.top = "50.5%";earthquake.style.left = "49.5%";
+        canvas.style.top = "50.5%";canvas.style.left = "49.5%";
     }, 200);
     setTimeout(() => {
-        earthquake.style.top = "50%";earthquake.style.left = "50%";
+        canvas.style.top = "50%";canvas.style.left = "50%";
     }, 250);
 }
 
@@ -805,6 +863,84 @@ const dead = () => {
         doorTimeout = false;
         frameDoor = 0;
     }
+}
+
+//----------------------------------------ESC Buttons
+
+const backToLobby = () => {
+    clearTimeout(setTimeoutDoor)
+    inGame = false;
+    black.style.opacity = "1";
+    esc.style.display = "none"; 
+    escShowed = false;
+    setTimeout(() => {
+        inGame = true;
+        platformLevel1 = [...lobby];
+        black.style.opacity = "0";
+        xGhost = 10000;
+        yGhost = 10000;
+        x = 40;
+        y = 500;
+        gravity();
+    }, 1300);
+}
+
+button_back.onclick = () => {
+    backToLobby();
+}
+button_resume.onclick = () => {
+    esc.style.display = "none"; 
+    escShowed = false;
+    black.style.opacity = "0";
+}
+button_menu.onclick = () => {
+    inGame = false;
+    black.style.opacity = "1";
+    esc.style.display = "none"; 
+    escShowed = false;
+    setTimeout(() => {
+        game.style.display = "none";
+        startMenu.style.display = "block";
+        black.style.opacity = "0";
+    }, 1300);
+}
+
+//----------------------------------------ESC Button Funkce
+
+const escFunction = () => {
+    if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){
+        button_back.style.display = "block";
+        button_resume.style.display = "block";
+        button_retry.style.display = "block";
+        button_menu.style.display = "none";
+        if(!escShowed){
+            esc.style.display = "flex"; 
+            escShowed = true;
+            black.style.opacity = "0.6";
+        }else if(escShowed){
+            esc.style.display = "none"; 
+            escShowed = false;
+            black.style.opacity = "0";
+        }
+    }else if(JSON.stringify(lobby) === JSON.stringify(platformLevel1)){
+        button_back.style.display = "none";
+        button_resume.style.display = "block";
+        button_retry.style.display = "none";
+        button_menu.style.display = "block";
+        if(!escShowed){
+            esc.style.display = "flex"; 
+            escShowed = true;
+            black.style.opacity = "0.6";
+        }else if(escShowed){
+            esc.style.display = "none"; 
+            escShowed = false;
+            black.style.opacity = "0";
+        }
+    }
+}
+
+escape_button.onclick = () => {
+    escFunction();
 }
 
 //----------------------------------------Kolize OBJEKTŮ
@@ -875,6 +1011,7 @@ const objectsCollision = () => {
                 y = cordsPortalY1;
             }
         }
+
         if (platformLevel1[i] == 30) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -886,9 +1023,7 @@ const objectsCollision = () => {
             ) {
                 clearTimeout(setTimeoutDoor);
                 menuMusic.pause();
-                earthquake.style.display = "none";
-                text.innerText = "lol ty si to dal wp";
-                wasd.style.display = "none";
+                backToLobby();
             }
         }
     }
@@ -1044,7 +1179,6 @@ const upCollision = () => {
                     x + width >= platformX &&
                     x <= platformX + 32
                 ) {
-                    
                     if(ladderCol == true){
                         y = platformY - 42 - velocityGoingUp + height;
                     }else{
@@ -1178,7 +1312,6 @@ let gravity = () => {
         if(crouched == true && velocity > 1){
             unCrouch();
         }
-        objectsCollision();
         orbCollision();
         //drawPlayer();
         velocity += 0.3;
@@ -1364,9 +1497,11 @@ let moveLeft = () => {
 
 let punched = false;
 let alreadyPunched = false;
+let punchCooldown = false;
 
 const punch = () => {
-    if(!crouched){
+    if(!crouched && !punchCooldown){
+        punchCooldown = true;
         punched = true;
         for (let i = 0; i < platformLevel1.length; i++) {
             if (platformLevel1[i] == 6) {
@@ -1404,7 +1539,10 @@ let RIGHT = "D";
 let LEFT = "A";
 
 let space = " ";
- 
+
+let escShowed = false;
+let inGame = false;
+
 let downPressed = false;
 
 window.addEventListener('keydown', (event) => {
@@ -1443,6 +1581,8 @@ window.addEventListener('keydown', (event) => {
             punch();
         }
         alreadyPunched = true;
+    } else if (event.key == "Escape" && inGame) {
+        escFunction();
     }
 });
 
