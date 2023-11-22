@@ -139,7 +139,7 @@ map[0] =    [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 
              0,  0,  0,  0, 15,  0,  0,  0, 16,  0,  8,  0,  0,  0, 16,  0,  0,  0,  8, 19, 19,  8,  0,  0,  0,  0, 16,  0,  0, 14,  0, 26,
             14,  0,  0,  0, 15,  0,  0,  0,  0,  0,  8,  0, 17,  0,  0,  0,  0,  0,  8,  7,  7,  8,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7,
              9,  0,  0,  0, 14,  0,  0,  0,  0,  0,  8, 17, 17,  2,  2,  0, 14,  0,  8,  0,  0,  8,  0, 14,  0,  0,  5,  0,  0,  0, 17,  9,
-             9, 25,  0,  0,  0,  0,  0,  0,  0, 14,  7,  7,  7,  7,  7,  7,  1,  1,  7,  7,  7,  7,  1,  1,  0,  0,  0,  0, 17, 17,  9,  9,
+             9, 25,  0, 30,  0,  0,  0,  0,  0, 14,  7,  7,  7,  7,  7,  7,  1,  1,  7,  7,  7,  7,  1,  1,  0,  0,  0,  0, 17, 17,  9,  9,
              9,  0,  0,  0,  0,  0,  0,  0,  0, 18, 19, 28, 28, 28,  0,  0,  1,  1, 27, 27, 27, 27,  1,  1, 18,  0,  0,  17,  9,  9,  9,  9,
              1,  1,  1,  1,  3,  3,  3,  1,  1,  1,  1,  1,  1,  1,  3,  3,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
 
@@ -224,7 +224,6 @@ window.addEventListener('keydown', (event) => {
 })
 
 const enterFunction = () => {
-    console.log("hej")
     inGame = false;
     black.style.opacity = "1";
     if(helpNum >= 2){
@@ -867,6 +866,8 @@ const dead = () => {
 
 //----------------------------------------ESC Buttons
 
+let backToLobbyEntered = false;
+
 const backToLobby = () => {
     clearTimeout(setTimeoutDoor)
     inGame = false;
@@ -881,6 +882,7 @@ const backToLobby = () => {
         yGhost = 10000;
         x = 40;
         y = 500;
+        backToLobbyEntered = false;
         gravity();
     }, 1300);
 }
@@ -1023,7 +1025,10 @@ const objectsCollision = () => {
             ) {
                 clearTimeout(setTimeoutDoor);
                 menuMusic.pause();
-                backToLobby();
+                if(!backToLobbyEntered){
+                    backToLobby();
+                    backToLobbyEntered = true;
+                }
             }
         }
     }
@@ -1364,7 +1369,6 @@ let velocityRight = 0.1;
 let nowRight;
 let thenRight = Date.now();
 let deltaRight;
-
 
 let moveRight = () => {
     velocityRight = 0.2;
