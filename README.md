@@ -1,5 +1,6 @@
 # Leap-and-Run
 <b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
+![gifmaker_me (1)](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c527e15d-dafc-43ba-9c7e-6b6fc1fb640c)<br>
 <b>BIG Update:</b>
  - <b>14 Nových Přidaných OFICIÁLNÍCH Levelů</b><br>
  - 15 LEVEL = Boss Fight (in progress)
@@ -11,16 +12,13 @@
  
 
 
+https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/b0dbca4f-c2a2-4e99-be12-3d52a28ad0f3
 
 
 
-https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/4f435cb9-c562-48ed-957d-b3ca9f68a95f
+https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/74347533-e7d0-457e-9838-bbdfad98d766
 
 
 
-https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/2594673f-05bf-4213-8424-9e75120639ef
-
-
-
-https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/fc3616dc-7d26-4b59-b417-7c470aceccf5
+https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c36014a6-9b3c-459b-b2aa-0fea97984e61
 
