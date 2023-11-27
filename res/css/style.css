@@ -101,12 +101,13 @@ body {
 }
 #canvas_container {
     width: 70%;
-    padding-bottom: 39.5%;
+    padding-bottom: 39.2%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
+    border:5px solid white;
 }
 canvas {
     width: 100%;
@@ -164,11 +165,11 @@ canvas {
 }
 #black {
     background-color: black;
-    width: 200%;
+    width: 150%;
     height: auto;
     position: absolute;
     top: 50%;
-    left: 30%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
     transition: opacity 0.3s;
@@ -232,7 +233,8 @@ canvas {
     height: 60px;
     border:5px solid rgba(255, 255, 255, 0.6);
     background-color:rgba(0, 0, 0, 0.6);
-    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
     border-radius: 1em;
 }
 
@@ -242,6 +244,7 @@ canvas {
     border:5px solid rgba(255, 255, 255, 0.6);
     background-color:rgba(0, 0, 0, 0.6);
     margin-left: 10px;
+    margin-bottom: 20px;
     border-radius: 1em;
 }
 #button_down img{
