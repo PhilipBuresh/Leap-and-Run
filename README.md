@@ -1,7 +1,7 @@
 # Leap-and-Run
-<h1><b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b></h1><br>
+<b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
  - Cílem hry je dohrát level za určitý čas, než se zavřou dvěře.<br>
-<h3></h3>b>BIG Update:</b></h3>
+<b>BIG Update:</b><br>
  - <b>14 Nových Přidaných OFICIÁLNÍCH Levelů</b><br>
  - 15 LEVEL = Boss Fight (in progress)
  - Přidané speciální levely<br>
