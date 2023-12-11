@@ -10,7 +10,7 @@
     <title>Leap&Run</title>
 </head>
 <body>
-    <audio loop id="music" src="./res/music/menu.mp3" type="audio/mpeg"></audio>
+    <audio loop id="music" src="" type="audio/mpeg"></audio>
     <div id="container">
         <div id="startMenu">
             <div id="text">Leap&Run</div>
@@ -24,10 +24,20 @@
             <div id="button_menu">Back to Menu</div>
         </div>
         <div id="game">
+            <div id="hps">
+                <div id="hp_bar">
+                    <div id="name">BOSS</div>
+                    <div id="hp"></div>
+                </div>
+                <div id="myHp">
+                    <img id="heart1" src="./res/img/heart.png" alt="heart">
+                    <img id="heart2" src="./res/img/heart.png" alt="heart">
+                    <img id="heart3" src="./res/img/heart.png" alt="heart">
+                </div>
+            </div>
             <div id="canvas_container">
                 <img id="rising" src="./res/gif/rising.gif" alt="rising">
                 <img id="background" src="./res/img/wall.png" alt="wall">
-                <img id="josh" src="./res/img/josh.png" alt="josh">
                 <canvas id="cnv" width="1024" height="576"></canvas>
                 <img id="black" src="./res/img/black.png" alt="black">
             </div>
@@ -43,6 +53,7 @@
                     <div id="button_right" ontouchstart = "go_right()" ontouchend = "isMovingRight = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
                 </div>
             </div>
+            <img id="youWin" src="./res/gif/youwin.gif" alt="win">
             <div id="escape_button">
                 <div id="first_col"></div>
                 <div id="second_col"></div>

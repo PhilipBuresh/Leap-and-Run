@@ -6,11 +6,12 @@ const wasd = document.getElementById("wasd");
 const buttons = document.getElementById("buttons");
 const music = document.getElementById("music");
 const game = document.getElementById("game");
+const background = document.getElementById("background");
 const black = document.getElementById("black");
 const rising = document.getElementById("rising");
-const josh = document.getElementById("josh");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
+const hp = document.getElementById("hp");
 const startMenu = document.getElementById("startMenu");
 const button_back = document.getElementById("button_back");
 const button_resume = document.getElementById("button_resume");
@@ -18,6 +19,11 @@ const button_retry = document.getElementById("button_retry");
 const button_menu = document.getElementById("button_menu");
 const button_enter = document.getElementById("button_enter");
 const escape_button = document.getElementById("escape_button");
+const hps = document.getElementById("hps");
+const heart1 = document.getElementById("heart1");
+const heart2 = document.getElementById("heart2");
+const heart3 = document.getElementById("heart3");
+const youWin = document.getElementById("youWin");
 
 const setVolume = (volume) => {
     if (music) {
@@ -59,8 +65,8 @@ let xGhost = 70000; //700
 let yGhost = 310
 
 let spawnCords = () => {
-    x = 40;
-    y = 510;
+    x = 50;
+    y = 500;
 }
 spawnCords();
 
@@ -385,14 +391,33 @@ map[13] =  [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
            23,  0,  0, 19,  1,  1, 26, 14,  0,  7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  0,  8,  0,  4,  0,  0,  0,  0, 15,  0,  7,  0,
            23,  5,  0, 19,  4,  0, 26,  9,  0,  0,  0,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  0,  0, 14,  0,  4,  0,
            23,  0,  0,  6,  0, 17, 26,  9, 17,  0, 14,  0,  0,  6,  0,  0,  0,  0,  0,  8,  0,  8,  0, 16, 17,  0,  2,  0,  0,  0,  0,  0,
-           23,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  2,  0,  1,  0,  8, 14,  8,  0, 17, 17,  0,  1,  0,  5,  0,  0,  0,
+           23,  0,  0, 10, 17, 17,  1,  1,  1,  0,  7,  7,  0,  1, 18,  0,  0,  1,  0,  8, 14,  8,  0, 17, 17,  0,  1,  0,  5,  0,  0,  0,
             0,  0,  7,  7,  7,  7,  1,  1,  8,  0,  4,  0,  0,  1,  1,  1,  0,  4,  0,  7,  7,  7,  0,  1,  1,  0,  0,  0,  0,  0, 16,  0,
-            0,  0,  0,  0,  0,  0,  8,  4,  8,  0,  0,  0,  0,  8,  6,  4,  0,  0,  0, 21, 21,  0,  0,  0,  0,  0,  0,  0,  0, 26,  0,  0,
+            0,  0,  0,  0,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  4,  0,  0,  0, 21, 21,  0,  0,  0,  0,  0,  0,  0,  0, 26,  0,  0,
            14,  0,  0, 16,  0,  0,  8,  0,  8,  0,  0,  0,  0,  8,  6,  8,  0,  0,  0,  0,  0, 10, 10,  0,  0,  0,  0,  2,  0, 26,  0, 18,
             9,  0,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  7,  7,  7,  0, 14,  0,  0,  7,  7,  7,  7,  0, 14,  0,  1,  0, 26,  0,  7,
             9, 25,  0,  0,  0,  2,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0, 18,  0,  0,  1, 13, 13,  1,  0, 18,  0,  0,  0, 26,  0,  1,
             9,  0,  0,  0, 18,  1,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  3,  1,  3,  3,  1, 13, 13,  1,  3,  1,  3,  3,  3,  3,  3,  1,
             7,  7,  7,  7,  7,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,]
+
+map[14] =  [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
+            0,  8,  0,  8,  0,  0,  8,  0,  8,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  8,  0,  8,  0,  0,  8,  0,  8,  0,
+            0,  8,  0,  8,  0,  0,  8,  0,  8,  0,  0, 13,  0,  0,  0,  0,  0,  0, 13,  0,  0,  0,  0,  8,  0,  8,  0,  0,  8,  0,  8,  0,
+            0,  8, 16,  8,  0,  0,  8,  0,  8, 26,  0, 13, 14,  0, 26, 26,  0, 14, 13,  0, 26, 26, 26,  8,  0,  8,  0, 16,  8,  0,  8,  0,
+            0,  8,  0,  8,  0,  0,  8,  0,  8,  0,  0,  1,  1,  1, 26, 26,  1,  1,  1,  0, 26, 26, 26,  8,  0,  8,  0,  0,  8,  0,  8,  0,
+            0,  7,  7,  7,  0,  0,  8, 14,  8,  0,  0,  0,  0,  8, 26, 26,  8,  0,  8,  0,  0,  0,  0,  8,  0,  8,  0,  0,  8,  0,  8, 26,
+            0,  0,  0,  0, 26, 26,  8, 18,  8,  0, 26, 26,  0,  8, 25,  0,  8,  0,  8,  0,  0,  0,  0,  8, 14,  8,  0,  0,  7,  7,  7, 26,
+            0,  0,  0,  0, 26, 26,  7,  7,  7, 16,  0,  0,  0,  8,  0,  0,  8,  0,  8,  0,  0,  0,  0,  7,  7,  7,  0,  0,  0,  0,  0, 26,
+            0,  0,  0,  0, 26, 26,  0,  0,  0,  0,  0,  0,  0,  7,  7,  7,  7,  0,  8,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,  0,  0, 26,
+            0,  0, 26, 26, 26, 26,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  8,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 26,
+            0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  7,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+           14,  0, 16,  0,  0,  0,  0,  0,  0, 14, 26,  0,  0,  0,  0,  0,  0,  0,  0, 26, 14,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0, 14,
+           18,  0,  0,  0,  0,  0,  0,  0,  7,  7, 26,  0,  0,  0,  0,  0,  0,  0,  0, 26,  7,  7,  0,  0, 16,  0,  0,  0,  0,  0, 17,  9,
+            1,  0,  0,  0,  0,  5,  0,  0, 13, 13,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 13, 13,  0,  0,  0,  0,  0,  0, 14, 17,  9,  9,
+            1,  0, 18, 14,  0,  0,  0,  0, 13, 13,  0,  0,  0, 14,  0,  0, 14,  0,  0,  0, 13, 13,  0,  0,  0,  0,  0, 17,  9, 17,  9,  9,
+            1, 18,  1, 18,  0,  0,  0,  0, 13, 13,  0,  0,  0,  7,  7,  7,  7,  0,  0,  0, 13, 13,  0,  0,  0,  0, 17,  9,  9,  9,  9,  9,
+            1,  1,  1,  1,  1,  6,  6,  6,  1,  1,  6,  6,  6, 19, 27, 27, 19,  6,  6,  6,  1,  1,  6,  6,  6,  1,  7,  7,  7,  7,  7,  7,
+            1,  1,  1,  1,  1,  3,  3,  3,  1,  1,  3,  3,  3,  1,  1,  1,  1,  3,  3,  3,  1,  1,  3,  3,  3,  1, 19, 27, 27, 27, 27, 19,]
 //---------------------------------------- Kolize dvěří do levelů
 
 let doorCol = false;
@@ -424,6 +449,72 @@ const doorsCollision = () => {
     } 
 };
 
+//---------------------------------------- BOSS Collision
+/*
+platformLevel1 = [...map[14]];
+originalPlatform1 = [...platformLevel1];
+lobby = [...map[14]];*/
+let bossX = 1000000;
+let bossY = 0;
+
+let canAttack = false;
+
+const bossCollision = () => {
+    if (
+        y + height >= bossY &&
+        y <= bossY + 80 &&
+        x + width >= bossX &&
+        x <= bossX + 80
+    ) {
+        canAttack = true;
+        if(currentFrameBoss == 6){
+            dead();
+        }
+    } else {
+        canAttack = false;
+    }
+};
+
+let bossVelocity = 1;
+
+let nowBossMoveY;
+let thenBossMoveY = Date.now();
+let deltaBossMoveY;
+let bossMoveYId;
+
+const bossMoveY = () => {
+    bossMoveYId = requestAnimationFrame(bossMoveY)
+    nowBossMoveY = Date.now();
+    deltaBossMoveY  = nowBossMoveY  - thenBossMoveY ;
+    if (deltaBossMoveY > interval) {
+        thenBossMoveY = nowBossMoveY - (deltaBossMoveY % interval);
+        if(y - 30 >= bossY){
+            bossY += bossVelocity;
+        }else{
+            bossY -= bossVelocity;
+        }
+    }
+}
+
+let nowBossMoveX;
+let thenBossMoveX = Date.now();
+let deltaBossMoveX;
+let bossMoveXId;
+
+const bossMoveX = () => {
+    bossMoveXId = requestAnimationFrame(bossMoveX)
+    nowBossMoveX = Date.now();
+    deltaBossMoveX  = nowBossMoveX  - thenBossMoveX ;
+    if (deltaBossMoveX > interval) {
+        thenBossMoveX = nowBossMoveX - (deltaBossMoveX % interval);
+        if(x - 25 > bossX){
+            bossX += bossVelocity;
+        }else{
+            bossX -= bossVelocity;
+        }
+    }
+}
+
 //---------------------------------------Enter Funkce
 
 let entered = false;
@@ -435,12 +526,11 @@ window.addEventListener('keydown', (event) => {
     }
 })
 
+let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, endBossLava2;
+
 const enterFunction = () => {
     inGame = false;
     black.style.opacity = "1";
-    if(helpNum == 14){
-        josh.style.display = "block";
-    }
     setTimeout(() => {
         inGame = true;
         platformLevel1 = [...map[helpNum]];
@@ -605,6 +695,8 @@ const enterFunction = () => {
             music.play();
             xGhost = 700;
             yGhost = 310;
+        }else if(helpNum == 14){
+            bossLevel();
         }
         setTimeoutDoor = setTimeout(() => {
             doorTimeout = true;
@@ -612,6 +704,100 @@ const enterFunction = () => {
         entered = false;
         gravity();
             }, 1300);
+}
+
+//BOSS LEVEL
+const bossLevel = () => {
+    generatorAttackFunction();
+    gravity();
+    spawnCords = () => {
+        x = 472;
+        y = 210;
+    }
+    spawnCords();
+    hps.style.display = "block";
+    heart1.style.display = "block";
+    heart2.style.display = "block";
+    heart3.style.display = "block";
+    hearts = 3;
+    bossX = 452;
+    bossY = 450;
+    playingBossFight = true;
+    music.currentTime = 0;
+    setVolume(0.5);
+    music.src = "./res/music/finalboss.mp3";
+    doorsTime = 76200;
+    music.play();
+    cancelAnimationFrame(bossMoveXId);
+    cancelAnimationFrame(bossMoveYId);
+    bossMoveY();
+    bossMoveX();
+    breakBottom = setTimeout(() => {
+        for (let index = 0; index < platformLevel1.length; index++) {
+            if(platformLevel1[index] == 6){
+                platformLevel1[index] = 0;
+            }
+        }
+        shake();
+    }, 13000);
+    bossLava = setTimeout(() => {
+        shake()
+        risingLavaActivated = true;
+        rising.style.display = "block";
+    }, 25000);
+    endBossLava = setTimeout(() => {
+        shake();
+        black.style.transition = "opacity 0s"
+        black.style.opacity = 1;
+        risingLavaActivated = false;
+        lavaY = 576;
+        risingPercent = risingPercentOriginal;
+        rising.style.bottom = risingPercent + "%"
+        rising.style.display = "none";
+        setTimeout(() => {
+            black.style.transition = "opacity 0.3s"
+            black.style.opacity = 0; 
+        }, 20);
+    }, 36200);
+    bossDarkness = setTimeout(() => {
+        shake();
+        black.style.transition = "opacity 0s"
+        black.style.opacity = 1;
+        setTimeout(() => {
+            black.style.transition = "opacity 0.3s"
+            black.style.opacity = 0; 
+        }, 20);
+        darkness = true;
+    }, 43800);
+    endBossDarkness = setTimeout(() => {
+        shake();
+        black.style.transition = "opacity 0s"
+        black.style.opacity = 1;
+        setTimeout(() => {
+            black.style.transition = "opacity 0.3s"
+            black.style.opacity = 0; 
+        }, 20);
+        darkness = false;
+    }, 52000);
+    bossLava2 = setTimeout(() => {
+        shake()
+        risingLavaActivated = true;
+        rising.style.display = "block";
+    }, 61500);
+    endBossLava2 = setTimeout(() => {
+        shake();
+        black.style.transition = "opacity 0s"
+        black.style.opacity = 1;
+        risingLavaActivated = false;
+        lavaY = 576;
+        risingPercent = risingPercentOriginal;
+        rising.style.bottom = risingPercent + "%"
+        rising.style.display = "none";
+        setTimeout(() => {
+            black.style.transition = "opacity 0.3s"
+            black.style.opacity = 0; 
+        }, 20);
+    }, 76200);
 }
 
 //----------------------------------------Vykreslení platform a překážek
@@ -687,6 +873,9 @@ woodBackFlipImage.src = "./res/img/wood_back_flip.png"
 
 const doorsImage = new Image();
 doorsImage.src = "./res/img/doors.png"
+
+const bossImage = new Image();
+bossImage.src = "./res/img/boss_s.png"
 
 const frameWidth = 30;
 const frameHeight = 40;
@@ -882,10 +1071,36 @@ const drawGhost = () => {
     drawing();
 }
 
+let bossAttacking = false;
+let attackNum = 0;
+
+let bossAttackGenerator;
+
+const generatorAttackFunction = () => {
+    bossAttackGenerator = setInterval(() => {
+        attackNum = Math.floor(Math.random() * 2)
+        if(attackNum == 1 && !bossAttacking){
+            bossVelocity = 1.5;
+            currentFrameBoss = 0;
+            bossAttacking = true;
+        }
+    }, 500);
+}
+
+const drawBoss = () => {
+    bossImage.src = "./res/img/boss_s.png";
+    if(!bossAttacking){
+        c.drawImage(bossImage, currentFrameBoss * 130, 0 * 130, 130, 130, bossX, bossY, 80, 80)
+    }else{
+        c.drawImage(bossImage, currentFrameBoss * 130, 1 * 130, 130, 130, bossX, bossY, 80, 80)
+    }
+    
+}
+
 //Vykreslení hráče + Animace objektů + Ghost
 
-let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost, nowGhostS, nowDoor;
-let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor;
+let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost, nowGhostS, nowDoor, nowBoss;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor, deltaBoss;
 let thenPlayer = Date.now();
 let thenLava = Date.now();
 let thenSpike = Date.now();
@@ -900,6 +1115,7 @@ let then4 = Date.now();
 let thenGhost = Date.now();
 let thenGhostS = Date.now();
 let thenDoor = Date.now();
+let thenBoss = Date.now();
 
 let drawingId;
 
@@ -908,6 +1124,7 @@ let currentFrameStand = 0;
 let currentFrameRun = 0;
 let currentFramePunch = 0;
 let currentFrameCrouch = 0;
+let currentFrameBoss = 0;
 
 let frameLava = 0;
 let frameSpike = 0;
@@ -1009,6 +1226,9 @@ const drawing = () => {
             if(frameDoor != 3){
                 frameDoor++;
             }else{
+                if(playingBossFight){
+                    hearts = 0;
+                }
                 dead();
             }
         }
@@ -1020,10 +1240,21 @@ const drawing = () => {
         deltaRise = nowRise - thenRise;
         if (deltaRise > 200) {
             thenRise = nowRise - (deltaRise % 200);
-            risingPercent += 0.3;
+            if(playingBossFight){
+                risingPercent += 0.6;
+            }else{
+                risingPercent += 0.3;
+            }
             rising.style.bottom = risingPercent + "%"
-            lavaY -= 1.8;
+            if(playingBossFight){
+                lavaY -= 3.6;
+            }else{
+                lavaY -= 1.8;
+            }
             if (y + height >= lavaY) {
+                if(playingBossFight){
+                    resistence = false;
+                }
                 dead();
             }
         }
@@ -1085,7 +1316,7 @@ const drawing = () => {
         thenGhost = nowGhost - (deltaGhost % 25);
         xGhost += ghostVelocity;
     }
-    //Ghost Sprite sheet
+    //--------------------Ghost Sprite sheet
     nowGhostS = Date.now();
     deltaGhostS = nowGhostS - thenGhostS;
     if (deltaGhostS > 200) {
@@ -1100,6 +1331,20 @@ const drawing = () => {
             if(ghostFrame2 == 4){
                 ghostFrame2 = 2;
             }
+        }
+    }
+    //--------------------BOSS Sprite sheet
+    nowBoss = Date.now();
+    deltaBoss = nowBoss - thenBoss;
+    if (deltaBoss > 250) {
+        thenBoss = nowBoss - (deltaBoss % 100);
+        currentFrameBoss++
+        if(currentFrameBoss % 4 == 0 && !bossAttacking){
+            currentFrameBoss = 0;
+        }else if(currentFrameBoss % 13 == 0 && bossAttacking){
+            bossAttacking = false;
+            bossVelocity = 1;
+            currentFrameBoss = 0;
         }
     }
 }
@@ -1192,7 +1437,7 @@ let drawPlayer = () => {
         c.drawImage(playerImage, currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
-    }else if (ladderCol && !crouched && !punched){ //Climbing
+    }else if (ladderCol && !crouched){ //Climbing
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
@@ -1206,6 +1451,7 @@ let drawPlayer = () => {
     orbCollision();
     ladderCollision();
     doorsCollision();
+    drawBoss();
     dark();
 };
 
@@ -1215,46 +1461,114 @@ let drawPlayer = () => {
 const shake = () => {
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "50.5%";
+        background.style.top = "50.5%";background.style.left = "50.5%";
     }, 50);
     setTimeout(() => {
         canvas.style.top = "49.5%";canvas.style.left = "50%";
+        background.style.top = "49.5%";background.style.left = "50%";
     }, 100);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50.5%";
+        background.style.top = "50%";background.style.left = "50.5%";
     }, 150);
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "49.5%";
+        background.style.top = "50.5%";background.style.left = "49.5%";
     }, 200);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50%";
+        background.style.top = "50%";background.style.left = "50%";
     }, 250);
 }
 
 //----------------------------------------Death funkce
 
+let playingBossFight = false;
+let hearts = 3;
+
+let resistence = false;
+
 const dead = () => {
-    clearTimeout(setTimeoutDoor)
-    setTimeoutDoor = setTimeout(() => {
-        doorTimeout = true;
-    }, doorsTime);
-    spawnCords();
-    unCrouch();
-    platformLevel1 = [...originalPlatform1];
-    drawPlatform();
-    dark();
-    frameSpike = 0;
-    frameLava = 0;
-    music.currentTime = 0;
-    if(risingLavaActivated){
-        lavaY = 576;
-        risingPercent = risingPercentOriginal;
-        rising.style.bottom = risingPercent + "%"
+    if(!playingBossFight){
+        frameSpike = 0;
+        frameLava = 0;
+        music.currentTime = 0;
+        clearTimeout(setTimeoutDoor)
+        setTimeoutDoor = setTimeout(() => {
+            doorTimeout = true;
+        }, doorsTime);
+        spawnCords();
+        unCrouch();
+        platformLevel1 = [...originalPlatform1];
+        drawPlatform();
+        dark();
+        if(risingLavaActivated){
+            lavaY = 576;
+            risingPercent = risingPercentOriginal;
+            rising.style.bottom = risingPercent + "%"
+        }
+        if(frameDoor == 3){
+            shake();
+            doorTimeout = false;
+            frameDoor = 0;
+        }
+    }else{
+        if(!resistence || frameDoor == 3 || usedRetry){
+            if(hearts == 3){
+                heart3.style.display = "none";
+            }else if(hearts == 2){
+                heart2.style.display = "none";
+            }else if(hearts == 1){
+                heart1.style.display = "none";
+            }
+            resistence = true;
+            hearts--;
+            if(hearts == 0 || frameDoor == 3 || usedRetry){
+                clearInterval(bossAttackGenerator);
+                if(usedRetry){
+                    usedRetry = false;
+                }
+                cancelAnimationFrame(bossMoveXId);
+                cancelAnimationFrame(bossMoveYId);
+                clearTimeout(setTimeoutDoor)
+                setTimeoutDoor = setTimeout(() => {
+                    doorTimeout = true;
+                }, doorsTime);
+                currentFrameBoss = 0;
+                bossAttacking = false;
+                currentHp = 100;
+                hp.style.width = currentHp + "%";
+                platformLevel1 = [...map[14]]
+                risingLavaActivated = false;
+                lavaY = 576;
+                risingPercent = risingPercentOriginal;
+                rising.style.bottom = risingPercent + "%"
+                rising.style.display = "none";
+                darkness = false;
+                heart1.style.display = "block";
+                heart2.style.display = "block";
+                heart3.style.display = "block";
+                hearts = 3;
+                clearTimeout(breakBottom);
+                clearTimeout(bossLava);
+                clearTimeout(bossLava2)
+                clearTimeout(endBossLava);
+                clearTimeout(endBossLava2);
+                clearTimeout(bossDarkness);
+                clearTimeout(endBossDarkness);
+                bossLevel();
+            }
+            setTimeout(() => {
+                resistence = false
+            }, 2000);
+            spawnCords();
+        }
+        if(frameDoor == 3){
+            doorTimeout = false;
+            frameDoor = 0;
+        }
     }
-    if(frameDoor == 3){
-        shake();
-        doorTimeout = false;
-        frameDoor = 0;
-    }
+    gravity();
 }
 
 //----------------------------------------ESC Buttons
@@ -1262,7 +1576,24 @@ const dead = () => {
 let backToLobbyEntered = false;
 
 const backToLobby = () => {
-    clearTimeout(setTimeoutDoor)
+    clearInterval(bossAttackGenerator);
+    clearTimeout(breakBottom);
+    clearTimeout(bossLava);
+    clearTimeout(bossLava2)
+    clearTimeout(endBossLava);
+    clearTimeout(endBossLava2);
+    clearTimeout(bossDarkness);
+    clearTimeout(endBossDarkness);
+    clearTimeout(setTimeoutDoor);
+    cancelAnimationFrame(bossMoveXId);
+    cancelAnimationFrame(bossMoveYId);
+    hps.style.display = "none";
+    hearts = 3;
+    heart1.style.display = "block";
+    heart2.style.display = "block";
+    heart3.style.display = "block";
+    currentHp = 100;
+    hp.style.width = currentHp + "%";
     music.pause();
     music.currentTime = 0;
     inGame = false;
@@ -1270,8 +1601,15 @@ const backToLobby = () => {
     esc.style.display = "none"; 
     escShowed = false;
     setTimeout(() => {
+        if(playingBossFight){
+            lives = 3;
+            playingBossFight = false;
+            bossX = 1000000;
+            bossY = 0;
+        }
         risingLavaActivated = false;
-        lavaY = 0;
+        lavaY = 576;
+        risingPercent = risingPercentOriginal;
         rising.style.bottom = risingPercentOriginal + "%"
         rising.style.display = "none";
         darkness = false;
@@ -1322,17 +1660,15 @@ const backToLobby = () => {
         }else if(helpNum == 13){
             x = 880;
             y = 200;
+        }else if(helpNum == 14){
+            x = 920;
+            y = 80;
         }
         
         backToLobbyEntered = false;
         gravity();
     }, 1300);
 }
-
-setInterval(() => {
-    console.log(x,y)
-}, 100);
-
 button_back.onclick = () => {
     backToLobby();
 }
@@ -1352,17 +1688,22 @@ button_menu.onclick = () => {
         black.style.opacity = "0";
     }, 1300);
 }
+
+let usedRetry = false;
+
 button_retry.onclick = () => {
-    dead();
+    usedRetry = true;
     esc.style.display = "none"; 
     escShowed = false;
     black.style.opacity = "0";
+    dead();
 }
 
 
 //----------------------------------------ESC Button Funkce
 
 const escFunction = () => {
+    youWin.style.display = "none";
     if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){
         button_back.style.display = "block";
         button_resume.style.display = "block";
@@ -1401,6 +1742,9 @@ escape_button.onclick = () => {
 //----------------------------------------Kolize OBJEKTŮ
 
 const objectsCollision = () => {
+    if(playingBossFight){
+        bossCollision();
+    }
     ghostCollision();
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 2) {
@@ -1436,6 +1780,9 @@ const objectsCollision = () => {
                 x + width >= platformX + 10 &&
                 x <= platformX + 22
             ) {
+                if(playingBossFight){
+                    resistence = false;
+                }
                 dead();
             }
         }
@@ -1476,8 +1823,6 @@ const objectsCollision = () => {
                 x + width >= platformX + 24 &&
                 x <= platformX + 40
             ) {
-                clearTimeout(setTimeoutDoor);
-                music.pause();
                 if(!backToLobbyEntered){
                     backToLobby();
                     backToLobbyEntered = true;
@@ -1962,28 +2307,42 @@ let punched = false;
 let alreadyPunched = false;
 let punchCooldown = false;
 
-const punch = () => {
+let currentHp = 100;
+
+const punch = () => {  
     if(!crouched && !punchCooldown){
         punchCooldown = true;
         punched = true;
-        for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 6) {
-                let platformX = (i % 32) * 32;
-                let platformY = Math.floor(i / 32) * 32;
-                if (
-                    y + height > platformY&&
-                    y < platformY + 32 && 
-                    x + width > platformX - 10 &&
-                    x < platformX && turnedRight
-                ) {
-                    platformLevel1[i] = 0;
-                } else if (
-                    y + height > platformY &&
-                    y < platformY + 32 &&
-                    x < platformX + 42 &&
-                    x > platformX + 32 && turnedLeft
-                ) {
-                    platformLevel1[i] = 0;
+        if(canAttack){
+            currentHp -= 5;
+            hp.style.width = currentHp + "%";
+            if(currentHp == 0 && !backToLobbyEntered){
+                clearTimeout(setTimeoutDoor);
+                music.pause();
+                backToLobby();
+                backToLobbyEntered = true;
+                youWin.style.display = "block";
+            }
+        }else{
+            for (let i = 0; i < platformLevel1.length; i++) {
+                if (platformLevel1[i] == 6) {
+                    let platformX = (i % 32) * 32;
+                    let platformY = Math.floor(i / 32) * 32;
+                    if (
+                        y + height > platformY&&
+                        y < platformY + 32 && 
+                        x + width > platformX - 10 &&
+                        x < platformX && turnedRight
+                    ) {
+                        platformLevel1[i] = 0;
+                    } else if (
+                        y + height > platformY &&
+                        y < platformY + 32 &&
+                        x < platformX + 42 &&
+                        x > platformX + 32 && turnedLeft
+                    ) {
+                        platformLevel1[i] = 0;
+                    }
                 }
             }
         }
