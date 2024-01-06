@@ -2,9 +2,10 @@
 <b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
  - Cílem hry je dohrát level za určitý čas, než se zavřou dvěře.<br>
 <b>LAST Update:</b><br>
+ - <b>NERFNUTÝ</b> Všechny mapy, takže to teď dohraje i noob (kromě Bosse)
  - PŘIDÁN BOSS FIGHT (Level 15)<br>
  - Cílem je ho zabít do určitého času, ale přitom vás nahání, může se zvedat láva nebo bude temnota okolo vás.<br>
- - Celkově máte 3 životy (Boss jich má 25 :) Good Luck)<br>
+ - Celkově máte 3 životy (Boss jich má 20 :) Good Luck)<br>
  - GAMEPLAY BOSS FIGHT ⬇️⬇️⬇️<br>
 
 
