@@ -1,5 +1,89 @@
 //--------------DRAW-----------------
 
+const platformImage = new Image();
+platformImage.src = "./res/img/block.png";
+
+const darknessImage = new Image();
+darknessImage.src = "./res/img/darkness1.png";
+
+const spikeMoveImage = new Image();
+spikeMoveImage.src = "./res/img/spike_move.png";
+
+const lavaImage = new Image();
+lavaImage.src = "./res/img/lava.png";
+
+const orbImage = new Image();
+orbImage.src = "./res/img/orb.png";
+
+const crackedImage = new Image();
+crackedImage.src = "./res/img/cracked.png";
+
+const woodImage = new Image();
+woodImage.src = "./res/img/wood.png";
+
+const chainImage = new Image();
+chainImage.src = "./res/img/chain.png";
+
+const bookImage = new Image();
+bookImage.src = "./res/img/bookshelf.png";
+
+const doorImage = new Image();
+doorImage.src = "./res/img/door.png";
+
+const chainDoorImage = new Image();
+chainDoorImage.src = "./res/img/chain_doors.png";
+
+const portal1Image = new Image();
+portal1Image.src = "./res/img/portal1.png";
+
+const portal2Image = new Image();
+portal2Image.src = "./res/img/portal2.png";
+
+const blockBackImage = new Image();
+blockBackImage.src = "./res/img/block_dark.png";
+
+const lanternImage = new Image();
+lanternImage.src = "./res/img/lantern.png";
+
+const chainBackImage = new Image();
+chainBackImage.src = "./res/img/chain_back.png";
+
+const torchImage = new Image();
+torchImage.src = "./res/img/torch.png"
+
+const bookshelfBackImage = new Image();
+bookshelfBackImage.src = "./res/img/bookshelf_back.png"
+
+const barrelImage = new Image();
+barrelImage.src = "./res/img/barrel.png"
+
+const woodFlipImage = new Image();
+woodFlipImage.src = "./res/img/wood_flip.png"
+
+const ladderImage = new Image();
+ladderImage.src = "./res/img/ladder.png"
+
+const woodBackImage = new Image();
+woodBackImage.src = "./res/img/wood_back.png"
+
+const woodBackFlipImage = new Image();
+woodBackFlipImage.src = "./res/img/wood_back_flip.png"
+
+const doorsImage = new Image();
+doorsImage.src = "./res/img/doors.png"
+
+const bossImage = new Image();
+bossImage.src = "./res/img/boss_s.png"
+
+const keyImage = new Image();
+keyImage.src = "./res/img/key.png"
+
+const ironImage = new Image();
+ironImage.src = "./res/img/iron.png"
+
+const ironKeyImage = new Image();
+ironKeyImage.src = "./res/img/iron_key.png"
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -49,6 +133,10 @@ const drawPlatform = () => {
             p.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 24){
             p.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 32){
+            p.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+        }else if(platformLevel1[index] == 33){
+            p.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 11){
             cordsPortalX1 = xBlock - 32;
             cordsPortalY1 = yBlock + 22;
@@ -97,6 +185,8 @@ const drawBackBlocks = () => {
             p.drawImage(woodBackFlipImage, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 30){
             p.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 31){
+            p.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }
         //---DOORS IN MENU
         else if(platformLevel1[index] == 50){

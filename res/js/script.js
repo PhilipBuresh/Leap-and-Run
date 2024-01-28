@@ -507,82 +507,7 @@ const bossLevel = () => {
     }, 76200);
 }
 
-//----------------------------------------Vykreslení platform a překážek
-
-const platformImage = new Image();
-platformImage.src = "./res/img/block.png";
-
-const darknessImage = new Image();
-darknessImage.src = "./res/img/darkness1.png";
-
-const spikeMoveImage = new Image();
-spikeMoveImage.src = "./res/img/spike_move.png";
-
-const lavaImage = new Image();
-lavaImage.src = "./res/img/lava.png";
-
-const orbImage = new Image();
-orbImage.src = "./res/img/orb.png";
-
-const crackedImage = new Image();
-crackedImage.src = "./res/img/cracked.png";
-
-const woodImage = new Image();
-woodImage.src = "./res/img/wood.png";
-
-const chainImage = new Image();
-chainImage.src = "./res/img/chain.png";
-
-const bookImage = new Image();
-bookImage.src = "./res/img/bookshelf.png";
-
-const doorImage = new Image();
-doorImage.src = "./res/img/door.png";
-
-const chainDoorImage = new Image();
-chainDoorImage.src = "./res/img/chain_doors.png";
-
-const portal1Image = new Image();
-portal1Image.src = "./res/img/portal1.png";
-
-const portal2Image = new Image();
-portal2Image.src = "./res/img/portal2.png";
-
-const blockBackImage = new Image();
-blockBackImage.src = "./res/img/block_dark.png";
-
-const lanternImage = new Image();
-lanternImage.src = "./res/img/lantern.png";
-
-const chainBackImage = new Image();
-chainBackImage.src = "./res/img/chain_back.png";
-
-const torchImage = new Image();
-torchImage.src = "./res/img/torch.png"
-
-const bookshelfBackImage = new Image();
-bookshelfBackImage.src = "./res/img/bookshelf_back.png"
-
-const barrelImage = new Image();
-barrelImage.src = "./res/img/barrel.png"
-
-const woodFlipImage = new Image();
-woodFlipImage.src = "./res/img/wood_flip.png"
-
-const ladderImage = new Image();
-ladderImage.src = "./res/img/ladder.png"
-
-const woodBackImage = new Image();
-woodBackImage.src = "./res/img/wood_back.png"
-
-const woodBackFlipImage = new Image();
-woodBackFlipImage.src = "./res/img/wood_back_flip.png"
-
-const doorsImage = new Image();
-doorsImage.src = "./res/img/doors.png"
-
-const bossImage = new Image();
-bossImage.src = "./res/img/boss_s.png"
+//Boss Attack
 
 let bossAttacking = false;
 let attackNum = 0;
@@ -1004,9 +929,28 @@ const objectsCollision = () => {
             ) {
                 if(!backToLobbyEntered){
                     finished[helpNum] = 1;
-                    finished[helpNum + 1] = 0;
+                    if(finished[helpNum + 1] != 1){
+                        finished[helpNum + 1] = 0;
+                    }
                     backToLobby();
                     backToLobbyEntered = true;
+                }
+            }
+        }
+        if (platformLevel1[i] == 31) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                y + height >= platformY &&
+                y + height <= platformY + 64 &&
+                x + width >= platformX &&
+                x <= platformX + 32
+            ) {
+                platformLevel1[i] = 0;
+                for (let index = 0; index < platformLevel1.length; index++) {
+                    if(platformLevel1[index] == 32 || platformLevel1[index] == 33){
+                        platformLevel1[index] = 0;
+                    }
                 }
             }
         }
@@ -1061,7 +1005,7 @@ let aboveHeadCollision = () => {
     ahCollision = requestAnimationFrame(aboveHeadCollision);
     if (crouched == true) {
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -1115,7 +1059,7 @@ let under = () => {
 
 const bottomCollision = () => {
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -1154,7 +1098,7 @@ const upCollision = () => {
         velocityJump = velocityJump/1.22
         y -= velocityJump;
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32 + 40;
                 if (
@@ -1380,7 +1324,7 @@ let moveRight = () => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -1451,7 +1395,7 @@ let moveLeft = () => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
