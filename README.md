@@ -7,4 +7,5 @@
  - Přidaný nový item - KEY (Odemkne vám cestu)<br>
  - BOSS NERF (20HP -> 18HP)<br>
  - Nově lze zabít DUCHA (musíte mu skočit na hlavu)<br>
+ - Bug fixes <br>
 ![key](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/62432a62-f22e-4ba9-8de3-d04d48a29631)
