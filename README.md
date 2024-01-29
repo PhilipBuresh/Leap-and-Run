@@ -6,5 +6,5 @@
  - Od teď se LEVELY se odemikají postupně (pokud chceš a jsi noob, zmáčkni "DELETE" a všechny LEVELY se odemknou)<br>
  - Přidaný nový item - KEY (Odemkne vám cestu)<br>
  - BOSS NERF (20HP -> 18HP)<br>
- - Nově lze zabít ducha (musíte mu skočit na hlavu)
+ - Nově lze zabít ducha (musíte mu skočit na hlavu)<br>
 ![key](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/62432a62-f22e-4ba9-8de3-d04d48a29631)
