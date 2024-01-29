@@ -405,6 +405,8 @@ const enterFunction = () => {
         }else if(helpNum == 14){
             bossLevel();
         }
+        saveGhostCordsX = xGhost;
+        saveGhostCordsY = yGhost;
         setTimeoutDoor = setTimeout(() => {
             doorTimeout = true;
         }, doorsTime);
@@ -560,7 +562,14 @@ let resistence = false;
 const dead = () => {
     if(!playingBossFight){
         if(yGhost < 2000 && xGhost < 2000){ 
-            console.log(1)
+            spawnGhostCords();
+        }
+        if(ghostKilled){
+            spawnGhostCords = () => {
+                xGhost = saveGhostCordsX;
+                yGhost = saveGhostCordsY;
+            }
+            ghostKilled = false;
             spawnGhostCords();
         }
         frameSpike = 0;
@@ -983,6 +992,10 @@ const orbCollision = () => {
 
 //---------------------------------------- GHOST Collision
 
+let ghostKilled = false;
+let saveGhostCordsX = 0;
+let saveGhostCordsY = 0;
+
 const ghostCollision = () => {
     if(
         y + height > yGhost &&
@@ -991,6 +1004,19 @@ const ghostCollision = () => {
         x < xGhost + 20
     ){
         dead();
+    } else if (
+        y + height > yGhost - 20 &&
+        y < yGhost + 32 &&
+        x + width > xGhost + 10 &&
+        x < xGhost + 20
+    ){
+        spawnGhostCords = () => {
+            xGhost = 10000;
+            yGhost = 10000;
+        }
+        ghostKilled = true;
+        spawnGhostCords();
+        jump()
     }
 }
 
@@ -1260,7 +1286,7 @@ let thenUp = Date.now();
 let deltaUp;
 
 let jump = () => {
-    if((stillJumping == false || canOrbJump == true && orbUsed == false) && ladderCol == false){
+    if((stillJumping == false || canOrbJump == true && orbUsed == false) && ladderCol == false || ghostKilled){
         if(crouched == true){
             unCrouch();
         }
@@ -1438,15 +1464,14 @@ const punch = () => {
         punchCooldown = true;
         punched = true;
         if(canAttack){
-            currentHp -= 5;
+            currentHp -= 5.5566;
             hp.style.width = currentHp + "%";
-            if(currentHp == 0 && !backToLobbyEntered){
+            if(currentHp <= 0 && !backToLobbyEntered){
                 clearTimeout(setTimeoutDoor);
                 music.pause();
                 backToLobby();
                 backToLobbyEntered = true;
                 finished[helpNum] = 1;
-                youWin.style.display = "block";
             }
         }else{
             for (let i = 0; i < platformLevel1.length; i++) {
