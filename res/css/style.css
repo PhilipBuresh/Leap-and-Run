@@ -3,8 +3,9 @@ body {
     overflow: hidden;
     height: 100vh;
     width: auto;
+    background-image: url("../img/wall_dark.png");
 }
-* {
+*{
    user-select: none;
    box-sizing: border-box;
 }
@@ -152,7 +153,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     overflow: hidden;
-    border:5px solid white;
+    border:5px solid black;
 }
 canvas {
     width: 100%;

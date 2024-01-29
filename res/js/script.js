@@ -993,6 +993,7 @@ const orbCollision = () => {
 //---------------------------------------- GHOST Collision
 
 let ghostKilled = false;
+let bounced = false;
 let saveGhostCordsX = 0;
 let saveGhostCordsY = 0;
 
@@ -1015,6 +1016,7 @@ const ghostCollision = () => {
             yGhost = 10000;
         }
         ghostKilled = true;
+        bounced = true;
         spawnGhostCords();
         jump()
     }
@@ -1286,7 +1288,8 @@ let thenUp = Date.now();
 let deltaUp;
 
 let jump = () => {
-    if((stillJumping == false || canOrbJump == true && orbUsed == false) && ladderCol == false || ghostKilled){
+    if((stillJumping == false || canOrbJump == true && orbUsed == false) && ladderCol == false || bounced){
+        bounced = false;
         if(crouched == true){
             unCrouch();
         }
