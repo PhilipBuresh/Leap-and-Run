@@ -84,6 +84,9 @@ ironImage.src = "./res/img/iron.png"
 const ironKeyImage = new Image();
 ironKeyImage.src = "./res/img/iron_key.png"
 
+const trophyImage = new Image();
+trophyImage.src = "./res/img/trophy.png"
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -161,6 +164,8 @@ const drawPlatform = () => {
 
 //-----------------------------Drawing Blocks in background
 
+let frameDoorFinal = 3;
+
 const drawBackBlocks = () => {
     xBlock = 0;
     yBlock = 0;
@@ -187,6 +192,10 @@ const drawBackBlocks = () => {
             p.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 31){
             p.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 34){
+            p.drawImage(chainDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+        }else if(platformLevel1[index] == 35){
+            p.drawImage(trophyImage, xBlock, yBlock, 32, 32);
         }
         //---DOORS IN MENU
         else if(platformLevel1[index] == 50){
@@ -433,7 +442,6 @@ const drawing = () => {
                 dead();
             }
         }
-
     }
     //Rising Lava
     if(risingLavaActivated){
@@ -549,7 +557,6 @@ const drawing = () => {
         }
     }
 }
-
 //----------------------------------------Drawing Player
 
 let playerImage = new Image();

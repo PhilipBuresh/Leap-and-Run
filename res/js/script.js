@@ -1,4 +1,5 @@
 const canvas = document.getElementById('cnv');
+const canvas_container = document.getElementById("canvas_container");
 const p = canvas.getContext('2d'); //Platform
 const c = canvas.getContext('2d'); //Character
 const text = document.getElementById("text");
@@ -8,10 +9,14 @@ const music = document.getElementById("music");
 const game = document.getElementById("game");
 const background = document.getElementById("background");
 const black = document.getElementById("black");
+const transition1 = document.getElementById("transition1");
+const transition2 = document.getElementById("transition2");
+const scene = document.getElementById("scene");
 const rising = document.getElementById("rising");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
 const hp = document.getElementById("hp");
+const myHp = document.getElementById("myHp");
 const startMenu = document.getElementById("startMenu");
 const button_back = document.getElementById("button_back");
 const button_resume = document.getElementById("button_resume");
@@ -38,6 +43,18 @@ if (deviceDetect == true) {
     buttons.style.display = "block";
 }
 
+let transitionY = 576
+let transitionX = 1024
+
+const setTransitionCords = () => {
+    transitionY = (y / 576) * 100 + 3;
+    transitionX = (x / 1024) * 100 + 2;
+    transition1.style.top = transitionY + "%";
+    transition1.style.left = transitionX + "%";
+    transition2.style.top = transitionY + "%";
+    transition2.style.left = transitionX + "%";
+}
+
 let doorsTime = 0;
 let doorTimeout = false;
 let setTimeoutDoor;
@@ -48,6 +65,8 @@ playButton.onclick = () => {
     playButton.style.animationPlayState = "running";
     black.style.opacity = "1";
     setTimeout(() => {
+        music.src = "./res/music/lobby_music.mp3";
+        music.play();
         game.style.display = "block";
         startMenu.style.display = "none";
         inGame = true;
@@ -110,7 +129,7 @@ let helpNum;
 const doorsCollision = () => {
     doorCol = false;
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] >= 50 && platformLevel1[i] <= 64) {
+        if (platformLevel1[i] >= 50 && platformLevel1[i] <= 64 || platformLevel1[i] == 34) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -119,8 +138,12 @@ const doorsCollision = () => {
                 x + width >= platformX + 24 &&
                 x <= platformX + 40
             ) {
+                if(platformLevel1[i] == 34 && frameDoorFinal == 0){
+                    helpNum = 15;
+                }else if(platformLevel1[i] != 34){
+                    helpNum = platformLevel1[i] - 50;
+                }
                 doorCol = true;
-                helpNum = platformLevel1[i] - 50;
                 c.font = "20px VT323, monospace";
                 if(finished[helpNum] == 2){
                     c.fillStyle = "red";
@@ -136,7 +159,7 @@ const doorsCollision = () => {
             }
         }
     } 
-};
+}
 
 //---------------------------------------- BOSS Collision
 let bossX = 1000000;
@@ -214,17 +237,20 @@ window.addEventListener('keydown', (event) => {
 let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, endBossLava2;
 
 const enterFunction = () => {
+    music.pause();
     inGame = false;
-    black.style.opacity = "1";
+    setTransitionCords();
+    transition2.style.opacity = "0";
+    transition1.style.opacity = "1";
+    transition1.play();
     setTimeout(() => {
         inGame = true;
         platformLevel1 = [...map[helpNum]];
         originalPlatform1 = [...platformLevel1];
-        black.style.opacity = "0";
         if(helpNum == 0){
             spawnCords = () =>{
                 x = 40;
-                y = 500;
+                y = 500
             }
             spawnCords();
             setVolume(0.6);
@@ -361,6 +387,7 @@ const enterFunction = () => {
                 xGhost = 650;
                 yGhost = 90;
             }
+            spawnGhostCords();
         }else if(helpNum == 11){
             spawnCords = () =>{
                 x = 500;
@@ -404,12 +431,27 @@ const enterFunction = () => {
             spawnGhostCords();
         }else if(helpNum == 14){
             bossLevel();
+        }else if(helpNum == 15){
+            spawnCords = () =>{
+                x = 40;
+                y = 520;
+            }
+            spawnCords();
+            setVolume(0.8);
+            music.src = "./res/music/ending.mp3";
+            music.play();
         }
+        setTransitionCords();
+        transition1.style.opacity = "0";
+        transition2.style.opacity = "1";
+        transition2.play();
         saveGhostCordsX = xGhost;
         saveGhostCordsY = yGhost;
-        setTimeoutDoor = setTimeout(() => {
-            doorTimeout = true;
-        }, doorsTime);
+        if(helpNum != 15){
+            setTimeoutDoor = setTimeout(() => {
+                doorTimeout = true;
+            }, doorsTime);
+        }
         entered = false;
         gravity();
             }, 1300);
@@ -420,10 +462,11 @@ const bossLevel = () => {
     generatorAttackFunction();
     gravity();
     spawnCords = () => {
-        x = 472;
+        x = 500;
         y = 210;
     }
     spawnCords();
+    myHp.style.display = "flex";
     hps.style.display = "block";
     heart1.style.display = "block";
     heart2.style.display = "block";
@@ -669,6 +712,8 @@ const backToLobby = () => {
     clearTimeout(setTimeoutDoor);
     cancelAnimationFrame(bossMoveXId);
     cancelAnimationFrame(bossMoveYId);
+    canAttack = false;
+    myHp.style.display = "none";
     hps.style.display = "none";
     hearts = 3;
     heart1.style.display = "block";
@@ -679,16 +724,23 @@ const backToLobby = () => {
     music.pause();
     music.currentTime = 0;
     inGame = false;
-    black.style.opacity = "1";
+    setTransitionCords();
+    transition2.style.opacity = "0";
+    transition1.style.opacity = "1";
+    transition1.play();
+    black.style.opacity = "0";
     esc.style.display = "none"; 
     escShowed = false;
     setTimeout(() => {
+        music.src = "./res/music/lobby_music.mp3";
+        music.play();
         if(playingBossFight){
             lives = 3;
             playingBossFight = false;
             bossX = 1000000;
             bossY = 0;
         }
+        frameDoorFinal = 3;
         risingLavaActivated = false;
         lavaY = 576;
         risingPercent = risingPercentOriginal;
@@ -697,7 +749,6 @@ const backToLobby = () => {
         darkness = false;
         inGame = true;
         platformLevel1 = [...lobby];
-        black.style.opacity = "0";
         spawnGhostCords = () => {
             xGhost = 20000;
             yGhost = 20000;
@@ -745,11 +796,14 @@ const backToLobby = () => {
         }else if(helpNum == 13){
             x = 880;
             y = 200;
-        }else if(helpNum == 14){
+        }else if(helpNum == 14 || helpNum == 15){
             x = 920;
             y = 80;
         }
-        
+        setTransitionCords();
+        transition1.style.opacity = "0";
+        transition2.style.opacity = "1";
+        transition2.play();
         backToLobbyEntered = false;
         gravity();
     }, 1300);
@@ -786,13 +840,15 @@ button_retry.onclick = () => {
 
 
 //----------------------------------------ESC Button Funkce
-
+ 
 const escFunction = () => {
-    youWin.style.display = "none";
     if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){
         button_back.style.display = "block";
         button_resume.style.display = "block";
         button_retry.style.display = "block";
+        if(helpNum == 15 || currentHp <= 0){
+            button_retry.style.display = "none";
+        }
         button_menu.style.display = "none";
         if(!escShowed){
             esc.style.display = "flex"; 
@@ -821,7 +877,9 @@ const escFunction = () => {
 }
 
 escape_button.onclick = () => {
-    escFunction();
+    if(inGame){
+        escFunction();
+    }
 }
 
 //----------------------------------------Finished level
@@ -963,8 +1021,26 @@ const objectsCollision = () => {
                 }
             }
         }
+        if (platformLevel1[i] == 35) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                y + height >= platformY &&
+                y + height <= platformY + 232 &&
+                x + width >= platformX &&
+                x <= platformX + 32
+            ) {
+                c.font = "80px VT323, monospace";
+                c.fillStyle = "lime";
+                c.fillText("Thanks For Playing <3", 20, 130);
+                p.font = "30px VT323, monospace";
+                p.fillStyle = "lime";
+                p.fillText("Game By: Philip Buresh", 30, 160);
+            }
+        }
     }
 }
+
 
 //---------------------------------------- ORB Collision
 let canOrbJump = false;
@@ -1462,19 +1538,15 @@ let punchCooldown = false;
 
 let currentHp = 100;
 
-const punch = () => {  
+const punch = () => {
     if(!crouched && !punchCooldown){
         punchCooldown = true;
         punched = true;
         if(canAttack){
-            currentHp -= 5.5566;
+            currentHp -= 5.5566; //5.5566
             hp.style.width = currentHp + "%";
             if(currentHp <= 0 && !backToLobbyEntered){
-                clearTimeout(setTimeoutDoor);
-                music.pause();
-                backToLobby();
-                backToLobbyEntered = true;
-                finished[helpNum] = 1;
+                deadBoss();
             }
         }else{
             for (let i = 0; i < platformLevel1.length; i++) {
@@ -1500,6 +1572,63 @@ const punch = () => {
             }
         }
     }
+}
+
+//--------------------------Dead Boss
+
+const deadBoss = () => {
+    canAttack = false;
+    inGame = false;
+    setTimeout(() => {
+        frameDoorFinal = 0; 
+    }, 2000);
+    scene.addEventListener("ended", () => {
+        scene.style.display = "none";
+        inGame = true;
+    });
+    clearTimeout(setTimeoutDoor);
+    music.pause();
+    lives = 3;
+    playingBossFight = false;
+    bossX = 1000000;
+    bossY = 0;
+    scene.style.display = "block";
+    scene.play();
+    clearInterval(bossAttackGenerator);
+    if(usedRetry){
+        usedRetry = false;
+    }
+    cancelAnimationFrame(bossMoveXId);
+    cancelAnimationFrame(bossMoveYId);
+    clearTimeout(setTimeoutDoor)
+    bossAttacking = false;
+    hp.style.width = currentHp + "%";
+    hps.style.display = "none"
+    myHp.style.display = "none"
+    risingLavaActivated = false;
+    lavaY = 576;
+    risingPercent = risingPercentOriginal;
+    rising.style.bottom = risingPercent + "%"
+    rising.style.display = "none";
+    darkness = false;
+    heart1.style.display = "block";
+    heart2.style.display = "block";
+    heart3.style.display = "block";
+    hearts = 3;
+    clearTimeout(breakBottom);
+    clearTimeout(bossLava);
+    clearTimeout(bossLava2)
+    clearTimeout(endBossLava);
+    clearTimeout(endBossLava2);
+    clearTimeout(bossDarkness);
+    clearTimeout(endBossDarkness);
+    spawnCords();
+    gravity();
+    platformLevel1 = [...map[14]];
+    originalPlatform1 = [...platformLevel1];
+    /*backToLobby();
+    backToLobbyEntered = true;
+    finished[helpNum] = 1;*/
 }
 
 //--------------------------Stlačení kláves
