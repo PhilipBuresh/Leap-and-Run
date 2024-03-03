@@ -5,7 +5,7 @@
  - <b>NEW CHARACTER (Ruby)</b><br>
  - SFX ADDED!
  - LOCAL STORAGE: Game is now SAVING
- - Level1, Level7 and Level8 SONGS are replaced
+ - Level1, Level7 and Level9 SONGS are replaced
  -  New Phase in the Boss Level - Super Fast Lava (Last Final Phase)
  - Added Smooth Transitions, Death Effects, Ruby Cut Scene
  - New Logo
