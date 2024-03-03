@@ -9,11 +9,27 @@ body {
    user-select: none;
    box-sizing: border-box;
 }
+p{
+    font-family: 'VT323', monospace;
+}
 #container{
     height: 100vh;
     width: auto;
     margin:0;
     padding: 0;
+}
+#fullBlack{
+    position:absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 110vh;
+    width: 200%;
+    z-index: 10;
+    z-index: 3;
+    transition: opacity 0.8s;
+    opacity: 0;
+    display: none;
 }
 #game{
     display:none;
@@ -64,9 +80,6 @@ body {
     background-color: red;
     transition: width 0.1s ease-out;
 }
-#startMenu{
-    display:block;
-}
 #escape_button {
     display:flex;
     flex-direction: row;
@@ -79,7 +92,7 @@ body {
     width: 60px;
     border: 3px solid white;
     border-radius: 0.5em;
-    z-index: 3;
+    z-index: 11;
     cursor: pointer;
 }
 #escape_button div{
@@ -92,45 +105,28 @@ body {
 #escape_button:hover{
     border: 3px solid gray;
 }
-#playButton{
-    font-family: 'VT323', monospace;
-    font-size:30px;
-    border:2px solid white;
-    border-radius: 1em;
-    color:white;
+#note_button {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding:1em;
-    padding-top:0.5em;
-    padding-bottom:0.5em;
+    top: 100px;
+    right: 20px;
+    height: 60px;
+    width: 60px;
+    border: 3px solid white;
+    border-radius: 0.5em;
+    z-index: 11;
     cursor: pointer;
-    animation-duration: 1000ms;
-    animation-play-state: paused;
-    animation-name: blink;
 }
-@keyframes blink {
-    1% {padding: 0;color: transparent;background-color: white;height: 10px;}
-    15% {padding: 0;padding-left: 5em;padding-right: 5em;color: transparent;background-color: white;height: 5px;}
-    50% {padding: 0;padding-left: 2.5em;padding-right: 2.5em;color: transparent;background-color: rgb(126, 125, 125);border:rgb(126, 125, 125);height: 3px;}
-    80% {padding: 0;padding-left: 1em;padding-right: 1em;font-size: 0;color: transparent;background-color: rgb(54, 54, 54);;border:rgb(54, 54, 54);height: 3px;}
-    90% {padding: 0;padding-left: 1em;padding-right: 1em;font-size: 0;color: transparent;background-color: rgb(27, 27, 27);;border:rgb(27, 27, 27);height: 3px;}
-    100% {padding: 0;padding-left: 1em;padding-right: 1em;font-size: 0;color: transparent;background-color: black;border:rgb(0, 0, 0);height: 5px;}
+#note_button img{
+    width: 50px;
+    margin-right:4px;
+    filter: invert(1);
 }
-#playButton:hover{
-    color: black;
-    background-color: white;
-}
-#youWin{
-    display:none;
-    width: auto;
-    height: 93%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index:2
+#note_button:hover{
+    border: 3px solid gray;
 }
 #rising{
     width: 100%;
@@ -145,6 +141,134 @@ body {
     overflow: hidden;
     display:none;
 }
+#paper{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(150%, -50%);
+    width: 50%;
+    height: auto;
+    border: 5px solid black;
+    box-shadow: 1px -1px 40px 7px rgb(0, 0, 0);
+    animation-duration: 1000ms;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-name: rightToMid;
+}
+@keyframes rightToMid {
+    1% {transform: translate(150%, -50%);}
+    100% {transform: translate(-50%, -50%)}
+}
+@keyframes midToRight {
+    0% {transform: translate(-50%, -50%);}
+    100% {transform: translate(-250%, -50%)}
+}
+#startMenuBtns{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+}
+#startMenuBtns div{
+    border-radius: 0.4em;
+    border:2px solid white;
+    color:white;
+    font-family: 'VT323', monospace;
+    padding:1em;
+    padding-top:0.5em;
+    padding-bottom:0.5em;
+    cursor: pointer;
+    text-align: center;
+}
+#playButton{
+    font-size:30px;
+    animation-duration: 1000ms;
+    animation-play-state: paused;
+    animation-name: blink;
+    margin:1em;
+}
+#playButton:hover, #tutorialButton:hover{
+    color: black;
+    background-color: white;
+}
+#tutorialButton{
+    font-size:20px;
+    cursor: pointer;
+}
+#startMenu{
+    display: block;
+}
+@keyframes blink {
+    1% {padding: 0;color: transparent;background-color: white;height: 10px;}
+    15% {padding: 0;padding-left: 5em;padding-right: 5em;color: transparent;background-color: white;height: 5px;}
+    100% {padding: 0;padding-left: 0.1em;padding-right: 0.1em;;color: transparent;background-color: rgb(126, 125, 125);border:rgb(126, 125, 125);height: 3px;}
+    
+}
+
+#characters {
+    border: 3px solid rgb(0, 0, 0);
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 150%);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image:url("../img/wall.png");
+    box-shadow: 1px -1px 40px 7px rgb(0, 0, 0);
+    display:none;
+    animation-duration: 1000ms;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-name: bottomToMid;
+}
+@keyframes bottomToMid {
+    1% {transform: translate(-50%, 150%);}
+    100% {transform: translate(-50%, -50%)}
+}
+@keyframes midToBottom {
+    0% {transform: translate(-50%, -50%);}
+    100% {transform: translate(-50%, 150%)}
+}
+
+#characters #images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#characters img:hover {
+    filter:contrast(0.9);
+}
+
+#characters img {
+    width: 100%;
+    height: auto;
+    transition: 0.3s;
+    cursor: pointer;
+    margin-left:-5em;
+    margin-right:-5em;
+}
+
+#characters p {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size:40px;
+    margin: 0.5em;
+}
+
+#choose {
+    color: white;
+    font-size:60px;
+    margin-bottom:0.5em;
+    font-family: 'VT323', monospace;
+}
+
 #canvas_container {
     width: 70%;
     padding-bottom: 39.2%;
@@ -156,7 +280,7 @@ body {
     border:5px solid black;
     box-shadow: 1px -1px 40px 7px rgb(0, 0, 0);
 }
-canvas {
+#canvas {
     width: 100%;
     height: auto;
     position: absolute;
@@ -191,7 +315,7 @@ canvas {
     background-color:rgba(0, 0, 0, 0.8);
     display:none;
 }
-#esc div{
+#esc div, #music_editor_back{
     background-color:black;
     text-align: center;
     font-size: 17px;
@@ -206,9 +330,65 @@ canvas {
 #button_menu{
     display:none;
 }
-#esc div:hover{
+#esc div:hover, #music_editor_back:hover{
     color: black;
     background-color: white;
+}
+#music_editor{
+    font-family: ' VT323', monospace;
+    display: none;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    width: 400px;
+    height: 260px;
+    position: absolute;
+    border:3px solid white;
+    border-radius: 0.3em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color:rgba(0, 0, 0, 0.8);
+}
+#whichAudio{
+    color:white;
+    font-size: 20px;
+    padding: 0;
+    margin: 0;
+}
+#music_value, #sfx_value{
+    color:white;
+    font-size: 30px;
+    margin:0.5em;
+}
+#music_volume div, #sfx_volume div{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+#note_logo, #sfx_logo{
+    filter: invert(1);
+    width: 80px;
+    pointer-events: none;
+}
+#not_invert_arrow1, #invert_arrow1, #not_invert_arrow2, #invert_arrow2{
+    width: 30px;
+    border:2px solid white;
+    border-radius: 0.4em;
+    padding:4px;
+    margin:0.5em;
+    cursor:pointer;
+}
+#not_invert_arrow1:hover, #invert_arrow1:hover, #not_invert_arrow2:hover, #invert_arrow2:hover{
+    border: 2px solid gray;
+}
+#invert_arrow1, #invert_arrow2{
+    transform: rotate(180deg);
+}
+#music_volume, #sfx_volume{
+    display: flex;
+    align-items:center;
 }
 #black {
     background-color: black;
@@ -244,20 +424,12 @@ canvas {
     display:none;
 }
 #text{
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    padding: 10px;
-    font-family: 'VT323', monospace;
-    font-size: 50px;
-}
-#wasd{
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    padding: 10px;
-    font-size: 30px;
-    font-family: 'VT323', monospace;   
+    max-width: fit-content;
+    top: 15%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: 0.5s;
 }
 #music{
     left: 0;
@@ -334,14 +506,30 @@ canvas {
         width: 90%;
         padding-bottom: 49%;
     }
+    #choose{
+        font-size: 20px;
+    }
+    #characters img{
+        width: 50%;
+    }
+    #characters p{
+        font-size: 30px;
+    }
+    #text{
+        top:10%;
+        width: 50%;
+        height: auto;
+    }
 }
-@media (max-height: 600px) {
+@media (max-height: 650px) {
     #canvas_container{
         width: 60%;
         padding-bottom: 33%;
     }
-    #text, #wasd{
-        display:none;
+    #text{
+        top:10%;
+        width: 50%;
+        height: auto;
     }
     #hp_bar{
         height: 15px;
@@ -350,14 +538,17 @@ canvas {
     #name{
         font-size: 15px;
     }
+    #choose{
+        font-size: 20px;
+    }
+    #characters img{
+        width: 30%;
+    }
+    #characters p{
+        font-size: 20px;
+    }
 }
 @media (max-height: 900px) {
-    #wasd{
-        display:none;
-    }
-    #hps{
-        margin-top:1.5em;
-    }
     #myHp img{
         margin-top:-0.3em;
         width: 35px;

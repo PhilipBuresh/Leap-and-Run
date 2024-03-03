@@ -1,20 +1,38 @@
-const canvas = document.getElementById('cnv');
+const canvas = document.getElementById('canvas');
 const canvas_container = document.getElementById("canvas_container");
+const container = document.getElementById("container");
 const p = canvas.getContext('2d'); //Platform
-const c = canvas.getContext('2d'); //Character
+const c = canvas.getContext('2d');
 const text = document.getElementById("text");
-const wasd = document.getElementById("wasd");
+const characters = document.getElementById("characters");
+const man = document.getElementById("man");
+const woman = document.getElementById("woman");
 const buttons = document.getElementById("buttons");
 const music = document.getElementById("music");
+const sfx = document.getElementById("sfx");
+const sfx_land = document.getElementById("sfx_land");
+const sfx_miss = document.getElementById("sfx_miss");
+const sfx_climb = document.getElementById("sfx_climb");
+const sfx_dead = document.getElementById("sfx_dead");
+const sfx_player = document.getElementById("sfx_player");
+const sfx_walk = document.getElementById("sfx_walk");
+const sfx_jump = document.getElementById("sfx_jump");
+const sfx_punch = document.getElementById("sfx_punch");
+const sfx_extra_jump = document.getElementById("sfx_extra_jump");
+const sfx_boss_talk = document.getElementById("sfx_boss_talk");
+const sfx_boss_laugh = document.getElementById("sfx_boss_laugh");
 const game = document.getElementById("game");
 const background = document.getElementById("background");
 const black = document.getElementById("black");
+const fullBlack = document.getElementById("fullBlack");
+const paper = document.getElementById("paper");
 const transition1 = document.getElementById("transition1");
 const transition2 = document.getElementById("transition2");
 const scene = document.getElementById("scene");
 const rising = document.getElementById("rising");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
+const tutorialButton = document.getElementById("tutorialButton");
 const hp = document.getElementById("hp");
 const myHp = document.getElementById("myHp");
 const startMenu = document.getElementById("startMenu");
@@ -28,15 +46,101 @@ const hps = document.getElementById("hps");
 const heart1 = document.getElementById("heart1");
 const heart2 = document.getElementById("heart2");
 const heart3 = document.getElementById("heart3");
-const youWin = document.getElementById("youWin");
+const invertArrow1 = document.getElementById("invert_arrow1");
+const invertArrow2 = document.getElementById("invert_arrow2");
+const notInvertArrow1 = document.getElementById("not_invert_arrow1");
+const notInvertArrow2 = document.getElementById("not_invert_arrow2");
+const music_value = document.getElementById("music_value");
+const sfx_value = document.getElementById("sfx_value");
+const note_button = document.getElementById("note_button");
+const music_editor = document.getElementById("music_editor");
+const music_editor_back = document.getElementById("music_editor_back");
 
-const setVolume = (volume) => {
-    if (music) {
-      music.volume = volume;
+let helpNum = 0;
+ 
+let musicVolume = 0.5;
+let sfxVolume = 0.5;
+let currentMusicValue = 50;
+let currentSfxValue = 50;
+
+const setMusicVolume = () => {
+    music.volume = musicVolume;
+}
+
+const setSfxVolume = () => {
+    sfx.volume = sfxVolume;
+    sfx_dead.volume = sfxVolume;
+    sfx_player.volume = sfxVolume;
+    sfx_walk.volume = sfxVolume;
+    sfx_climb.volume = sfxVolume;
+    sfx_miss.volume = sfxVolume;
+    sfx_jump.volume = sfxVolume;
+    sfx_punch.volume = sfxVolume;
+    sfx_extra_jump.volume = sfxVolume;
+    sfx_boss_talk.volume = sfxVolume;
+    sfx_boss_laugh.volume = sfxVolume;
+    sfx_land.volume = sfxVolume;
+}
+
+setMusicVolume();
+setSfxVolume();
+
+notInvertArrow1.onclick = () => {
+    if(currentMusicValue >= 0 && currentMusicValue < 100){
+        musicVolume += 0.05
+        currentMusicValue += 5;
+        music_value.innerHTML = currentMusicValue + "%";
+        setMusicVolume(musicVolume);
+    }
+}
+notInvertArrow2.onclick = () => {
+    if(currentSfxValue >= 0 && currentSfxValue < 100){
+        sfxVolume += 0.05
+        currentSfxValue += 5;
+        sfx_value.innerHTML = currentSfxValue + "%";
+        setSfxVolume(sfxVolume);
+    }
+}
+invertArrow1.onclick = () => {
+    if(currentMusicValue > 0 && currentMusicValue <= 100){
+        musicVolume -= 0.05
+        currentMusicValue -= 5;
+        music_value.innerHTML = currentMusicValue + "%";
+        setMusicVolume(musicVolume);
+    }
+}
+invertArrow2.onclick = () => {
+    if(currentSfxValue > 0 && currentSfxValue <= 100){
+        sfxVolume -= 0.05
+        currentSfxValue -= 5;
+        sfx_value.innerHTML = currentSfxValue + "%";
+        setSfxVolume(sfxVolume);
     }
 }
 
-setVolume(1);
+let musicEditorOpened = false;
+
+note_button.onclick = () => {
+    if(inGame && !escShowed){
+        if(musicEditorOpened){
+            music_editor.style.display = "none";
+            musicEditorOpened = false;
+            black.style.opacity = "0";
+        }else{
+            music_editor.style.display = "flex";
+            musicEditorOpened = true;
+            black.style.opacity = "0.6";
+        }
+    }
+}
+
+music_editor_back.onclick = () => {
+    if(musicEditorOpened){
+        music_editor.style.display = "none";
+        musicEditorOpened = false;
+        black.style.opacity = "0";
+    }
+}
 
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect == true) {
@@ -60,22 +164,66 @@ let doorTimeout = false;
 let setTimeoutDoor;
 
 playButton.onclick = () => {
-    drawing();
     playButton.style.animationName = "blink"
     playButton.style.animationPlayState = "running";
     black.style.opacity = "1";
+    tutorialButton.style.opacity = "0%";
+    tutorialButton.style.pointerEvents = "none";
+    characters.style.display = "block";
+    characters.style.animationName = "bottomToMid"
+    characters.style.animationPlayState = "running";
+    playButton.style.pointerEvents = "none";
+    tutorialButton.style.pointerEvents = "none";
+    text.style.opacity = "0";
     setTimeout(() => {
-        music.src = "./res/music/lobby_music.mp3";
-        music.play();
-        game.style.display = "block";
-        startMenu.style.display = "none";
-        inGame = true;
-        playButton.style.animationName = "none"
-        playButton.style.animationPlayState = "none";
-        setTimeout(() => {1
-            black.style.opacity = "0";
-        }, 50)
-    }, 800);
+        tutorialBtnSliding = false;
+        tutorialBtnShowed = true;
+    }, 1000);
+}
+
+let tutorialBtnShowed = false;
+let tutorialBtnSliding = false;
+
+tutorialButton.onclick = () => {
+    tutorialBtnSliding = true;
+    paper.style.display = "block";
+    paper.style.animationName = "rightToMid"
+    paper.style.animationPlayState = "running";
+    playButton.style.pointerEvents = "none";
+    tutorialButton.style.pointerEvents = "none";
+    setTimeout(() => {
+        tutorialBtnSliding = false;
+        tutorialBtnShowed = true;
+    }, 1000);
+}
+
+paper.onclick = () => {
+    if(tutorialBtnShowed){
+        tutorialBtnSliding = true;
+        paper.style.display = "block";
+        paper.style.animationName = "midToRight"
+        paper.style.animationPlayState = "running";
+        setTimeout(() => {
+            tutorialBtnSliding = false;
+            tutorialBtnShowed = false;
+            playButton.style.pointerEvents = "auto";
+            tutorialButton.style.pointerEvents = "auto";
+        }, 1000);
+    }
+}
+
+
+const menuToLobby = () => {
+    music.src = "./res/music/lobby_music.mp3";
+    music.play();
+    game.style.display = "block";
+    startMenu.style.display = "none";
+    inGame = true;
+    playButton.style.animationName = "none"
+    playButton.style.animationPlayState = "none";
+    setTimeout(() => {
+        black.style.opacity = "0";
+    }, 50)
 }
 
 let x;
@@ -93,6 +241,48 @@ spawnCords();
 let spawnGhostCords = () => {
     xGhost = 10000;
     yGhost = 10000;
+}
+
+let player;
+let playingAsRioter;
+let playingAsRuby;
+
+const movingCharactersAndFullBlack = () => {
+    characters.style.display = "block";
+    characters.style.animationName = "midToBottom"
+    characters.style.animationPlayState = "running";
+    fullBlack.style.display = "block";
+    playButton.style.display = "none";
+    note_button.style.zIndex = "3";
+    escape_button.style.zIndex = "3";
+    setTimeout(() => {
+        fullBlack.style.opacity = "1";
+    }, 10);
+    setTimeout(() => {
+        characters.style.display = "none";
+        menuToLobby();
+        drawing();
+        fullBlack.style.opacity = "0";
+        setTimeout(() => {
+            note_button.style.zIndex = "11";
+            escape_button.style.zIndex = "11";
+        }, 800);
+    }, 1000);
+}
+
+man.onclick = () => { //Choosing Character - Rioter
+    characters.style.display = "none";
+    player =  "./res/img/rioter.png";
+    playingAsRioter = true;
+    playingAsRuby = false;
+    movingCharactersAndFullBlack();
+}
+woman.onclick = () => { //Choosing Character - Ruby
+    characters.style.display = "none";
+    player =  "./res/img/ruby.png";
+    playingAsRioter = false;
+    playingAsRuby = true;
+    movingCharactersAndFullBlack();
 }
 
 let height = 40;
@@ -123,10 +313,12 @@ let portalCordsY2 = 0;
 
 //----------------------------------------DOORS COLLISION in Menu
 
+let lobbyDoorCol = false; //Help for sfx door
+let finalDoorUnlocked = true; //Can let you go to the Final Door while is boss dead
 let doorCol = false;
-let helpNum;
 
 const doorsCollision = () => {
+    lobbyDoorCol = false;
     doorCol = false;
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] >= 50 && platformLevel1[i] <= 64 || platformLevel1[i] == 34) {
@@ -142,10 +334,11 @@ const doorsCollision = () => {
                     helpNum = 15;
                 }else if(platformLevel1[i] != 34){
                     helpNum = platformLevel1[i] - 50;
+                    lobbyDoorCol = true;
                 }
                 doorCol = true;
                 c.font = "20px VT323, monospace";
-                if(finished[helpNum] == 2){
+                if(finished[helpNum] == 2 || !finalDoorUnlocked){
                     c.fillStyle = "red";
                     c.fillText("LOCKED", platformX + 7, platformY);
                 }else{
@@ -228,21 +421,36 @@ const bossMoveX = () => {
 let entered = false;
 
 window.addEventListener('keydown', (event) => {
-    if ((event.key == "e" || event.key == "E") && doorCol && !entered && finished[helpNum] != 2 && inGame) {
+    if ((event.key == "e" || event.key == "E") && doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame) {
         entered = true;
         enterFunction();
     }
 })
 
-let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, endBossLava2;
+const enterMobileFunction = () => {
+    if (doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame) {
+        entered = true;
+        enterFunction();
+    }
+}
+
+let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, bossLava3;
+let nonStopShake;
 
 const enterFunction = () => {
+    if(lobbyDoorCol){
+        sfx.src = "./res/sfx/door.mp3";
+        sfx.play();
+    }
     music.pause();
     inGame = false;
     setTransitionCords();
-    transition2.style.opacity = "0";
-    transition1.style.opacity = "1";
-    transition1.play();
+    fadeInTransition();
+    setTimeout(() => {
+        transition2.currentTime = 0;
+        transition2.style.opacity = "0";
+        transition2.pause();   
+    }, 100);
     setTimeout(() => {
         inGame = true;
         platformLevel1 = [...map[helpNum]];
@@ -253,9 +461,8 @@ const enterFunction = () => {
                 y = 500
             }
             spawnCords();
-            setVolume(0.6);
             music.src = "./res/music/song0.mp3";
-            doorsTime = 23900;
+            doorsTime = 30000;
             music.play();
             spawnGhostCords = () =>{
                 xGhost = 900;
@@ -268,7 +475,6 @@ const enterFunction = () => {
                 y = 500;
             }
             spawnCords();
-            setVolume(0.2);
             music.src = "./res/music/song1.mp3";
             doorsTime = 27900;
             music.play();
@@ -283,7 +489,6 @@ const enterFunction = () => {
                 y = 380;
             }
             spawnCords();
-            setVolume(0.3);
             darkness = true;
             music.src = "./res/music/song2.mp3";
             doorsTime = 37100;
@@ -294,7 +499,6 @@ const enterFunction = () => {
                 y = 500;
             }
             spawnCords();
-            setVolume(0.3);
             music.src = "./res/music/song3.mp3";
             doorsTime = 31000;
             music.play();
@@ -311,7 +515,6 @@ const enterFunction = () => {
                 y = 470;
             }
             spawnCords();
-            setVolume(0.4);
             music.src = "./res/music/song4.mp3";
             doorsTime = 23000;
             music.play();
@@ -321,7 +524,6 @@ const enterFunction = () => {
                 y = 470;
             }
             spawnCords();
-            setVolume(0.25);
             music.src = "./res/music/song5.mp3";
             doorsTime = 30000;
             music.play();
@@ -336,9 +538,8 @@ const enterFunction = () => {
                 y = 470;
             }
             spawnCords();
-            setVolume(0.3);
             music.src = "./res/music/song6.mp3";
-            doorsTime = 31000;
+            doorsTime = 39000;
             music.play();
         }else if(helpNum == 7){
             spawnCords = () =>{
@@ -346,7 +547,6 @@ const enterFunction = () => {
                 y = 500;
             }
             spawnCords();
-            setVolume(0.3);
             darkness = true;
             music.src = "./res/music/song7.mp3";
             doorsTime = 48000;
@@ -357,9 +557,8 @@ const enterFunction = () => {
                 y = 400;
             }
             spawnCords();
-            setVolume(0.25);
             music.src = "./res/music/song8.mp3";
-            doorsTime = 38000;
+            doorsTime = 40000;
             music.play();
         }else if(helpNum == 9){
             rising.style.display = "block";
@@ -369,7 +568,6 @@ const enterFunction = () => {
                 y = 470;
             }
             spawnCords();
-            setVolume(0.25);
             music.src = "./res/music/song9.mp3";
             doorsTime = 28000;
             music.play();
@@ -379,7 +577,6 @@ const enterFunction = () => {
                 y = 500;
             }
             spawnCords();
-            setVolume(0.2);
             music.src = "./res/music/song10.mp3";
             doorsTime = 30000;
             music.play();
@@ -394,7 +591,6 @@ const enterFunction = () => {
                 y = 80;
             }
             spawnCords();
-            setVolume(0.4);
             music.src = "./res/music/song11.mp3";
             doorsTime = 36000;
             music.play();
@@ -404,7 +600,6 @@ const enterFunction = () => {
                 y = 510;
             }
             spawnCords();
-            setVolume(0.3);
             darkness = true;
             music.src = "./res/music/song12.mp3";
             doorsTime = 36000;
@@ -420,7 +615,6 @@ const enterFunction = () => {
                 y = 520;
             }
             spawnCords();
-            setVolume(0.3);
             music.src = "./res/music/song13.mp3";
             doorsTime = 54000;
             music.play();
@@ -436,15 +630,13 @@ const enterFunction = () => {
                 x = 40;
                 y = 520;
             }
+            finished[14] = 1; //Boss Beated -> Level 15 Doors are now green
             spawnCords();
-            setVolume(0.8);
             music.src = "./res/music/ending.mp3";
             music.play();
         }
         setTransitionCords();
-        transition1.style.opacity = "0";
-        transition2.style.opacity = "1";
-        transition2.play();
+        fadeOutTransition();
         saveGhostCordsX = xGhost;
         saveGhostCordsY = yGhost;
         if(helpNum != 15){
@@ -459,6 +651,7 @@ const enterFunction = () => {
 
 //BOSS LEVEL
 const bossLevel = () => {
+    finalDoorUnlocked = false;
     generatorAttackFunction();
     gravity();
     spawnCords = () => {
@@ -472,11 +665,12 @@ const bossLevel = () => {
     heart2.style.display = "block";
     heart3.style.display = "block";
     hearts = 3;
-    bossX = 452;
+    bossX = 474;
     bossY = 450;
     playingBossFight = true;
+    sfx_boss_talk.src = "./res/sfx/killyou.mp3";
+    sfx_boss_talk.play();
     music.currentTime = 0;
-    setVolume(0.5);
     music.src = "./res/music/finalboss.mp3";
     doorsTime = 76200;
     music.play();
@@ -502,6 +696,7 @@ const bossLevel = () => {
         black.style.transition = "opacity 0s"
         black.style.opacity = 1;
         risingLavaActivated = false;
+        lavaIncreaseValue = 3.6;
         lavaY = 576;
         risingPercent = risingPercentOriginal;
         rising.style.bottom = risingPercent + "%"
@@ -536,20 +731,16 @@ const bossLevel = () => {
         risingLavaActivated = true;
         rising.style.display = "block";
     }, 61500);
-    endBossLava2 = setTimeout(() => {
-        shake();
-        black.style.transition = "opacity 0s"
-        black.style.opacity = 1;
-        risingLavaActivated = false;
-        lavaY = 576;
-        risingPercent = risingPercentOriginal;
-        rising.style.bottom = risingPercent + "%"
-        rising.style.display = "none";
-        setTimeout(() => {
-            black.style.transition = "opacity 0.3s"
-            black.style.opacity = 0; 
-        }, 20);
-    }, 76200);
+    bossLava3 = setTimeout(() => {
+        shake()
+        risingLavaActivated = true;
+        rising.style.display = "block";
+        risingIncreaseValue = 1.32;
+        lavaIncreaseValue = 7.92;
+        nonStopShake = setInterval(() => {
+            shake()
+        }, 300);
+    }, 67000);
 }
 
 //Boss Attack
@@ -601,6 +792,18 @@ let playingBossFight = false;
 let hearts = 3;
 
 let resistence = false;
+let deadSoundCanBeUse = true;
+
+const grayScaleEffect = () => {
+    canvas.style.filter = "grayscale(1)";
+    setTimeout(() => {
+        canvas.style.transition = "filter 0.5s";
+        canvas.style.filter = "grayscale(0)";
+        setTimeout(() => {
+            canvas.style.transition = "filter 0s";
+        }, 250);
+    },500);
+}
 
 const dead = () => {
     if(!playingBossFight){
@@ -628,6 +831,8 @@ const dead = () => {
         drawPlatform();
         dark();
         if(risingLavaActivated){
+            risingIncreaseValue = 0.6;
+            lavaIncreaseValue = 3.6;
             lavaY = 576;
             risingPercent = risingPercentOriginal;
             rising.style.bottom = risingPercent + "%"
@@ -637,6 +842,7 @@ const dead = () => {
             doorTimeout = false;
             frameDoor = 0;
         }
+        grayScaleEffect();
     }else{
         if(!resistence || frameDoor == 3 || usedRetry){
             if(hearts == 3){
@@ -648,8 +854,10 @@ const dead = () => {
             }
             resistence = true;
             hearts--;
-            if(hearts == 0 || frameDoor == 3 || usedRetry){
+            if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
                 clearInterval(bossAttackGenerator);
+                grayScaleEffect();
+                sfx_boss_laugh.pause();
                 if(usedRetry){
                     usedRetry = false;
                 }
@@ -665,6 +873,8 @@ const dead = () => {
                 hp.style.width = currentHp + "%";
                 platformLevel1 = [...map[14]]
                 risingLavaActivated = false;
+                risingIncreaseValue = 0.6;
+                lavaIncreaseValue = 3.6;
                 lavaY = 576;
                 risingPercent = risingPercentOriginal;
                 rising.style.bottom = risingPercent + "%"
@@ -676,12 +886,16 @@ const dead = () => {
                 hearts = 3;
                 clearTimeout(breakBottom);
                 clearTimeout(bossLava);
-                clearTimeout(bossLava2)
+                clearTimeout(bossLava2);
+                clearTimeout(bossLava3);
                 clearTimeout(endBossLava);
-                clearTimeout(endBossLava2);
                 clearTimeout(bossDarkness);
                 clearTimeout(endBossDarkness);
+                clearInterval(nonStopShake);
                 bossLevel();
+            }else{
+                sfx_boss_laugh.src = "./res/sfx/laugh.mp3";
+                sfx_boss_laugh.play();
             }
             setTimeout(() => {
                 resistence = false
@@ -693,10 +907,52 @@ const dead = () => {
             frameDoor = 0;
         }
     }
+    if(deadSoundCanBeUse){
+        sfx_dead.src = "./res/sfx/died.mp3";
+        sfx_dead.play();
+        deadSoundCanBeUse = false;
+        setTimeout(() => {
+            deadSoundCanBeUse = true;
+        }, 300);
+    }
+   
+    
     gravity();
 }
 
 //---------------------------------------- ESCButtons
+
+//Fade **IN** Transition Function
+const fadeInTransition = () => {
+    transition1.currentTime = 0;
+    setTimeout(() => {
+        transition1.style.opacity = "1";
+        transition1.play(); 
+    }, 30);
+    setTimeout(() => {
+        setTimeout(() => {
+            transition2.currentTime = 0;
+        }, 30);
+        transition2.style.opacity = "0";
+        transition2.pause();   
+    }, 100);
+}
+
+//Fade **OUT** Transition Function
+const fadeOutTransition = () => {
+transition2.currentTime = 0;
+    setTimeout(() => {
+        transition2.style.opacity = "1";
+        transition2.play();  
+    }, 30);
+    setTimeout(() => {
+        transition1.currentTime = 0;
+        setTimeout(() => {
+            transition1.style.opacity = "0";
+            transition1.pause();   
+        }, 30);
+    }, 100);
+}
 
 let backToLobbyEntered = false;
 
@@ -704,14 +960,17 @@ const backToLobby = () => {
     clearInterval(bossAttackGenerator);
     clearTimeout(breakBottom);
     clearTimeout(bossLava);
-    clearTimeout(bossLava2)
+    clearTimeout(bossLava2);
+    clearTimeout(bossLava3);
     clearTimeout(endBossLava);
-    clearTimeout(endBossLava2);
     clearTimeout(bossDarkness);
     clearTimeout(endBossDarkness);
+    clearInterval(nonStopShake);
     clearTimeout(setTimeoutDoor);
     cancelAnimationFrame(bossMoveXId);
     cancelAnimationFrame(bossMoveYId);
+    black.style.opacity = "0";
+    finalDoorUnlocked = true;
     canAttack = false;
     myHp.style.display = "none";
     hps.style.display = "none";
@@ -725,10 +984,7 @@ const backToLobby = () => {
     music.currentTime = 0;
     inGame = false;
     setTransitionCords();
-    transition2.style.opacity = "0";
-    transition1.style.opacity = "1";
-    transition1.play();
-    black.style.opacity = "0";
+    fadeInTransition();
     esc.style.display = "none"; 
     escShowed = false;
     setTimeout(() => {
@@ -742,6 +998,8 @@ const backToLobby = () => {
         }
         frameDoorFinal = 3;
         risingLavaActivated = false;
+        risingIncreaseValue = 0.6;
+        lavaIncreaseValue = 3.6;
         lavaY = 576;
         risingPercent = risingPercentOriginal;
         rising.style.bottom = risingPercentOriginal + "%"
@@ -801,9 +1059,7 @@ const backToLobby = () => {
             y = 80;
         }
         setTransitionCords();
-        transition1.style.opacity = "0";
-        transition2.style.opacity = "1";
-        transition2.play();
+        fadeOutTransition()
         backToLobbyEntered = false;
         gravity();
     }, 1300);
@@ -818,13 +1074,29 @@ button_resume.onclick = () => {
 }
 button_menu.onclick = () => {
     inGame = false;
+    text.style.opacity = "1";
+    note_button.style.zIndex = "3";
+    escape_button.style.zIndex = "3";
+    fullBlack.style.opacity = "1";
     black.style.opacity = "1";
     esc.style.display = "none"; 
     escShowed = false;
+    tutorialButton.style.pointerEvents = "auto"; //Now I can again click tutorialButton
+    tutorialButton.style.opacity = "100%";
+    music.currentTime = 0; //OFF Lobby Music 
+    music.pause();
     setTimeout(() => {
         game.style.display = "none";
         startMenu.style.display = "block";
+        playButton.style.pointerEvents = "auto";
+        playButton.style.display = "block";
         black.style.opacity = "0";
+        fullBlack.style.opacity = "0";
+        setTimeout(() => {
+            fullBlack.style.display = "none";
+            note_button.style.zIndex = "11";
+            escape_button.style.zIndex = "11";
+        }, 1000);
     }, 1300);
 }
 
@@ -877,7 +1149,7 @@ const escFunction = () => {
 }
 
 escape_button.onclick = () => {
-    if(inGame){
+    if(inGame && !musicEditorOpened){
         escFunction();
     }
 }
@@ -889,7 +1161,8 @@ let finished = new Array (15)
 for (let index = 0; index < finished.length; index++) {
     finished[index] = 2;
 }
-finished[0] = 0;
+
+finished[helpNum] = 0; // Unlock 1st level
 
 //----------------------------------------UNLOCK ALL DOORS FUNCTION
 
@@ -902,13 +1175,13 @@ const unlockAll = () => {
         }
     }
 }
-
+/*
 window.addEventListener('keydown', (event) => {
     if (event.key == "Delete" && allUnclocked == false && inGame == true) {
         allUnclocked = true;
         unlockAll();
     }
-})
+})*/
 
 //---------------------------------------- OBJECTS Collision
 
@@ -957,7 +1230,7 @@ const objectsCollision = () => {
                 dead();
             }
         }
-        
+        //Portal 1
         if (platformLevel1[i] == 11) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -967,10 +1240,13 @@ const objectsCollision = () => {
                 x + width >= platformX + 10 &&
                 x <= platformX + 22
             ) {
+                sfx.src = "./res/sfx/portal_sfx.mp3";
+                sfx.play();
                 x = cordsPortalX2;
                 y = cordsPortalY2;
             }
         }
+        //Portal 2
         if (platformLevel1[i] == 12) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -980,6 +1256,8 @@ const objectsCollision = () => {
                 x + width >= platformX + 10 &&
                 x <= platformX + 22
             ) {
+                sfx.src = "./res/sfx/portal_sfx.mp3";
+                sfx.play();
                 x = cordsPortalX1;
                 y = cordsPortalY1;
             }
@@ -995,12 +1273,17 @@ const objectsCollision = () => {
                 x <= platformX + 40
             ) {
                 if(!backToLobbyEntered){
-                    finished[helpNum] = 1;
+                    sfx.src = "./res/sfx/completed.mp3";
+                    sfx.play();
+                    finished[helpNum] = 1; // Level Completed -> Doors are now GREEN
                     if(finished[helpNum + 1] != 1){
-                        finished[helpNum + 1] = 0;
+                        finished[helpNum + 1] = 0; // Another Level is available -> removed LOCK
                     }
                     backToLobby();
                     backToLobbyEntered = true;
+
+                    localStorage.setItem('finished_' + helpNum, finished[helpNum]);
+                    localStorage.setItem('unlocked_' + helpNum, finished[helpNum + 1]);
                 }
             }
         }
@@ -1014,6 +1297,8 @@ const objectsCollision = () => {
                 x <= platformX + 32
             ) {
                 platformLevel1[i] = 0;
+                sfx.src = "./res/sfx/key_pick.mp3";
+                sfx.play();
                 for (let index = 0; index < platformLevel1.length; index++) {
                     if(platformLevel1[index] == 32 || platformLevel1[index] == 33){
                         platformLevel1[index] = 0;
@@ -1035,11 +1320,37 @@ const objectsCollision = () => {
                 c.fillText("Thanks For Playing <3", 20, 130);
                 p.font = "30px VT323, monospace";
                 p.fillStyle = "lime";
-                p.fillText("Game By: Philip Buresh", 30, 160);
+                p.fillText("Game By: Philip B.", 30, 160);
             }
         }
     }
 }
+
+window.onload =  () => {
+    for (let i = 0; i <= 15; i++) {
+        let savedValue = localStorage.getItem('unlocked_' + i);
+        if (savedValue !== null) {
+            finished[i + 1] = parseInt(savedValue); // Convert to numbers
+        }
+    }
+    for (let i = 0; i <= 15; i++) {
+        let savedValue = localStorage.getItem('finished_' + i);
+        if (savedValue !== null) {
+            finished[i] = parseInt(savedValue); // Convert to numbers
+        }
+    }
+}
+
+const resetLocalStorage = () => {
+    for (let i = 0; i <= 15; i++) {
+        localStorage.removeItem('finished_' + i);
+    }
+    for (let i = 0; i <= 15; i++) {
+        localStorage.removeItem('unlocked_' + i);
+    }
+}
+
+//resetLocalStorage();
 
 
 //---------------------------------------- ORB Collision
@@ -1161,6 +1472,9 @@ let under = () => {
 
 //----------------------------------------Kolize SPODKU CANVASU a BLOCKŮ
 
+let onRock = false;
+let onWood = false;
+
 const bottomCollision = () => {
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
@@ -1172,11 +1486,25 @@ const bottomCollision = () => {
                 x + width >= platformX &&
                 x <= platformX + 32
             ) {
+                if(sfx_land.paused && sfx_land.src != "./res/sfx/small_land.mp3" && velocity >= 3 && velocity < 8 && !ladderCol){
+                    sfx_land.src = "./res/sfx/small_land.mp3"
+                    sfx_land.play();
+                }else if(sfx_land.paused && sfx_land.src != "./res/sfx/large_land.mp3" && velocity >= 8 && !ladderCol){
+                    sfx_land.src = "./res/sfx/large_land.mp3"
+                    sfx_land.play();
+                }
                 stillJumping = false;
                 y = platformY - height;
                 velocity = 0;
                 velocityGoingDown = 0;
                 orbUsed = false;
+                if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 || platformLevel1[i] == 33){
+                    onRock = true; 
+                    onWood = false;
+                 }else if(platformLevel1[i] == 7 || platformLevel1[i] == 19 || platformLevel1[i] == 18 || platformLevel1[i] == 9){
+                     onRock = false;
+                     onWood = true;
+                 }
                 cancelAnimationFrame(gravityId);
                 cancelAnimationFrame(goingDownId);
                 break;
@@ -1261,6 +1589,8 @@ const ladderCollision = () => {
                 if(crouched){
                     unCrouch();
                 }
+                onRock = false;
+                onWood = false;
                 ladderCol = true;
                 cancelAnimationFrame(gravityId)
                 canGravityActivate = true;
@@ -1298,6 +1628,11 @@ const goingUp = () => {
     deltaGoingdUp = nowGoingdUp - thenGoingdUp;
     if (deltaGoingdUp > interval) {
         thenGoingdUp = nowGoingdUp - (deltaGoingdUp % interval);
+        if(sfx_climb.paused && velocityGoingUp > 1 && ladderCol && !onWood || onWood){
+            sfx_walk.pause();
+            sfx_climb.src = "./res/sfx/ladder.mp3"
+            sfx_climb.play();
+        }
         y -= velocityGoingUp;
         upCollision();
     }
@@ -1322,6 +1657,11 @@ const goingDown = () => {
     deltaGoingdDown = nowGoingdDown - thenGoingdDown;
     if (deltaGoingdDown > interval) {
         thenGoingdDown = nowGoingdDown - (deltaGoingdDown % interval);
+        if(sfx_climb.paused && velocityGoingDown > -1 && ladderCol){
+            sfx_walk.pause();
+            sfx_climb.src = "./res/sfx/ladder.mp3"
+            sfx_climb.play();
+        }
         y += velocityGoingDown;
         bottomCollision();
     }
@@ -1342,6 +1682,19 @@ let gravity = () => {
         deltaDown = nowDown - thenDown;
         if (deltaDown > interval) {
             thenDown = nowDown - (deltaDown % interval);
+            //SFX Walking
+            if(sfx_walk.paused && (onWood || onRock) && (velocityRight > 1 || velocityLeft > 1) && !crouched && !ladderCol && velocity < 0.3 && !isJumping) {
+                if(onWood){
+                    sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
+                }else{
+                    sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+                }
+                sfx_walk.pause();
+                sfx_walk.play();
+            }else if(!sfx_walk.paused && velocityRight <= 1 && velocityLeft <= 1 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3){
+                sfx_walk.pause();
+            }
+            sfx_climb.pause();
             if(crouched == true && velocity > 1){
                 unCrouch();
             }
@@ -1365,16 +1718,29 @@ let deltaUp;
 
 let jump = () => {
     if((stillJumping == false || canOrbJump == true && orbUsed == false) && ladderCol == false || bounced){
-        bounced = false;
-        if(crouched == true){
-            unCrouch();
+        onRock = false;
+        onWood = false;
+        if(!sfx_walk.paused) {
+            sfx_walk.pause(); //Jumping = OFF SFX Walk
         }
-        if(canOrbJump == true && velocity >= 0){
+        if(crouched == true){
+            unCrouch(); //No crouching while you jumping
+        }
+        if(canOrbJump && velocity >= 0){
             cancelAnimationFrame(gravityId);
             cancelAnimationFrame(jumpingId);
             velocityJump = 0;
             orbUsed = true;
+            sfx_extra_jump.src = "./res/sfx/orb_jump.mp3"
+            sfx_extra_jump.play();
+        }else if(!canOrbJump && velocity >= 0 && !bounced){
+            sfx_jump.src = "./res/sfx/jump.mp3"
+            sfx_jump.play();
+        }else if(!canOrbJump && velocity >= 0 && bounced){
+            sfx_extra_jump.src = "./res/sfx/bonus_jump.mp3"
+            sfx_extra_jump.play();
         }
+        bounced = false;
         headHit = false;
         velocityJump = 16;
         stillJumping = true;
@@ -1406,11 +1772,12 @@ let moveRight = () => {
         deltaRight = nowRight - thenRight;
         if (deltaRight > interval) {
             thenRight = nowRight - (deltaRight % interval);
+            //Crouched
             if(crouched == true && velocityRight >= 1){
                 velocityRight -= 0.12;
                 cancelAnimationFrame(gravityId);
                 gravity();
-            }else{
+            }else{ //Not Crouched
                 if(isMovingRight == true){
                     if(velocityRight < 4 && crouched == false){
                         velocityRight += 0.12;
@@ -1420,13 +1787,22 @@ let moveRight = () => {
                         gravity();
                     }else if(velocityRight + 0.12 >= 4){
                         velocityRight = 4;
+                    }else if(velocityRight >= 2 && velocityLeft >= 2){//If you walk to two sides at once, you won't move
+                        velocityRight = 0;
+                        velocityLeft = 0;
                     }
+                    
                 }else if(isMovingRight == false){
                     velocityRight -= 0.2;
                     if(velocityRight <= 0.1){
+                        if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
+                            turnedLeft = false;
+                            turnedRight = true;
+                        }
                         cancelAnimationFrame(animationIdRight);
                     }
                 }
+            
             }
             for (let i = 0; i < platformLevel1.length; i++) {
                 if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
@@ -1438,6 +1814,13 @@ let moveRight = () => {
                         x + width + velocityRight > platformX &&
                         x < platformX + 32
                     ) {
+                        if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
+                            turnedLeft = false;
+                            turnedRight = true;
+                        }
+                        if(velocityRight >= 1 && velocityLeft >= 1){//If you walk to two sides at once, you won't move
+                            velocityLeft = 0;
+                        }
                         velocityRight = 0;
                         break;
                     }
@@ -1475,13 +1858,12 @@ let moveLeft = () => {
         deltaLeft = nowLeft - thenLeft;
         if (deltaLeft > interval) {
             thenLeft = nowLeft - (deltaLeft % interval);
+            //Crouched
             if(crouched == true && velocityLeft >= 1){
                 velocityLeft -= 0.12;
-                if(crouched == true){
-                    cancelAnimationFrame(gravityId);
-                    gravity();
-                }
-            }else{
+                cancelAnimationFrame(gravityId);
+                gravity();
+            }else{ //Not Crouched
                 if(isMovingLeft == true){
                     if(velocityLeft < 4 && crouched == false){
                         velocityLeft += 0.12;
@@ -1491,10 +1873,17 @@ let moveLeft = () => {
                         gravity();
                     }else if(velocityLeft + 0.12 >= 4){
                         velocityLeft = 4;
+                    }else if(velocityRight >= 2 && velocityLeft >= 2){ //If you walk to two sides at once, you won't move
+                        velocityRight = 0;
+                        velocityLeft = 0;
                     }
                 }else if(isMovingLeft == false){
                     velocityLeft -= 0.2;
                     if(velocityLeft <= 0.1){
+                        if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
+                            turnedLeft = true;
+                            turnedRight = false;
+                        }
                         cancelAnimationFrame(animationIdLeft);
                     }
                 }
@@ -1509,6 +1898,13 @@ let moveLeft = () => {
                         x - velocityLeft < platformX + 32 &&
                         x > platformX
                     ) {
+                        if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
+                            turnedLeft = true;
+                            turnedRight = false;
+                        }
+                        if(velocityRight >= 1 && velocityLeft >= 1){//If you walk to two sides at once, you won't move
+                            velocityRight = 0;
+                        }
                         velocityLeft = 0;
                         break;
                     }
@@ -1535,6 +1931,7 @@ let moveLeft = () => {
 let punched = false;
 let alreadyPunched = false;
 let punchCooldown = false;
+let canPlayBreakSound = true;
 
 let currentHp = 100;
 
@@ -1542,11 +1939,21 @@ const punch = () => {
     if(!crouched && !punchCooldown){
         punchCooldown = true;
         punched = true;
+        if(playingAsRuby){
+            sfx_player.src = "./res/sfx/ruby_attack.mp3";
+        }else if(playingAsRioter){
+            sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
+        }
+        sfx_player.play();
         if(canAttack){
+            sfx_miss.pause();
+            sfx_punch.src = "./res/sfx/punch.mp3";
+            sfx_punch.play();
             currentHp -= 5.5566; //5.5566
             hp.style.width = currentHp + "%";
             if(currentHp <= 0 && !backToLobbyEntered){
                 deadBoss();
+                finalDoorUnlocked = true;
             }
         }else{
             for (let i = 0; i < platformLevel1.length; i++) {
@@ -1554,19 +1961,25 @@ const punch = () => {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
-                        y + height > platformY&&
+                        (y + height > platformY&&
                         y < platformY + 32 && 
                         x + width > platformX - 10 &&
-                        x < platformX && turnedRight
-                    ) {
-                        platformLevel1[i] = 0;
-                    } else if (
-                        y + height > platformY &&
+                        x < platformX && turnedRight)
+                        ||
+                        (y + height > platformY &&
                         y < platformY + 32 &&
                         x < platformX + 42 &&
-                        x > platformX + 32 && turnedLeft
+                        x > platformX + 32 && turnedLeft)
                     ) {
                         platformLevel1[i] = 0;
+                        if(canPlayBreakSound){ //When you hit 2 blocks, sound will be played once
+                            canPlayBreakSound = false;
+                            sfx_punch.src = "./res/sfx/wall_break.mp3";
+                            sfx_punch.play();
+                            setTimeout(() => {
+                                canPlayBreakSound = true;
+                            }, 500);
+                        }
                     }
                 }
             }
@@ -1592,6 +2005,11 @@ const deadBoss = () => {
     playingBossFight = false;
     bossX = 1000000;
     bossY = 0;
+    if(playingAsRioter){
+        scene.src = "./res/vid/rioter_scene.mp4";
+    }else{
+        scene.src = "./res//vid/ruby_scene.mp4";
+    }
     scene.style.display = "block";
     scene.play();
     clearInterval(bossAttackGenerator);
@@ -1606,6 +2024,7 @@ const deadBoss = () => {
     hps.style.display = "none"
     myHp.style.display = "none"
     risingLavaActivated = false;
+    lavaIncreaseValue = 3;
     lavaY = 576;
     risingPercent = risingPercentOriginal;
     rising.style.bottom = risingPercent + "%"
@@ -1617,11 +2036,12 @@ const deadBoss = () => {
     hearts = 3;
     clearTimeout(breakBottom);
     clearTimeout(bossLava);
-    clearTimeout(bossLava2)
+    clearTimeout(bossLava2);
+    clearTimeout(bossLava3);
     clearTimeout(endBossLava);
-    clearTimeout(endBossLava2);
     clearTimeout(bossDarkness);
     clearTimeout(endBossDarkness);
+    clearInterval(nonStopShake);
     spawnCords();
     gravity();
     platformLevel1 = [...map[14]];
@@ -1677,6 +2097,7 @@ window.addEventListener('keydown', (event) => {
             crouch();
             currentFrame = 0;            
         } else if (ladderCol && !alreadyGoingDown){
+            sfx_climb.pause();
             goingDown();
         }
         downPressed = true;
@@ -1686,7 +2107,13 @@ window.addEventListener('keydown', (event) => {
         }
         alreadyPunched = true;
     } else if (event.key == "Escape" && inGame) {
-        escFunction();
+        if(musicEditorOpened){
+            music_editor.style.display = "none";
+            musicEditorOpened = false;
+            black.style.opacity = "0";
+        }else{
+            escFunction();
+        }
     }
 });
 
@@ -1698,13 +2125,22 @@ window.addEventListener('keyup', (event) => {
         if(ladderCol){
             cancelAnimationFrame(goingUpId);
             velocityGoingUp = 0;
+            sfx_climb.pause();
         }
     }
     if (event.key == right || event.key == RIGHT) {
         isMovingRight = false;
+        if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
+            turnedLeft = true;
+            turnedRight = false;
+        }
     }
     if (event.key == left || event.key == LEFT) {
         isMovingLeft = false;
+        if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
+            turnedLeft = false;
+            turnedRight = true;
+        }
     }
     if (event.key == down ||event.key == DOWN) {
         downPressed = false;
@@ -1720,6 +2156,7 @@ window.addEventListener('keyup', (event) => {
             velocityGoingDown = 0;
             cancelAnimationFrame(goingDownId);
             alreadyGoingDown = false;
+            sfx_climb.pause();
         }
     }
     if (event.key == space && inGame) {

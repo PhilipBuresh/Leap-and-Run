@@ -12,17 +12,71 @@
 </head>
 <body>
     <audio loop id="music" src="" type="audio/mpeg"></audio>
+    <audio id="sfx" type="audio/mpeg"></audio>
+    <audio id="sfx_land" type="audio/mpeg"></audio>
+    <audio id="sfx_miss" type="audio/mpeg"></audio>
+    <audio id="sfx_dead" type="audio/mpeg"></audio>
+    <audio id="sfx_player" type="audio/mpeg"></audio>
+    <audio id="sfx_walk" type="audio/mpeg"></audio>
+    <audio id="sfx_climb" type="audio/mpeg"></audio>
+    <audio id="sfx_jump" type="audio/mpeg"></audio>
+    <audio id="sfx_punch" type="audio/mpeg"></audio>
+    <audio id="sfx_extra_jump" type="audio/mpeg"></audio>
+    <audio id="sfx_boss_talk" type="audio/mpeg"></audio>
+    <audio id="sfx_boss_laugh" type="audio/mpeg"></audio>
+    <!--
+        https://uppbeat.io/ - orb jump
+        https://pixabay.com/
+        Eccentric Sounds - i will kill you
+    -->
     <div id="container">
         <div id="startMenu">
-            <div id="text">Leap&Run</div>
-            <div id="wasd">Play with: WASD and Space</div>
-            <div id="playButton">Play!</div>
+            <img id="text" src="./res/img/name.png" alt="name" draggable="false">
+            <div id="startMenuBtns">
+                <div id="playButton">Play!</div>
+                <div id="tutorialButton">Tutorial</div>
+            </div>
         </div>
         <div id="esc">
             <div id="button_resume">Resume [esc]</div>
             <div id="button_retry">Retry</div>
             <div id="button_back">Back to Lobby</div>
             <div id="button_menu">Back to Menu</div>
+        </div>
+        <div id="characters">
+            <div id="images">
+                <div>
+                    <p>Rioter</p>
+                    <img id="man" src="./res/img/man.png" alt="man" draggable="false">
+                </div>
+                <div>
+                    <p>Ruby</p>
+                    <img id="woman" src="./res/img/woman.png" alt="woman" draggable="false">
+                </div>
+            </div>
+            <div id="choose">Choose your Character!</div>
+        </div>
+        <img id="paper" src="./res/gif/paper.gif" alt="paper" draggable="false">
+        <div id="music_editor">
+            <div id="music_volume">
+                <div>
+                    <img id="note_logo" src="./res/img/note.png" alt="note">
+                    <p id="whichAudio">Music</p>
+                </div>
+                <p id="music_value">50%</p>
+                <img id="not_invert_arrow1" src="./res/img/arrow.png" alt="arrow">
+                <img id="invert_arrow1" src="./res/img/arrow.png" alt="arrow">
+            </div>
+            <div id="sfx_volume">
+                <div>
+                    <img id="sfx_logo" src="./res/img/sfx.png" alt="sfx">
+                    <p id="whichAudio">SFX</p>
+                </div>
+                <p id="sfx_value">50%</p>
+                <img id="not_invert_arrow2" src="./res/img/arrow.png" alt="arrow">
+                <img id="invert_arrow2" src="./res/img/arrow.png" alt="arrow">
+            </div>
+            <p id="music_editor_back">Resume [esc]</p>
         </div>
         <div id="game">
             <div id="myHp">
@@ -39,7 +93,7 @@
             <div id="canvas_container">
                 <img id="rising" src="./res/gif/rising.gif" alt="rising">
                 <img id="background" src="./res/img/wall.png" alt="wall">
-                <canvas id="cnv" width="1024" height="576"></canvas>
+                <canvas id="canvas" width="1024" height="576"></canvas>
                 <img id="black" src="./res/img/black.png" alt="black">
                 <video id="transition1">
                     <source src="./res/vid/transition1.webm" type="video/webm">
@@ -48,12 +102,12 @@
                     <source src="./res/vid/transition2.webm" type="video/webm">
                 </video>
                 <video id="scene">
-                    <source src="./res/vid/scene.mp4" type="video/mp4">
+                    <source src="./res/vid/rioter_scene.mp4" type="video/mp4">
                 </video>
             </div>
             <div id="buttons">
                 <div id="left_buttons">
-                    <div id="button_enter" ontouchstart = "enterFunction()"><p>Enter</p></div>
+                    <div id="button_enter" ontouchstart = "enterMobileFunction()"><p>Enter</p></div>
                     <div id="button_up" ontouchstart = "go_up()" ontouchend = "isJumping = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
                     <div id="button_punch" ontouchstart = "go_punch()" ontouchend = "alreadyPunched = false;"><img src="./res/img/punch.png" alt="punch"></div>
                     <div id="button_down" ontouchstart = "go_down();" ontouchend = "go_down_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
@@ -63,12 +117,15 @@
                     <div id="button_right" ontouchstart = "go_right()" ontouchend = "isMovingRight = false;"><img src="./res/img/arrow.png" alt="arrow"></div>
                 </div>
             </div>
-            <img id="youWin" src="./res/gif/youwin.gif" alt="win">
             <div id="escape_button">
                 <div id="first_col"></div>
                 <div id="second_col"></div>
             </div>
-        </div> 
+            <div id="note_button">
+            <img id="note" src="./res/img/note.png" alt="note">
+            </div>
+        </div>
+        <img id="fullBlack" src="./res/img/black.png" alt="black" draggable="false">
     </div>
     <script src="./res/js/draw.js"></script>
     <script src="./res/js/maps.js"></script>

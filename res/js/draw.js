@@ -18,8 +18,8 @@ orbImage.src = "./res/img/orb.png";
 const crackedImage = new Image();
 crackedImage.src = "./res/img/cracked.png";
 
-const woodImage = new Image();
-woodImage.src = "./res/img/wood.png";
+const woodsImage = new Image();
+woodsImage.src = "./res/img/woods.png";
 
 const chainImage = new Image();
 chainImage.src = "./res/img/chain.png";
@@ -57,17 +57,8 @@ bookshelfBackImage.src = "./res/img/bookshelf_back.png"
 const barrelImage = new Image();
 barrelImage.src = "./res/img/barrel.png"
 
-const woodFlipImage = new Image();
-woodFlipImage.src = "./res/img/wood_flip.png"
-
 const ladderImage = new Image();
 ladderImage.src = "./res/img/ladder.png"
-
-const woodBackImage = new Image();
-woodBackImage.src = "./res/img/wood_back.png"
-
-const woodBackFlipImage = new Image();
-woodBackFlipImage.src = "./res/img/wood_back_flip.png"
 
 const doorsImage = new Image();
 doorsImage.src = "./res/img/doors.png"
@@ -119,7 +110,7 @@ const drawPlatform = () => {
         }else if(platformLevel1[index] == 6){
             p.drawImage(crackedImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 7){
-            p.drawImage(woodImage, xBlock, yBlock, 32, 32)
+            p.drawImage(woodsImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 8){
             p.drawImage(chainImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 9){
@@ -140,18 +131,10 @@ const drawPlatform = () => {
             p.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 33){
             p.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 11){
-            cordsPortalX1 = xBlock - 32;
-            cordsPortalY1 = yBlock + 22;
-            p.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-        }else if(platformLevel1[index] == 12){
-            cordsPortalX2 = xBlock + 32;
-            cordsPortalY2 = yBlock + 22;
-            p.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
         }else if(platformLevel1[index] == 18){
             p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 19){
-            p.drawImage(woodFlipImage, xBlock, yBlock, 32, 32)
+            p.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -172,6 +155,14 @@ const drawBackBlocks = () => {
     for (let index = 0; index < platformLevel1.length; index++) {
         if(platformLevel1[index] == 13){
             p.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 11){
+            cordsPortalX1 = xBlock - 32;
+            cordsPortalY1 = yBlock + 22;
+            p.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
+        }else if(platformLevel1[index] == 12){
+            cordsPortalX2 = xBlock + 32;
+            cordsPortalY2 = yBlock + 22;
+            p.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
         }else if(platformLevel1[index] == 14){
             p.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 15){
@@ -185,9 +176,9 @@ const drawBackBlocks = () => {
         }else if(platformLevel1[index] == 26){
             p.drawImage(ladderImage, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 27){
-            p.drawImage(woodBackImage, xBlock, yBlock, 32, 32);
+            p.drawImage(woodsImage, 2 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 28){
-            p.drawImage(woodBackFlipImage, xBlock, yBlock, 32, 32);
+            p.drawImage(woodsImage, 3 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 30){
             p.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 31){
@@ -352,6 +343,8 @@ let risingPercent = -148;
 let risingPercentOriginal = -148;
 let lavaY = 576;
 let risingLavaActivated = false;
+let lavaIncreaseValue = 3.6;
+let risingIncreaseValue = 0.6;
 
 const drawing = () => {
     drawingId = requestAnimationFrame(drawing);
@@ -450,13 +443,13 @@ const drawing = () => {
         if (deltaRise > 200) {
             thenRise = nowRise - (deltaRise % 200);
             if(playingBossFight){
-                risingPercent += 0.6;
+                risingPercent += risingIncreaseValue;;
             }else{
                 risingPercent += 0.3;
             }
             rising.style.bottom = risingPercent + "%"
             if(playingBossFight){
-                lavaY -= 3.6;
+                lavaY -= lavaIncreaseValue;
             }else{
                 lavaY -= 1.8;
             }
@@ -548,6 +541,10 @@ const drawing = () => {
     if (deltaBoss > 250) {
         thenBoss = nowBoss - (deltaBoss % 100);
         currentFrameBoss++
+        if(currentFrameBoss == 6){
+            sfx.src = "./res/sfx/boss_slash.mp3"
+            sfx.play();
+        }
         if(currentFrameBoss % 4 == 0 && !bossAttacking){
             currentFrameBoss = 0;
         }else if(currentFrameBoss % 13 == 0 && bossAttacking){
@@ -560,11 +557,11 @@ const drawing = () => {
 //----------------------------------------Drawing Player
 
 let playerImage = new Image();
-playerImage.src = "./res/img/player.png";
+playerImage.src = "./res/img/rioter.png";
 
 let drawPlayer = () => {
     button_enter.style.display = "none";
-    playerImage.src = "./res/img/player.png";
+    playerImage.src = player;
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched && !ladderCol){ //Right Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();

@@ -1,8 +1,10 @@
 # Leap-and-Run
 <b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
  - Cílem hry je dohrát level za určitý čas, než se zavřou dvěře (lze se orientovat podle hudby, kdy se dveře zavřou).<br>
-<b>Update 0.8:</b><br>
- - <b>Přidaný ENDING + cut scene (hra už jde dohrát)</b><br>
- - <b>Nová Lobby Hudba</b><br>
- - (Coming Soon - SFX, optimalizace, popis kódu,...)<br>
-![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
+<b>LAST Update:</b><br>
+ - <b>NERFNUTÝ</b> Všechny mapy, takže to teď dohraje i noob<br>
+ - Od teď se LEVELY odemikají postupně (pokud chceš a jsi noob, zmáčkni "DELETE" a všechny LEVELY se odemknou)<br>
+ - Přidaný nový item - KEY (Odemkne vám cestu)<br>
+ - BOSS NERF (20HP -> 18HP)<br>
+ - Nově lze zabít DUCHA (musíte mu skočit na hlavu)<br>
+![key](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/62432a62-f22e-4ba9-8de3-d04d48a29631)
