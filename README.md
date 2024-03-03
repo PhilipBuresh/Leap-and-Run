@@ -12,6 +12,6 @@
  - Added Tutorial
  - Fixed PLayer movement
  - New Phase in the Boss Level - Super Fast Lava (Last Final Phase)
- - (Coming Soon - Optimization, Code description, Bug Fixes,...)<br>
+ - (Coming Soon - Optimization, Code description, Bug Fixes, Credits,...)<br>
 ![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
 ![output-onlinegiftools](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/3f542c81-fdb6-4717-821a-9dbf8fa37242)
