@@ -7,7 +7,6 @@ const text = document.getElementById("text");
 const characters = document.getElementById("characters");
 const man = document.getElementById("man");
 const woman = document.getElementById("woman");
-const buttons = document.getElementById("buttons");
 const music = document.getElementById("music");
 const sfx = document.getElementById("sfx");
 const sfx_land = document.getElementById("sfx_land");
@@ -40,7 +39,6 @@ const button_back = document.getElementById("button_back");
 const button_resume = document.getElementById("button_resume");
 const button_retry = document.getElementById("button_retry");
 const button_menu = document.getElementById("button_menu");
-const button_enter = document.getElementById("button_enter");
 const escape_button = document.getElementById("escape_button");
 const hps = document.getElementById("hps");
 const heart1 = document.getElementById("heart1");
@@ -140,11 +138,6 @@ music_editor_back.onclick = () => {
         musicEditorOpened = false;
         black.style.opacity = "0";
     }
-}
-
-const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-if (deviceDetect == true) {
-    buttons.style.display = "block";
 }
 
 let transitionY = 576
@@ -345,9 +338,6 @@ const doorsCollision = () => {
                     c.fillStyle = "lime";
                     c.fillText("Enter [e]", platformX - 3, platformY);
                 }
-                if(deviceDetect && inGame){
-                    button_enter.style.display = "flex";
-                }
                 break;
             }
         }
@@ -426,13 +416,6 @@ window.addEventListener('keydown', (event) => {
         enterFunction();
     }
 })
-
-const enterMobileFunction = () => {
-    if (doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame) {
-        entered = true;
-        enterFunction();
-    }
-}
 
 let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, bossLava3;
 let nonStopShake;
@@ -796,11 +779,15 @@ let deadSoundCanBeUse = true;
 
 const grayScaleEffect = () => {
     canvas.style.filter = "grayscale(1)";
+    rising.style.filter = "grayscale(1)";
     setTimeout(() => {
         canvas.style.transition = "filter 0.5s";
         canvas.style.filter = "grayscale(0)";
+        rising.style.transition = "filter 0.5s";
+        rising.style.filter = "grayscale(0)";
         setTimeout(() => {
             canvas.style.transition = "filter 0s";
+            rising.style.transition = "filter 0s";
         }, 250);
     },500);
 }
@@ -1945,8 +1932,9 @@ const punch = () => {
             sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
         }
         sfx_player.play();
+        sfx_miss.src = "./res/sfx/miss.mp3"; 
+        sfx_miss.play();
         if(canAttack){
-            sfx_miss.pause();
             sfx_punch.src = "./res/sfx/punch.mp3";
             sfx_punch.play();
             currentHp -= 5.5566; //5.5566
@@ -1980,8 +1968,8 @@ const punch = () => {
                                 canPlayBreakSound = true;
                             }, 500);
                         }
-                    }
-                }
+                    } 
+                } 
             }
         }
     }
@@ -2163,73 +2151,3 @@ window.addEventListener('keyup', (event) => {
         alreadyPunched = false;
     }
 });
-
-const go_up = () => {
-    if (isJumping == false && canStandUp == true) {
-        currentFrame = 0;
-        isJumping = true;
-        if(ladderCol == true){
-            goingUp();
-        }else{
-            jump();
-        }
-    }
-}
-
-const go_punch = () => {
-    if(!alreadyPunched && !ladderCol){
-        punch();
-    }
-    alreadyPunched = true;
-}
-
-const go_down = () => {
-    if (!punched) {
-        if(crouched == false && stillJumping == false && downPressed == false && ladderCol == false){
-            crouch();
-            currentFrame = 0;            
-        } else if (ladderCol && !alreadyGoingDown){
-            goingDown();
-        }
-        downPressed = true;
-    }
-}
-
-const go_down_return = () => {
-    downPressed = false;
-    if(velocity <= 0.35 && crouched == true && canStandUp == true && ladderCol == false){
-        unCrouch();
-    }else if(canStandUp == false){
-        if(wasUnder == true){
-            wasUnder = false;
-            under();
-        }
-    }
-    if(ladderCol){
-        velocityGoingDown = 0;
-        cancelAnimationFrame(goingDownId);
-        alreadyGoingDown = false;
-    }
-}
-
-const go_right = () => {
-    if (isMovingRight == false) {
-        currentFrame = 0;
-        isMovingRight = true;
-        turnedRight = true;
-        turnedLeft = false;
-        cancelAnimationFrame(animationIdRight);
-        moveRight();
-    }
-}
-
-const go_left = () => {
-    if (isMovingLeft == false) {
-        currentFrame = 0;
-        isMovingLeft = true;
-        turnedRight = false;
-        turnedLeft = true;
-        cancelAnimationFrame(animationIdLeft);
-        moveLeft();
-    }
-}

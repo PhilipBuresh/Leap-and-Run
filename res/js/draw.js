@@ -560,7 +560,6 @@ let playerImage = new Image();
 playerImage.src = "./res/img/rioter.png";
 
 let drawPlayer = () => {
-    button_enter.style.display = "none";
     playerImage.src = player;
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched && !ladderCol){ //Right Stand
         c.clearRect(0, 0, canvas.width, canvas.height);
