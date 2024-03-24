@@ -83,6 +83,7 @@ const setSfxVolume = () => {
     sfx_boss_talk.volume = sfxVolume;
     sfx_boss_laugh.volume = sfxVolume;
     sfx_land.volume = sfxVolume;
+    scene.volume = sfxVolume;
 }
 
 setMusicVolume();
