@@ -91,6 +91,44 @@ let cordsPortalY1 = 0;
 let cordsPortalX2 = 0;
 let cordsPortalY2 = 0;
 
+//----------------------------------- Blocks
+
+// 1 = Stone Brick
+// 2 = Spike on bottom
+// 3 = Lava
+// 4 = Spike on top
+// 5 = Orb
+// 6 = Cracked Stone Brick
+// 7 = Wood
+// 8 = Chain
+// 9 = Bookshelf
+// 10 = Spike on bottom (Moving)
+// 11 = Portal 1
+// 12 = Portal 2
+// 13 = Stone Brick (Background)
+// 14 = Lantern
+// 15 = Chain (Background)
+// 16 = Torch
+// 17 = Bookshelf (Background)
+// 18 = Barrel
+// 19 = Rotated Wood
+// 20 = Spike on left (Moving)
+// 21 = Spike on top (Moving)
+// 22 = Spike on right (Moving)
+// 23 = Spike on left
+// 24 = Spike on Right
+// 25 = Doors (Start)
+// 26 = Ladder
+// 27 = Wood (Background)
+// 28 = Rotated Wood (Background)
+// 30 = Doors (Finish)
+// 31 = Key
+// 32 = Iron Block
+// 33 = Iron Block with Key hole
+// 34 = Doors - Boss (Finish)
+// 35 = Trophy
+// 50 - 64 = Doors in the Lobby (Level 1 - 15)
+
 //-----------------------------Drawing Platform
 
 const drawPlatform = () => {
@@ -98,43 +136,43 @@ const drawPlatform = () => {
     yBlock = 0;
     for (let index = 0; index < platformLevel1.length; index++) {
         if(platformLevel1[index] == 1){
-            p.drawImage(platformImage, xBlock,yBlock,32,32)
+            c.drawImage(platformImage, xBlock,yBlock,32,32)
         }else if(platformLevel1[index] == 2){
-            p.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 3){
-            p.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 4){
-            p.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 5){
-            p.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 6){
-            p.drawImage(crackedImage, xBlock, yBlock, 32, 32)
+            c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 7){
-            p.drawImage(woodsImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            c.drawImage(woodsImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 8){
-            p.drawImage(chainImage, xBlock, yBlock, 32, 32)
+            c.drawImage(chainImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 9){
-            p.drawImage(bookImage, xBlock, yBlock, 32, 32)
+            c.drawImage(bookImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 10){
-            p.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 20){
-            p.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 21){
-            p.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 22){
-            p.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 23){
-            p.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 24){
-            p.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 32){
-            p.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 33){
-            p.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 18){
-            p.drawImage(barrelImage, xBlock, yBlock, 32, 32)
+            c.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 19){
-            p.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            c.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -154,71 +192,71 @@ const drawBackBlocks = () => {
     yBlock = 0;
     for (let index = 0; index < platformLevel1.length; index++) {
         if(platformLevel1[index] == 13){
-            p.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
+            c.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 11){
             cordsPortalX1 = xBlock - 32;
             cordsPortalY1 = yBlock + 22;
-            p.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
+            c.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
         }else if(platformLevel1[index] == 12){
             cordsPortalX2 = xBlock + 32;
             cordsPortalY2 = yBlock + 22;
-            p.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
+            c.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
         }else if(platformLevel1[index] == 14){
-            p.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 15){
-            p.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
+            c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 16){
-            p.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            c.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 17){
-            p.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
+            c.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 25){
-            p.drawImage(doorImage, xBlock, yBlock, 64, 64);
+            c.drawImage(doorImage, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 26){
-            p.drawImage(ladderImage, xBlock, yBlock, 32, 32);
+            c.drawImage(ladderImage, xBlock, yBlock, 32, 32);
         }else if(platformLevel1[index] == 27){
-            p.drawImage(woodsImage, 2 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            c.drawImage(woodsImage, 2 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 28){
-            p.drawImage(woodsImage, 3 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            c.drawImage(woodsImage, 3 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 30){
-            p.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 31){
-            p.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 34){
-            p.drawImage(chainDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(chainDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 35){
-            p.drawImage(trophyImage, xBlock, yBlock, 32, 32);
+            c.drawImage(trophyImage, xBlock, yBlock, 32, 32);
         }
         //---DOORS IN MENU
         else if(platformLevel1[index] == 50){
-            p.drawImage(doorsImage, 0 * 64, finished[0] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 0 * 64, finished[0] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 51){
-            p.drawImage(doorsImage, 1 * 64, finished[1] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 1 * 64, finished[1] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 52){
-            p.drawImage(doorsImage, 2 * 64, finished[2] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 2 * 64, finished[2] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 53){
-            p.drawImage(doorsImage, 3 * 64, finished[3] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 3 * 64, finished[3] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 54){
-            p.drawImage(doorsImage, 4 * 64, finished[4] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 4 * 64, finished[4] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 55){
-            p.drawImage(doorsImage, 5 * 64, finished[5] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 5 * 64, finished[5] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 56){
-            p.drawImage(doorsImage, 6 * 64, finished[6] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 6 * 64, finished[6] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 57){
-            p.drawImage(doorsImage, 7 * 64, finished[7] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 7 * 64, finished[7] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 58){
-            p.drawImage(doorsImage, 8 * 64, finished[8] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 8 * 64, finished[8] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 59){
-            p.drawImage(doorsImage, 9 * 64, finished[9] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 9 * 64, finished[9] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 60){
-            p.drawImage(doorsImage, 10 * 64, finished[10] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 10 * 64, finished[10] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 61){
-            p.drawImage(doorsImage, 11 * 64, finished[11] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 11 * 64, finished[11] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 62){
-            p.drawImage(doorsImage, 12 * 64, finished[12] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 12 * 64, finished[12] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 63){
-            p.drawImage(doorsImage, 13 * 64, finished[13] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 13 * 64, finished[13] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }else if(platformLevel1[index] == 64){
-            p.drawImage(doorsImage, 14 * 64, finished[14] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            c.drawImage(doorsImage, 14 * 64, finished[14] * 64, 64, 64, xBlock, yBlock, 64, 64);
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;

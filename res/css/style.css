@@ -37,6 +37,96 @@ p{
     width: auto;
     position: relative;
 }
+#recommend{
+    position: absolute;
+    bottom: -25px;
+    left: 10px;
+    letter-spacing: 2px;
+    font-family: 'VT323', monospace;
+    color:rgb(175, 175, 175);
+    transition: 0.2s;
+}
+#recommend:hover{
+    color: white;
+}
+#recommend h2{
+    font-size: 40px;
+}
+#recommend h4{
+    font-size: 25px;
+    margin-top: -1em;
+}
+#credits_list{
+    background-color: rgb(15, 15, 15);
+    background-image: url("../img/wall_verydark.png");
+    margin-top:1em;
+    color:white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 90%;
+    width: 90%;
+    border:5px solid rgb(0, 0, 0);
+    font-family: 'VT323', monospace;
+    box-shadow: 1px -1px 40px 7px rgb(0, 0, 0);
+    overflow-y: auto;
+    display:none;
+}
+#credits_list::-webkit-scrollbar{
+    width: 8px;
+}
+#credits_list::-webkit-scrollbar-thumb{
+    background-color: #c7c7c7;
+    border-radius: 4px;
+}
+#credits_list::-webkit-scrollbar-track{
+    background-color: #252525;
+}
+#credits_list h2{
+    margin:0 0 2em 0;
+    text-align: center;
+    font-size: 40px;
+    letter-spacing: 2px;
+    background-color: rgb(20, 20, 20);
+    padding: 10px 10px;
+}
+#credits_back{
+    background-color: white;
+}
+#song_box{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+#song_box div{
+    padding: 5px;
+    width: 30%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border:2px solid rgb(37, 37, 37);
+    border-radius: 0.4em;
+    margin:15px 5px;
+    transition: 0.2s;
+}
+#song_box div:hover{
+    background-color: rgb(2, 2, 2);
+    border:2px solid rgb(77, 77, 77);
+    border-radius: 0.2em;
+}
+#song_box h3{
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+#song_box p{
+    margin-top:-10px;
+    font-size: 20px;
+}
 #hps{
     display: none;
     width: 30%;
@@ -53,7 +143,7 @@ p{
 #myHp img{
     margin-left:0.2em;
     margin-right:0.2em;
-    width: 50px;
+    width: 60px;
 }
 #hp_bar{
     height: 25px;
@@ -160,20 +250,23 @@ p{
     1% {transform: translate(150%, -50%);}
     100% {transform: translate(-50%, -50%)}
 }
-@keyframes midToRight {
+@keyframes midToLeft {
     0% {transform: translate(-50%, -50%);}
     100% {transform: translate(-250%, -50%)}
 }
 #startMenuBtns{
+    height: 100vh;
     position: absolute;
     top: 50%;
     left: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 #startMenuBtns div{
-    border-radius: 0.4em;
+    border-radius: 0.2em;
     border:2px solid white;
     color:white;
     font-family: 'VT323', monospace;
@@ -190,13 +283,18 @@ p{
     animation-name: blink;
     margin:1em;
 }
-#playButton:hover, #tutorialButton:hover{
-    color: black;
-    background-color: white;
-}
 #tutorialButton{
     font-size:20px;
     cursor: pointer;
+}
+#creditsButton{
+    margin: 10px 0px;
+    font-size:20px;
+    cursor: pointer;
+}
+#playButton:hover, #tutorialButton:hover, #creditsButton:hover{
+    color: black;
+    background-color: white;
 }
 #startMenu{
     display: block;
@@ -205,9 +303,7 @@ p{
     1% {padding: 0;color: transparent;background-color: white;height: 10px;}
     15% {padding: 0;padding-left: 5em;padding-right: 5em;color: transparent;background-color: white;height: 5px;}
     100% {padding: 0;padding-left: 0.1em;padding-right: 0.1em;;color: transparent;background-color: rgb(126, 125, 125);border:rgb(126, 125, 125);height: 3px;}
-    
 }
-
 #characters {
     border: 3px solid rgb(0, 0, 0);
     background-color: black;
@@ -326,6 +422,7 @@ p{
     padding:0.3em;
     border-radius: 0.3em;
     cursor:pointer;
+    
 }
 #button_menu{
     display:none;
@@ -489,4 +586,42 @@ p{
         margin-top:-0.3em;
         width: 35px;
     }
+    #song_box p{
+        font-size: 14px;
+    }
+    #song_box h3{
+        font-size: 20px;
+    }
+    #recommend{
+        bottom:0;
+    }
+    #recommend h2{
+        font-size:20px;
+        margin-bottom:1em;
+    }
+    #recommend h4{
+        font-size:16px
+    }
 }
+@media (max-width: 1000px) {
+    #song_box p{
+        font-size: 14px;
+    }
+    #song_box h3{
+        font-size: 20px;
+    }
+    #sfx_in_box{
+        margin-top:100em;
+    }
+    #recommend{
+        bottom:0;
+    }
+    #recommend h2{
+        font-size:20px;
+        margin-bottom:1em;
+    }
+    #recommend h4{
+        font-size:16px
+    }
+}
+

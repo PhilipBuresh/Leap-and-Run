@@ -1,7 +1,6 @@
 const canvas = document.getElementById('canvas');
 const canvas_container = document.getElementById("canvas_container");
 const container = document.getElementById("container");
-const p = canvas.getContext('2d'); //Platform
 const c = canvas.getContext('2d');
 const text = document.getElementById("text");
 const characters = document.getElementById("characters");
@@ -25,6 +24,8 @@ const background = document.getElementById("background");
 const black = document.getElementById("black");
 const fullBlack = document.getElementById("fullBlack");
 const paper = document.getElementById("paper");
+const recommend = document.getElementById("recommend");
+const credits_list = document.getElementById("credits_list");
 const transition1 = document.getElementById("transition1");
 const transition2 = document.getElementById("transition2");
 const scene = document.getElementById("scene");
@@ -32,6 +33,7 @@ const rising = document.getElementById("rising");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
 const tutorialButton = document.getElementById("tutorialButton");
+const creditsButton = document.getElementById("creditsButton");
 const hp = document.getElementById("hp");
 const myHp = document.getElementById("myHp");
 const startMenu = document.getElementById("startMenu");
@@ -54,17 +56,20 @@ const note_button = document.getElementById("note_button");
 const music_editor = document.getElementById("music_editor");
 const music_editor_back = document.getElementById("music_editor_back");
 
-let helpNum = 0;
- 
+let helpNum = 0; //Help Number for level detection (doors)
+
+//Setting default volume
 let musicVolume = 0.5;
 let sfxVolume = 0.5;
 let currentMusicValue = 50;
 let currentSfxValue = 50;
 
+//Adjust Music Volume
 const setMusicVolume = () => {
     music.volume = musicVolume;
 }
 
+//Adjust SFX volume
 const setSfxVolume = () => {
     sfx.volume = sfxVolume;
     sfx_dead.volume = sfxVolume;
@@ -83,6 +88,7 @@ const setSfxVolume = () => {
 setMusicVolume();
 setSfxVolume();
 
+//Turn Music UP by 5%
 notInvertArrow1.onclick = () => {
     if(currentMusicValue >= 0 && currentMusicValue < 100){
         musicVolume += 0.05
@@ -91,6 +97,7 @@ notInvertArrow1.onclick = () => {
         setMusicVolume(musicVolume);
     }
 }
+//Turn SFX UP by 5%
 notInvertArrow2.onclick = () => {
     if(currentSfxValue >= 0 && currentSfxValue < 100){
         sfxVolume += 0.05
@@ -99,6 +106,7 @@ notInvertArrow2.onclick = () => {
         setSfxVolume(sfxVolume);
     }
 }
+//Turn Music DOWN by 5%
 invertArrow1.onclick = () => {
     if(currentMusicValue > 0 && currentMusicValue <= 100){
         musicVolume -= 0.05
@@ -107,6 +115,7 @@ invertArrow1.onclick = () => {
         setMusicVolume(musicVolume);
     }
 }
+//Turn SFX DOWN by 5%
 invertArrow2.onclick = () => {
     if(currentSfxValue > 0 && currentSfxValue <= 100){
         sfxVolume -= 0.05
@@ -118,6 +127,7 @@ invertArrow2.onclick = () => {
 
 let musicEditorOpened = false;
 
+//Note Button -> Will open Music Editor
 note_button.onclick = () => {
     if(inGame && !escShowed){
         if(musicEditorOpened){
@@ -132,6 +142,7 @@ note_button.onclick = () => {
     }
 }
 
+//Music Editor -> You can here adjust volume of Music or SFX by yourself
 music_editor_back.onclick = () => {
     if(musicEditorOpened){
         music_editor.style.display = "none";
@@ -143,6 +154,7 @@ music_editor_back.onclick = () => {
 let transitionY = 576
 let transitionX = 1024
 
+//Adjusts the position of the transition on you
 const setTransitionCords = () => {
     transitionY = (y / 576) * 100 + 3;
     transitionX = (x / 1024) * 100 + 2;
@@ -156,6 +168,7 @@ let doorsTime = 0;
 let doorTimeout = false;
 let setTimeoutDoor;
 
+//Play Button
 playButton.onclick = () => {
     playButton.style.animationName = "blink"
     playButton.style.animationPlayState = "running";
@@ -167,6 +180,7 @@ playButton.onclick = () => {
     characters.style.animationPlayState = "running";
     playButton.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
+    creditsButton.style.display = "none";
     text.style.opacity = "0";
     setTimeout(() => {
         tutorialBtnSliding = false;
@@ -177,6 +191,7 @@ playButton.onclick = () => {
 let tutorialBtnShowed = false;
 let tutorialBtnSliding = false;
 
+//Tutorial Button -> Will show you Tutorial Paper
 tutorialButton.onclick = () => {
     tutorialBtnSliding = true;
     paper.style.display = "block";
@@ -184,28 +199,42 @@ tutorialButton.onclick = () => {
     paper.style.animationPlayState = "running";
     playButton.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
+    creditsButton.style.pointerEvents = "none";
     setTimeout(() => {
         tutorialBtnSliding = false;
         tutorialBtnShowed = true;
     }, 1000);
 }
 
+//Tutorial Paper will dissapear
 paper.onclick = () => {
     if(tutorialBtnShowed){
         tutorialBtnSliding = true;
         paper.style.display = "block";
-        paper.style.animationName = "midToRight"
+        paper.style.animationName = "midToLeft"
         paper.style.animationPlayState = "running";
         setTimeout(() => {
             tutorialBtnSliding = false;
             tutorialBtnShowed = false;
             playButton.style.pointerEvents = "auto";
             tutorialButton.style.pointerEvents = "auto";
+            creditsButton.style.pointerEvents = "auto";
         }, 1000);
     }
 }
 
+//Credit Button
+creditsButton.onclick = () => {
+    credits_list.style.display = "block";
+    recommend.style.display = "none";
+}
+//Credits List
+credits_list.onclick = () => {
+    credits_list.style.display = "none";
+    recommend.style.display = "block";
+}
 
+//This function will send you to the game
 const menuToLobby = () => {
     music.src = "./res/music/lobby_music.mp3";
     music.play();
@@ -219,18 +248,22 @@ const menuToLobby = () => {
     }, 50)
 }
 
+//Player COORDINATES
 let x;
 let y;
 
-let xGhost = 70000; //700
+//Ghost COORDINATES
+let xGhost = 70000;
 let yGhost = 310
 
+//This will spawn you
 let spawnCords = () => {
     x = 50;
     y = 500;
 }
 spawnCords();
 
+//This will spawn the Ghost
 let spawnGhostCords = () => {
     xGhost = 10000;
     yGhost = 10000;
@@ -240,6 +273,28 @@ let player;
 let playingAsRioter;
 let playingAsRuby;
 
+man.onclick = () => { //Choosing Character - Rioter
+    characters.style.display = "none";
+    player =  "./res/img/rioter.png";
+    heart1.src = "./res/img/heart_rioter.png";
+    heart2.src = "./res/img/heart_rioter.png";
+    heart3.src = "./res/img/heart_rioter.png";
+    playingAsRioter = true;
+    playingAsRuby = false;
+    movingCharactersAndFullBlack();
+}
+woman.onclick = () => { //Choosing Character - Ruby
+    characters.style.display = "none";
+    player =  "./res/img/ruby.png";
+    heart1.src = "./res/img/heart_ruby.png";
+    heart2.src = "./res/img/heart_ruby.png";
+    heart3.src = "./res/img/heart_ruby.png";
+    playingAsRioter = false;
+    playingAsRuby = true;
+    movingCharactersAndFullBlack();
+}
+
+//If you choose a character -> Transition will be activated and you will be send to the game by function menuToLobby()
 const movingCharactersAndFullBlack = () => {
     characters.style.display = "block";
     characters.style.animationName = "midToBottom"
@@ -261,21 +316,6 @@ const movingCharactersAndFullBlack = () => {
             escape_button.style.zIndex = "11";
         }, 800);
     }, 1000);
-}
-
-man.onclick = () => { //Choosing Character - Rioter
-    characters.style.display = "none";
-    player =  "./res/img/rioter.png";
-    playingAsRioter = true;
-    playingAsRuby = false;
-    movingCharactersAndFullBlack();
-}
-woman.onclick = () => { //Choosing Character - Ruby
-    characters.style.display = "none";
-    player =  "./res/img/ruby.png";
-    playingAsRioter = false;
-    playingAsRuby = true;
-    movingCharactersAndFullBlack();
 }
 
 let height = 40;
@@ -310,6 +350,7 @@ let lobbyDoorCol = false; //Help for sfx door
 let finalDoorUnlocked = true; //Can let you go to the Final Door while is boss dead
 let doorCol = false;
 
+//This Function will show you, if you can enter to the level 
 const doorsCollision = () => {
     lobbyDoorCol = false;
     doorCol = false;
@@ -350,6 +391,7 @@ let bossY = 0;
 
 let canAttack = false;
 
+//Boss Collision
 const bossCollision = () => {
     if (
         y + height >= bossY &&
@@ -366,6 +408,8 @@ const bossCollision = () => {
     }
 };
 
+//---------------------------------------- BOSS Moving X and Y
+
 let bossVelocity = 1;
 
 let nowBossMoveY;
@@ -373,6 +417,7 @@ let thenBossMoveY = Date.now();
 let deltaBossMoveY;
 let bossMoveYId;
 
+//Boss Moving Y
 const bossMoveY = () => {
     bossMoveYId = requestAnimationFrame(bossMoveY)
     nowBossMoveY = Date.now();
@@ -392,6 +437,7 @@ let thenBossMoveX = Date.now();
 let deltaBossMoveX;
 let bossMoveXId;
 
+//Boss Moving X
 const bossMoveX = () => {
     bossMoveXId = requestAnimationFrame(bossMoveX)
     nowBossMoveX = Date.now();
@@ -406,20 +452,24 @@ const bossMoveX = () => {
     }
 }
 
-//---------------------------------------Enter Funkce
+//---------------------------------------Enter to the Level Function
 
 let entered = false;
 
 window.addEventListener('keydown', (event) => {
-    if ((event.key == "e" || event.key == "E") && doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame) {
+    if ((event.key == "e" || event.key == "E") && doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter) {
         entered = true;
         enterFunction();
     }
 })
 
+//Boss Phases
 let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, bossLava3;
 let nonStopShake;
 
+let canEnter = true;
+
+//Enter Function
 const enterFunction = () => {
     if(lobbyDoorCol){
         sfx.src = "./res/sfx/door.mp3";
@@ -432,13 +482,13 @@ const enterFunction = () => {
     setTimeout(() => {
         transition2.currentTime = 0;
         transition2.style.opacity = "0";
-        transition2.pause();   
+        transition2.pause(); 
     }, 100);
     setTimeout(() => {
         inGame = true;
         platformLevel1 = [...map[helpNum]];
         originalPlatform1 = [...platformLevel1];
-        if(helpNum == 0){
+        if(helpNum == 0){ //Level 1
             spawnCords = () =>{
                 x = 40;
                 y = 500
@@ -452,7 +502,7 @@ const enterFunction = () => {
                 yGhost = 500;
             }
             spawnGhostCords();
-        }else if(helpNum == 1){
+        }else if(helpNum == 1){ //Level 2
             spawnCords = () =>{
                 x = 40;
                 y = 500;
@@ -466,7 +516,7 @@ const enterFunction = () => {
                 yGhost = 240;
             }
             spawnGhostCords();
-        }else if(helpNum == 2){
+        }else if(helpNum == 2){ //Level 3
             spawnCords = () =>{
                 x = 20;
                 y = 380;
@@ -476,7 +526,7 @@ const enterFunction = () => {
             music.src = "./res/music/song2.mp3";
             doorsTime = 37100;
             music.play();
-        }else if(helpNum == 3){
+        }else if(helpNum == 3){ //Level 4
             spawnCords = () =>{
                 x = 40;
                 y = 500;
@@ -490,7 +540,7 @@ const enterFunction = () => {
                 yGhost = 310;
             }
             spawnGhostCords();
-        }else if(helpNum == 4){
+        }else if(helpNum == 4){ //Level 5
             rising.style.display = "block";
             risingLavaActivated = true;
             spawnCords = () =>{
@@ -501,7 +551,7 @@ const enterFunction = () => {
             music.src = "./res/music/song4.mp3";
             doorsTime = 23000;
             music.play();
-        }else if(helpNum == 5){
+        }else if(helpNum == 5){ //Level 6
             spawnCords = () =>{
                 x = 20;
                 y = 470;
@@ -515,7 +565,7 @@ const enterFunction = () => {
                 yGhost = 245;
             }
             spawnGhostCords();
-        }else if(helpNum == 6){
+        }else if(helpNum == 6){ //Level 7
             spawnCords = () =>{
                 x = 500;
                 y = 470;
@@ -524,7 +574,7 @@ const enterFunction = () => {
             music.src = "./res/music/song6.mp3";
             doorsTime = 39000;
             music.play();
-        }else if(helpNum == 7){
+        }else if(helpNum == 7){ //Level 8
             spawnCords = () =>{
                 x = 20;
                 y = 500;
@@ -534,7 +584,7 @@ const enterFunction = () => {
             music.src = "./res/music/song7.mp3";
             doorsTime = 48000;
             music.play();
-        }else if(helpNum == 8){
+        }else if(helpNum == 8){ //Level 9
             spawnCords = () =>{
                 x = 20;
                 y = 400;
@@ -543,7 +593,7 @@ const enterFunction = () => {
             music.src = "./res/music/song8.mp3";
             doorsTime = 40000;
             music.play();
-        }else if(helpNum == 9){
+        }else if(helpNum == 9){ //Level 10
             rising.style.display = "block";
             risingLavaActivated = true;
             spawnCords = () =>{
@@ -554,7 +604,7 @@ const enterFunction = () => {
             music.src = "./res/music/song9.mp3";
             doorsTime = 28000;
             music.play();
-        }else if(helpNum == 10){
+        }else if(helpNum == 10){ //Level 11
             spawnCords = () =>{
                 x = 20;
                 y = 500;
@@ -568,7 +618,7 @@ const enterFunction = () => {
                 yGhost = 90;
             }
             spawnGhostCords();
-        }else if(helpNum == 11){
+        }else if(helpNum == 11){ //Level 12
             spawnCords = () =>{
                 x = 500;
                 y = 80;
@@ -577,7 +627,7 @@ const enterFunction = () => {
             music.src = "./res/music/song11.mp3";
             doorsTime = 36000;
             music.play();
-        }else if(helpNum == 12){
+        }else if(helpNum == 12){ //Level 13
             spawnCords = () =>{
                 x = 20;
                 y = 510;
@@ -592,7 +642,7 @@ const enterFunction = () => {
                 yGhost = 210;
             }
             spawnGhostCords();
-        }else if(helpNum == 13){
+        }else if(helpNum == 13){ //Level 14
             spawnCords = () =>{
                 x = 40;
                 y = 520;
@@ -606,9 +656,9 @@ const enterFunction = () => {
                 yGhost = 310;
             }
             spawnGhostCords();
-        }else if(helpNum == 14){
+        }else if(helpNum == 14){ //Level 15 (Boss Fight)
             bossLevel();
-        }else if(helpNum == 15){
+        }else if(helpNum == 15){ // Level 16 (Trophy Room)
             spawnCords = () =>{
                 x = 40;
                 y = 520;
@@ -632,7 +682,7 @@ const enterFunction = () => {
             }, 1300);
 }
 
-//BOSS LEVEL
+//----------------------------------------BOSS LEVEL
 const bossLevel = () => {
     finalDoorUnlocked = false;
     generatorAttackFunction();
@@ -726,7 +776,7 @@ const bossLevel = () => {
     }, 67000);
 }
 
-//Boss Attack
+//----------------------------------------Boss Attack Generator
 
 let bossAttacking = false;
 let attackNum = 0;
@@ -744,7 +794,7 @@ const generatorAttackFunction = () => {
     }, 500);
 }
 
-//----------------------------------------SHAKE funkce
+//----------------------------------------SHAKE Function
 
 const shake = () => {
     setTimeout(() => {
@@ -769,7 +819,7 @@ const shake = () => {
     }, 250);
 }
 
-//----------------------------------------Death funkce
+//----------------------------------------Death Effects
 
 let playingBossFight = false;
 let hearts = 3;
@@ -792,8 +842,10 @@ const grayScaleEffect = () => {
     },500);
 }
 
+//---------------------------------------- Death Function (Player)
+
 const dead = () => {
-    if(!playingBossFight){
+    if(!playingBossFight){ //You are not playing BOSS FIGHT
         if(yGhost < 2000 && xGhost < 2000){ 
             spawnGhostCords();
         }
@@ -902,32 +954,31 @@ const dead = () => {
             deadSoundCanBeUse = true;
         }, 300);
     }
-   
-    
+
     gravity();
 }
 
-//---------------------------------------- ESCButtons
-
 //Fade **IN** Transition Function
+//transition1 = Fade In
 const fadeInTransition = () => {
+    setTimeout(() => {
+        transition2.currentTime = 0;
+    }, 30);
+    transition2.style.opacity = "0";
+    transition2.pause();   
     transition1.currentTime = 0;
     setTimeout(() => {
         transition1.style.opacity = "1";
         transition1.play(); 
     }, 30);
     setTimeout(() => {
-        setTimeout(() => {
-            transition2.currentTime = 0;
-        }, 30);
-        transition2.style.opacity = "0";
-        transition2.pause();   
     }, 100);
 }
 
 //Fade **OUT** Transition Function
+//transition2 = Fade Out
 const fadeOutTransition = () => {
-transition2.currentTime = 0;
+    transition2.currentTime = 0;
     setTimeout(() => {
         transition2.style.opacity = "1";
         transition2.play();  
@@ -940,6 +991,8 @@ transition2.currentTime = 0;
         }, 30);
     }, 100);
 }
+
+//---------------------------------------- Back to the Lobby (from level)
 
 let backToLobbyEntered = false;
 
@@ -956,6 +1009,9 @@ const backToLobby = () => {
     clearTimeout(setTimeoutDoor);
     cancelAnimationFrame(bossMoveXId);
     cancelAnimationFrame(bossMoveYId);
+    transition2.addEventListener("ended", () => {
+        canEnter = true;
+    });
     black.style.opacity = "0";
     finalDoorUnlocked = true;
     canAttack = false;
@@ -999,7 +1055,7 @@ const backToLobby = () => {
             yGhost = 20000;
         }
         spawnGhostCords();
-        if(helpNum == 0){
+        if(helpNum == 0){ // Go to lobby From Levels 1 - 15
             x = 120;
             y = 500;
         }else if(helpNum == 1){
@@ -1051,14 +1107,18 @@ const backToLobby = () => {
         gravity();
     }, 1300);
 }
+//Back from Level to the Lobby
 button_back.onclick = () => {
+    canEnter = false; //Now you cant spam "e"
     backToLobby();
 }
+//Resume Function
 button_resume.onclick = () => {
     esc.style.display = "none"; 
     escShowed = false;
     black.style.opacity = "0";
 }
+//Back from Lobby to the Menu Function
 button_menu.onclick = () => {
     inGame = false;
     text.style.opacity = "1";
@@ -1077,6 +1137,7 @@ button_menu.onclick = () => {
         startMenu.style.display = "block";
         playButton.style.pointerEvents = "auto";
         playButton.style.display = "block";
+        creditsButton.style.display = "block";
         black.style.opacity = "0";
         fullBlack.style.opacity = "0";
         setTimeout(() => {
@@ -1098,7 +1159,7 @@ button_retry.onclick = () => {
 }
 
 
-//----------------------------------------ESC Button Funkce
+//----------------------------------------ESC Button Function
  
 const escFunction = () => {
     if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){
@@ -1162,6 +1223,7 @@ const unlockAll = () => {
         }
     }
 }
+
 /*
 window.addEventListener('keydown', (event) => {
     if (event.key == "Delete" && allUnclocked == false && inGame == true) {
@@ -1178,18 +1240,7 @@ const objectsCollision = () => {
     }
     ghostCollision();
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 2) {
-            let platformX = (i % 32) * 32;
-            let platformY = Math.floor(i / 32) * 32;
-            if (
-                y + height >= platformY + 10 &&
-                y + height <= platformY + 32 &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
-            ) {
-                dead();
-            }
-        }
+        //Spikes and Moving Spikes
         if ((platformLevel1[i] == 2 || platformLevel1[i] == 4 || platformLevel1[i] == 23 || platformLevel1[i] == 24) || (platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22) && canDieOnSpike == true) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -1202,6 +1253,7 @@ const objectsCollision = () => {
                 dead();
             }
         }
+        //Lava
         if (platformLevel1[i] == 3) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -1249,7 +1301,7 @@ const objectsCollision = () => {
                 y = cordsPortalY1;
             }
         }
-
+        //Closing Doors
         if (platformLevel1[i] == 30) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -1260,6 +1312,7 @@ const objectsCollision = () => {
                 x <= platformX + 40
             ) {
                 if(!backToLobbyEntered){
+                    canEnter = false; //Now you cant spam "e"
                     sfx.src = "./res/sfx/completed.mp3";
                     sfx.play();
                     finished[helpNum] = 1; // Level Completed -> Doors are now GREEN
@@ -1274,6 +1327,7 @@ const objectsCollision = () => {
                 }
             }
         }
+        //Key
         if (platformLevel1[i] == 31) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -1293,6 +1347,7 @@ const objectsCollision = () => {
                 }
             }
         }
+        //Final Trophy
         if (platformLevel1[i] == 35) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -1305,14 +1360,16 @@ const objectsCollision = () => {
                 c.font = "80px VT323, monospace";
                 c.fillStyle = "lime";
                 c.fillText("Thanks For Playing <3", 20, 130);
-                p.font = "30px VT323, monospace";
-                p.fillStyle = "lime";
-                p.fillText("Game By: Philip B.", 30, 160);
+                c.font = "30px VT323, monospace";
+                c.fillStyle = "lime";
+                c.fillText("Game By: Philip B.", 30, 160);
             }
         }
     }
 }
 
+
+//This will load you progress which was saved
 window.onload =  () => {
     for (let i = 0; i <= 15; i++) {
         let savedValue = localStorage.getItem('unlocked_' + i);
@@ -1328,6 +1385,7 @@ window.onload =  () => {
     }
 }
 
+//Reset Local Storage Function
 const resetLocalStorage = () => {
     for (let i = 0; i <= 15; i++) {
         localStorage.removeItem('finished_' + i);
@@ -1338,7 +1396,6 @@ const resetLocalStorage = () => {
 }
 
 //resetLocalStorage();
-
 
 //---------------------------------------- ORB Collision
 let canOrbJump = false;
@@ -1396,13 +1453,14 @@ const ghostCollision = () => {
     }
 }
 
-//----------------------------------------Skrčení/Postavení hráče
+//---------------------------------------- Crouch and Stand (Player)
 
 let crouched = false;
 let canStandUp = true;
 let ahCollision;
 let underCollision;
 
+//This Function is checking, if you do not have a block above you (then you can stand up)
 let aboveHeadCollision = () => {
     ahCollision = requestAnimationFrame(aboveHeadCollision);
     if (crouched == true) {
@@ -1426,6 +1484,7 @@ let aboveHeadCollision = () => {
     }
 };
 
+//Crouching Function
 let crouch = () => {
     crouched = true;
     height = 20;
@@ -1433,6 +1492,7 @@ let crouch = () => {
     aboveHeadCollision()
 }
 
+//UnCrouching Function (Stand Up)
 let unCrouch = () => {
     if (canStandUp == true) {
         height = 40;
@@ -1448,6 +1508,7 @@ let unCrouch = () => {
 
 let wasUnder = true;
 
+//You will Stand Up if you do not have above you a block
 let under = () => {
     underCollision = window.requestAnimationFrame(under);
     if(canStandUp == true){
@@ -1457,10 +1518,12 @@ let under = () => {
     }
 }
 
-//----------------------------------------Kolize SPODKU CANVASU a BLOCKŮ
+//---------------------------------------- Collision Canvas BOTTOM and BLOCKS
 
 let onRock = false;
 let onWood = false;
+
+let onBottom = false;
 
 const bottomCollision = () => {
     for (let i = 0; i < platformLevel1.length; i++) {
@@ -1480,24 +1543,29 @@ const bottomCollision = () => {
                     sfx_land.src = "./res/sfx/large_land.mp3"
                     sfx_land.play();
                 }
+                sfx_climb.pause()
                 stillJumping = false;
                 y = platformY - height;
                 velocity = 0;
                 velocityGoingDown = 0;
                 orbUsed = false;
-                if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 || platformLevel1[i] == 33){
+                if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 || platformLevel1[i] == 33){ //You are on Rock
                     onRock = true; 
                     onWood = false;
-                 }else if(platformLevel1[i] == 7 || platformLevel1[i] == 19 || platformLevel1[i] == 18 || platformLevel1[i] == 9){
+                }else if(platformLevel1[i] == 7 || platformLevel1[i] == 19 || platformLevel1[i] == 18 || platformLevel1[i] == 9){ //You are on Wood
                      onRock = false;
                      onWood = true;
-                 }
+                }
+                onBottom = true;
                 cancelAnimationFrame(gravityId);
                 cancelAnimationFrame(goingDownId);
                 break;
+            } else {
+                onBottom = false;
             }
         }
     }
+    //Canvas Bottom detection
     if (canvas.height - height < y) {
         y = canvas.height - height;
         velocity = 0;
@@ -1509,7 +1577,7 @@ const bottomCollision = () => {
     }
 }
 
-//----------------------------------------Kolize VRŠKU CANVASU a BLOCKŮ
+//---------------------------------------- Hitting your head to the block Collision
 
 const upCollision = () => {
     if (deltaUp > interval) {
@@ -1557,7 +1625,7 @@ const upCollision = () => {
     }
 }
 
-//----------------------------------------Kolize LADDERU
+//----------------------------------------Ladder Collision
 
 let ladderCol = false;
 let canGravityActivate = false;
@@ -1583,11 +1651,11 @@ const ladderCollision = () => {
                 canGravityActivate = true;
                 break;
             } else {
-                width = 30;
                 ladderCol = false;
             }
         }
     }
+    //Cancel Ladder Functions
     if(ladderCol == false) {
         cancelAnimationFrame(goingUpId);
         cancelAnimationFrame(goingDownId);
@@ -1599,7 +1667,7 @@ const ladderCollision = () => {
     }
 }
 
-//----------------------------------------Lezení po žebříku nahoru
+//----------------------------------------Climbing on a Ladder - UP
 
 let goingUpId;
 let nowGoingdUp;
@@ -1615,7 +1683,7 @@ const goingUp = () => {
     deltaGoingdUp = nowGoingdUp - thenGoingdUp;
     if (deltaGoingdUp > interval) {
         thenGoingdUp = nowGoingdUp - (deltaGoingdUp % interval);
-        if(sfx_climb.paused && velocityGoingUp > 1 && ladderCol && !onWood || onWood){
+        if(sfx_climb.paused && ladderCol && (!onWood || !onRock)){
             sfx_walk.pause();
             sfx_climb.src = "./res/sfx/ladder.mp3"
             sfx_climb.play();
@@ -1625,8 +1693,7 @@ const goingUp = () => {
     }
 }
 
-//----------------------------------------Lezení po žebříku dolu
-
+//----------------------------------------Climbing on a Ladder - DOWN
 let goingDownId;
 let nowGoingdDown;
 let thenGoingdDown = Date.now();
@@ -1638,13 +1705,13 @@ let alreadyGoingDown = false;
 
 const goingDown = () => {
     alreadyGoingDown = true;
-    velocityGoingDown = 2
+    velocityGoingDown = 2;
     goingDownId = requestAnimationFrame(goingDown);
     nowGoingdDown = Date.now();
     deltaGoingdDown = nowGoingdDown - thenGoingdDown;
     if (deltaGoingdDown > interval) {
         thenGoingdDown = nowGoingdDown - (deltaGoingdDown % interval);
-        if(sfx_climb.paused && velocityGoingDown > -1 && ladderCol){
+        if(sfx_climb.paused && ladderCol && !onBottom){
             sfx_walk.pause();
             sfx_climb.src = "./res/sfx/ladder.mp3"
             sfx_climb.play();
@@ -1654,7 +1721,7 @@ const goingDown = () => {
     }
 }
 
-//----------------------------------------Funkce GRAVITACE hráče
+//---------------------------------------- Gravity Function (Player)
 
 let velocity = 0;
 let stillJumping = false;
@@ -1670,32 +1737,36 @@ let gravity = () => {
         if (deltaDown > interval) {
             thenDown = nowDown - (deltaDown % interval);
             //SFX Walking
-            if(sfx_walk.paused && (onWood || onRock) && (velocityRight > 1 || velocityLeft > 1) && !crouched && !ladderCol && velocity < 0.3 && !isJumping) {
-                if(onWood){
+            if(sfx_walk.paused && sfx_jump.paused && (onWood || onRock) && (velocityRight > 1 || velocityLeft > 1) && !crouched && !ladderCol && velocity < 0.3 && !isJumping) {
+                if(onWood && !ladderCol){
                     sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
-                }else{
+                }else if(onRock && !ladderCol){
                     sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
                 }
-                sfx_walk.pause();
-                sfx_walk.play();
+                setTimeout(() => {
+                    sfx_walk.play(); 
+                }, 30);
             }else if(!sfx_walk.paused && velocityRight <= 1 && velocityLeft <= 1 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3){
                 sfx_walk.pause();
             }
-            sfx_climb.pause();
             if(crouched == true && velocity > 1){
                 unCrouch();
             }
+            if(velocity >= 0.6){
+                sfx_climb.pause();
+            }
+            velocityGoingUp = 0;
             orbCollision();
             velocity += 0.3;
             y += velocity;
-            bottomCollision(); //Podmínka
+            bottomCollision(); //Condition
         }
     } 
 }
 
 gravity();
 
-//----------------------------------------Funkce SKÁKÁNÍ hráče
+//---------------------------------------- Jumping Function (Player)
 
 let headHit;
 
@@ -1717,13 +1788,14 @@ let jump = () => {
             cancelAnimationFrame(gravityId);
             cancelAnimationFrame(jumpingId);
             velocityJump = 0;
+            velocityJump = 0;
             orbUsed = true;
             sfx_extra_jump.src = "./res/sfx/orb_jump.mp3"
             sfx_extra_jump.play();
-        }else if(!canOrbJump && velocity >= 0 && !bounced){
+        }else if(!canOrbJump && !bounced && !ladderCol){
             sfx_jump.src = "./res/sfx/jump.mp3"
             sfx_jump.play();
-        }else if(!canOrbJump && velocity >= 0 && bounced){
+        }else if(!canOrbJump && bounced && !ladderCol){
             sfx_extra_jump.src = "./res/sfx/bonus_jump.mp3"
             sfx_extra_jump.play();
         }
@@ -1744,7 +1816,7 @@ let jump = () => {
         jumping();
     }
 }
-//----------------------------------------Funkce hráče CHOZENÍ DO PRAVA
+//----------------------------------------Moving Right Function (Player)
 
 let velocityRight = 0.1;
 let nowRight;
@@ -1830,7 +1902,7 @@ let moveRight = () => {
 };
 
 
-//----------------------------------------Funkce hráče CHOZENÍ DO LEVA
+//----------------------------------------Moving Left Function (Player)
 
 let velocityLeft = 0.1;
 let nowLeft;
@@ -1913,7 +1985,7 @@ let moveLeft = () => {
     movingLeft();
 };
 
-//--------------------------PUNCH funkce
+//--------------------------PUNCH Function
 
 let punched = false;
 let alreadyPunched = false;
@@ -1975,16 +2047,19 @@ const punch = () => {
     }
 }
 
-//--------------------------Dead Boss
+//--------------------------Dead Boss Function
 
 const deadBoss = () => {
     canAttack = false;
     inGame = false;
+    sfx_boss_laugh.pause();
+    black.style.opacity = "1";
     setTimeout(() => {
         frameDoorFinal = 0; 
     }, 2000);
     scene.addEventListener("ended", () => {
         scene.style.display = "none";
+        black.style.opacity = "0";
         inGame = true;
     });
     clearTimeout(setTimeoutDoor);
@@ -2034,12 +2109,9 @@ const deadBoss = () => {
     gravity();
     platformLevel1 = [...map[14]];
     originalPlatform1 = [...platformLevel1];
-    /*backToLobby();
-    backToLobbyEntered = true;
-    finished[helpNum] = 1;*/
 }
 
-//--------------------------Stlačení kláves
+//-------------------------- Pressing KEYBOARD Buttons
 let up = "w";
 let down = "s";
 let right = "d";
@@ -2058,14 +2130,16 @@ let inGame = false;
 let downPressed = false;
 
 window.addEventListener('keydown', (event) => {
+    // W - Jumping / Climbing Up
     if ((event.key == up || event.key == UP) && isJumping == false && canStandUp == true && inGame) {
         currentFrame = 0;
         isJumping = true;
-        if(ladderCol == true){
+        if(ladderCol){
             goingUp();
         }else{
             jump();
         }
+    // D - Moving Right / Climbing Right
     } else if ((event.key == right || event.key == RIGHT) && isMovingRight == false && inGame) {
         currentFrame = 0;
         isMovingRight = true;
@@ -2073,6 +2147,7 @@ window.addEventListener('keydown', (event) => {
         turnedLeft = false;
         cancelAnimationFrame(animationIdRight);
         moveRight();
+    // A - Moving Left / Climbing Left
     } else if ((event.key == left || event.key == LEFT) && isMovingLeft == false && inGame) {
         currentFrame = 0;
         isMovingLeft = true;
@@ -2080,6 +2155,7 @@ window.addEventListener('keydown', (event) => {
         turnedLeft = true;
         cancelAnimationFrame(animationIdLeft);
         moveLeft();
+    // S - Crouching / Climbing Down
     } else if ((event.key == down || event.key == DOWN) && !punched) {
         if(crouched == false && stillJumping == false && downPressed == false && ladderCol == false && inGame){
             crouch();
@@ -2089,6 +2165,7 @@ window.addEventListener('keydown', (event) => {
             goingDown();
         }
         downPressed = true;
+    // SPACE - Punching BOSS / Breaking Cracked Blocks
     } else if (event.key == space) {
         if(!alreadyPunched && !ladderCol && inGame){
             punch();
@@ -2105,17 +2182,19 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
-//--------------------------Pouštění kláves
+//-------------------------- Releasing KEYBOARD Buttons
 
 window.addEventListener('keyup', (event) => {
+    // W - Stop Climbing UP
     if (event.key == up || event.key == UP && inGame) {
         isJumping = false;
-        if(ladderCol){
+        if(ladderCol){  
             cancelAnimationFrame(goingUpId);
-            velocityGoingUp = 0;
             sfx_climb.pause();
         }
+        velocityGoingUp = 0;
     }
+    // D - Stop Moving Right
     if (event.key == right || event.key == RIGHT) {
         isMovingRight = false;
         if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
@@ -2123,6 +2202,7 @@ window.addEventListener('keyup', (event) => {
             turnedRight = false;
         }
     }
+    // A - Stop Moving Left
     if (event.key == left || event.key == LEFT) {
         isMovingLeft = false;
         if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
@@ -2130,6 +2210,7 @@ window.addEventListener('keyup', (event) => {
             turnedRight = true;
         }
     }
+    // S - UnCrouch / Stop Climbing Down
     if (event.key == down ||event.key == DOWN) {
         downPressed = false;
         if(velocity <= 0.35 && crouched == true && canStandUp == true && ladderCol == false){
