@@ -459,7 +459,7 @@ const drawing = () => {
         }
     }
     //Chain Door
-    if(doorTimeout == true){
+    if(doorTimeout){
         nowDoor = Date.now();
         deltaDoor = nowDoor - thenDoor;
         if (deltaDoor > 100) {

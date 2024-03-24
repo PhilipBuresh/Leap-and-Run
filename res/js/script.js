@@ -1311,7 +1311,7 @@ const objectsCollision = () => {
                 x + width >= platformX + 24 &&
                 x <= platformX + 40
             ) {
-                if(!backToLobbyEntered){
+                if(!backToLobbyEntered && frameDoor < 1){
                     canEnter = false; //Now you cant spam "e"
                     sfx.src = "./res/sfx/completed.mp3";
                     sfx.play();
@@ -1321,7 +1321,6 @@ const objectsCollision = () => {
                     }
                     backToLobby();
                     backToLobbyEntered = true;
-
                     localStorage.setItem('finished_' + helpNum, finished[helpNum]);
                     localStorage.setItem('unlocked_' + helpNum, finished[helpNum + 1]);
                 }
