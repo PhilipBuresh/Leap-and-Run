@@ -37,6 +37,23 @@ p{
     width: auto;
     position: relative;
 }
+#timer{
+    display: block;
+    border:3px solid rgb(29, 1, 1);
+    color:white;
+    border-radius: 0 0 0.5em 0.5em;
+    padding: 2px 5px;
+    font-size: 50px;
+    background-color: rgb(45, 3, 3);
+    display:block;
+    position: absolute;
+    top: -5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    margin:0 auto;
+    transition: 0.6s;
+}
 #recommend{
     position: absolute;
     bottom: -25px;

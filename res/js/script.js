@@ -7,6 +7,7 @@ const characters = document.getElementById("characters");
 const man = document.getElementById("man");
 const woman = document.getElementById("woman");
 const music = document.getElementById("music");
+const timer = document.getElementById("timer");
 const sfx = document.getElementById("sfx");
 const sfx_land = document.getElementById("sfx_land");
 const sfx_miss = document.getElementById("sfx_miss");
@@ -154,6 +155,62 @@ music_editor_back.onclick = () => {
 
 let transitionY = 576
 let transitionX = 1024
+
+const resizeTimer = () => {
+    let widthCalculator = window.innerWidth;
+    let newSize = widthCalculator * 0.02; // Pravidlo pro zmenšení/zvětšení textu můžete upravit podle potřeby
+    timer.style.fontSize = newSize + "px";
+}
+
+resizeTimer();
+
+let seconds = 0
+
+let timerInterval;
+let colorInterval;
+let secondsInterval;
+
+const timerFunction = () => {
+    timer.style.top = "3%";
+    seconds = timeNow;
+    timer.innerHTML = `Time: ${seconds}s`
+    timerInterval = setInterval(() => {
+        seconds--
+        timer.innerHTML = `Time: ${seconds}s`
+        if(seconds == 10){
+            notEnoughTime();
+            console.log(1)
+        }else if(seconds == 0){
+            clearInterval(timerInterval)
+        }
+    }, 1000);
+}
+
+let colorIntervalNumber = 1;
+
+const notEnoughTime = () => {
+    colorIntervalNumber = 1;
+    colorInterval = setInterval(() => {
+        colorIntervalNumber++;
+        if(colorIntervalNumber % 2 == 0){
+            timer.style.backgroundColor = "rgb(143, 19, 19)"
+            timer.style.padding = "2px 10px";
+        }else{
+            timer.style.backgroundColor = "rgb(45, 3, 3)"
+            timer.style.padding = "2px 5px";
+        }
+    }, 300);
+}
+
+const restartTimer = () => {
+    seconds = 0
+    clearInterval(colorInterval)
+    clearInterval(timerInterval)
+}
+
+window.onresize = function() {
+    resizeTimer()
+};
 
 //Adjusts the position of the transition on you
 const setTransitionCords = () => {
@@ -318,6 +375,15 @@ const movingCharactersAndFullBlack = () => {
         }, 800);
     }, 1000);
 }
+//here
+characters.style.display = "none";
+player =  "./res/img/ruby.png";
+heart1.src = "./res/img/heart_ruby.png";
+heart2.src = "./res/img/heart_ruby.png";
+heart3.src = "./res/img/heart_ruby.png";
+playingAsRioter = false;
+playingAsRuby = true;
+movingCharactersAndFullBlack()
 
 let height = 40;
 let width = 30;
@@ -470,6 +536,8 @@ let nonStopShake;
 
 let canEnter = true;
 
+let timeNow = 0;
+
 //Enter Function
 const enterFunction = () => {
     if(lobbyDoorCol){
@@ -510,7 +578,7 @@ const enterFunction = () => {
             }
             spawnCords();
             music.src = "./res/music/song1.mp3";
-            doorsTime = 27900;
+            doorsTime = 28000;
             music.play();
             spawnGhostCords = () =>{
                 xGhost = 400;
@@ -525,7 +593,7 @@ const enterFunction = () => {
             spawnCords();
             darkness = true;
             music.src = "./res/music/song2.mp3";
-            doorsTime = 37100;
+            doorsTime = 37000;
             music.play();
         }else if(helpNum == 3){ //Level 4
             spawnCords = () =>{
@@ -673,6 +741,9 @@ const enterFunction = () => {
         fadeOutTransition();
         saveGhostCordsX = xGhost;
         saveGhostCordsY = yGhost;
+        timeNow = doorsTime/1000;
+        timerFunction();
+        console.log(timeNow)
         if(helpNum != 15){
             setTimeoutDoor = setTimeout(() => {
                 doorTimeout = true;
@@ -706,7 +777,7 @@ const bossLevel = () => {
     sfx_boss_talk.play();
     music.currentTime = 0;
     music.src = "./res/music/finalboss.mp3";
-    doorsTime = 76200;
+    doorsTime = 76000;
     music.play();
     cancelAnimationFrame(bossMoveXId);
     cancelAnimationFrame(bossMoveYId);
@@ -800,22 +871,27 @@ const generatorAttackFunction = () => {
 const shake = () => {
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "50.5%";
+        timer.style.top = "3.5%";canvas.style.left = "50.5%";
         background.style.top = "50.5%";background.style.left = "50.5%";
     }, 50);
     setTimeout(() => {
         canvas.style.top = "49.5%";canvas.style.left = "50%";
+        timer.style.top = "2.5%";canvas.style.left = "50%";
         background.style.top = "49.5%";background.style.left = "50%";
     }, 100);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50.5%";
+        timer.style.top = "3%";canvas.style.left = "50.5%";
         background.style.top = "50%";background.style.left = "50.5%";
     }, 150);
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "49.5%";
+        timer.style.top = "3.5%";canvas.style.left = "49.5%";
         background.style.top = "50.5%";background.style.left = "49.5%";
     }, 200);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50%";
+        timer.style.top = "3%";canvas.style.left = "50%";
         background.style.top = "50%";background.style.left = "50%";
     }, 250);
 }
@@ -883,6 +959,8 @@ const dead = () => {
             frameDoor = 0;
         }
         grayScaleEffect();
+        restartTimer();
+        timerFunction();
     }else{
         if(!resistence || frameDoor == 3 || usedRetry){
             if(hearts == 3){
@@ -932,6 +1010,8 @@ const dead = () => {
                 clearTimeout(bossDarkness);
                 clearTimeout(endBossDarkness);
                 clearInterval(nonStopShake);
+                restartTimer();
+                timerFunction();
                 bossLevel();
             }else{
                 sfx_boss_laugh.src = "./res/sfx/laugh.mp3";
@@ -1009,7 +1089,9 @@ const backToLobby = () => {
     clearInterval(nonStopShake);
     clearTimeout(setTimeoutDoor);
     cancelAnimationFrame(bossMoveXId);
-    cancelAnimationFrame(bossMoveYId);
+    cancelAnimationFrame(bossMoveYId)
+    restartTimer();
+    timer.style.top = "-5%"
     transition2.addEventListener("ended", () => {
         canEnter = true;
     });
@@ -1313,6 +1395,8 @@ const objectsCollision = () => {
                 x <= platformX + 40
             ) {
                 if(!backToLobbyEntered && frameDoor < 1){
+                    restartTimer();
+                    timer.style.top = "-5%"
                     canEnter = false; //Now you cant spam "e"
                     sfx.src = "./res/sfx/completed.mp3";
                     sfx.play();
