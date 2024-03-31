@@ -1,7 +1,7 @@
 # Leap-and-Run
 <b>[Play!](https://philipburesh.github.io/Leap-and-Run/)</b><br>
 <b>FULL VERSION (1.0)</b><br>
- - <b>You have to finish the level in a certain time before the door closes.</b><br>
+ - <b>You must complete the level before the door closes.</b><br>
  - TIMER Added<br>
  - Ladder Animation Fixed<br>
  - SFX Fixed<br>
