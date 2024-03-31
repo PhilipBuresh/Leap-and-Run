@@ -14,7 +14,7 @@ const sfx_miss = document.getElementById("sfx_miss");
 const sfx_climb = document.getElementById("sfx_climb");
 const sfx_dead = document.getElementById("sfx_dead");
 const sfx_player = document.getElementById("sfx_player");
-const sfx_walk = document.getElementById("sfx_walk");
+const sfx_walk = document.getElementById("sfx_walk"); 
 const sfx_jump = document.getElementById("sfx_jump");
 const sfx_punch = document.getElementById("sfx_punch");
 const sfx_extra_jump = document.getElementById("sfx_extra_jump");
@@ -375,15 +375,6 @@ const movingCharactersAndFullBlack = () => {
         }, 800);
     }, 1000);
 }
-//here
-characters.style.display = "none";
-player =  "./res/img/ruby.png";
-heart1.src = "./res/img/heart_ruby.png";
-heart2.src = "./res/img/heart_ruby.png";
-heart3.src = "./res/img/heart_ruby.png";
-playingAsRioter = false;
-playingAsRuby = true;
-movingCharactersAndFullBlack()
 
 let height = 40;
 let width = 30;
