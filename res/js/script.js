@@ -177,7 +177,7 @@ const timerFunction = () => {
     timerInterval = setInterval(() => {
         seconds--
         timer.innerHTML = `Time: ${seconds}s`
-        if(seconds == 10){
+        if(seconds == 9){
             notEnoughTime();
             console.log(1)
         }else if(seconds == 0){
