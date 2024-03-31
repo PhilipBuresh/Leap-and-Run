@@ -641,5 +641,8 @@ p{
     #recommend h4{
         font-size:16px
     }
+    #song_box div{
+        width: 100%;
+    }
 }
 
