@@ -156,13 +156,20 @@ music_editor_back.onclick = () => {
 let transitionY = 576
 let transitionX = 1024
 
+//Timer resize function
 const resizeTimer = () => {
     let widthCalculator = window.innerWidth;
-    let newSize = widthCalculator * 0.02; // Pravidlo pro zmenšení/zvětšení textu můžete upravit podle potřeby
+    let newSize = widthCalculator * 0.02;
     timer.style.fontSize = newSize + "px";
 }
 
 resizeTimer();
+
+window.onresize = function() {
+    resizeTimer()
+};
+
+//Timer Function
 
 let seconds = 0
 
@@ -186,6 +193,8 @@ const timerFunction = () => {
     }, 1000);
 }
 
+//This will function will warning you when you don't have enough time
+
 let colorIntervalNumber = 1;
 
 const notEnoughTime = () => {
@@ -202,15 +211,13 @@ const notEnoughTime = () => {
     }, 300);
 }
 
+//Restart timer function
+
 const restartTimer = () => {
     seconds = 0
     clearInterval(colorInterval)
     clearInterval(timerInterval)
 }
-
-window.onresize = function() {
-    resizeTimer()
-};
 
 //Adjusts the position of the transition on you
 const setTransitionCords = () => {
