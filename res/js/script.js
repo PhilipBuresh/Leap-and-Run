@@ -156,20 +156,13 @@ music_editor_back.onclick = () => {
 let transitionY = 576
 let transitionX = 1024
 
-//Timer resize function
 const resizeTimer = () => {
     let widthCalculator = window.innerWidth;
-    let newSize = widthCalculator * 0.02;
+    let newSize = widthCalculator * 0.02; // Pravidlo pro zmenšení/zvětšení textu můžete upravit podle potřeby
     timer.style.fontSize = newSize + "px";
 }
 
 resizeTimer();
-
-window.onresize = function() {
-    resizeTimer()
-};
-
-//Timer Function
 
 let seconds = 0
 
@@ -186,14 +179,11 @@ const timerFunction = () => {
         timer.innerHTML = `Time: ${seconds}s`
         if(seconds == 9){
             notEnoughTime();
-            console.log(1)
         }else if(seconds == 0){
             clearInterval(timerInterval)
         }
     }, 1000);
 }
-
-//This will function will warning you when you don't have enough time
 
 let colorIntervalNumber = 1;
 
@@ -211,13 +201,16 @@ const notEnoughTime = () => {
     }, 300);
 }
 
-//Restart timer function
-
 const restartTimer = () => {
     seconds = 0
+    timer.style.backgroundColor = "rgb(45, 3, 3)"
     clearInterval(colorInterval)
     clearInterval(timerInterval)
 }
+
+window.onresize = function() {
+    resizeTimer()
+};
 
 //Adjusts the position of the transition on you
 const setTransitionCords = () => {
@@ -431,7 +424,7 @@ const doorsCollision = () => {
             ) {
                 if(platformLevel1[i] == 34 && frameDoorFinal == 0){
                     helpNum = 15;
-                }else if(platformLevel1[i] != 34){
+                }else if(platformLevel1[i] != 34 && inGame){
                     helpNum = platformLevel1[i] - 50;
                     lobbyDoorCol = true;
                 }
@@ -542,6 +535,7 @@ const enterFunction = () => {
         sfx.src = "./res/sfx/door.mp3";
         sfx.play();
     }
+    frameDoor = 0;
     music.pause();
     inGame = false;
     setTransitionCords();
@@ -558,7 +552,7 @@ const enterFunction = () => {
         if(helpNum == 0){ //Level 1
             spawnCords = () =>{
                 x = 40;
-                y = 500
+                y = 515
             }
             spawnCords();
             music.src = "./res/music/song0.mp3";
@@ -572,7 +566,7 @@ const enterFunction = () => {
         }else if(helpNum == 1){ //Level 2
             spawnCords = () =>{
                 x = 40;
-                y = 500;
+                y = 515;
             }
             spawnCords();
             music.src = "./res/music/song1.mp3";
@@ -586,7 +580,7 @@ const enterFunction = () => {
         }else if(helpNum == 2){ //Level 3
             spawnCords = () =>{
                 x = 20;
-                y = 380;
+                y = 390;
             }
             spawnCords();
             darkness = true;
@@ -596,7 +590,7 @@ const enterFunction = () => {
         }else if(helpNum == 3){ //Level 4
             spawnCords = () =>{
                 x = 40;
-                y = 500;
+                y = 515;
             }
             spawnCords();
             music.src = "./res/music/song3.mp3";
@@ -612,7 +606,7 @@ const enterFunction = () => {
             risingLavaActivated = true;
             spawnCords = () =>{
                 x = 512;
-                y = 470;
+                y = 485;
             }
             spawnCords();
             music.src = "./res/music/song4.mp3";
@@ -621,7 +615,7 @@ const enterFunction = () => {
         }else if(helpNum == 5){ //Level 6
             spawnCords = () =>{
                 x = 20;
-                y = 470;
+                y = 485;
             }
             spawnCords();
             music.src = "./res/music/song5.mp3";
@@ -635,7 +629,7 @@ const enterFunction = () => {
         }else if(helpNum == 6){ //Level 7
             spawnCords = () =>{
                 x = 500;
-                y = 470;
+                y = 485;
             }
             spawnCords();
             music.src = "./res/music/song6.mp3";
@@ -644,7 +638,7 @@ const enterFunction = () => {
         }else if(helpNum == 7){ //Level 8
             spawnCords = () =>{
                 x = 20;
-                y = 500;
+                y = 515;
             }
             spawnCords();
             darkness = true;
@@ -654,7 +648,7 @@ const enterFunction = () => {
         }else if(helpNum == 8){ //Level 9
             spawnCords = () =>{
                 x = 20;
-                y = 400;
+                y = 420;
             }
             spawnCords();
             music.src = "./res/music/song8.mp3";
@@ -665,7 +659,7 @@ const enterFunction = () => {
             risingLavaActivated = true;
             spawnCords = () =>{
                 x = 20;
-                y = 470;
+                y = 485;
             }
             spawnCords();
             music.src = "./res/music/song9.mp3";
@@ -674,7 +668,7 @@ const enterFunction = () => {
         }else if(helpNum == 10){ //Level 11
             spawnCords = () =>{
                 x = 20;
-                y = 500;
+                y = 515;
             }
             spawnCords();
             music.src = "./res/music/song10.mp3";
@@ -688,7 +682,7 @@ const enterFunction = () => {
         }else if(helpNum == 11){ //Level 12
             spawnCords = () =>{
                 x = 500;
-                y = 80;
+                y = 70;
             }
             spawnCords();
             music.src = "./res/music/song11.mp3";
@@ -697,7 +691,7 @@ const enterFunction = () => {
         }else if(helpNum == 12){ //Level 13
             spawnCords = () =>{
                 x = 20;
-                y = 510;
+                y = 515;
             }
             spawnCords();
             darkness = true;
@@ -712,7 +706,7 @@ const enterFunction = () => {
         }else if(helpNum == 13){ //Level 14
             spawnCords = () =>{
                 x = 40;
-                y = 520;
+                y = 515;
             }
             spawnCords();
             music.src = "./res/music/song13.mp3";
@@ -728,7 +722,7 @@ const enterFunction = () => {
         }else if(helpNum == 15){ // Level 16 (Trophy Room)
             spawnCords = () =>{
                 x = 40;
-                y = 520;
+                y = 515;
             }
             finished[14] = 1; //Boss Beated -> Level 15 Doors are now green
             spawnCords();
@@ -739,9 +733,10 @@ const enterFunction = () => {
         fadeOutTransition();
         saveGhostCordsX = xGhost;
         saveGhostCordsY = yGhost;
-        timeNow = doorsTime/1000;
-        timerFunction();
-        console.log(timeNow)
+        if(helpNum != 15){
+            timeNow = doorsTime/1000;
+            timerFunction();
+        }
         if(helpNum != 15){
             setTimeoutDoor = setTimeout(() => {
                 doorTimeout = true;
@@ -869,27 +864,22 @@ const generatorAttackFunction = () => {
 const shake = () => {
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "50.5%";
-        timer.style.top = "3.5%";canvas.style.left = "50.5%";
         background.style.top = "50.5%";background.style.left = "50.5%";
     }, 50);
     setTimeout(() => {
         canvas.style.top = "49.5%";canvas.style.left = "50%";
-        timer.style.top = "2.5%";canvas.style.left = "50%";
         background.style.top = "49.5%";background.style.left = "50%";
     }, 100);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50.5%";
-        timer.style.top = "3%";canvas.style.left = "50.5%";
         background.style.top = "50%";background.style.left = "50.5%";
     }, 150);
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "49.5%";
-        timer.style.top = "3.5%";canvas.style.left = "49.5%";
         background.style.top = "50.5%";background.style.left = "49.5%";
     }, 200);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50%";
-        timer.style.top = "3%";canvas.style.left = "50%";
         background.style.top = "50%";background.style.left = "50%";
     }, 250);
 }
@@ -1827,8 +1817,8 @@ let gravity = () => {
                 }
                 setTimeout(() => {
                     sfx_walk.play(); 
-                }, 30);
-            }else if(!sfx_walk.paused && velocityRight <= 1 && velocityLeft <= 1 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3){
+                }, 3);
+            }else if(!sfx_walk.paused && velocityRight <= 1 && velocityLeft <= 1 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping){
                 sfx_walk.pause();
             }
             if(crouched == true && velocity > 1){
@@ -1872,6 +1862,9 @@ let jump = () => {
             velocityJump = 0;
             velocityJump = 0;
             orbUsed = true;
+            setTimeout(() => {
+                orbUsed = false;
+            }, 250);
             sfx_extra_jump.src = "./res/sfx/orb_jump.mp3"
             sfx_extra_jump.play();
         }else if(!canOrbJump && !bounced && !ladderCol){
@@ -1900,7 +1893,8 @@ let jump = () => {
 }
 //----------------------------------------Moving Right Function (Player)
 
-let velocityRight = 0.1;
+let velocityRight = 0;
+
 let nowRight;
 let thenRight = Date.now();
 let deltaRight;
@@ -1952,7 +1946,7 @@ let moveRight = () => {
                     if (
                         y + height > platformY &&
                         y < platformY + 32 &&
-                        x + width + velocityRight > platformX &&
+                        x + width + velocityRight*1.1 > platformX &&
                         x < platformX + 32
                     ) {
                         if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
@@ -1961,6 +1955,10 @@ let moveRight = () => {
                         }
                         if(velocityRight >= 1 && velocityLeft >= 1){//If you walk to two sides at once, you won't move
                             velocityLeft = 0;
+                            velocityRight = 0;
+                        }
+                        if(!canStandUp){ // This condition fixing uncrouch teleport bug
+                            x = platformX - width - 0.12;
                         }
                         velocityRight = 0;
                         break;
@@ -1986,7 +1984,8 @@ let moveRight = () => {
 
 //----------------------------------------Moving Left Function (Player)
 
-let velocityLeft = 0.1;
+let velocityLeft = 0;
+
 let nowLeft;
 let thenLeft = Date.now();
 let deltaLeft;
@@ -2036,15 +2035,19 @@ let moveLeft = () => {
                     if (
                         y + height > platformY &&
                         y < platformY + 32 &&
-                        x - velocityLeft < platformX + 32 &&
-                        x > platformX
+                        x - velocityLeft * 1.1 < platformX + 32 &&
+                        x > platformX 
                     ) {
                         if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
                             turnedLeft = true;
                             turnedRight = false;
                         }
                         if(velocityRight >= 1 && velocityLeft >= 1){//If you walk to two sides at once, you won't move
+                            velocityLeft = 0;
                             velocityRight = 0;
+                        }
+                        if(!canStandUp){ // This condition fixing uncrouch teleport bug
+                            x = platformX + width + 2.24;
                         }
                         velocityLeft = 0;
                         break;
@@ -2132,6 +2135,8 @@ const punch = () => {
 //--------------------------Dead Boss Function
 
 const deadBoss = () => {
+    restartTimer();
+    timer.style.top = "-5%"
     canAttack = false;
     inGame = false;
     sfx_boss_laugh.pause();

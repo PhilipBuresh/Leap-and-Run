@@ -50,8 +50,8 @@ p{
     top: -5%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 20;
-    margin:0 auto;
+    margin: 0 auto;
+    z-index: 100;
     transition: 0.6s;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
@@ -298,7 +298,7 @@ p{
     font-size:30px;
     animation-duration: 1000ms;
     animation-play-state: paused;
-    animation-name: blink;
+    animation-name: none;
     margin:1em;
 }
 #tutorialButton{
@@ -318,7 +318,7 @@ p{
     display: block;
 }
 @keyframes blink {
-    1% {padding: 0;color: transparent;background-color: white;height: 10px;}
+    0% {padding: 0;color: transparent;background-color: white;height: 10px;}
     15% {padding: 0;padding-left: 5em;padding-right: 5em;color: transparent;background-color: white;height: 5px;}
     100% {padding: 0;padding-left: 0.1em;padding-right: 0.1em;;color: transparent;background-color: rgb(126, 125, 125);border:rgb(126, 125, 125);height: 3px;}
 }
