@@ -60,8 +60,8 @@ const music_editor_back = document.getElementById("music_editor_back");
 let helpNum = 0; //Help Number for level detection (doors)
 
 //Setting default volume
-let musicVolume = 0.1;
-let sfxVolume = 0.1; 
+let musicVolume = 0.5;
+let sfxVolume = 0.5; 
 let currentMusicValue = 50;
 let currentSfxValue = 50;
 
