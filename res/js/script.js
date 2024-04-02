@@ -1,7 +1,7 @@
-const canvas = document.getElementById('canvas');
+const canvas = document.getElementById("canvas");
 const canvas_container = document.getElementById("canvas_container");
 const container = document.getElementById("container");
-const c = canvas.getContext('2d');
+const c = canvas.getContext("2d");
 const text = document.getElementById("text");
 const characters = document.getElementById("characters");
 const man = document.getElementById("man");
@@ -60,8 +60,8 @@ const music_editor_back = document.getElementById("music_editor_back");
 let helpNum = 0; //Help Number for level detection (doors)
 
 //Setting default volume
-let musicVolume = 0.5;
-let sfxVolume = 0.5;
+let musicVolume = 0.1;
+let sfxVolume = 0.1; 
 let currentMusicValue = 50;
 let currentSfxValue = 50;
 
@@ -514,7 +514,7 @@ const bossMoveX = () => {
 
 let entered = false;
 
-window.addEventListener('keydown', (event) => {
+window.addEventListener("keydown", (event) => {
     if ((event.key == "e" || event.key == "E") && doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter) {
         entered = true;
         enterFunction();
@@ -538,6 +538,7 @@ const enterFunction = () => {
     frameDoor = 0;
     music.pause();
     inGame = false;
+    ghostVelocity = 2;
     setTransitionCords();
     fadeInTransition();
     setTimeout(() => {
@@ -597,7 +598,7 @@ const enterFunction = () => {
             doorsTime = 31000;
             music.play();
             spawnGhostCords = () => {
-                xGhost = 700;
+                xGhost = 670;
                 yGhost = 310;
             }
             spawnGhostCords();
@@ -675,7 +676,7 @@ const enterFunction = () => {
             doorsTime = 30000;
             music.play();
             spawnGhostCords = () => {
-                xGhost = 650;
+                xGhost = 600;
                 yGhost = 90;
             }
             spawnGhostCords();
@@ -754,7 +755,7 @@ const bossLevel = () => {
     gravity();
     spawnCords = () => {
         x = 500;
-        y = 210;
+        y = 220;
     }
     spawnCords();
     myHp.style.display = "flex";
@@ -910,121 +911,128 @@ const grayScaleEffect = () => {
 //---------------------------------------- Death Function (Player)
 
 const dead = () => {
-    if(!playingBossFight){ //You are not playing BOSS FIGHT
-        if(yGhost < 2000 && xGhost < 2000){ 
-            spawnGhostCords();
-        }
-        if(ghostKilled){
-            spawnGhostCords = () => {
-                xGhost = saveGhostCordsX;
-                yGhost = saveGhostCordsY;
+    if(!goingBackToTheLobby){
+        if(!playingBossFight){ //You are not playing BOSS FIGHT
+            if(yGhost < 2000 && xGhost < 2000){
+                ghostVelocity = 2;
+                spawnGhostCords();
             }
-            ghostKilled = false;
-            spawnGhostCords();
-        }
-        frameSpike = 0;
-        frameLava = 0;
-        music.currentTime = 0;
-        clearTimeout(setTimeoutDoor)
-        setTimeoutDoor = setTimeout(() => {
-            doorTimeout = true;
-        }, doorsTime);
-        spawnCords();
-        unCrouch();
-        platformLevel1 = [...originalPlatform1];
-        drawPlatform();
-        dark();
-        if(risingLavaActivated){
-            risingIncreaseValue = 0.6;
-            lavaIncreaseValue = 3.6;
-            lavaY = 576;
-            risingPercent = risingPercentOriginal;
-            rising.style.bottom = risingPercent + "%"
-        }
-        if(frameDoor == 3){
-            shake();
-            doorTimeout = false;
-            frameDoor = 0;
-        }
-        grayScaleEffect();
-        restartTimer();
-        timerFunction();
-    }else{
-        if(!resistence || frameDoor == 3 || usedRetry){
-            if(hearts == 3){
-                heart3.style.display = "none";
-            }else if(hearts == 2){
-                heart2.style.display = "none";
-            }else if(hearts == 1){
-                heart1.style.display = "none";
-            }
-            resistence = true;
-            hearts--;
-            if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
-                clearInterval(bossAttackGenerator);
-                grayScaleEffect();
-                sfx_boss_laugh.pause();
-                if(usedRetry){
-                    usedRetry = false;
+            if(ghostKilled){
+                spawnGhostCords = () => {
+                    xGhost = saveGhostCordsX;
+                    yGhost = saveGhostCordsY;
                 }
-                cancelAnimationFrame(bossMoveXId);
-                cancelAnimationFrame(bossMoveYId);
-                clearTimeout(setTimeoutDoor)
-                setTimeoutDoor = setTimeout(() => {
-                    doorTimeout = true;
-                }, doorsTime);
-                currentFrameBoss = 0;
-                bossAttacking = false;
-                currentHp = 100;
-                hp.style.width = currentHp + "%";
-                platformLevel1 = [...map[14]]
-                risingLavaActivated = false;
+                ghostKilled = false;
+                spawnGhostCords();
+            }
+            frameSpike = 0;
+            frameLava = 0;
+            velocity = 0;
+            velocityRight = 0;
+            velocityLeft = 0;
+            velocityJump = 0;
+            music.currentTime = 0;
+            clearTimeout(setTimeoutDoor)
+            setTimeoutDoor = setTimeout(() => {
+                doorTimeout = true;
+            }, doorsTime);
+            spawnCords();
+            unCrouch();
+            platformLevel1 = [...originalPlatform1];
+            drawPlatform();
+            dark();
+            if(risingLavaActivated){
                 risingIncreaseValue = 0.6;
                 lavaIncreaseValue = 3.6;
                 lavaY = 576;
                 risingPercent = risingPercentOriginal;
                 rising.style.bottom = risingPercent + "%"
-                rising.style.display = "none";
-                darkness = false;
-                heart1.style.display = "block";
-                heart2.style.display = "block";
-                heart3.style.display = "block";
-                hearts = 3;
-                clearTimeout(breakBottom);
-                clearTimeout(bossLava);
-                clearTimeout(bossLava2);
-                clearTimeout(bossLava3);
-                clearTimeout(endBossLava);
-                clearTimeout(bossDarkness);
-                clearTimeout(endBossDarkness);
-                clearInterval(nonStopShake);
-                restartTimer();
-                timerFunction();
-                bossLevel();
-            }else{
-                sfx_boss_laugh.src = "./res/sfx/laugh.mp3";
-                sfx_boss_laugh.play();
             }
+            if(frameDoor == 3){
+                shake();
+                doorTimeout = false;
+                frameDoor = 0;
+            }
+            grayScaleEffect();
+            restartTimer();
+            timerFunction();
+        }else{
+            if(!resistence || frameDoor == 3 || usedRetry){
+                if(hearts == 3){
+                    heart3.style.display = "none";
+                }else if(hearts == 2){
+                    heart2.style.display = "none";
+                }else if(hearts == 1){
+                    heart1.style.display = "none";
+                }
+                resistence = true;
+                hearts--;
+                if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
+                    clearInterval(bossAttackGenerator);
+                    grayScaleEffect();
+                    sfx_boss_laugh.pause();
+                    if(usedRetry){
+                        usedRetry = false;
+                    }
+                    cancelAnimationFrame(bossMoveXId);
+                    cancelAnimationFrame(bossMoveYId);
+                    clearTimeout(setTimeoutDoor)
+                    setTimeoutDoor = setTimeout(() => {
+                        doorTimeout = true;
+                    }, doorsTime);
+                    currentFrameBoss = 0;
+                    bossAttacking = false;
+                    currentHp = 100;
+                    hp.style.width = currentHp + "%";
+                    platformLevel1 = [...map[14]]
+                    risingLavaActivated = false;
+                    risingIncreaseValue = 0.6;
+                    lavaIncreaseValue = 3.6;
+                    lavaY = 576;
+                    risingPercent = risingPercentOriginal;
+                    rising.style.bottom = risingPercent + "%"
+                    rising.style.display = "none";
+                    darkness = false;
+                    heart1.style.display = "block";
+                    heart2.style.display = "block";
+                    heart3.style.display = "block";
+                    hearts = 3;
+                    clearTimeout(breakBottom);
+                    clearTimeout(bossLava);
+                    clearTimeout(bossLava2);
+                    clearTimeout(bossLava3);
+                    clearTimeout(endBossLava);
+                    clearTimeout(bossDarkness);
+                    clearTimeout(endBossDarkness);
+                    clearInterval(nonStopShake);
+                    restartTimer();
+                    timerFunction();
+                    bossLevel();
+                }else{
+                    sfx_boss_laugh.src = "./res/sfx/laugh.mp3";
+                    sfx_boss_laugh.play();
+                }
+                setTimeout(() => {
+                    resistence = false
+                }, 2000);
+                spawnCords();
+            }
+            if(frameDoor == 3){
+                doorTimeout = false;
+                frameDoor = 0;
+            }
+        }
+        if(deadSoundCanBeUse){
+            sfx_dead.src = "./res/sfx/died.mp3";
+            sfx_dead.play();
+            deadSoundCanBeUse = false;
             setTimeout(() => {
-                resistence = false
-            }, 2000);
-            spawnCords();
+                deadSoundCanBeUse = true;
+            }, 300);
         }
-        if(frameDoor == 3){
-            doorTimeout = false;
-            frameDoor = 0;
-        }
+    
+        gravity();
     }
-    if(deadSoundCanBeUse){
-        sfx_dead.src = "./res/sfx/died.mp3";
-        sfx_dead.play();
-        deadSoundCanBeUse = false;
-        setTimeout(() => {
-            deadSoundCanBeUse = true;
-        }, 300);
-    }
-
-    gravity();
 }
 
 //Fade **IN** Transition Function
@@ -1065,7 +1073,11 @@ const fadeOutTransition = () => {
 
 let backToLobbyEntered = false;
 
+let goingBackToTheLobby = false;
+
 const backToLobby = () => {
+    goingBackToTheLobby = true;
+    cancelAnimationFrame(gravityId);
     clearInterval(bossAttackGenerator);
     clearTimeout(breakBottom);
     clearTimeout(bossLava);
@@ -1083,7 +1095,11 @@ const backToLobby = () => {
     transition2.addEventListener("ended", () => {
         canEnter = true;
     });
+    if(usedRetry){
+        usedRetry = false;
+    }
     black.style.opacity = "0";
+    risingLavaActivated = false;
     finalDoorUnlocked = true;
     canAttack = false;
     myHp.style.display = "none";
@@ -1111,7 +1127,6 @@ const backToLobby = () => {
             bossY = 0;
         }
         frameDoorFinal = 3;
-        risingLavaActivated = false;
         risingIncreaseValue = 0.6;
         lavaIncreaseValue = 3.6;
         lavaY = 576;
@@ -1175,6 +1190,7 @@ const backToLobby = () => {
         setTransitionCords();
         fadeOutTransition()
         backToLobbyEntered = false;
+        goingBackToTheLobby = false;
         gravity();
     }, 1300);
 }
@@ -1285,8 +1301,6 @@ finished[helpNum] = 0; // Unlock 1st level
 
 //----------------------------------------UNLOCK ALL DOORS FUNCTION
 
-let allUnclocked = false;
-
 const unlockAll = () => {
     for (let index = 0; index < finished.length; index++) {
         if(finished[index] != 1){
@@ -1295,13 +1309,7 @@ const unlockAll = () => {
     }
 }
 
-/*
-window.addEventListener('keydown', (event) => {
-    if (event.key == "Delete" && allUnclocked == false && inGame == true) {
-        allUnclocked = true;
-        unlockAll();
-    }
-})*/
+//unlockAll()
 
 //---------------------------------------- OBJECTS Collision
 
@@ -1394,8 +1402,11 @@ const objectsCollision = () => {
                     }
                     backToLobby();
                     backToLobbyEntered = true;
-                    localStorage.setItem('finished_' + helpNum, finished[helpNum]);
-                    localStorage.setItem('unlocked_' + helpNum, finished[helpNum + 1]);
+                    if(usedRetry){
+                        usedRetry = false;
+                    }
+                    localStorage.setItem("finished_" + helpNum, finished[helpNum]);
+                    localStorage.setItem("unlocked_" + helpNum, finished[helpNum + 1]);
                 }
             }
         }
@@ -1444,13 +1455,13 @@ const objectsCollision = () => {
 //This will load you progress which was saved
 window.onload =  () => {
     for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem('unlocked_' + i);
+        let savedValue = localStorage.getItem("unlocked_" + i);
         if (savedValue !== null) {
             finished[i + 1] = parseInt(savedValue); // Convert to numbers
         }
     }
     for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem('finished_' + i);
+        let savedValue = localStorage.getItem("finished_" + i);
         if (savedValue !== null) {
             finished[i] = parseInt(savedValue); // Convert to numbers
         }
@@ -1460,10 +1471,10 @@ window.onload =  () => {
 //Reset Local Storage Function
 const resetLocalStorage = () => {
     for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem('finished_' + i);
+        localStorage.removeItem("finished_" + i);
     }
     for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem('unlocked_' + i);
+        localStorage.removeItem("unlocked_" + i);
     }
 }
 
@@ -1608,6 +1619,7 @@ const bottomCollision = () => {
                 x + width >= platformX &&
                 x <= platformX + 32
             ) {
+                stillJumping = false;
                 if(sfx_land.paused && sfx_land.src != "./res/sfx/small_land.mp3" && velocity >= 3 && velocity < 8 && !ladderCol){
                     sfx_land.src = "./res/sfx/small_land.mp3"
                     sfx_land.play();
@@ -1616,7 +1628,6 @@ const bottomCollision = () => {
                     sfx_land.play();
                 }
                 sfx_climb.pause()
-                stillJumping = false;
                 y = platformY - height;
                 velocity = 0;
                 velocityGoingDown = 0;
@@ -1659,7 +1670,7 @@ const upCollision = () => {
         for (let i = 0; i < platformLevel1.length; i++) {
             if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                 let platformX = (i % 32) * 32;
-                let platformY = Math.floor(i / 32) * 32 + 40;
+                let platformY = Math.floor(i / 32) * 32 + 42;
                 if (
                     y + height >= platformY &&
                     y + height <= platformY + 32 &&
@@ -1796,6 +1807,7 @@ const goingDown = () => {
 //---------------------------------------- Gravity Function (Player)
 
 let velocity = 0;
+
 let stillJumping = false;
 let nowDown;
 let thenDown = Date.now();
@@ -1821,7 +1833,7 @@ let gravity = () => {
             }else if(!sfx_walk.paused && velocityRight <= 1 && velocityLeft <= 1 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping){
                 sfx_walk.pause();
             }
-            if(crouched == true && velocity > 1){
+            if(crouched && velocity > 1){
                 unCrouch();
             }
             if(velocity >= 0.6){
@@ -1946,7 +1958,7 @@ let moveRight = () => {
                     if (
                         y + height > platformY &&
                         y < platformY + 32 &&
-                        x + width + velocityRight*1.1 > platformX &&
+                        x + width + velocityRight + 0.2 > platformX &&
                         x < platformX + 32
                     ) {
                         if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
@@ -1960,7 +1972,12 @@ let moveRight = () => {
                         if(!canStandUp){ // This condition fixing uncrouch teleport bug
                             x = platformX - width - 0.12;
                         }
-                        velocityRight = 0;
+                        if(velocityRight > 0.5){
+                            velocityRight = 0;
+                            x = platformX - width - 1.2;
+                        }else{
+                            velocityRight = 0;
+                        }
                         break;
                     }
                 }
@@ -2035,7 +2052,7 @@ let moveLeft = () => {
                     if (
                         y + height > platformY &&
                         y < platformY + 32 &&
-                        x - velocityLeft * 1.1 < platformX + 32 &&
+                        x - velocityLeft < platformX + 32 &&
                         x > platformX 
                     ) {
                         if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
@@ -2049,7 +2066,12 @@ let moveLeft = () => {
                         if(!canStandUp){ // This condition fixing uncrouch teleport bug
                             x = platformX + width + 2.24;
                         }
-                        velocityLeft = 0;
+                        if(velocityLeft > 0.5){
+                            velocityLeft = 0;
+                            x = platformX + width + 2.2;
+                        }else{
+                            velocityLeft = 0;
+                        }
                         break;
                     }
                 }
@@ -2148,6 +2170,8 @@ const deadBoss = () => {
         scene.style.display = "none";
         black.style.opacity = "0";
         inGame = true;
+        spawnCords();
+        gravity();
     });
     clearTimeout(setTimeoutDoor);
     music.pause();
@@ -2193,7 +2217,8 @@ const deadBoss = () => {
     clearTimeout(endBossDarkness);
     clearInterval(nonStopShake);
     spawnCords();
-    gravity();
+    velocity = 0;
+    cancelAnimationFrame(gravityId);
     platformLevel1 = [...map[14]];
     originalPlatform1 = [...platformLevel1];
 }
@@ -2216,7 +2241,7 @@ let inGame = false;
 
 let downPressed = false;
 
-window.addEventListener('keydown', (event) => {
+window.addEventListener("keydown", (event) => {
     // W - Jumping / Climbing Up
     if ((event.key == up || event.key == UP) && isJumping == false && canStandUp == true && inGame) {
         currentFrame = 0;
@@ -2271,7 +2296,7 @@ window.addEventListener('keydown', (event) => {
 
 //-------------------------- Releasing KEYBOARD Buttons
 
-window.addEventListener('keyup', (event) => {
+window.addEventListener("keyup", (event) => {
     // W - Stop Climbing UP
     if (event.key == up || event.key == UP && inGame) {
         isJumping = false;
