@@ -984,6 +984,10 @@ const dead = () => {
                     bossAttacking = false;
                     currentHp = 100;
                     hp.style.width = currentHp + "%";
+                    setTimeout(() => { // Fixing bug
+                        currentHp = 100;
+                        hp.style.width = currentHp + "%";
+                    }, 100);
                     platformLevel1 = [...map[14]]
                     risingLavaActivated = false;
                     risingIncreaseValue = 0.6;
@@ -1072,12 +1076,10 @@ const fadeOutTransition = () => {
 //---------------------------------------- Back to the Lobby (from level)
 
 let backToLobbyEntered = false;
-
 let goingBackToTheLobby = false;
 
 const backToLobby = () => {
     goingBackToTheLobby = true;
-    cancelAnimationFrame(gravityId);
     clearInterval(bossAttackGenerator);
     clearTimeout(breakBottom);
     clearTimeout(bossLava);
