@@ -8,6 +8,7 @@
  - Now you can use ORB multiple times<br>
  - Remade some maps<br>
  - Ladder Animation Fixed<br>
+ - Better Jumping ("w" press) detection
  - SFX Fixed<br>
  - Stucking in a Wall Fixed<br>
  - Player Movement Fixed<br>
