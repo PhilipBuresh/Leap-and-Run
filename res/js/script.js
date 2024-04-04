@@ -1861,7 +1861,7 @@ let thenUp = Date.now();
 let deltaUp;
 
 let jump = () => {
-    if((stillJumping == false || canOrbJump == true && orbUsed == false) && ladderCol == false || bounced){
+    if((stillJumping == false || canOrbJump == true && orbUsed == false) || bounced){
         onRock = false;
         onWood = false;
         if(!sfx_walk.paused) {
@@ -2243,15 +2243,33 @@ let inGame = false;
 
 let downPressed = false;
 
+let jumpInterval;
+let jumpIntervalSet = false;
+
+let crouchInterval;
+let crouchIntervalSet = false;
+
 window.addEventListener("keydown", (event) => {
     // W - Jumping / Climbing Up
-    if ((event.key == up || event.key == UP) && isJumping == false && canStandUp == true && inGame) {
+    if ((event.key == up || event.key == UP) && canStandUp == true && inGame && !isJumping) {
+        wPressed = true;
         currentFrame = 0;
         isJumping = true;
         if(ladderCol){
             goingUp();
         }else{
-            jump();
+            if(!jumpIntervalSet && stillJumping){ //Better W pressed detection
+                jump()
+                jumpInterval = setInterval(() => {
+                    jump()
+                }, 10);  
+                setTimeout(() => {
+                    clearInterval(jumpInterval)
+                }, 100);
+            }else if(!stillJumping && !jumpIntervalSet){
+                jump();
+            }
+            jumpIntervalSet = true;
         }
     // D - Moving Right / Climbing Right
     } else if ((event.key == right || event.key == RIGHT) && isMovingRight == false && inGame) {
@@ -2279,6 +2297,7 @@ window.addEventListener("keydown", (event) => {
             goingDown();
         }
         downPressed = true;
+        
     // SPACE - Punching BOSS / Breaking Cracked Blocks
     } else if (event.key == space) {
         if(!alreadyPunched && !ladderCol && inGame){
@@ -2302,6 +2321,8 @@ window.addEventListener("keyup", (event) => {
     // W - Stop Climbing UP
     if (event.key == up || event.key == UP && inGame) {
         isJumping = false;
+        jumpIntervalSet = false;
+        clearInterval(jumpInterval)
         if(ladderCol){  
             cancelAnimationFrame(goingUpId);
             sfx_climb.pause();
