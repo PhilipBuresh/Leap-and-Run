@@ -677,7 +677,7 @@ const enterFunction = () => {
             music.play();
             spawnGhostCords = () => {
                 xGhost = 600;
-                yGhost = 90;
+                yGhost = 150;
             }
             spawnGhostCords();
         }else if(helpNum == 11){ //Level 12
@@ -1571,10 +1571,12 @@ let aboveHeadCollision = () => {
 
 //Crouching Function
 let crouch = () => {
-    crouched = true;
-    height = 20;
-    y += 20;
-    aboveHeadCollision()
+    if(!stillJumping && !ladderCol){
+        crouched = true;
+        height = 20;
+        y += 20;
+        aboveHeadCollision()
+    }
 }
 
 //UnCrouching Function (Stand Up)
@@ -1608,8 +1610,6 @@ let under = () => {
 let onRock = false;
 let onWood = false;
 
-let onBottom = false;
-
 const bottomCollision = () => {
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
@@ -1641,12 +1641,12 @@ const bottomCollision = () => {
                      onRock = false;
                      onWood = true;
                 }
-                onBottom = true;
+                if(downPressed && !crouched){ //You will still crouch, if
+                    crouch();
+                }
                 cancelAnimationFrame(gravityId);
                 cancelAnimationFrame(goingDownId);
                 break;
-            } else {
-                onBottom = false;
             }
         }
     }
@@ -1796,10 +1796,12 @@ const goingDown = () => {
     deltaGoingdDown = nowGoingdDown - thenGoingdDown;
     if (deltaGoingdDown > interval) {
         thenGoingdDown = nowGoingdDown - (deltaGoingdDown % interval);
-        if(sfx_climb.paused && ladderCol && !onBottom){
+        if(sfx_climb.paused && ladderCol){
             sfx_walk.pause();
             sfx_climb.src = "./res/sfx/ladder.mp3"
-            sfx_climb.play();
+            setTimeout(() => {
+                sfx_climb.play();  
+            }, 10);
         }
         y += velocityGoingDown;
         bottomCollision();
@@ -1823,7 +1825,7 @@ let gravity = () => {
         if (deltaDown > interval) {
             thenDown = nowDown - (deltaDown % interval);
             //SFX Walking
-            if(sfx_walk.paused && sfx_jump.paused && (onWood || onRock) && (velocityRight > 1 || velocityLeft > 1) && !crouched && !ladderCol && velocity < 0.3 && !isJumping) {
+            if(sfx_walk.paused && sfx_jump.paused && (onWood || onRock) && (velocityRight > 2 || velocityLeft > 2) && !crouched && !ladderCol && velocity < 0.3 && !isJumping) {
                 if(onWood && !ladderCol){
                     sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
                 }else if(onRock && !ladderCol){
@@ -1831,8 +1833,8 @@ let gravity = () => {
                 }
                 setTimeout(() => {
                     sfx_walk.play(); 
-                }, 3);
-            }else if(!sfx_walk.paused && velocityRight <= 1 && velocityLeft <= 1 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping){
+                }, 10);
+            }else if(!sfx_walk.paused && velocityRight <= 2 && velocityLeft <= 2 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping){
                 sfx_walk.pause();
             }
             if(crouched && velocity > 1){
@@ -1864,6 +1866,7 @@ let jump = () => {
     if((stillJumping == false || canOrbJump == true && orbUsed == false) || bounced){
         onRock = false;
         onWood = false;
+        sfx_walk.currentTime = 0;
         if(!sfx_walk.paused) {
             sfx_walk.pause(); //Jumping = OFF SFX Walk
         }
@@ -2246,9 +2249,6 @@ let downPressed = false;
 let jumpInterval;
 let jumpIntervalSet = false;
 
-let crouchInterval;
-let crouchIntervalSet = false;
-
 window.addEventListener("keydown", (event) => {
     // W - Jumping / Climbing Up
     if ((event.key == up || event.key == UP) && canStandUp == true && inGame && !isJumping) {
@@ -2261,7 +2261,11 @@ window.addEventListener("keydown", (event) => {
             if(!jumpIntervalSet && stillJumping){ //Better W pressed detection
                 jump()
                 jumpInterval = setInterval(() => {
-                    jump()
+                    if(canOrbJump && velocity == 0){
+                        clearInterval(jumpInterval)
+                    }else{
+                        jump()
+                    }
                 }, 10);  
                 setTimeout(() => {
                     clearInterval(jumpInterval)
@@ -2289,9 +2293,9 @@ window.addEventListener("keydown", (event) => {
         moveLeft();
     // S - Crouching / Climbing Down
     } else if ((event.key == down || event.key == DOWN) && !punched) {
-        if(crouched == false && stillJumping == false && downPressed == false && ladderCol == false && inGame){
+        if(crouched == false && downPressed == false && ladderCol == false && inGame){
             crouch();
-            currentFrame = 0;            
+            currentFrame = 0;        
         } else if (ladderCol && !alreadyGoingDown){
             sfx_climb.pause();
             goingDown();
