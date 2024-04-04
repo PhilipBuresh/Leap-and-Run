@@ -6,9 +6,10 @@
 --------------------------------------------------------------------<br>
  - TIMER Added<br>
  - Now you can use ORB multiple times<br>
+ - Better Jumping ("w" press) detection<br>
+ - Better Crouching ("s" press) detection<br>
  - Remade some maps<br>
  - Ladder Animation Fixed<br>
- - Better Jumping ("w" press) detection
  - SFX Fixed<br>
  - Stucking in a Wall Fixed<br>
  - Player Movement Fixed<br>
