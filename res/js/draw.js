@@ -533,6 +533,7 @@ const drawing = () => {
         if(currentFrameRun % 8 == 0){
             currentFrameRun = 0;
         }
+        sfxWalkFunction();
     }
     //Animate4 (Crouch & Climb)
     now4 = Date.now();
@@ -598,87 +599,72 @@ let playerImage = new Image();
 playerImage.src = "./res/img/rioter.png";
 
 let drawPlayer = () => {
-    playerImage.src = player;
+    c.clearRect(0, 0, canvas.width, canvas.height);
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched && !ladderCol){ //Right Stand
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameStand * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight)
         cancelAnimationFrame(drawingId);
         drawing();
     }else if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedLeft && !punched && !crouched && !ladderCol){ //Left Stand
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameStand * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if(velocity > 0 && turnedRight && !punched && !crouched && !ladderCol){ //Right Fall
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 0 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if(velocity > 0 && turnedLeft && !punched && !crouched && !ladderCol){ //Left Fall
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 1 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if(velocityJump > 0 && turnedRight && !punched && !crouched && !ladderCol){ //Right Jump
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 4 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if(velocityJump > 0 && turnedLeft && !punched && !crouched && !ladderCol){ //Left Jump
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 5 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-    }else if(velocity == 0 && velocityJump == 0 && isMovingRight && !punched && !crouched && !ladderCol){ //Right Run
-        c.clearRect(0, 0, canvas.width, canvas.height);
+    }else if(velocity == 0 && velocityJump == 0 && isMovingRight && !punched && !crouched && !ladderCol){ //Right Run)
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameRun * sX, 2 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if(velocity == 0 && velocityJump == 0 && isMovingLeft && !punched && !crouched && !ladderCol){ //Left Run
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameRun * sX, 3 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if(punched && turnedRight && !ladderCol){ //Right Punch
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFramePunch * sX, 8 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if(punched && turnedLeft && !ladderCol){ //Left Punch
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFramePunch * sX, 9 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if((!isMovingRight && !isMovingLeft && crouched && turnedRight && !punched) || (isMovingRight && isMovingLeft && crouched && turnedRight && !punched)){ //Crouched Right
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if((!isMovingRight && !isMovingLeft && crouched && turnedLeft && !punched) || (isMovingRight && isMovingLeft && crouched && turnedLeft && !punched)){ //Crouched Left
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, 0 * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if(isMovingRight && !isMovingLeft && crouched && !punched){ //Crouched Right Moving
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if(crouched && isMovingLeft && !isMovingRight && !punched){ //Crouched Left Moving
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, x, y - height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
         drawing();
     }else if (ladderCol && !crouched){ //Climbing
-        c.clearRect(0, 0, canvas.width, canvas.height);
         drawBackBlocks();
         c.drawImage(playerImage, currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, x, y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);

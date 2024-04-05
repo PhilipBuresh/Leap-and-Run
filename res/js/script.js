@@ -967,6 +967,10 @@ const dead = () => {
                 }
                 resistence = true;
                 hearts--;
+                velocity = 0;
+                velocityRight = 0;
+                velocityLeft = 0;
+                velocityJump = 0;
                 if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
                     clearInterval(bossAttackGenerator);
                     grayScaleEffect();
@@ -1570,6 +1574,7 @@ let aboveHeadCollision = () => {
 };
 
 //Crouching Function
+
 let crouch = () => {
     if(!stillJumping && !ladderCol){
         crouched = true;
@@ -1702,7 +1707,6 @@ const upCollision = () => {
             velocityJump = 0;
             velocityGoingUp = 0;
             velocity = 0;
-            cancelAnimationFrame(goingUpId);
             cancelAnimationFrame(jumpingId);
             cancelAnimationFrame(gravityId);
             gravity();
@@ -1808,6 +1812,19 @@ const goingDown = () => {
     }
 }
 
+//SFX Walk Function
+
+const sfxWalkFunction = () => {
+    if(sfx_walk.paused && sfx_jump.paused && (onWood || onRock) && (velocityRight > 2 || velocityLeft > 2) && !crouched && !ladderCol && velocity < 0.3 && !isJumping && (currentFrameRun % 2 == 0)) {
+        if(onWood && !ladderCol){
+            sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
+        }else if(onRock && !ladderCol){
+            sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+        }
+        sfx_walk.play(); 
+    }
+}
+
 //---------------------------------------- Gravity Function (Player)
 
 let velocity = 0;
@@ -1825,23 +1842,14 @@ let gravity = () => {
         if (deltaDown > interval) {
             thenDown = nowDown - (deltaDown % interval);
             //SFX Walking
-            if(sfx_walk.paused && sfx_jump.paused && (onWood || onRock) && (velocityRight > 2 || velocityLeft > 2) && !crouched && !ladderCol && velocity < 0.3 && !isJumping) {
-                if(onWood && !ladderCol){
-                    sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
-                }else if(onRock && !ladderCol){
-                    sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
-                }
-                setTimeout(() => {
-                    sfx_walk.play(); 
-                }, 10);
-            }else if(!sfx_walk.paused && velocityRight <= 2 && velocityLeft <= 2 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping){
-                sfx_walk.pause();
-            }
             if(crouched && velocity > 1){
                 unCrouch();
             }
             if(velocity >= 0.6){
                 sfx_climb.pause();
+            }
+            if(!sfx_walk.paused && velocityRight <= 2 && velocityLeft <= 2 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping && currentFrameRun != 1){
+                sfx_walk.pause();
             }
             velocityGoingUp = 0;
             orbCollision();
@@ -1870,9 +1878,6 @@ let jump = () => {
         if(!sfx_walk.paused) {
             sfx_walk.pause(); //Jumping = OFF SFX Walk
         }
-        if(crouched == true){
-            unCrouch(); //No crouching while you jumping
-        }
         if(canOrbJump && velocity >= 0){
             cancelAnimationFrame(gravityId);
             cancelAnimationFrame(jumpingId);
@@ -1895,6 +1900,9 @@ let jump = () => {
         headHit = false;
         velocityJump = 16;
         stillJumping = true;
+        if(crouched){
+            unCrouch();
+        }
         const jumping = () => {
             jumpingId = requestAnimationFrame(jumping);
             nowUp = Date.now();
@@ -2252,7 +2260,6 @@ let jumpIntervalSet = false;
 window.addEventListener("keydown", (event) => {
     // W - Jumping / Climbing Up
     if ((event.key == up || event.key == UP) && canStandUp == true && inGame && !isJumping) {
-        wPressed = true;
         currentFrame = 0;
         isJumping = true;
         if(ladderCol){
@@ -2301,7 +2308,6 @@ window.addEventListener("keydown", (event) => {
             goingDown();
         }
         downPressed = true;
-        
     // SPACE - Punching BOSS / Breaking Cracked Blocks
     } else if (event.key == space) {
         if(!alreadyPunched && !ladderCol && inGame){
