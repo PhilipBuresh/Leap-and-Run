@@ -599,6 +599,7 @@ let playerImage = new Image();
 playerImage.src = "./res/img/rioter.png";
 
 let drawPlayer = () => {
+    playerImage.src = player;
     c.clearRect(0, 0, canvas.width, canvas.height);
     if(velocity == 0 && velocityJump == 0 && !isMovingRight && !isMovingLeft && turnedRight && !punched && !crouched && !ladderCol){ //Right Stand
         drawBackBlocks();
