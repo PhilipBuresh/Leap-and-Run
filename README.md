@@ -20,8 +20,3 @@
 ![output-onlinegiftools](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/3f542c81-fdb6-4717-821a-9dbf8fa37242)
 ![output-onlinegiftools (1)](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c9052834-06c6-471e-b6b7-6424205927d9)<br>
 ---------------------------------------------------------------------<br>
-<h1>Showcase</h1><br>
-
-https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/3862d487-6778-48e5-8917-4015c6f5632f
-- Music: Beethoven - Moonlight Sonata 3rd Movement (meganeko Remix)
-
