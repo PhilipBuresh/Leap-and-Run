@@ -65,6 +65,20 @@ let sfxVolume = 0.5;
 let currentMusicValue = 50;
 let currentSfxValue = 50;
 
+//Load Audio/Video
+const loadElements = () => {
+    let audios = document.getElementsByTagName("audio");
+    for (let index = 0; index < audios.length; index++) {
+        audios[index].load()
+    }
+    let videos = document.getElementsByTagName("video");
+    for (let index = 0; index < videos.length; index++) {
+        videos[index].load()
+    }
+}
+
+loadElements();
+
 //Adjust Music Volume
 const setMusicVolume = () => {
     music.volume = musicVolume;
@@ -133,10 +147,16 @@ let musicEditorOpened = false;
 note_button.onclick = () => {
     if(inGame && !escShowed){
         if(musicEditorOpened){
+            canvas.style.filter = "blur(0)"
+            background.style.filter = "blur(0)"
+            rising.style.filter = "blur(0)"
             music_editor.style.display = "none";
             musicEditorOpened = false;
             black.style.opacity = "0";
         }else{
+            canvas.style.filter = "blur(1px)"
+            background.style.filter = "blur(1px)"
+            rising.style.filter = "blur(1px)"
             music_editor.style.display = "flex";
             musicEditorOpened = true;
             black.style.opacity = "0.6";
@@ -150,6 +170,9 @@ music_editor_back.onclick = () => {
         music_editor.style.display = "none";
         musicEditorOpened = false;
         black.style.opacity = "0";
+        canvas.style.filter = "blur(0)"
+        background.style.filter = "blur(0)"
+        rising.style.filter = "blur(0)"
     }
 }
 
@@ -1104,6 +1127,9 @@ const backToLobby = () => {
     if(usedRetry){
         usedRetry = false;
     }
+    canvas.style.filter = "blur(0)";
+    background.style.filter = "blur(0)";
+    rising.style.filter = "blur(0)";
     black.style.opacity = "0";
     risingLavaActivated = false;
     finalDoorUnlocked = true;
@@ -1207,6 +1233,9 @@ button_back.onclick = () => {
 }
 //Resume Function
 button_resume.onclick = () => {
+    canvas.style.filter = "blur(0)"
+    background.style.filter = "blur(0)"
+    rising.style.filter = "blur(0)"
     esc.style.display = "none"; 
     escShowed = false;
     black.style.opacity = "0";
@@ -1225,6 +1254,9 @@ button_menu.onclick = () => {
     tutorialButton.style.opacity = "100%";
     music.currentTime = 0; //OFF Lobby Music 
     music.pause();
+    canvas.style.filter = "blur(0)";
+    background.style.filter = "blur(0)";
+    rising.style.filter = "blur(0)";
     setTimeout(() => {
         game.style.display = "none";
         startMenu.style.display = "block";
@@ -1255,7 +1287,10 @@ button_retry.onclick = () => {
 //----------------------------------------ESC Button Function
  
 const escFunction = () => {
-    if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){
+    canvas.style.filter = "blur(1px)";
+    background.style.filter = "blur(1px)";
+    rising.style.filter = "blur(1px)";
+    if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){ //When Lobby and current level are not same
         button_back.style.display = "block";
         button_resume.style.display = "block";
         button_retry.style.display = "block";
@@ -1268,11 +1303,14 @@ const escFunction = () => {
             escShowed = true;
             black.style.opacity = "0.6";
         }else if(escShowed){
+            canvas.style.filter = "blur(0)";
+            background.style.filter = "blur(0)";
+            rising.style.filter = "blur(0)";
             esc.style.display = "none"; 
             escShowed = false;
             black.style.opacity = "0";
         }
-    }else if(JSON.stringify(lobby) === JSON.stringify(platformLevel1)){
+    }else if(JSON.stringify(lobby) === JSON.stringify(platformLevel1)){ //When Lobby and current level are same
         button_back.style.display = "none";
         button_resume.style.display = "block";
         button_retry.style.display = "none";
@@ -1282,6 +1320,9 @@ const escFunction = () => {
             escShowed = true;
             black.style.opacity = "0.6";
         }else if(escShowed){
+            canvas.style.filter = "blur(0)";
+            background.style.filter = "blur(0)";
+            rising.style.filter = "blur(0)";
             esc.style.display = "none"; 
             escShowed = false;
             black.style.opacity = "0";
@@ -2319,6 +2360,9 @@ window.addEventListener("keydown", (event) => {
             music_editor.style.display = "none";
             musicEditorOpened = false;
             black.style.opacity = "0";
+            canvas.style.filter = "blur(0)"
+            background.style.filter = "blur(0)"
+            rising.style.filter = "blur(0)"
         }else{
             escFunction();
         }
