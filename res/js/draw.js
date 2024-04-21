@@ -89,7 +89,7 @@ let sY = 40;
 let cordsPortalX1 = 0;
 let cordsPortalY1 = 0;
 let cordsPortalX2 = 0;
-let cordsPortalY2 = 0;
+let cordsPortalY2 = 0
 
 //----------------------------------- Blocks
 

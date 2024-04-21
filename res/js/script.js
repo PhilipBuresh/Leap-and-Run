@@ -65,20 +65,6 @@ let sfxVolume = 0.5;
 let currentMusicValue = 50;
 let currentSfxValue = 50;
 
-//Load Audio/Video
-const loadElements = () => {
-    let audios = document.getElementsByTagName("audio");
-    for (let index = 0; index < audios.length; index++) {
-        audios[index].load()
-    }
-    let videos = document.getElementsByTagName("video");
-    for (let index = 0; index < videos.length; index++) {
-        videos[index].load()
-    }
-}
-
-loadElements();
-
 //Adjust Music Volume
 const setMusicVolume = () => {
     music.volume = musicVolume;
@@ -1882,7 +1868,6 @@ let gravity = () => {
         deltaDown = nowDown - thenDown;
         if (deltaDown > interval) {
             thenDown = nowDown - (deltaDown % interval);
-            //SFX Walking
             if(crouched && velocity > 1){
                 unCrouch();
             }
@@ -2324,7 +2309,7 @@ window.addEventListener("keydown", (event) => {
             jumpIntervalSet = true;
         }
     // D - Moving Right / Climbing Right
-    } else if ((event.key == right || event.key == RIGHT) && isMovingRight == false && inGame) {
+    } else if ((event.key == right || event.key == RIGHT) && !isMovingRight && inGame) {
         currentFrame = 0;
         isMovingRight = true;
         turnedRight = true;
@@ -2332,7 +2317,7 @@ window.addEventListener("keydown", (event) => {
         cancelAnimationFrame(animationIdRight);
         moveRight();
     // A - Moving Left / Climbing Left
-    } else if ((event.key == left || event.key == LEFT) && isMovingLeft == false && inGame) {
+    } else if ((event.key == left || event.key == LEFT) && !isMovingLeft && inGame) {
         currentFrame = 0;
         isMovingLeft = true;
         turnedRight = false;
@@ -2341,7 +2326,7 @@ window.addEventListener("keydown", (event) => {
         moveLeft();
     // S - Crouching / Climbing Down
     } else if ((event.key == down || event.key == DOWN) && !punched) {
-        if(crouched == false && downPressed == false && ladderCol == false && inGame){
+        if(!crouched && !downPressed && !ladderCol && inGame){
             crouch();
             currentFrame = 0;        
         } else if (ladderCol && !alreadyGoingDown){
