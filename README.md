@@ -28,4 +28,5 @@ https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/092f0ebd-5416-40a0
  - Player Movement Fixed<br>
  - Boss 1 hit bug Fixed<br>
  - Crouch Jump Fixed<br>
+ - Still blurred BG when you click on the retry button - Fixed<br>
  --------------------------------------------------------------------<br>
