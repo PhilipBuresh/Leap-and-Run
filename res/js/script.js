@@ -1266,6 +1266,9 @@ button_retry.onclick = () => {
     esc.style.display = "none"; 
     escShowed = false;
     black.style.opacity = "0";
+    canvas.style.filter = "blur(0)"
+    background.style.filter = "blur(0)"
+    rising.style.filter = "blur(0)"
     dead();
 }
 
