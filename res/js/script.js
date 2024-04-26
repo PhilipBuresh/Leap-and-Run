@@ -858,13 +858,17 @@ let attackNum = 0;
 
 let bossAttackGenerator;
 
+const bossAttack = () => {
+    bossVelocity = 1.5;
+    currentFrameBoss = 0;
+    bossAttacking = true;
+}
+
 const generatorAttackFunction = () => {
     bossAttackGenerator = setInterval(() => {
-        attackNum = Math.floor(Math.random() * 2)
+        attackNum = Math.floor(Math.random() * 3)
         if(attackNum == 1 && !bossAttacking){
-            bossVelocity = 1.5;
-            currentFrameBoss = 0;
-            bossAttacking = true;
+            bossAttack()
         }
     }, 500);
 }
@@ -2160,6 +2164,9 @@ const punch = () => {
             sfx_punch.play();
             currentHp -= 5.5566; //5.5566
             hp.style.width = currentHp + "%";
+            if(!bossAttacking){
+                bossAttack();
+            }
             if(currentHp <= 0 && !backToLobbyEntered){
                 deadBoss();
                 finalDoorUnlocked = true;
