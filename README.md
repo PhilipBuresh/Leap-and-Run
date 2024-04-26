@@ -18,6 +18,7 @@ https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/092f0ebd-5416-40a0
  --------------------------------------------------------------------<br>
  - TIMER Added<br>
  - Level 14 was REMADE<br>
+ - Boss mechanic modified - Boss will attack if you hit him + Boss attack generator nerfed<br>
  - Now you can use ORB multiple times<br>
  - Better Jumping ("w" press) detection<br>
  - Better Crouching ("s" press) detection<br>
