@@ -15,7 +15,7 @@ p{
 #container{
     height: 100vh;
     width: auto;
-    margin:0;
+    margin: 0;
     padding: 0;
 }
 #fullBlack{
@@ -282,6 +282,9 @@ p{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #startMenuBtns div{
     border-radius: 0.2em;
@@ -294,12 +297,19 @@ p{
     cursor: pointer;
     text-align: center;
 }
-#playButton{
+#startBtns{
+    display: flex;
+    flex-direction: row;
+}
+#playButton, #playButtonMulti{
     font-size:30px;
     animation-duration: 1000ms;
     animation-play-state: paused;
     animation-name: none;
     margin:1em;
+}
+#otherBtns{
+    width: 30%;
 }
 #tutorialButton{
     font-size:20px;
@@ -310,7 +320,7 @@ p{
     font-size:20px;
     cursor: pointer;
 }
-#playButton:hover, #tutorialButton:hover, #creditsButton:hover{
+#playButton:hover, #playButtonMulti:hover, #tutorialButton:hover, #creditsButton:hover{
     color: black;
     background-color: white;
 }
@@ -402,6 +412,15 @@ p{
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
+}
+#canvas_darkness {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
 }
 #background {
     width: 100%;

@@ -1,7 +1,198 @@
+//Player 1
+const player1 = {
+    // Coordinates
+    x : 0,
+    y : 500,
+    height : 40,
+    width : 30,
+    // Frames
+    currentFrameStand : 0,
+    currentFramePunch : 0,
+    currentFrameRun : 0,
+    currentFrameCrouch : 0,
+    // Help punch variables
+    punched : false,
+    punchCooldown : false,
+    alreadyPunched : false,
+    // Velocity
+    velocity : 0,
+    velocityJump : 0,
+    velocityRight : 0,
+    velocityLeft : 0,
+    velocityGoingDown : 0,
+    velocityGoingUp : 0,
+    // Help move variables
+    isMovingRight : false,
+    isMovingLeft : false,
+    // Animation
+    turnedRight : true,
+    turnedLeft : false,
+    animationIdRight : null,
+    animationIdLeft : null,
+    ahCollision : null,
+    underCollision : null,
+    jumpingId : null,
+    goingUpId : null,
+    goingDownId : null,
+    // NOW THEN DELTA
+    nowLeft : null,
+    thenLeft : Date.now(),
+    deltaLeft : null,
+    //
+    nowRight : null,
+    thenRight : Date.now(),
+    deltaRight : null,
+    //
+    nowDown : null,
+    thenDown : Date.now(),
+    deltaDown : null,
+    //
+    nowUp : null,
+    thenUp : Date.now(),
+    deltaUp : null,
+    //
+    nowGoingUp : null,
+    thenGoingUp : Date.now(),
+    deltaGoingUp : null,
+    //
+    nowGoingDown : null,
+    thenGoingDown : Date.now(),
+    deltaGoingDown : null,
+    // Help Jump variables
+    stillJumping : false,
+    // Help Crouch variables
+    crouched : false,
+    downPressed : false,
+    canStandUp : true,
+    wasUnder : true,
+    // Gravity
+    onRock : false,
+    onWood : false,
+    orbUsed : false,
+    canOrbJump : false,
+    gravityId : null,
+    // Ladder
+    ladderCol : false,
+    canGravityActivate : false,
+    alreadyGoingDown : false,
+    wPressed : false,
+    // Jump
+    headHit : null,
+    bounced : false,
+    jumpInterval : null,
+    jumpIntervalSet : false,
+    isJumping : null,
+    // Doors
+    doorCol : false,
+    closingDoorCol : false,
+}
+
+//Player 2
+const player2 = {
+    // Coordinates
+    x : 0,
+    y : 500,
+    height : 40,
+    width : 30,
+    // Frames
+    currentFrameStand : 0,
+    currentFramePunch : 0,
+    currentFrameRun : 0,
+    currentFrameCrouch : 0,
+    // Help punch variables
+    punched : false,
+    punchCooldown : false,
+    alreadyPunched : false,
+    // Velocity
+    velocity : 0,
+    velocityJump : 0,
+    velocityRight : 0,
+    velocityLeft : 0,
+    velocityGoingDown : 0,
+    velocityGoingUp : 0,
+    // Help move variables
+    isMovingRight : false,
+    isMovingLeft : false,
+    // Animation
+    turnedRight : true,
+    turnedLeft : false,
+    animationIdRight : null,
+    animationIdLeft : null,
+    ahCollision : null,
+    underCollision : null,
+    jumpingId : null,
+    goingUpId : null,
+    goingDownId : null,
+    // NOW THEN DELTA
+    nowLeft : null,
+    thenLeft : Date.now(),
+    deltaLeft : null,
+    //
+    nowRight : null,
+    thenRight : Date.now(),
+    deltaRight : null,
+    //
+    nowDown : null,
+    thenDown : Date.now(),
+    deltaDown : null,
+    //
+    nowUp : null,
+    thenUp : Date.now(),
+    deltaUp : null,
+    //
+    nowGoingUp : null,
+    thenGoingUp : Date.now(),
+    deltaGoingUp : null,
+    //
+    nowGoingDown : null,
+    thenGoingDown : Date.now(),
+    deltaGoingDown : null,
+    // Help Jump variables
+    stillJumping : false,
+    // Help Crouch variables
+    crouched : false,
+    downPressed : false,
+    canStandUp : true,
+    wasUnder : true,
+    // Gravity
+    onRock : false,
+    onWood : false,
+    orbUsed : false,
+    canOrbJump : false,
+    gravityId : null,
+    // Ladder
+    ladderCol : false,
+    canGravityActivate : false,
+    alreadyGoingDown : false,
+    wPressed : false,
+    // Jump
+    headHit : null,
+    bounced : false,
+    jumpInterval : null,
+    jumpIntervalSet : false,
+    isJumping : null,
+    // Doors
+    doorCol : false,
+    closingDoorCol : false,
+}
+
+let playingMultiplayer = false;
+
+//This will spawn you
+let spawnCords = () => {
+    player1.x = 35;
+    player1.y = 500;
+    player2.x = 70;
+    player2.y = 500;
+}
+spawnCords();
+
 const canvas = document.getElementById("canvas");
+const canvas_darkness = document.getElementById("canvas_darkness");
 const canvas_container = document.getElementById("canvas_container");
 const container = document.getElementById("container");
 const c = canvas.getContext("2d");
+const c_d = canvas_darkness.getContext("2d");
 const text = document.getElementById("text");
 const characters = document.getElementById("characters");
 const man = document.getElementById("man");
@@ -20,6 +211,16 @@ const sfx_punch = document.getElementById("sfx_punch");
 const sfx_extra_jump = document.getElementById("sfx_extra_jump");
 const sfx_boss_talk = document.getElementById("sfx_boss_talk");
 const sfx_boss_laugh = document.getElementById("sfx_boss_laugh");
+const sfx2 = document.getElementById("sfx2");
+const sfx_land2 = document.getElementById("sfx_land2");
+const sfx_miss2 = document.getElementById("sfx_miss2");
+const sfx_climb2 = document.getElementById("sfx_climb2");
+const sfx_dead2 = document.getElementById("sfx_dead2");
+const sfx_player2 = document.getElementById("sfx_player2");
+const sfx_walk2 = document.getElementById("sfx_walk2"); 
+const sfx_jump2 = document.getElementById("sfx_jump2");
+const sfx_punch2 = document.getElementById("sfx_punch2");
+const sfx_extra_jump2 = document.getElementById("sfx_extra_jump2");
 const game = document.getElementById("game");
 const background = document.getElementById("background");
 const black = document.getElementById("black");
@@ -33,6 +234,7 @@ const scene = document.getElementById("scene");
 const rising = document.getElementById("rising");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
+const playButtonMulti = document.getElementById("playButtonMulti");
 const tutorialButton = document.getElementById("tutorialButton");
 const creditsButton = document.getElementById("creditsButton");
 const hp = document.getElementById("hp");
@@ -81,14 +283,26 @@ const setSfxVolume = () => {
     sfx_jump.volume = sfxVolume;
     sfx_punch.volume = sfxVolume;
     sfx_extra_jump.volume = sfxVolume;
+    sfx2.volume = sfxVolume;
+    sfx_dead2.volume = sfxVolume;
+    sfx_player2.volume = sfxVolume;
+    sfx_walk2.volume = sfxVolume;
+    sfx_climb2.volume = sfxVolume;
+    sfx_miss2.volume = sfxVolume;
+    sfx_jump2.volume = sfxVolume;
+    sfx_punch2.volume = sfxVolume;
+    sfx_extra_jump2.volume = sfxVolume;
     sfx_boss_talk.volume = sfxVolume;
     sfx_boss_laugh.volume = sfxVolume;
     sfx_land.volume = sfxVolume;
     scene.volume = sfxVolume;
 }
 
+
 setMusicVolume();
 setSfxVolume();
+
+//music.volume = 0;
 
 //Turn Music UP by 5%
 notInvertArrow1.onclick = () => {
@@ -223,8 +437,8 @@ window.onresize = function() {
 
 //Adjusts the position of the transition on you
 const setTransitionCords = () => {
-    transitionY = (y / 576) * 100 + 3;
-    transitionX = (x / 1024) * 100 + 2;
+    transitionY = (player1.y / 576) * 100 + 3;
+    transitionX =  (player1.x / 1024) * 100 + 2;
     transition1.style.top = transitionY + "%";
     transition1.style.left = transitionX + "%";
     transition2.style.top = transitionY + "%";
@@ -248,11 +462,52 @@ playButton.onclick = () => {
     playButton.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
+    playButtonMulti.style.display = "none";
     text.style.opacity = "0";
     setTimeout(() => {
         tutorialBtnSliding = false;
         tutorialBtnShowed = true;
     }, 1000);
+}
+
+playButtonMulti.onclick = () => {
+    playingMultiplayer = true;
+    playButton.style.display = "none";
+    playButtonMulti.style.animationName = "blink"
+    playButtonMulti.style.animationPlayState = "running";
+    black.style.opacity = "1";
+    tutorialButton.style.opacity = "0%";
+    tutorialButton.style.pointerEvents = "none";
+    playButtonMulti.style.pointerEvents = "none";
+    tutorialButton.style.pointerEvents = "none";
+    creditsButton.style.display = "none";
+    text.style.opacity = "0";
+    setTimeout(() => {
+        tutorialBtnSliding = false;
+        tutorialBtnShowed = true;
+    }, 1000);
+    fullBlack.style.display = "block";
+    note_button.style.zIndex = "3";
+    escape_button.style.zIndex = "3";
+    setTimeout(() => {
+        fullBlack.style.opacity = "1";
+    }, 10);
+    setTimeout(() => {
+        menuToLobby();
+        drawing();
+        fullBlack.style.opacity = "0";
+        setTimeout(() => {
+            note_button.style.zIndex = "11";
+            escape_button.style.zIndex = "11";
+        }, 800);
+    }, 1000);
+    player =  "./res/img/rioter.png";
+    heart1.src = "./res/img/heart_rioter.png";
+    heart2.src = "./res/img/heart_rioter.png";
+    heart3.src = "./res/img/heart_rioter.png";
+    gravity(player2)
+    playingAsRioter = true;
+    playingAsRuby = false;
 }
 
 let tutorialBtnShowed = false;
@@ -265,6 +520,7 @@ tutorialButton.onclick = () => {
     paper.style.animationName = "rightToMid"
     paper.style.animationPlayState = "running";
     playButton.style.pointerEvents = "none";
+    playButtonMulti.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.pointerEvents = "none";
     setTimeout(() => {
@@ -284,6 +540,7 @@ paper.onclick = () => {
             tutorialBtnSliding = false;
             tutorialBtnShowed = false;
             playButton.style.pointerEvents = "auto";
+            playButtonMulti.style.pointerEvents = "auto";
             tutorialButton.style.pointerEvents = "auto";
             creditsButton.style.pointerEvents = "auto";
         }, 1000);
@@ -310,25 +567,16 @@ const menuToLobby = () => {
     inGame = true;
     playButton.style.animationName = "none"
     playButton.style.animationPlayState = "none";
+    playButtonMulti.style.animationName = "none"
+    playButtonMulti.style.animationPlayState = "none";
     setTimeout(() => {
         black.style.opacity = "0";
     }, 50)
 }
 
-//Player COORDINATES
-let x;
-let y;
-
 //Ghost COORDINATES
 let xGhost = 70000;
 let yGhost = 310
-
-//This will spawn you
-let spawnCords = () => {
-    x = 50;
-    y = 500;
-}
-spawnCords();
 
 //This will spawn the Ghost
 let spawnGhostCords = () => {
@@ -385,23 +633,7 @@ const movingCharactersAndFullBlack = () => {
     }, 1000);
 }
 
-let height = 40;
-let width = 30;
-
-let gravityId;
-let jumpingId;
-let animationIdRight;
-let animationIdLeft;
-
-let velocityJump = 0
-
-let isJumping = false;
 let gravityOn = false;
-let isMovingRight = false;
-let isMovingLeft = false;
-
-let turnedRight = true;
-let turnedLeft = false;
 
 let fps = 55;
 let interval = 1000/fps;
@@ -415,21 +647,22 @@ let portalCordsY2 = 0;
 
 let lobbyDoorCol = false; //Help for sfx door
 let finalDoorUnlocked = true; //Can let you go to the Final Door while is boss dead
-let doorCol = false;
+
+let helpNumbers = []
 
 //This Function will show you, if you can enter to the level 
-const doorsCollision = () => {
+const doorsCollision = (PLAYER) => {
     lobbyDoorCol = false;
-    doorCol = false;
+    PLAYER.doorCol = false;
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] >= 50 && platformLevel1[i] <= 64 || platformLevel1[i] == 34) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY &&
-                y + height <= platformY + 64 &&
-                x + width >= platformX + 24 &&
-                x <= platformX + 40
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + 64 &&
+                PLAYER.x + PLAYER.width >= platformX + 24 &&
+                PLAYER.x <= platformX + 40
             ) {
                 if(platformLevel1[i] == 34 && frameDoorFinal == 0){
                     helpNum = 15;
@@ -437,14 +670,30 @@ const doorsCollision = () => {
                     helpNum = platformLevel1[i] - 50;
                     lobbyDoorCol = true;
                 }
-                doorCol = true;
+                if(helpNumbers.length == 2){
+                    helpNumbers.shift()
+                    helpNumbers.push(helpNum)
+                }else{
+                    helpNumbers.push(helpNum)
+                }
+                PLAYER.doorCol = true;
                 c.font = "20px VT323, monospace";
                 if(finished[helpNum] == 2 || !finalDoorUnlocked){
                     c.fillStyle = "red";
                     c.fillText("LOCKED", platformX + 7, platformY);
                 }else{
-                    c.fillStyle = "lime";
-                    c.fillText("Enter [e]", platformX - 3, platformY);
+                    if(playingMultiplayer){
+                        if(player1.doorCol && !player2.doorCol || !player1.doorCol && player2.doorCol || helpNumbers[0] != helpNumbers[1]){
+                            c.fillStyle = "yellow";
+                            c.fillText("1 / 2", platformX + 11, platformY);
+                        }else if(player1.doorCol && player2.doorCol && helpNumbers[0] == helpNumbers[1]){
+                            c.fillStyle = "lime";
+                            c.fillText("Enter [e]", platformX - 3, platformY);
+                        }
+                    }else{
+                        c.fillStyle = "lime";
+                        c.fillText("Enter [e]", platformX - 3, platformY);
+                    }
                 }
                 break;
             }
@@ -459,12 +708,12 @@ let bossY = 0;
 let canAttack = false;
 
 //Boss Collision
-const bossCollision = () => {
+const bossCollision = (PLAYER) => {
     if (
-        y + height >= bossY &&
-        y <= bossY + 80 &&
-        x + width >= bossX &&
-        x <= bossX + 80
+        PLAYER.y + PLAYER.height >= bossY &&
+        PLAYER.y <= bossY + 80 &&
+        PLAYER.x + PLAYER.width >= bossX &&
+        PLAYER.x <= bossX + 80
     ) {
         canAttack = true;
         if(currentFrameBoss == 6){
@@ -484,6 +733,25 @@ let thenBossMoveY = Date.now();
 let deltaBossMoveY;
 let bossMoveYId;
 
+// Mutliplayer Target calculator
+
+let possibleTarget1 = 0;
+let possibleTarget2 = 0;
+
+let targetInterval;
+
+let targetX = 0;
+let targetY = 0;
+
+const setTarget = () => {
+    targetInterval = setInterval(() => {
+        possibleTarget1 = 0; 
+        possibleTarget2 = 0;
+        possibleTarget1 = Math.sqrt(Math.pow(player1.y - bossY, 2) + Math.pow(player1.x - bossX, 2))
+        possibleTarget2 = Math.sqrt(Math.pow(player2.y - bossY, 2) + Math.pow(player2.x - bossX, 2))
+    }, 1000);
+}
+
 //Boss Moving Y
 const bossMoveY = () => {
     bossMoveYId = requestAnimationFrame(bossMoveY)
@@ -491,7 +759,14 @@ const bossMoveY = () => {
     deltaBossMoveY  = nowBossMoveY  - thenBossMoveY ;
     if (deltaBossMoveY > interval) {
         thenBossMoveY = nowBossMoveY - (deltaBossMoveY % interval);
-        if(y - 30 >= bossY){
+        if(possibleTarget1 <= possibleTarget2){
+            targetY = player1.y;
+            targetX = player1.x;
+        }else{
+            targetY = player2.y;
+            targetX = player2.x;
+        }
+        if(targetY - 30 >= bossY){
             bossY += bossVelocity;
         }else{
             bossY -= bossVelocity;
@@ -511,7 +786,8 @@ const bossMoveX = () => {
     deltaBossMoveX  = nowBossMoveX  - thenBossMoveX ;
     if (deltaBossMoveX > interval) {
         thenBossMoveX = nowBossMoveX - (deltaBossMoveX % interval);
-        if(x - 25 > bossX){
+
+        if(targetX - 25 > bossX){
             bossX += bossVelocity;
         }else{
             bossX -= bossVelocity;
@@ -519,12 +795,17 @@ const bossMoveX = () => {
     }
 }
 
+
 //---------------------------------------Enter to the Level Function
 
 let entered = false;
 
 window.addEventListener("keydown", (event) => {
-    if ((event.key == "e" || event.key == "E") && doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter) {
+    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter & !playingMultiplayer ) {
+        console.log(1)
+        entered = true;
+        enterFunction();
+    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1]) {
         entered = true;
         enterFunction();
     }
@@ -561,13 +842,17 @@ const enterFunction = () => {
         originalPlatform1 = [...platformLevel1];
         if(helpNum == 0){ //Level 1
             spawnCords = () =>{
-                x = 40;
-                y = 515
+                player1.x = 40;
+                player1.y = 500;
+                if(playingMultiplayer){
+                    player2.x = 40;
+                    player2.y = 500;
+                }
             }
             spawnCords();
             music.src = "./res/music/song0.mp3";
             doorsTime = 30000;
-            music.play();
+            music.play(); 
             spawnGhostCords = () =>{
                 xGhost = 900;
                 yGhost = 500;
@@ -575,8 +860,12 @@ const enterFunction = () => {
             spawnGhostCords();
         }else if(helpNum == 1){ //Level 2
             spawnCords = () =>{
-                x = 40;
-                y = 515;
+                player1.x = 40;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 40;
+                    player2.y = 515;
+                }  
             }
             spawnCords();
             music.src = "./res/music/song1.mp3";
@@ -589,8 +878,12 @@ const enterFunction = () => {
             spawnGhostCords();
         }else if(helpNum == 2){ //Level 3
             spawnCords = () =>{
-                x = 20;
-                y = 390;
+                player1.x = 20;
+                player1.y = 390;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 390;
+                }
             }
             spawnCords();
             darkness = true;
@@ -599,8 +892,12 @@ const enterFunction = () => {
             music.play();
         }else if(helpNum == 3){ //Level 4
             spawnCords = () =>{
-                x = 40;
-                y = 515;
+                player1.x = 40;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 40;
+                    player2.y = 515;
+                }
             }
             spawnCords();
             music.src = "./res/music/song3.mp3";
@@ -615,8 +912,12 @@ const enterFunction = () => {
             rising.style.display = "block";
             risingLavaActivated = true;
             spawnCords = () =>{
-                x = 512;
-                y = 485;
+                player1.x = 512;
+                player1.y = 485;
+                if(playingMultiplayer){
+                    player2.x = 512;
+                    player2.y = 485;
+                }
             }
             spawnCords();
             music.src = "./res/music/song4.mp3";
@@ -624,8 +925,12 @@ const enterFunction = () => {
             music.play();
         }else if(helpNum == 5){ //Level 6
             spawnCords = () =>{
-                x = 20;
-                y = 485;
+                player1.x = 20;
+                player1.y= 485;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y= 485;
+                }
             }
             spawnCords();
             music.src = "./res/music/song5.mp3";
@@ -638,8 +943,12 @@ const enterFunction = () => {
             spawnGhostCords();
         }else if(helpNum == 6){ //Level 7
             spawnCords = () =>{
-                x = 500;
-                y = 485;
+                player1.x = 500;
+                player1.y = 485;
+                if(playingMultiplayer){
+                    player2.x = 500;
+                    player2.y = 485;
+                }
             }
             spawnCords();
             music.src = "./res/music/song6.mp3";
@@ -647,8 +956,12 @@ const enterFunction = () => {
             music.play();
         }else if(helpNum == 7){ //Level 8
             spawnCords = () =>{
-                x = 20;
-                y = 515;
+                player1.x = 20;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 515;
+                }
             }
             spawnCords();
             darkness = true;
@@ -657,8 +970,12 @@ const enterFunction = () => {
             music.play();
         }else if(helpNum == 8){ //Level 9
             spawnCords = () =>{
-                x = 20;
-                y = 420;
+                player1.x = 20;
+                player1.y = 420;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 420;
+                }
             }
             spawnCords();
             music.src = "./res/music/song8.mp3";
@@ -668,8 +985,12 @@ const enterFunction = () => {
             rising.style.display = "block";
             risingLavaActivated = true;
             spawnCords = () =>{
-                x = 20;
-                y = 485;
+                player1.x = 20;
+                player1.y = 485;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 485;
+                }
             }
             spawnCords();
             music.src = "./res/music/song9.mp3";
@@ -677,8 +998,12 @@ const enterFunction = () => {
             music.play();
         }else if(helpNum == 10){ //Level 11
             spawnCords = () =>{
-                x = 20;
-                y = 515;
+                player1.x = 20;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 515;
+                }
             }
             spawnCords();
             music.src = "./res/music/song10.mp3";
@@ -691,8 +1016,12 @@ const enterFunction = () => {
             spawnGhostCords();
         }else if(helpNum == 11){ //Level 12
             spawnCords = () =>{
-                x = 500;
-                y = 70;
+                player1.x = 500;
+                player1.y = 70;
+                if(playingMultiplayer){
+                    player2.x = 500;
+                    player2.y = 70;
+                }
             }
             spawnCords();
             music.src = "./res/music/song11.mp3";
@@ -700,8 +1029,12 @@ const enterFunction = () => {
             music.play();
         }else if(helpNum == 12){ //Level 13
             spawnCords = () =>{
-                x = 20;
-                y = 515;
+                player1.x = 20;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 515;
+                }
             }
             spawnCords();
             darkness = true;
@@ -715,8 +1048,12 @@ const enterFunction = () => {
             spawnGhostCords();
         }else if(helpNum == 13){ //Level 14
             spawnCords = () =>{
-                x = 40;
-                y = 515;
+                player1.x = 40;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 40;
+                    player2.y = 515;
+                }
             }
             spawnCords();
             music.src = "./res/music/song13.mp3";
@@ -731,8 +1068,12 @@ const enterFunction = () => {
             bossLevel();
         }else if(helpNum == 15){ // Level 16 (Trophy Room)
             spawnCords = () =>{
-                x = 40;
-                y = 515;
+                player1.x = 40;
+                player1.y = 515;
+                if(playingMultiplayer){
+                    player2.x = 40;
+                    player2.y = 515;
+                }
             }
             finished[14] = 1; //Boss Beated -> Level 15 Doors are now green
             spawnCords();
@@ -753,18 +1094,29 @@ const enterFunction = () => {
             }, doorsTime);
         }
         entered = false;
-        gravity();
+        gravity(player1);
+        if(playingMultiplayer){
+            gravity(player2)
+        }
             }, 1300);
 }
 
 //----------------------------------------BOSS LEVEL
 const bossLevel = () => {
     finalDoorUnlocked = false;
+    setTarget();
     generatorAttackFunction();
-    gravity();
+    gravity(player1);
+    if(playingMultiplayer){
+        gravity(player2)
+    }
     spawnCords = () => {
-        x = 500;
-        y = 220;
+        player1.x = 500;
+        player1.y= 220;
+        if(playingMultiplayer){
+            player2.x = 500;
+            player2.y= 220;        
+        }
     }
     spawnCords();
     myHp.style.display = "flex";
@@ -793,6 +1145,10 @@ const bossLevel = () => {
             }
         }
         shake();
+        gravity(player1);
+        if(playingMultiplayer){
+            gravity(player2)
+        }
     }, 13000);
     bossLava = setTimeout(() => {
         shake()
@@ -858,17 +1214,13 @@ let attackNum = 0;
 
 let bossAttackGenerator;
 
-const bossAttack = () => {
-    bossVelocity = 1.5;
-    currentFrameBoss = 0;
-    bossAttacking = true;
-}
-
 const generatorAttackFunction = () => {
     bossAttackGenerator = setInterval(() => {
-        attackNum = Math.floor(Math.random() * 3)
+        attackNum = Math.floor(Math.random() * 2)
         if(attackNum == 1 && !bossAttacking){
-            bossAttack()
+            bossVelocity = 1.5;
+            currentFrameBoss = 0;
+            bossAttacking = true;
         }
     }, 500);
 }
@@ -940,17 +1292,18 @@ const dead = () => {
             }
             frameSpike = 0;
             frameLava = 0;
-            velocity = 0;
-            velocityRight = 0;
-            velocityLeft = 0;
-            velocityJump = 0;
+            player1.velocity= 0;
+            player1.velocityRight = 0;
+            player1.velocityLeft = 0;
+            player1.velocityJump = 0;
             music.currentTime = 0;
             clearTimeout(setTimeoutDoor)
             setTimeoutDoor = setTimeout(() => {
                 doorTimeout = true;
             }, doorsTime);
             spawnCords();
-            unCrouch();
+            unCrouch(player1);
+            unCrouch(player2);
             platformLevel1 = [...originalPlatform1];
             drawPlatform();
             dark();
@@ -980,11 +1333,14 @@ const dead = () => {
                 }
                 resistence = true;
                 hearts--;
-                velocity = 0;
-                velocityRight = 0;
-                velocityLeft = 0;
-                velocityJump = 0;
+                player1.velocity= 0;
+                player1.velocityRight = 0;
+                player1.velocityLeft = 0;
+                player1.velocityJump = 0;
                 if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
+                    if(playingMultiplayer){
+                        clearInterval(targetInterval);
+                    }
                     clearInterval(bossAttackGenerator);
                     grayScaleEffect();
                     sfx_boss_laugh.pause();
@@ -1051,8 +1407,10 @@ const dead = () => {
                 deadSoundCanBeUse = true;
             }, 300);
         }
-    
-        gravity();
+        gravity(player1);
+        if(playingMultiplayer){
+            gravity(player2)
+        }
     }
 }
 
@@ -1145,6 +1503,9 @@ const backToLobby = () => {
         if(playingBossFight){
             lives = 3;
             playingBossFight = false;
+            if(playingMultiplayer){
+                clearInterval(targetInterval);
+            }
             bossX = 1000000;
             bossY = 0;
         }
@@ -1164,56 +1525,118 @@ const backToLobby = () => {
         }
         spawnGhostCords();
         if(helpNum == 0){ // Go to lobby From Levels 1 - 15
-            x = 120;
-            y = 500;
+            player1.x = 120;
+            player1.y = 500;
+            if(playingMultiplayer){
+                player2.x = 120;
+                player2.y = 500;
+            }
         }else if(helpNum == 1){
-            x = 300;
-            y = 410
+            player1.x = 300;
+            player1.y = 410;
+            if(playingMultiplayer){
+                player2.x = 300;
+                player2.y = 410;
+            }
         }else if(helpNum == 2){
-            x = 560;
-            y = 370
+            player1.x = 560;
+            player1.y = 370;
+            if(playingMultiplayer){
+                player2.x = 560;
+                player2.y = 370;
+            }
         }else if(helpNum == 3){
-            x = 720;
-            y = 500
+            player1.x = 720;
+            player1.y = 500;
+            if(playingMultiplayer){
+                player2.x = 720;
+                player2.y = 500;
+            }
         }else if(helpNum == 4){
-            x = 910;
-            y = 400
+            player1.x = 910;
+            player1.y = 400;
+            if(playingMultiplayer){
+                player2.x = 910;
+                player2.y = 400;
+            }
         }else if(helpNum == 5){
-            x = 880;
-            y = 300;
+            player1.x = 880;
+            player1.y = 300;
+            if(playingMultiplayer){
+                player2.x = 880;
+                player2.y = 300;
+            }
         }else if(helpNum == 6){
-            x = 582;
-            y = 290;
+            player1.x = 582;
+            player1.y = 290;
+            if(playingMultiplayer){
+                player2.x = 582;
+                player2.y = 290;
+            }
         }else if(helpNum == 7){
-            x = 400;
-            y = 300;
+            player1.x = 400;
+            player1.y = 300;
+            if(playingMultiplayer){
+                player2.x = 400;
+                player2.y = 300;
+            }
         }else if(helpNum == 8){
-            x = 220;
-            y = 300;
+            player1.x = 220;
+            player1.y= 300;
+            if(playingMultiplayer){
+                player2.x = 220;
+                player2.y= 300;
+            }
         }else if(helpNum == 9){
-            x = 20;
-            y = 260;
+            player1.x = 20;
+            player1.y = 260;
+            if(playingMultiplayer){
+                
+            }
         }else if(helpNum == 10){
-            x = 20;
-            y = 80;
+            player1.x = 20;
+            player1.y= 80;
+            if(playingMultiplayer){
+                player2.x = 20;
+                player2.y = 80;
+            }
         }else if(helpNum == 11){
-            x = 240;
-            y = 80;
+            player1.x = 240;
+            player1.y= 80;
+            if(playingMultiplayer){
+                player2.x = 240;
+                player2.y = 80; 
+            }
         }else if(helpNum == 12){
-            x = 560;
-            y = 50;
+            player1.x = 560;
+            player1.y = 50;
+            if(playingMultiplayer){
+                player2.x = 560;
+                player2.y = 50;
+            }
         }else if(helpNum == 13){
-            x = 880;
-            y = 200;
+            player1.x = 880;
+            player1.y = 200;
+            if(playingMultiplayer){
+                player2.x = 880;
+                player2.y = 200;
+            }
         }else if(helpNum == 14 || helpNum == 15){
-            x = 920;
-            y = 80;
+            player1.x = 920;
+            player1.y = 80;
+            if(playingMultiplayer){
+                player2.x = 920;
+                player2.y = 80;
+            }
         }
         setTransitionCords();
         fadeOutTransition()
         backToLobbyEntered = false;
         goingBackToTheLobby = false;
-        gravity();
+        gravity(player1);
+        if(playingMultiplayer){
+            gravity(player2)
+        }
     }, 1300);
 }
 //Back from Level to the Lobby
@@ -1252,9 +1675,12 @@ button_menu.onclick = () => {
         startMenu.style.display = "block";
         playButton.style.pointerEvents = "auto";
         playButton.style.display = "block";
+        playButtonMulti.style.pointerEvents = "auto";
+        playButtonMulti.style.display = "block";
         creditsButton.style.display = "block";
         black.style.opacity = "0";
         fullBlack.style.opacity = "0";
+        playingMultiplayer = false;
         setTimeout(() => {
             fullBlack.style.display = "none";
             note_button.style.zIndex = "11";
@@ -1269,6 +1695,9 @@ button_retry.onclick = () => {
     usedRetry = true;
     esc.style.display = "none"; 
     escShowed = false;
+    if(playingMultiplayer){
+        clearInterval(targetInterval);
+    }
     black.style.opacity = "0";
     canvas.style.filter = "blur(0)"
     background.style.filter = "blur(0)"
@@ -1353,21 +1782,21 @@ const unlockAll = () => {
 
 //---------------------------------------- OBJECTS Collision
 
-const objectsCollision = () => {
+const objectsCollision = (PLAYER) => {
     if(playingBossFight){
-        bossCollision();
+        bossCollision(PLAYER);
     }
-    ghostCollision();
+    ghostCollision(PLAYER);
     for (let i = 0; i < platformLevel1.length; i++) {
         //Spikes and Moving Spikes
         if ((platformLevel1[i] == 2 || platformLevel1[i] == 4 || platformLevel1[i] == 23 || platformLevel1[i] == 24) || (platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22) && canDieOnSpike == true) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY + 10 &&
-                y + height <= platformY + 27 + height &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
+                PLAYER.y + PLAYER.height >= platformY + 10 &&
+                PLAYER.y + PLAYER.height <= platformY + 27 + PLAYER.height &&
+                PLAYER.x + PLAYER.width >= platformX + 10 &&
+                PLAYER.x <= platformX + 22
             ) {
                 dead();
             }
@@ -1377,10 +1806,10 @@ const objectsCollision = () => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY + 10 &&
-                y + height <= platformY + 32 &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
+                PLAYER.y + PLAYER.height >= platformY + 10 &&
+                PLAYER.y + PLAYER.height <= platformY + 32 &&
+                PLAYER.x + PLAYER.width >= platformX + 10 &&
+                PLAYER.x <= platformX + 22
             ) {
                 if(playingBossFight){
                     resistence = false;
@@ -1393,15 +1822,20 @@ const objectsCollision = () => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY + 10 &&
-                y + height <= platformY + 64 + height &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
+                PLAYER.y + PLAYER.height >= platformY + 10 &&
+                PLAYER.y + PLAYER.height <= platformY + 64 + PLAYER.height &&
+                PLAYER.x + PLAYER.width >= platformX + 10 &&
+                PLAYER.x <= platformX + 22
             ) {
-                sfx.src = "./res/sfx/portal_sfx.mp3";
-                sfx.play();
-                x = cordsPortalX2;
-                y = cordsPortalY2;
+                if(PLAYER == player1){
+                    sfx.src = "./res/sfx/portal_sfx.mp3";
+                    sfx.play();
+                }else{
+                    sfx2.src = "./res/sfx/portal_sfx.mp3";
+                    sfx2.play();
+                }
+                PLAYER.x = cordsPortalX2;
+                PLAYER.y= cordsPortalY2;
             }
         }
         //Portal 2
@@ -1409,15 +1843,20 @@ const objectsCollision = () => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY + 10 &&
-                y + height <= platformY + 64 + height &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
+                PLAYER.y + PLAYER.height >= platformY + 10 &&
+                PLAYER.y + PLAYER.height <= platformY + 64 + PLAYER.height &&
+                PLAYER.x + PLAYER.width >= platformX + 10 &&
+                PLAYER.x <= platformX + 22
             ) {
-                sfx.src = "./res/sfx/portal_sfx.mp3";
-                sfx.play();
-                x = cordsPortalX1;
-                y = cordsPortalY1;
+                if(PLAYER == player1){
+                    sfx.src = "./res/sfx/portal_sfx.mp3";
+                    sfx.play();
+                }else{
+                    sfx2.src = "./res/sfx/portal_sfx.mp3";
+                    sfx2.play();
+                }
+                PLAYER.x = cordsPortalX1;
+                PLAYER.y= cordsPortalY1;
             }
         }
         //Closing Doors
@@ -1425,12 +1864,17 @@ const objectsCollision = () => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY &&
-                y + height <= platformY + 64 &&
-                x + width >= platformX + 24 &&
-                x <= platformX + 40
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + 64 &&
+                PLAYER.x + PLAYER.width >= platformX + 24 &&
+                PLAYER.x <= platformX + 40
             ) {
-                if(!backToLobbyEntered && frameDoor < 1){
+                PLAYER.closingDoorCol = true;
+                if((player1.closingDoorCol && !player2.closingDoorCol || !player1.closingDoorCol && player2.closingDoorCol) && playingMultiplayer){
+                    c.fillStyle = "yellow";
+                    c.fillText("1 / 2", platformX + 11, platformY);
+                }
+                if((!backToLobbyEntered && frameDoor < 1 && !playingMultiplayer) || (!backToLobbyEntered && frameDoor < 1 && player1.closingDoorCol && player2.closingDoorCol)){
                     restartTimer();
                     timer.style.top = "-5%"
                     canEnter = false; //Now you cant spam "e"
@@ -1448,6 +1892,8 @@ const objectsCollision = () => {
                     localStorage.setItem("finished_" + helpNum, finished[helpNum]);
                     localStorage.setItem("unlocked_" + helpNum, finished[helpNum + 1]);
                 }
+            } else {
+                PLAYER.closingDoorCol = false;
             }
         }
         //Key
@@ -1455,10 +1901,10 @@ const objectsCollision = () => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY &&
-                y + height <= platformY + 64 &&
-                x + width >= platformX &&
-                x <= platformX + 32
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + 64 &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
             ) {
                 platformLevel1[i] = 0;
                 sfx.src = "./res/sfx/key_pick.mp3";
@@ -1475,10 +1921,10 @@ const objectsCollision = () => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY &&
-                y + height <= platformY + 232 &&
-                x + width >= platformX &&
-                x <= platformX + 32
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + 232 &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
             ) {
                 c.font = "80px VT323, monospace";
                 c.fillStyle = "lime";
@@ -1521,24 +1967,22 @@ const resetLocalStorage = () => {
 //resetLocalStorage();
 
 //---------------------------------------- ORB Collision
-let canOrbJump = false;
-let orbUsed = false;
 
-const orbCollision = () => {
+const orbCollision = (PLAYER) => {
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 5) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY &&
-                y + height <= platformY + 32 + height &&
-                x + width >= platformX &&
-                x <= platformX + 32
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + 32 + PLAYER.height &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
             ) {
-                canOrbJump = true;
+                PLAYER.canOrbJump = true;
                 break;
             } else {
-                canOrbJump = false; 
+                PLAYER.canOrbJump = false; 
             }
         }
     }
@@ -1547,60 +1991,54 @@ const orbCollision = () => {
 //---------------------------------------- GHOST Collision
 
 let ghostKilled = false;
-let bounced = false;
 let saveGhostCordsX = 0;
 let saveGhostCordsY = 0;
 
-const ghostCollision = () => {
+const ghostCollision = (PLAYER) => {
     if(
-        y + height > yGhost &&
-        y < yGhost + 32 &&
-        x + width > xGhost + 10 &&
-        x < xGhost + 20
+        PLAYER.y + PLAYER.height > yGhost &&
+        PLAYER.y < yGhost + 32 &&
+        PLAYER.x + PLAYER.width > xGhost + 10 &&
+        PLAYER.x < xGhost + 20
     ){
         dead();
     } else if (
-        y + height > yGhost - 20 &&
-        y < yGhost + 32 &&
-        x + width > xGhost + 10 &&
-        x < xGhost + 20
+        PLAYER.y + PLAYER.height > yGhost - 20 &&
+        PLAYER.y < yGhost + 32 &&
+        PLAYER.x + PLAYER.width > xGhost + 10 &&
+        PLAYER.x < xGhost + 20
     ){
         spawnGhostCords = () => {
             xGhost = 10000;
             yGhost = 10000;
         }
         ghostKilled = true;
-        bounced = true;
+        PLAYER.bounced = true;
         spawnGhostCords();
-        jump()
+        jump(PLAYER)
     }
 }
 
 //---------------------------------------- Crouch and Stand (Player)
 
-let crouched = false;
-let canStandUp = true;
-let ahCollision;
-let underCollision;
-
 //This Function is checking, if you do not have a block above you (then you can stand up)
-let aboveHeadCollision = () => {
-    ahCollision = requestAnimationFrame(aboveHeadCollision);
-    if (crouched == true) {
+let aboveHeadCollision = (PLAYER) => {
+    PLAYER.ahCollision = window.requestAnimationFrame(() => aboveHeadCollision(PLAYER));
+    if (PLAYER.crouched == true) {
         for (let i = 0; i < platformLevel1.length; i++) {
             if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
-                    y + height >= platformY + 64 &&
-                    y + height <= platformY + 64 &&
-                    x + width >= platformX &&
-                    x <= platformX + 32
+                    PLAYER.y + PLAYER.height >= platformY + 64 &&
+                    PLAYER.y + PLAYER.height <= platformY + 64 &&
+                    PLAYER.x + PLAYER.width >= platformX &&
+                    PLAYER.x <= platformX + 32
                 ) {
-                    canStandUp = false;
+                    PLAYER.canStandUp = false;
                     break;
                 }else{
-                    canStandUp = true;
+                    PLAYER.canStandUp = true;
                 }
             }
         }
@@ -1609,390 +2047,429 @@ let aboveHeadCollision = () => {
 
 //Crouching Function
 
-let crouch = () => {
-    if(!stillJumping && !ladderCol){
-        crouched = true;
-        height = 20;
-        y += 20;
-        aboveHeadCollision()
+let crouch = (PLAYER) => {
+    if(!PLAYER.stillJumping && !PLAYER.ladderCol){
+        PLAYER.crouched = true;
+        PLAYER.height = 20;
+        PLAYER.y += 20;
+        aboveHeadCollision(PLAYER)
     }
 }
 
 //UnCrouching Function (Stand Up)
-let unCrouch = () => {
-    if (canStandUp == true) {
-        height = 40;
-        y -= 20;
-        crouched = false;
-        cancelAnimationFrame(gravityId);
-        gravity();
-        drawPlayer();
-        cancelAnimationFrame(ahCollision);
+let unCrouch = (PLAYER) => {
+    if (PLAYER.canStandUp == true) {
+        PLAYER.height = 40;
+        PLAYER.y -= 20;
+        PLAYER.crouched = false;
+        cancelAnimationFrame(PLAYER.gravityId);
+        gravity(PLAYER);
+        cancelAnimationFrame(PLAYER.ahCollision);
     }
-    canStandUp = true;
+    PLAYER.canStandUp = true;
 };
 
-let wasUnder = true;
-
 //You will Stand Up if you do not have above you a block
-let under = () => {
-    underCollision = window.requestAnimationFrame(under);
-    if(canStandUp == true){
-        unCrouch();
-        wasUnder = true;
-        cancelAnimationFrame(underCollision);
+let under = (PLAYER) => {
+    PLAYER.underCollision = window.requestAnimationFrame(() => under(PLAYER));
+    if(PLAYER.canStandUp == true){
+        unCrouch(PLAYER);
+        PLAYER.wasUnder = true;
+        cancelAnimationFrame(PLAYER.underCollision);
     }
 }
 
 //---------------------------------------- Collision Canvas BOTTOM and BLOCKS
 
-let onRock = false;
-let onWood = false;
-
-const bottomCollision = () => {
+const bottomCollision = (PLAYER) => {
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY &&
-                y + height <= platformY + 32 &&
-                x + width >= platformX &&
-                x <= platformX + 32
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + 32 &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
             ) {
-                stillJumping = false;
-                if(sfx_land.paused && sfx_land.src != "./res/sfx/small_land.mp3" && velocity >= 3 && velocity < 8 && !ladderCol){
-                    sfx_land.src = "./res/sfx/small_land.mp3"
-                    sfx_land.play();
-                }else if(sfx_land.paused && sfx_land.src != "./res/sfx/large_land.mp3" && velocity >= 8 && !ladderCol){
-                    sfx_land.src = "./res/sfx/large_land.mp3"
-                    sfx_land.play();
+                PLAYER.stillJumping = false;
+                if(PLAYER == player1){
+                    if(sfx_land.paused && sfx_land.src != "./res/sfx/small_land.mp3" && PLAYER.velocity>= 3 && PLAYER.velocity< 8 && !PLAYER.ladderCol){
+                        sfx_land.src = "./res/sfx/small_land.mp3"
+                        sfx_land.play();
+                    }else if(sfx_land.paused && sfx_land.src != "./res/sfx/large_land.mp3" && PLAYER.velocity>= 8 && !PLAYER.ladderCol){
+                        sfx_land.src = "./res/sfx/large_land.mp3"
+                        sfx_land.play();
+                    }
+                    sfx_climb.pause()
+                }else{
+                    if(sfx_land2.paused && sfx_land.src != "./res/sfx/small_land.mp3" && PLAYER.velocity>= 3 && PLAYER.velocity< 8 && !PLAYER.ladderCol){
+                        sfx_land2.src = "./res/sfx/small_land.mp3"
+                        sfx_land2.play();
+                    }else if(sfx_land2.paused && sfx_land.src != "./res/sfx/large_land.mp3" && PLAYER.velocity>= 8 && !PLAYER.ladderCol){
+                        sfx_land2.src = "./res/sfx/large_land.mp3"
+                        sfx_land2.play();
+                    }
+                    sfx_climb2.pause()
                 }
-                sfx_climb.pause()
-                y = platformY - height;
-                velocity = 0;
-                velocityGoingDown = 0;
-                orbUsed = false;
+                PLAYER.y = platformY - PLAYER.height;
+                PLAYER.velocity = 0;
+                PLAYER.velocityGoingDown = 0;
+                PLAYER.orbUsed = false;
                 if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 || platformLevel1[i] == 33){ //You are on Rock
-                    onRock = true; 
-                    onWood = false;
+                    PLAYER.onRock = true; 
+                    PLAYER.onWood = false;
                 }else if(platformLevel1[i] == 7 || platformLevel1[i] == 19 || platformLevel1[i] == 18 || platformLevel1[i] == 9){ //You are on Wood
-                     onRock = false;
-                     onWood = true;
+                    PLAYER.onRock = false;
+                    PLAYER.onWood = true;
                 }
-                if(downPressed && !crouched){ //You will still crouch, if
-                    crouch();
+                if(PLAYER.downPressed && !PLAYER.crouched){ //You will still crouch
+                    crouch(PLAYER);
                 }
-                cancelAnimationFrame(gravityId);
-                cancelAnimationFrame(goingDownId);
+                cancelAnimationFrame(PLAYER.gravityId);
+                cancelAnimationFrame(PLAYER.goingDownId);
                 break;
             }
         }
     }
     //Canvas Bottom detection
-    if (canvas.height - height < y) {
-        y = canvas.height - height;
-        velocity = 0;
-        velocityGoingDown = 0;
-        orbUsed = false;
-        stillJumping = false;
-        cancelAnimationFrame(goingDownId);
-        cancelAnimationFrame(gravityId);
+    if (canvas.height - PLAYER.height < PLAYER.y) {
+        PLAYER.y = canvas.height - PLAYER.height;
+        PLAYER.velocity = 0;
+        PLAYER.velocityGoingDown = 0;
+        PLAYER.orbUsed = false;
+        PLAYER.stillJumping = false;
+        cancelAnimationFrame(PLAYER.goingDownId);
+        cancelAnimationFrame(PLAYER.gravityId);
     }
 }
 
 //---------------------------------------- Hitting your head to the block Collision
 
-const upCollision = () => {
-    if (deltaUp > interval) {
-        thenUp = nowUp - (deltaUp % interval);
-        velocityJump = velocityJump/1.22
-        y -= velocityJump;
+const upCollision = (PLAYER) => {
+    if (PLAYER.deltaUp > interval) {
+        PLAYER.thenUp = PLAYER.nowUp - (PLAYER.deltaUp % interval);
+        PLAYER.velocityJump = PLAYER.velocityJump/1.22
+        PLAYER.y-= PLAYER.velocityJump;
         for (let i = 0; i < platformLevel1.length; i++) {
             if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32 + 42;
                 if (
-                    y + height >= platformY &&
-                    y + height <= platformY + 32 &&
-                    x + width >= platformX &&
-                    x <= platformX + 32
+                    PLAYER.y + PLAYER.height >= platformY &&
+                    PLAYER.y + PLAYER.height <= platformY + 32 &&
+                    PLAYER.x + PLAYER.width >= platformX &&
+                    PLAYER.x <= platformX + 32
                 ) {
-                    if(ladderCol == true){
-                        y = platformY - 42 - velocityGoingUp + height;
+                    if(PLAYER.ladderCol == true){
+                        PLAYER.y = platformY - 42 - PLAYER.velocityGoingUp + PLAYER.height;
                     }else{
-                        y = platformY - 39 - velocityJump + height;
+                        PLAYER.y = platformY - 39 - PLAYER.velocityJump + PLAYER.height;
                     }
-                    stillJumping == false;
-                    headHit = true;
-                    velocityJump = 0;
-                    velocity = 0;
-                    velocityGoingUp = 0;
-                    cancelAnimationFrame(goingUpId);
-                    cancelAnimationFrame(jumpingId);
-                    cancelAnimationFrame(gravityId);
-                    gravity();
+                    PLAYER.stillJumping == false;
+                    PLAYER.headHit = true;
+                    PLAYER.velocityJump = 0;
+                    PLAYER.velocity= 0;
+                    PLAYER.velocityGoingUp = 0;
+                    cancelAnimationFrame(PLAYER.goingUpId);
+                    cancelAnimationFrame(PLAYER.jumpingId);
+                    cancelAnimationFrame(PLAYER.gravityId);
+                    gravity(PLAYER);
                     break;
                 }
             }
         }
-        if(velocityJump <= 0.35 && headHit == false){
-            headHit = true;
-            velocityJump = 0;
-            velocityGoingUp = 0;
-            velocity = 0;
-            cancelAnimationFrame(jumpingId);
-            cancelAnimationFrame(gravityId);
-            gravity();
+        if(PLAYER.velocityJump <= 0.35 && PLAYER.headHit == false){
+            PLAYER.headHit = true;
+            PLAYER.velocityJump = 0;
+            PLAYER.velocityGoingUp = 0;
+            PLAYER.velocity= 0;
+            cancelAnimationFrame(PLAYER.jumpingId);
+            cancelAnimationFrame(PLAYER.gravityId);
+            gravity(PLAYER);
         }
     }
 }
 
 //----------------------------------------Ladder Collision
 
-let ladderCol = false;
-let canGravityActivate = false;
-
-const ladderCollision = () => {
+const ladderCollision = (PLAYER) => {
     for (let i = 0; i < platformLevel1.length; i++) {
         if (platformLevel1[i] == 26) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                y + height >= platformY + 22 &&
-                y + height <= platformY + 54 &&
-                x + width >= platformX + 10 &&
-                x <= platformX + 22
+                PLAYER.y + PLAYER.height >= platformY + 22 &&
+                PLAYER.y + PLAYER.height <= platformY + 54 &&
+                PLAYER.x + PLAYER.width >= platformX + 10 &&
+                PLAYER.x <= platformX + 22
             ) {
-                if(crouched){
-                    unCrouch();
+                if(PLAYER.crouched){
+                    unCrouch(PLAYER);
                 }
-                onRock = false;
-                onWood = false;
-                ladderCol = true;
-                cancelAnimationFrame(gravityId)
-                canGravityActivate = true;
+                PLAYER.onRock = false;
+                PLAYER.onWood = false;
+                PLAYER.ladderCol = true;
+                cancelAnimationFrame(PLAYER.gravityId)
+                PLAYER.canGravityActivate = true;
                 break;
             } else {
-                ladderCol = false;
+                PLAYER.ladderCol = false;
             }
         }
     }
     //Cancel Ladder Functions
-    if(ladderCol == false) {
-        cancelAnimationFrame(goingUpId);
-        cancelAnimationFrame(goingDownId);
-        if(canGravityActivate == true){
-            velocity = 0;
-            gravity();
-            canGravityActivate = false
+    if(PLAYER.ladderCol == false) {
+        cancelAnimationFrame(PLAYER.goingUpId);
+        cancelAnimationFrame(PLAYER.goingDownId);
+        if(PLAYER.canGravityActivate == true){
+            PLAYER.velocity= 0;
+            gravity(PLAYER);
+            PLAYER.canGravityActivate = false
         }
     }
 }
 
 //----------------------------------------Climbing on a Ladder - UP
 
-let goingUpId;
-let nowGoingdUp;
-let thenGoingdUp = Date.now();
-let deltaGoingdUp;
-
-let velocityGoingUp = 0;
-
-const goingUp = () => {
-    velocityGoingUp = 2;
-    goingUpId = requestAnimationFrame(goingUp);
-    nowGoingdUp = Date.now();
-    deltaGoingdUp = nowGoingdUp - thenGoingdUp;
-    if (deltaGoingdUp > interval) {
-        thenGoingdUp = nowGoingdUp - (deltaGoingdUp % interval);
-        if(sfx_climb.paused && ladderCol && (!onWood || !onRock)){
-            sfx_walk.pause();
-            sfx_climb.src = "./res/sfx/ladder.mp3"
-            sfx_climb.play();
+const goingUp = (PLAYER) => {
+    PLAYER.velocityGoingUp = 2;
+    PLAYER.goingUpId = requestAnimationFrame(() => goingUp(PLAYER));
+    PLAYER.nowGoingUp = Date.now();
+    PLAYER.deltaGoingUp = PLAYER.nowGoingUp - PLAYER.thenGoingUp;
+    if (PLAYER.deltaGoingUp > interval) {
+        PLAYER.thenGoingUp = PLAYER.nowGoingUp - (PLAYER.deltaGoingUp % interval);
+        if(PLAYER == player1){
+            if(sfx_climb.paused && PLAYER.ladderCol && (!PLAYER.onWood || !PLAYER.onRock)){
+                sfx_walk.pause();
+                sfx_climb.src = "./res/sfx/ladder.mp3"
+                sfx_climb.play();
+            }
+        }else{
+            if(sfx_climb2.paused && PLAYER.ladderCol && (!PLAYER.onWood || !PLAYER.onRock)){
+                sfx_walk2.pause();
+                sfx_climb2.src = "./res/sfx/ladder.mp3"
+                sfx_climb2.play();
+            }
         }
-        y -= velocityGoingUp;
-        upCollision();
+        
+        PLAYER.y -= PLAYER.velocityGoingUp;
+        upCollision(PLAYER);
     }
 }
 
 //----------------------------------------Climbing on a Ladder - DOWN
-let goingDownId;
-let nowGoingdDown;
-let thenGoingdDown = Date.now();
-let deltaGoingdDown;
 
-let velocityGoingDown = 0;
-
-let alreadyGoingDown = false;
-
-const goingDown = () => {
-    alreadyGoingDown = true;
-    velocityGoingDown = 2;
-    goingDownId = requestAnimationFrame(goingDown);
-    nowGoingdDown = Date.now();
-    deltaGoingdDown = nowGoingdDown - thenGoingdDown;
-    if (deltaGoingdDown > interval) {
-        thenGoingdDown = nowGoingdDown - (deltaGoingdDown % interval);
-        if(sfx_climb.paused && ladderCol){
-            sfx_walk.pause();
-            sfx_climb.src = "./res/sfx/ladder.mp3"
-            setTimeout(() => {
-                sfx_climb.play();  
-            }, 10);
+const goingDown = (PLAYER) => {
+    PLAYER.alreadyGoingDown = true;
+    PLAYER.velocityGoingDown = 2;
+    PLAYER.goingDownId = requestAnimationFrame(() => goingDown(PLAYER));
+    PLAYER.nowGoingDown = Date.now();
+    PLAYER.deltaGoingDown = PLAYER.nowGoingDown - PLAYER.thenGoingDown;
+    if (PLAYER.deltaGoingDown > interval) {
+        PLAYER.thenGoingDown = PLAYER.nowGoingDown - (PLAYER.deltaGoingDown % interval);
+        if(PLAYER == player1){
+            if(sfx_climb.paused && PLAYER.ladderCol){
+                sfx_walk.pause();
+                sfx_climb.src = "./res/sfx/ladder.mp3"
+                setTimeout(() => {
+                    sfx_climb.play();  
+                }, 10);
+            }
+        }else{
+            if(sfx_climb2.paused && PLAYER.ladderCol){
+                sfx_walk2.pause();
+                sfx_climb2.src = "./res/sfx/ladder.mp3"
+                setTimeout(() => {
+                    sfx_climb2.play();  
+                }, 10);
+            }
         }
-        y += velocityGoingDown;
-        bottomCollision();
+        
+        PLAYER.y += PLAYER.velocityGoingDown;
+        bottomCollision(PLAYER);
     }
 }
 
 //SFX Walk Function
 
-const sfxWalkFunction = () => {
-    if(sfx_walk.paused && sfx_jump.paused && (onWood || onRock) && (velocityRight > 2 || velocityLeft > 2) && !crouched && !ladderCol && velocity < 0.3 && !isJumping && (currentFrameRun % 2 == 0)) {
-        if(onWood && !ladderCol){
-            sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
-        }else if(onRock && !ladderCol){
-            sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+
+const sfxWalkFunction = (PLAYER) => {
+    if(PLAYER == player1){
+        if(sfx_walk.paused && sfx_jump.paused && (PLAYER.onWood || PLAYER.onRock) && (PLAYER.velocityRight > 2 || PLAYER.velocityLeft > 2) && !PLAYER.crouched && !PLAYER.ladderCol && PLAYER.velocity< 0.3 && !PLAYER.isJumping && (PLAYER.currentFrameRun % 2 == 0)) {
+            if(PLAYER.onWood && !PLAYER.ladderCol){
+                sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
+            }else if(PLAYER.onRock && !PLAYER.ladderCol){
+                sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+            }
+            sfx_walk.play();
         }
-        sfx_walk.play(); 
+    }else{
+        if(sfx_walk2.paused && sfx_jump2.paused && (PLAYER.onWood || PLAYER.onRock) && (PLAYER.velocityRight > 2 || PLAYER.velocityLeft > 2) && !PLAYER.crouched && !PLAYER.ladderCol && PLAYER.velocity< 0.3 && !PLAYER.isJumping && (PLAYER.currentFrameRun % 2 == 0)) {
+            if(PLAYER.onWood && !PLAYER.ladderCol){
+                sfx_walk2.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
+            }else if(PLAYER.onRock && !PLAYER.ladderCol){
+                sfx_walk2.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+            }
+            sfx_walk2.play();
+        }
     }
+    
 }
 
 //---------------------------------------- Gravity Function (Player)
 
-let velocity = 0;
-
-let stillJumping = false;
-let nowDown;
-let thenDown = Date.now();
-let deltaDown;
-
-let gravity = () => {
-    if(velocityJump < 0.1){
-        gravityId = requestAnimationFrame(gravity);
-        nowDown = Date.now();
-        deltaDown = nowDown - thenDown;
-        if (deltaDown > interval) {
-            thenDown = nowDown - (deltaDown % interval);
-            if(crouched && velocity > 1){
-                unCrouch();
+let gravity = (PLAYER) => {
+    if(PLAYER.velocityJump < 0.1){
+        PLAYER.gravityId = requestAnimationFrame(() => gravity(PLAYER));
+        PLAYER.nowDown = Date.now();
+        PLAYER.deltaDown = PLAYER.nowDown - PLAYER.thenDown;
+        if (PLAYER.deltaDown > interval) {
+            PLAYER.thenDown = PLAYER.nowDown - (PLAYER.deltaDown % interval);
+            if(PLAYER.crouched && PLAYER.velocity> 1){
+                unCrouch(PLAYER);
             }
-            if(velocity >= 0.6){
-                sfx_climb.pause();
+            if(PLAYER.velocity >= 0.6){
+                if(PLAYER == player1){
+                    sfx_climb.pause();
+                }else{
+                    sfx_climb2.pause();
+                }
+                
             }
-            if(!sfx_walk.paused && velocityRight <= 2 && velocityLeft <= 2 && (!onWood || !onRock) || crouched || ladderCol || velocity >= 0.3 || isJumping && currentFrameRun != 1){
-                sfx_walk.pause();
+            if(PLAYER == player1){
+                if(!sfx_walk.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
+                    sfx_walk.pause();
+                }
+            }else{
+                if(!sfx_walk2.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
+                    sfx_walk2.pause();
+                }
             }
-            velocityGoingUp = 0;
-            orbCollision();
-            velocity += 0.3;
-            y += velocity;
-            bottomCollision(); //Condition
+            
+            PLAYER.velocityGoingUp = 0;
+            orbCollision(PLAYER);
+            PLAYER.velocity+= 0.3;
+            PLAYER.y += PLAYER.velocity;
+            bottomCollision(PLAYER); //Condition
         }
     } 
 }
 
-gravity();
+gravity(player1);
+if(playingMultiplayer){
+    gravity(player2)
+}
 
 //---------------------------------------- Jumping Function (Player)
 
-let headHit;
-
-let nowUp;
-let thenUp = Date.now();
-let deltaUp;
-
-let jump = () => {
-    if((stillJumping == false || canOrbJump == true && orbUsed == false) || bounced){
-        onRock = false;
-        onWood = false;
-        sfx_walk.currentTime = 0;
-        if(!sfx_walk.paused) {
-            sfx_walk.pause(); //Jumping = OFF SFX Walk
-        }
-        if(canOrbJump && velocity >= 0){
-            cancelAnimationFrame(gravityId);
-            cancelAnimationFrame(jumpingId);
-            velocityJump = 0;
-            velocityJump = 0;
-            orbUsed = true;
-            setTimeout(() => {
-                orbUsed = false;
-            }, 250);
-            sfx_extra_jump.src = "./res/sfx/orb_jump.mp3"
-            sfx_extra_jump.play();
-        }else if(!canOrbJump && !bounced && !ladderCol){
-            sfx_jump.src = "./res/sfx/jump.mp3"
-            sfx_jump.play();
-        }else if(!canOrbJump && bounced && !ladderCol){
-            sfx_extra_jump.src = "./res/sfx/bonus_jump.mp3"
-            sfx_extra_jump.play();
-        }
-        bounced = false;
-        headHit = false;
-        velocityJump = 16;
-        stillJumping = true;
-        if(crouched){
-            unCrouch();
-        }
-        const jumping = () => {
-            jumpingId = requestAnimationFrame(jumping);
-            nowUp = Date.now();
-            deltaUp = nowUp - thenUp;
-            if (deltaUp > interval) {
-                thenUp = nowUp - (deltaUp % interval);
-                upCollision(); //Podmínka
+let jump = (PLAYER) => {
+    if((PLAYER.stillJumping == false || PLAYER.canOrbJump == true && PLAYER.orbUsed == false) || PLAYER.bounced){
+        PLAYER.onRock = false;
+        PLAYER.onWood = false;
+        if(PLAYER == player1){
+            sfx_walk.currentTime = 0;
+            if(!sfx_walk.paused) {
+                sfx_walk.pause(); //Jumping = OFF SFX Walk
+            }
+        }else{
+            sfx_walk2.currentTime = 0;
+            if(!sfx_walk2.paused) {
+                sfx_walk2.pause(); //Jumping = OFF SFX Walk
             }
         }
-        velocity = 0;
+        
+        if(PLAYER.canOrbJump && PLAYER.velocity>= 0){
+            cancelAnimationFrame(PLAYER.gravityId);
+            cancelAnimationFrame(PLAYER.jumpingId);
+            PLAYER.velocityJump = 0;
+            PLAYER.orbUsed = true;
+            setTimeout(() => {
+                PLAYER.orbUsed = false;
+            }, 250);
+            if(PLAYER == player1){
+                sfx_extra_jump.src = "./res/sfx/orb_jump.mp3"
+                sfx_extra_jump.play();
+            }else{
+                sfx_extra_jump2.src = "./res/sfx/orb_jump.mp3"
+                sfx_extra_jump2.play();
+            }
+        }else if(!PLAYER.canOrbJump && !PLAYER.bounced && !PLAYER.ladderCol){
+            if(PLAYER == player1){
+                sfx_jump.src = "./res/sfx/jump.mp3"
+                sfx_jump.play();
+            }else{
+                sfx_jump2.src = "./res/sfx/jump.mp3"
+                sfx_jump2.play();
+            }
+        }else if(!PLAYER.canOrbJump && PLAYER.bounced && !PLAYER.ladderCol){
+            if(PLAYER == player1){
+                sfx_extra_jump.src = "./res/sfx/bonus_jump.mp3"
+                sfx_extra_jump.play();
+            }else{
+                sfx_extra_jump2.src = "./res/sfx/bonus_jump.mp3"
+                sfx_extra_jump2.play();
+            }
+        }
+        PLAYER.bounced = false;
+        PLAYER.headHit = false;
+        PLAYER.velocityJump = 16;
+        PLAYER.stillJumping = true;
+        if(PLAYER.crouched){
+            unCrouch(PLAYER);
+        }
+        const jumping = () => {
+            PLAYER.jumpingId = requestAnimationFrame(() => jumping());
+            PLAYER.nowUp = Date.now();
+            PLAYER.deltaUp = PLAYER.nowUp - PLAYER.thenUp;
+            if (PLAYER.deltaUp > interval) {
+                PLAYER.thenUp = PLAYER.nowUp - (PLAYER.deltaUp % interval);
+                upCollision(PLAYER); //Podmínka
+            }
+        }
+        PLAYER.velocity= 0;
         jumping();
     }
 }
 //----------------------------------------Moving Right Function (Player)
 
-let velocityRight = 0;
-
-let nowRight;
-let thenRight = Date.now();
-let deltaRight;
-
-let moveRight = () => {
-    velocityRight = 0.2;
+let moveRight = (PLAYER) => {
+    PLAYER.velocityRight = 0.2;
     const movingRight = () => {
-        animationIdRight = requestAnimationFrame(movingRight);
-        nowRight = Date.now();
-        deltaRight = nowRight - thenRight;
-        if (deltaRight > interval) {
-            thenRight = nowRight - (deltaRight % interval);
+        PLAYER.animationIdRight = requestAnimationFrame(() => movingRight())
+        PLAYER.nowRight = Date.now();
+        PLAYER.deltaRight = PLAYER.nowRight - PLAYER.thenRight;
+        if (PLAYER.deltaRight > interval) {
+            PLAYER.thenRight = PLAYER.nowRight - (PLAYER.deltaRight % interval);
             //Crouched
-            if(crouched == true && velocityRight >= 1){
-                velocityRight -= 0.12;
-                cancelAnimationFrame(gravityId);
-                gravity();
+            if(PLAYER.crouched == true && PLAYER.velocityRight >= 1){
+                PLAYER.velocityRight -= 0.12;
+                cancelAnimationFrame(PLAYER.gravityId);
+                gravity(PLAYER);
             }else{ //Not Crouched
-                if(isMovingRight == true){
-                    if(velocityRight < 4 && crouched == false){
-                        velocityRight += 0.12;
-                    }else if(velocityRight < 1 && crouched == true){
-                        velocityRight += 0.12;
-                        cancelAnimationFrame(gravityId);
-                        gravity();
-                    }else if(velocityRight + 0.12 >= 4){
-                        velocityRight = 4;
-                    }else if(velocityRight >= 2 && velocityLeft >= 2){//If you walk to two sides at once, you won't move
-                        velocityRight = 0;
-                        velocityLeft = 0;
+                if(PLAYER.isMovingRight == true){
+                    sfxWalkFunction(PLAYER);
+                    if(PLAYER.velocityRight < 4 && PLAYER.crouched == false){
+                        PLAYER.velocityRight += 0.12;
+                    }else if(PLAYER.velocityRight < 1 && PLAYER.crouched == true){
+                        PLAYER.velocityRight += 0.12;
+                        cancelAnimationFrame(PLAYER.gravityId);
+                        gravity(PLAYER);
+                    }else if(PLAYER.velocityRight + 0.12 >= 4){
+                        PLAYER.velocityRight = 4;
+                    }else if(PLAYER.velocityRight >= 2 && PLAYER.velocityLeft >= 2){//If you walk to two sides at once, you won't move
+                        PLAYER.velocityRight = 0;
+                        PLAYER.velocityLeft = 0;
                     }
                     
-                }else if(isMovingRight == false){
-                    velocityRight -= 0.2;
-                    if(velocityRight <= 0.1){
-                        if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
-                            turnedLeft = false;
-                            turnedRight = true;
+                }else if(PLAYER.isMovingRight == false){
+                    PLAYER.velocityRight -= 0.2;
+                    if(PLAYER.velocityRight <= 0.1){
+                        if(PLAYER.velocityRight > PLAYER.velocityLeft && PLAYER.isMovingRight){ //Fixing switching sides
+                            PLAYER.turnedLeft = false;
+                            PLAYER.turnedRight = true;
                         }
-                        cancelAnimationFrame(animationIdRight);
+                        cancelAnimationFrame(PLAYER.animationIdRight);
                     }
                 }
             
@@ -2002,42 +2479,42 @@ let moveRight = () => {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
-                        y + height > platformY &&
-                        y < platformY + 32 &&
-                        x + width + velocityRight + 0.2 > platformX &&
-                        x < platformX + 32
+                        PLAYER.y + PLAYER.height > platformY &&
+                        PLAYER.y < platformY + 32 &&
+                        PLAYER.x + PLAYER.width + PLAYER.velocityRight + 0.2 > platformX &&
+                        PLAYER.x < platformX + 32
                     ) {
-                        if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
-                            turnedLeft = false;
-                            turnedRight = true;
+                        if(PLAYER.velocityRight > PLAYER.velocityLeft && PLAYER.isMovingRight){ //Fixing switching sides
+                            PLAYER.turnedLeft = false;
+                            PLAYER.turnedRight = true;
                         }
-                        if(velocityRight >= 1 && velocityLeft >= 1){//If you walk to two sides at once, you won't move
-                            velocityLeft = 0;
-                            velocityRight = 0;
+                        if(PLAYER.velocityRight >= 1 && PLAYER.velocityLeft >= 1){//If you walk to two sides at once, you won't move
+                            PLAYER.velocityLeft = 0;
+                            PLAYER.velocityRight = 0;
                         }
-                        if(!canStandUp){ // This condition fixing uncrouch teleport bug
-                            x = platformX - width - 0.12;
+                        if(!PLAYER.canStandUp){ // This condition fixing uncrouch teleport bug
+                            PLAYER.x = platformX - PLAYER.width - 0.12;
                         }
-                        if(velocityRight > 0.5){
-                            velocityRight = 0;
-                            x = platformX - width - 1.2;
+                        if(PLAYER.velocityRight > 0.5){
+                            PLAYER.velocityRight = 0;
+                            PLAYER.x = platformX - PLAYER.width - 1.2;
                         }else{
-                            velocityRight = 0;
+                            PLAYER.velocityRight = 0;
                         }
                         break;
                     }
                 }
             }
-            x += velocityRight;
-            if (x >= canvas.width - width) {
-                x = canvas.width - width;
-                velocityRight = 0;
-                cancelAnimationFrame(animationIdRight);
+            PLAYER.x += PLAYER.velocityRight;
+            if  (PLAYER.x >= canvas.width - PLAYER.width) {
+                PLAYER.x = canvas.width - PLAYER.width;
+                PLAYER.velocityRight = 0;
+                cancelAnimationFrame(PLAYER.animationIdRight);
             }
-            if(stillJumping == false && !crouched){
-                stillJumping = true;
-                cancelAnimationFrame(gravityId);
-                gravity();
+            if(PLAYER.stillJumping == false && !PLAYER.crouched){
+                PLAYER.stillJumping = true;
+                cancelAnimationFrame(PLAYER.gravityId);
+                gravity(PLAYER);
             }
         }
     };
@@ -2047,47 +2524,42 @@ let moveRight = () => {
 
 //----------------------------------------Moving Left Function (Player)
 
-let velocityLeft = 0;
-
-let nowLeft;
-let thenLeft = Date.now();
-let deltaLeft;
-
-let moveLeft = () => {
-    velocityLeft = 0.2;
+let moveLeft = (PLAYER) => {
+    PLAYER.velocityLeft = 0.2;
     const movingLeft = () => {
-        animationIdLeft = requestAnimationFrame(movingLeft);
-        nowLeft = Date.now();
-        deltaLeft = nowLeft - thenLeft;
-        if (deltaLeft > interval) {
-            thenLeft = nowLeft - (deltaLeft % interval);
+        PLAYER.animationIdLeft = requestAnimationFrame(() => movingLeft());
+        PLAYER.nowLeft = Date.now();
+        PLAYER.deltaLeft = PLAYER.nowLeft - PLAYER.thenLeft;
+        if (PLAYER.deltaLeft > interval) {
+            PLAYER.thenLeft = PLAYER.nowLeft - (PLAYER.deltaLeft % interval);
             //Crouched
-            if(crouched == true && velocityLeft >= 1){
-                velocityLeft -= 0.12;
-                cancelAnimationFrame(gravityId);
-                gravity();
+            if(PLAYER.crouched == true && PLAYER.velocityLeft >= 1){
+                PLAYER.velocityLeft -= 0.12;
+                cancelAnimationFrame(PLAYER.gravityId);
+                gravity(PLAYER);
             }else{ //Not Crouched
-                if(isMovingLeft == true){
-                    if(velocityLeft < 4 && crouched == false){
-                        velocityLeft += 0.12;
-                    }else if(velocityLeft <= 1 && crouched == true){
-                        velocityLeft += 0.12;
-                        cancelAnimationFrame(gravityId);
-                        gravity();
-                    }else if(velocityLeft + 0.12 >= 4){
-                        velocityLeft = 4;
-                    }else if(velocityRight >= 2 && velocityLeft >= 2){ //If you walk to two sides at once, you won't move
-                        velocityRight = 0;
-                        velocityLeft = 0;
+                if(PLAYER.isMovingLeft == true){
+                    sfxWalkFunction(PLAYER);
+                    if(PLAYER.velocityLeft < 4 && PLAYER.crouched == false){
+                        PLAYER.velocityLeft += 0.12;
+                    }else if(PLAYER.velocityLeft <= 1 && PLAYER.crouched == true){
+                        PLAYER.velocityLeft += 0.12;
+                        cancelAnimationFrame(PLAYER.gravityId);
+                        gravity(PLAYER);
+                    }else if(PLAYER.velocityLeft + 0.12 >= 4){
+                        PLAYER.velocityLeft = 4;
+                    }else if(PLAYER.velocityRight >= 2 && PLAYER.velocityLeft >= 2){ //If you walk to two sides at once, you won't move
+                        PLAYER.velocityRight = 0;
+                        PLAYER.velocityLeft = 0;
                     }
-                }else if(isMovingLeft == false){
-                    velocityLeft -= 0.2;
-                    if(velocityLeft <= 0.1){
-                        if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
-                            turnedLeft = true;
-                            turnedRight = false;
+                }else if(PLAYER.isMovingLeft == false){
+                    PLAYER.velocityLeft -= 0.2;
+                    if(PLAYER.velocityLeft <= 0.1){
+                        if(PLAYER.velocityRight <= PLAYER.velocityLeft && PLAYER.isMovingLeft){ //Fixing switching sides
+                            PLAYER.turnedLeft = true;
+                            PLAYER.turnedRight = false;
                         }
-                        cancelAnimationFrame(animationIdLeft);
+                        cancelAnimationFrame(PLAYER.animationIdLeft);
                     }
                 }
             }
@@ -2096,42 +2568,42 @@ let moveLeft = () => {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
-                        y + height > platformY &&
-                        y < platformY + 32 &&
-                        x - velocityLeft < platformX + 32 &&
-                        x > platformX 
+                        PLAYER.y+ PLAYER.height > platformY &&
+                        PLAYER.y< platformY + 32 &&
+                        PLAYER.x - PLAYER.velocityLeft < platformX + 32 &&
+                        PLAYER.x > platformX 
                     ) {
-                        if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
-                            turnedLeft = true;
-                            turnedRight = false;
+                        if(PLAYER.velocityRight <= PLAYER.velocityLeft && PLAYER.isMovingLeft){ //Fixing switching sides
+                            PLAYER.turnedLeft = true;
+                            PLAYER.turnedRight = false;
                         }
-                        if(velocityRight >= 1 && velocityLeft >= 1){//If you walk to two sides at once, you won't move
-                            velocityLeft = 0;
-                            velocityRight = 0;
+                        if(PLAYER.velocityRight >= 1 && PLAYER.velocityLeft >= 1){//If you walk to two sides at once, you won't move
+                            PLAYER.velocityLeft = 0;
+                            PLAYER.velocityRight = 0;
                         }
-                        if(!canStandUp){ // This condition fixing uncrouch teleport bug
-                            x = platformX + width + 2.24;
+                        if(!PLAYER.canStandUp){ // This condition fixing uncrouch teleport bug
+                            PLAYER.x = platformX + PLAYER.width + 2.24;
                         }
-                        if(velocityLeft > 0.5){
-                            velocityLeft = 0;
-                            x = platformX + width + 2.2;
+                        if(PLAYER.velocityLeft > 0.5){
+                            PLAYER.velocityLeft = 0;
+                            PLAYER.x = platformX + PLAYER.width + 2.2;
                         }else{
-                            velocityLeft = 0;
+                            PLAYER.velocityLeft = 0;
                         }
                         break;
                     }
                 }
             }
-            x -= velocityLeft;
-            if (x <= 0) {
-                x = 0;
-                velocityLeft = 0;
-                cancelAnimationFrame(animationIdLeft);
+            PLAYER.x -= PLAYER.velocityLeft;
+            if  (PLAYER.x <= 0) {
+                PLAYER.x = 0;
+                PLAYER.velocityLeft = 0;
+                cancelAnimationFrame(PLAYER.animationIdLeft);
             }
-            if(stillJumping == false && !crouched){
-                stillJumping = true;
-                cancelAnimationFrame(gravityId);
-                gravity();
+            if(PLAYER.stillJumping == false && !PLAYER.crouched){
+                PLAYER.stillJumping = true;
+                cancelAnimationFrame(PLAYER.gravityId);
+                gravity(PLAYER);
             }
         }
     };
@@ -2140,33 +2612,53 @@ let moveLeft = () => {
 
 //--------------------------PUNCH Function
 
-let punched = false;
-let alreadyPunched = false;
-let punchCooldown = false;
 let canPlayBreakSound = true;
 
 let currentHp = 100;
 
-const punch = () => {
-    if(!crouched && !punchCooldown){
-        punchCooldown = true;
-        punched = true;
-        if(playingAsRuby){
-            sfx_player.src = "./res/sfx/ruby_attack.mp3";
-        }else if(playingAsRioter){
-            sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
-        }
-        sfx_player.play();
-        sfx_miss.src = "./res/sfx/miss.mp3"; 
-        sfx_miss.play();
-        if(canAttack){
-            sfx_punch.src = "./res/sfx/punch.mp3";
-            sfx_punch.play();
-            currentHp -= 5.5566; //5.5566
-            hp.style.width = currentHp + "%";
-            if(!bossAttacking){
-                bossAttack();
+const punch = (PLAYER) => {
+    if(!PLAYER.crouched && !PLAYER.punchCooldown){
+        PLAYER.punchCooldown = true;
+        PLAYER.punched = true;
+        
+        if(playingMultiplayer){
+            if(PLAYER == player1){
+                sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
+                sfx_player.play();
+            }else{
+                sfx_player2.src = "./res/sfx/ruby_attack.mp3";
+                sfx_player2.play();
             }
+        }else{
+            if(playingAsRuby){
+                sfx_player.src = "./res/sfx/ruby_attack.mp3";
+            }else if(playingAsRioter){
+                sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
+            }
+            sfx_player.play();
+        }
+        if(PLAYER == player1){
+            sfx_miss.src = "./res/sfx/miss.mp3"; 
+            sfx_miss.play();
+        }else{
+            
+            sfx_miss2.src = "./res/sfx/miss.mp3"; 
+            sfx_miss2.play();
+        }
+        if(canAttack){
+            if(PLAYER == player1){
+                sfx_punch.src = "./res/sfx/punch.mp3";
+                sfx_punch.play();
+            }else{
+                sfx_punch2.src = "./res/sfx/punch.mp3";
+                sfx_punch2.play();
+            }
+            if(playingMultiplayer){
+                currentHp -= 5.5566 / 2;
+            }else{
+                currentHp -= 5.5566; //5.5566
+            }
+            hp.style.width = currentHp + "%";
             if(currentHp <= 0 && !backToLobbyEntered){
                 deadBoss();
                 finalDoorUnlocked = true;
@@ -2177,21 +2669,27 @@ const punch = () => {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
-                        (y + height > platformY&&
-                        y < platformY + 32 && 
-                        x + width > platformX - 10 &&
-                        x < platformX && turnedRight)
+                        (PLAYER.y + PLAYER.height > platformY&&
+                        PLAYER.y< platformY + 32 && 
+                        PLAYER.x + PLAYER.width > platformX - 10 &&
+                        PLAYER.x < platformX &&  PLAYER.turnedRight)
                         ||
-                        (y + height > platformY &&
-                        y < platformY + 32 &&
-                        x < platformX + 42 &&
-                        x > platformX + 32 && turnedLeft)
+                        (PLAYER.y + PLAYER.height > platformY &&
+                        PLAYER.y< platformY + 32 &&
+                        PLAYER.x < platformX + 42 &&
+                        PLAYER.x > platformX + 32 &&  PLAYER.turnedLeft)
                     ) {
                         platformLevel1[i] = 0;
                         if(canPlayBreakSound){ //When you hit 2 blocks, sound will be played once
                             canPlayBreakSound = false;
-                            sfx_punch.src = "./res/sfx/wall_break.mp3";
-                            sfx_punch.play();
+                            if(PLAYER == player1){
+                                sfx_punch.src = "./res/sfx/wall_break.mp3";
+                                sfx_punch.play();
+                            }else{
+                                sfx_punch2.src = "./res/sfx/wall_break.mp3";
+                                sfx_punch2.play();
+                            }
+                            
                             setTimeout(() => {
                                 canPlayBreakSound = true;
                             }, 500);
@@ -2220,12 +2718,16 @@ const deadBoss = () => {
         black.style.opacity = "0";
         inGame = true;
         spawnCords();
-        gravity();
+        gravity(player1);
+        if(playingMultiplayer){
+            gravity(player2)
+        }
     });
     clearTimeout(setTimeoutDoor);
     music.pause();
     lives = 3;
     playingBossFight = false;
+    clearInterval(targetInterval);
     bossX = 1000000;
     bossY = 0;
     if(playingAsRioter){
@@ -2266,8 +2768,8 @@ const deadBoss = () => {
     clearTimeout(endBossDarkness);
     clearInterval(nonStopShake);
     spawnCords();
-    velocity = 0;
-    cancelAnimationFrame(gravityId);
+    player1.velocity= 0;
+    cancelAnimationFrame(player1.gravityId);
     platformLevel1 = [...map[14]];
     originalPlatform1 = [...platformLevel1];
 }
@@ -2288,68 +2790,62 @@ let space = " ";
 let escShowed = false;
 let inGame = false;
 
-let downPressed = false;
-
-let jumpInterval;
-let jumpIntervalSet = false;
-
 window.addEventListener("keydown", (event) => {
     // W - Jumping / Climbing Up
-    if ((event.key == up || event.key == UP) && canStandUp == true && inGame && !isJumping) {
-        currentFrame = 0;
+    if ((event.key == up || event.key == UP) && player1.canStandUp == true && inGame && !player1.isJumping) {
         isJumping = true;
-        if(ladderCol){
-            goingUp();
+        if(player1.ladderCol){
+            if(!player1.wPressed){
+                player1.wPressed = true;
+                goingUp(player1);
+            }
         }else{
-            if(!jumpIntervalSet && stillJumping){ //Better W pressed detection
-                jump()
-                jumpInterval = setInterval(() => {
-                    if(canOrbJump && velocity == 0){
-                        clearInterval(jumpInterval)
+            if(!player1.jumpIntervalSet && player1.stillJumping){ //Better W pressed detection
+                jump(player1)
+                player1.jumpInterval = setInterval(() => {
+                    if(player1.canOrbJump && player1.velocity== 0){
+                        clearInterval(player1.jumpInterval)
                     }else{
-                        jump()
+                        jump(player1)
                     }
                 }, 10);  
                 setTimeout(() => {
-                    clearInterval(jumpInterval)
+                    clearInterval(player1.jumpInterval)
                 }, 100);
-            }else if(!stillJumping && !jumpIntervalSet){
-                jump();
+            }else if(!player1.stillJumping && !player1.jumpIntervalSet){
+                jump(player1);
             }
-            jumpIntervalSet = true;
+            player1.jumpIntervalSet = true;
         }
     // D - Moving Right / Climbing Right
-    } else if ((event.key == right || event.key == RIGHT) && !isMovingRight && inGame) {
-        currentFrame = 0;
-        isMovingRight = true;
-        turnedRight = true;
-        turnedLeft = false;
-        cancelAnimationFrame(animationIdRight);
-        moveRight();
+    } else if ((event.key == right || event.key == RIGHT) && !player1.isMovingRight && inGame) {
+        player1.isMovingRight = true;
+        player1.turnedRight = true;
+        player1.turnedLeft = false;
+        cancelAnimationFrame(player1.animationIdRight);
+        moveRight(player1);
     // A - Moving Left / Climbing Left
-    } else if ((event.key == left || event.key == LEFT) && !isMovingLeft && inGame) {
-        currentFrame = 0;
-        isMovingLeft = true;
-        turnedRight = false;
-        turnedLeft = true;
-        cancelAnimationFrame(animationIdLeft);
-        moveLeft();
+    } else if ((event.key == left || event.key == LEFT) && !player1.isMovingLeft && inGame) {
+        player1.isMovingLeft = true;
+        player1.turnedRight = false;
+        player1.turnedLeft = true;
+        cancelAnimationFrame(player1.animationIdLeft);
+        moveLeft(player1);
     // S - Crouching / Climbing Down
-    } else if ((event.key == down || event.key == DOWN) && !punched) {
-        if(!crouched && !downPressed && !ladderCol && inGame){
-            crouch();
-            currentFrame = 0;        
-        } else if (ladderCol && !alreadyGoingDown){
+    } else if ((event.key == down || event.key == DOWN) && !player1.punched) {
+        if(!player1.crouched && !player1.downPressed && !player1.ladderCol && inGame){
+            crouch(player1);     
+        } else if (player1.ladderCol && !player1.alreadyGoingDown){
             sfx_climb.pause();
-            goingDown();
+            goingDown(player1);
         }
-        downPressed = true;
+        player1.downPressed = true;
     // SPACE - Punching BOSS / Breaking Cracked Blocks
     } else if (event.key == space) {
-        if(!alreadyPunched && !ladderCol && inGame){
-            punch();
+        if(!player1.alreadyPunched && !player1.ladderCol && inGame){
+            punch(player1);
         }
-        alreadyPunched = true;
+        player1.alreadyPunched = true;
     } else if (event.key == "Escape" && inGame) {
         if(musicEditorOpened){
             music_editor.style.display = "none";
@@ -2364,55 +2860,171 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
+//--------------------------------------------------------------------
+// SECOND PLAYER WASD SPACE - ON
+//--------------------------------------------------------------------
+
+window.addEventListener("keydown", (event) => {
+    // ArrowUp - Jumping / Climbing Up
+    if ( event.key == "ArrowUp" && player2.canStandUp == true && inGame && !player2.isJumping) {
+        isJumping = true;
+        if(player2.ladderCol){
+            if(!player2.wPressed){
+                player2.wPressed = true;
+                goingUp(player2);
+            }
+        }else{
+            if(!player2.jumpIntervalSet && player2.stillJumping){ //Better W pressed detection
+                jump(player2)
+                player2.jumpInterval = setInterval(() => {
+                    if(player2.canOrbJump && player2.velocity== 0){
+                        clearInterval(player2.jumpInterval)
+                    }else{
+                        jump(player2)
+                    }
+                }, 10);  
+                setTimeout(() => {
+                    clearInterval(player2.jumpInterval)
+                }, 100);
+            }else if(!player2.stillJumping && !player2.jumpIntervalSet){
+                jump(player2);
+            }
+            player2.jumpIntervalSet = true;
+        }
+    // ArrowRight - Moving Right / Climbing Right
+    }else if (event.key == "ArrowRight" && !player2.isMovingRight && inGame) {
+        player2.isMovingRight = true;
+        player2.turnedRight = true;
+        player2.turnedLeft = false;
+        cancelAnimationFrame(player2.animationIdRight);
+        moveRight(player2);
+    // ArrowLeft - Moving Left / Climbing Left
+    } else if (event.key == "ArrowLeft" && !player2.isMovingLeft && inGame) {
+        player2.isMovingLeft = true;
+        player2.turnedRight = false;
+        player2.turnedLeft = true;
+        cancelAnimationFrame(player2.animationIdLeft);
+        moveLeft(player2);
+    // Enter - Punching BOSS / Breaking Cracked Blocks
+    } else if (event.key == "Enter") {
+        if(!player2.alreadyPunched && !player2.ladderCol && inGame){
+            punch(player2);
+        }
+        player2.alreadyPunched = true;
+    // ArrowDown - Crouching / Climbing Down
+    } else if (event.key == "ArrowDown" && !player2.punched) {
+        if(!player2.crouched && !player2.downPressed && !player2.ladderCol && inGame){
+            crouch(player2);     
+        } else if (player2.ladderCol && !player2.alreadyGoingDown){
+            sfx_climb2.pause();
+            goingDown(player2);
+        }
+        player2.downPressed = true;
+    }
+});
+
 //-------------------------- Releasing KEYBOARD Buttons
 
 window.addEventListener("keyup", (event) => {
     // W - Stop Climbing UP
     if (event.key == up || event.key == UP && inGame) {
-        isJumping = false;
-        jumpIntervalSet = false;
-        clearInterval(jumpInterval)
-        if(ladderCol){  
-            cancelAnimationFrame(goingUpId);
+        player1.isJumping = false;
+        player1.jumpIntervalSet = false;
+        clearInterval(player1.jumpInterval)
+        if(player1.ladderCol && player1.wPressed){
+            player1.wPressed = false;
+            cancelAnimationFrame(player1.goingUpId);
             sfx_climb.pause();
         }
-        velocityGoingUp = 0;
+        player1.velocityGoingUp = 0;
     }
     // D - Stop Moving Right
     if (event.key == right || event.key == RIGHT) {
-        isMovingRight = false;
-        if(velocityRight <= velocityLeft && isMovingLeft){ //Fixing switching sides
-            turnedLeft = true;
-            turnedRight = false;
+        player1.isMovingRight = false;
+        if(player1.velocityRight <= player1.velocityLeft && player1.isMovingLeft){ //Fixing switching sides
+            player1.turnedLeft = true;
+            player1.turnedRight = false;
         }
     }
     // A - Stop Moving Left
     if (event.key == left || event.key == LEFT) {
-        isMovingLeft = false;
-        if(velocityRight > velocityLeft && isMovingRight){ //Fixing switching sides
-            turnedLeft = false;
-            turnedRight = true;
+        player1.isMovingLeft = false;
+        if(player1.velocityRight > player1.velocityLeft && player1.isMovingRight){ //Fixing switching sides
+            player1.turnedLeft = false;
+            player1.turnedRight = true;
         }
     }
     // S - UnCrouch / Stop Climbing Down
     if (event.key == down ||event.key == DOWN) {
-        downPressed = false;
-        if(velocity <= 0.35 && crouched == true && canStandUp == true && ladderCol == false){
-            unCrouch();
-        }else if(canStandUp == false){
-            if(wasUnder == true){
-                wasUnder = false;
-                under();
+        player1.downPressed = false;
+        if(player1.velocity<= 0.35 && player1.crouched == true && player1.canStandUp == true && player1.ladderCol == false){
+            unCrouch(player1);
+        }else if(player1.canStandUp == false){
+            if(player1.wasUnder == true){
+                player1.wasUnder = false;
+                under(player1);
             }
         }
-        if(ladderCol){
-            velocityGoingDown = 0;
-            cancelAnimationFrame(goingDownId);
-            alreadyGoingDown = false;
+        if(player1.ladderCol){
+            player1.velocityGoingDown = 0;
+            cancelAnimationFrame(player1.goingDownId);
+            player1.alreadyGoingDown = false;
             sfx_climb.pause();
         }
     }
     if (event.key == space && inGame) {
-        alreadyPunched = false;
+        player1.alreadyPunched = false;
+    }
+});
+
+//--------------------------------------------------------------------
+// SECOND PLAYER WASD SPACE - OFF
+//--------------------------------------------------------------------
+
+window.addEventListener("keyup", (event) => {
+    if (event.key == "ArrowUp" && inGame) {
+        player2.isJumping = false;
+        player2.jumpIntervalSet = false;
+        clearInterval(player2.jumpInterval)
+        if(player2.ladderCol && player2.wPressed){
+            player2.wPressed = false;
+            cancelAnimationFrame(player2.goingUpId);
+            sfx_climb2.pause();
+        }
+        player2.velocityGoingUp = 0;
+    }
+    if (event.key == "ArrowRight") {
+        player2.isMovingRight = false;
+        if(player2.velocityRight <= player2.velocityLeft && player2.isMovingLeft){ //Fixing switching sides
+            player2.turnedLeft = true;
+            player2.turnedRight = false;
+        }
+    }
+    if (event.key == "ArrowLeft") {
+        player2.isMovingLeft = false;
+        if(player2.velocityLeft <= player2.velocityRight && player2.isMovingRight){ //Fixing switching sides
+            player2.turnedLeft = true;
+            player2.turnedRight = false;
+        }
+    }
+    if (event.key == "ArrowDown") {
+        player2.downPressed = false;
+        if(player2.velocity <= 0.35 && player2.crouched == true && player2.canStandUp == true && player2.ladderCol == false){
+            unCrouch(player2);
+        }else if(player2.canStandUp == false){
+            if(player2.wasUnder == true){
+                player2.wasUnder = false;
+                under(player2);
+            }
+        }
+        if(player2.ladderCol){
+            player2.velocityGoingDown = 0;
+            cancelAnimationFrame(player2.goingDownId);
+            player2.alreadyGoingDown = false;
+            sfx_climb2.pause();
+        }
+    }
+    if (event.key == "Enter" && inGame) {
+        player2.alreadyPunched = false;
     }
 });
