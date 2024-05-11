@@ -4,9 +4,8 @@
 <b>FULL VERSION (1.0)</b><br>
 --------------------------------------------------------------------<br>
  - <h2><b>You must complete the level before the door closes and kill the Boss at the end.</b></h2><br>
-  --------------------------------------------------------------------<br>
- - <h2>Coming Soon</h2><br>
- - Multiplayer (WASD and Arrows)
+ - <b>Coming Soon</b><br>
+ - Multiplayer (WASD and Arrows)<br>
  --------------------------------------------------------------------<br>
 ![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
 ![output-onlinegiftools](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/3f542c81-fdb6-4717-821a-9dbf8fa37242)
