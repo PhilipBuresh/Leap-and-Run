@@ -85,6 +85,8 @@ const player1 = {
     // Doors
     doorCol : false,
     closingDoorCol : false,
+    // Boss
+    canAttack : false,
 }
 
 //Player 2
@@ -174,6 +176,8 @@ const player2 = {
     // Doors
     doorCol : false,
     closingDoorCol : false,
+    // Boss
+    canAttack : false,
 }
 
 let playingMultiplayer = false;
@@ -705,8 +709,6 @@ const doorsCollision = (PLAYER) => {
 let bossX = 1000000;
 let bossY = 0;
 
-let canAttack = false;
-
 //Boss Collision
 const bossCollision = (PLAYER) => {
     if (
@@ -715,12 +717,12 @@ const bossCollision = (PLAYER) => {
         PLAYER.x + PLAYER.width >= bossX &&
         PLAYER.x <= bossX + 80
     ) {
-        canAttack = true;
+        PLAYER.canAttack = true;
         if(currentFrameBoss == 6){
             dead();
         }
     } else {
-        canAttack = false;
+        PLAYER.canAttack = false;
     }
 };
 
@@ -1481,7 +1483,11 @@ const backToLobby = () => {
     black.style.opacity = "0";
     risingLavaActivated = false;
     finalDoorUnlocked = true;
-    canAttack = false;
+    player1.canAttack = false;
+    if(playingMultiplayer){
+        player2.canAttack = false;
+    }
+    
     myHp.style.display = "none";
     hps.style.display = "none";
     hearts = 3;
@@ -2646,7 +2652,7 @@ const punch = (PLAYER) => {
             sfx_miss2.src = "./res/sfx/miss.mp3"; 
             sfx_miss2.play();
         }
-        if(canAttack){
+        if(PLAYER.canAttack){
             if(PLAYER == player1){
                 sfx_punch.src = "./res/sfx/punch.mp3";
                 sfx_punch.play();
@@ -2707,7 +2713,10 @@ const punch = (PLAYER) => {
 const deadBoss = () => {
     restartTimer();
     timer.style.top = "-5%"
-    canAttack = false;
+    player1.canAttack = false;
+    if(playingMultiplayer){
+        player2.canAttack = false;
+    }
     inGame = false;
     sfx_boss_laugh.pause();
     black.style.opacity = "1";
