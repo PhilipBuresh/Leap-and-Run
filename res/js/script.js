@@ -1591,7 +1591,8 @@ const backToLobby = () => {
             player1.x = 20;
             player1.y = 260;
             if(playingMultiplayer){
-                
+                player2.x = 20;
+                player2.y = 260;
             }
         }else if(helpNum == 10){
             player1.x = 20;
