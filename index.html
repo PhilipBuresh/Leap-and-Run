@@ -24,6 +24,17 @@
     <audio id="sfx_extra_jump" type="audio/mpeg"></audio>
     <audio id="sfx_boss_talk" type="audio/mpeg"></audio>
     <audio id="sfx_boss_laugh" type="audio/mpeg"></audio>
+
+    <audio id="sfx2" type="audio/mpeg"></audio>
+    <audio id="sfx_land2" type="audio/mpeg"></audio>
+    <audio id="sfx_miss2" type="audio/mpeg"></audio>
+    <audio id="sfx_dead2" type="audio/mpeg"></audio>
+    <audio id="sfx_player2" type="audio/mpeg"></audio>
+    <audio id="sfx_walk2" type="audio/mpeg"></audio>
+    <audio id="sfx_climb2" type="audio/mpeg"></audio>
+    <audio id="sfx_jump2" type="audio/mpeg"></audio>
+    <audio id="sfx_punch2" type="audio/mpeg"></audio>
+    <audio id="sfx_extra_jump2" type="audio/mpeg"></audio>
     <div id="container">
         <div id="startMenu">
             <div id="recommend">
@@ -33,9 +44,14 @@
             </div>
             <img id="text" src="./res/img/name.png" alt="name" draggable="false">
             <div id="startMenuBtns">
-                <div id="playButton">Play!</div>
-                <div id="tutorialButton">Tutorial</div>
-                <div id="creditsButton">Credits</div>
+                <span id="startBtns">
+                    <div id="playButton">Singleplayer</div>
+                    <div id="playButtonMulti">Mutliplayer</div>
+                </span>
+                <span id="otherBtns">
+                    <div id="tutorialButton">Tutorial</div>
+                    <div id="creditsButton">Credits</div>
+                </span>
             </div>
         </div>
         <div id="esc">
@@ -251,6 +267,7 @@
                 <img id="rising" src="./res/gif/rising.gif" alt="rising">
                 <img id="background" src="./res/img/wall.png" alt="wall">
                 <canvas id="canvas" width="1024" height="576"></canvas>
+                <canvas id="canvas_darkness" width="1024" height="576"></canvas>
                 <p id="timer">Time: 0s</p>
                 <img id="black" src="./res/img/black.png" alt="black">
                 <video id="transition1">
@@ -276,5 +293,6 @@
     <script src="./res/js/draw.js"></script>
     <script src="./res/js/maps.js"></script>
     <script src="./res/js/script.js"></script>
+    <script src="./res/js/players.js"></script>
 </body>
 </html>
