@@ -12,6 +12,9 @@ lavaImage.src = "./res/img/lava.png";
 const orbImage = new Image();
 orbImage.src = "./res/img/orb.png";
 
+const jumpPadImage = new Image();
+jumpPadImage.src = "./res/img/jump_pad.png";
+
 const crackedImage = new Image();
 crackedImage.src = "./res/img/cracked.png";
 
@@ -118,6 +121,7 @@ let cordsPortalY2 = 0
 // 26 = Ladder
 // 27 = Wood (Background)
 // 28 = Rotated Wood (Background)
+// 29 = Jump Pad
 // 30 = Doors (Finish)
 // 31 = Key
 // 32 = Iron Block
@@ -170,6 +174,8 @@ const drawPlatform = () => {
             c.drawImage(barrelImage, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 19){
             c.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 29){
+            c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -513,11 +519,19 @@ const drawing = () => {
             }else{
                 lavaY -= 1.8;
             }
-            if (player1.y + player1.height >= lavaY || player2.y + player2.height >= lavaY) {
+            if (player1.y + player1.height >= lavaY) {
                 if(playingBossFight){
                     resistence = false;
                 }
                 dead();
+            }
+            if(playingMultiplayer){
+                if(player1.y + player1.height >= lavaY || player2.y + player2.height >= lavaY){
+                    if(playingBossFight){
+                        resistence = false;
+                    }
+                    dead();
+                }
             }
         }
     }
@@ -662,17 +676,17 @@ let drawPlayer = () => {
     }else if(player1.velocity == 0 && player1.velocityJump == 0 && !player1.isMovingRight && !player1.isMovingLeft && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Stand
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);  
-    }else if(player1.velocity > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Fall
-        c.drawImage(playerOneImage, 0 * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
-    }else if(player1.velocity > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Fall
-        c.drawImage(playerOneImage, 0 * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocityJump > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Jump
         c.drawImage(playerOneImage, 0 * sX, 4 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if(player1.velocityJump > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Jump
         c.drawImage(playerOneImage, 0 * sX, 5 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+    }else if(player1.velocity > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Fall
+        c.drawImage(playerOneImage, 0 * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+    }else if(player1.velocity > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Fall
+        c.drawImage(playerOneImage, 0 * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if(player1.velocity == 0 && player1.velocityJump == 0 && player1.isMovingRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Run
         c.drawImage(playerOneImage, player1.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
@@ -719,17 +733,17 @@ let drawPlayer = () => {
         }else if(player2.velocity == 0 && player2.velocityJump == 0 && !player2.isMovingRight && !player2.isMovingLeft && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Stand
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
-        }else if(player2.velocity > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Fall
-            c.drawImage(playerTwoImage, 0 * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
-        }else if(player2.velocity > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Fall
-            c.drawImage(playerTwoImage, 0 * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocityJump > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Jump
             c.drawImage(playerTwoImage, 0 * sX, 4 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }else if(player2.velocityJump > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Jump
             c.drawImage(playerTwoImage, 0 * sX, 5 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
+            cancelAnimationFrame(drawingId);
+        }else if(player2.velocity > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Fall
+            c.drawImage(playerTwoImage, 0 * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
+            cancelAnimationFrame(drawingId);
+        }else if(player2.velocity > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Fall
+            c.drawImage(playerTwoImage, 0 * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }else if(player2.velocity == 0 && player2.velocityJump == 0 && player2.isMovingRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Run
             c.drawImage(playerTwoImage, player2.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
@@ -765,10 +779,12 @@ let drawPlayer = () => {
     drawPlatform();
     objectsCollision(player1);
     orbCollision(player1);
+    jumpPadCollision(player1);
     ladderCollision(player1);
     doorsCollision(player1);
     if(playingMultiplayer){
         orbCollision(player2);
+        jumpPadCollision(player2);
         ladderCollision(player2);
         objectsCollision(player2);
         doorsCollision(player2);

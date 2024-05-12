@@ -82,6 +82,7 @@ const player1 = {
     jumpInterval : null,
     jumpIntervalSet : false,
     isJumping : null,
+    canUseJumpPad : false,
     // Doors
     doorCol : false,
     closingDoorCol : false,
@@ -173,6 +174,7 @@ const player2 = {
     jumpInterval : null,
     jumpIntervalSet : false,
     isJumping : null,
+    canUseJumpPad : false,
     // Doors
     doorCol : false,
     closingDoorCol : false,
@@ -761,12 +763,17 @@ const bossMoveY = () => {
     deltaBossMoveY  = nowBossMoveY  - thenBossMoveY ;
     if (deltaBossMoveY > interval) {
         thenBossMoveY = nowBossMoveY - (deltaBossMoveY % interval);
-        if(possibleTarget1 <= possibleTarget2){
+        if(playingMultiplayer){
+            if(possibleTarget1 <= possibleTarget2){
+                targetY = player1.y;
+                targetX = player1.x;
+            }else{
+                targetY = player2.y;
+                targetX = player2.x;
+            }
+        }else{
             targetY = player1.y;
             targetX = player1.x;
-        }else{
-            targetY = player2.y;
-            targetX = player2.x;
         }
         if(targetY - 30 >= bossY){
             bossY += bossVelocity;
@@ -804,7 +811,6 @@ let entered = false;
 
 window.addEventListener("keydown", (event) => {
     if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter & !playingMultiplayer ) {
-        console.log(1)
         entered = true;
         enterFunction();
     } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1]) {
@@ -1106,7 +1112,9 @@ const enterFunction = () => {
 //----------------------------------------BOSS LEVEL
 const bossLevel = () => {
     finalDoorUnlocked = false;
-    setTarget();
+    if(playingMultiplayer){
+        setTarget();
+    }
     generatorAttackFunction();
     gravity(player1);
     if(playingMultiplayer){
@@ -1995,6 +2003,29 @@ const orbCollision = (PLAYER) => {
     }
 }
 
+//---------------------------------------- JUMP PAD Collision
+
+const jumpPadCollision = (PLAYER) => {
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if (platformLevel1[i] == 29) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32 + 16;
+            if (
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY + PLAYER.height &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
+            ) {
+                PLAYER.canUseJumpPad = true;
+                jump(PLAYER)
+                break;
+            } else {
+                PLAYER.canUseJumpPad = false;
+            }
+        }
+    }
+}
+
 //---------------------------------------- GHOST Collision
 
 let ghostKilled = false;
@@ -2356,6 +2387,7 @@ let gravity = (PLAYER) => {
             
             PLAYER.velocityGoingUp = 0;
             orbCollision(PLAYER);
+            jumpPadCollision(PLAYER);
             PLAYER.velocity+= 0.3;
             PLAYER.y += PLAYER.velocity;
             bottomCollision(PLAYER); //Condition
@@ -2371,7 +2403,7 @@ if(playingMultiplayer){
 //---------------------------------------- Jumping Function (Player)
 
 let jump = (PLAYER) => {
-    if((PLAYER.stillJumping == false || PLAYER.canOrbJump == true && PLAYER.orbUsed == false) || PLAYER.bounced){
+    if((PLAYER.stillJumping == false || PLAYER.canOrbJump == true && PLAYER.orbUsed == false) || PLAYER.canUseJumpPad || PLAYER.bounced){
         PLAYER.onRock = false;
         PLAYER.onWood = false;
         if(PLAYER == player1){
@@ -2386,7 +2418,7 @@ let jump = (PLAYER) => {
             }
         }
         
-        if(PLAYER.canOrbJump && PLAYER.velocity>= 0){
+        if(PLAYER.canOrbJump && PLAYER.velocity >= 0 || PLAYER.canUseJumpPad && PLAYER.velocity >= 0){
             cancelAnimationFrame(PLAYER.gravityId);
             cancelAnimationFrame(PLAYER.jumpingId);
             PLAYER.velocityJump = 0;
@@ -2401,7 +2433,7 @@ let jump = (PLAYER) => {
                 sfx_extra_jump2.src = "./res/sfx/orb_jump.mp3"
                 sfx_extra_jump2.play();
             }
-        }else if(!PLAYER.canOrbJump && !PLAYER.bounced && !PLAYER.ladderCol){
+        }else if(!PLAYER.canOrbJump && !PLAYER.bounced && !PLAYER.ladderCol && !PLAYER.canUseJumpPad){
             if(PLAYER == player1){
                 sfx_jump.src = "./res/sfx/jump.mp3"
                 sfx_jump.play();
@@ -2409,7 +2441,7 @@ let jump = (PLAYER) => {
                 sfx_jump2.src = "./res/sfx/jump.mp3"
                 sfx_jump2.play();
             }
-        }else if(!PLAYER.canOrbJump && PLAYER.bounced && !PLAYER.ladderCol){
+        }else if(!PLAYER.canOrbJump && PLAYER.bounced && !PLAYER.ladderCol && !PLAYER.canUseJumpPad){
             if(PLAYER == player1){
                 sfx_extra_jump.src = "./res/sfx/bonus_jump.mp3"
                 sfx_extra_jump.play();
@@ -2420,7 +2452,12 @@ let jump = (PLAYER) => {
         }
         PLAYER.bounced = false;
         PLAYER.headHit = false;
-        PLAYER.velocityJump = 16;
+        if(PLAYER.canUseJumpPad){
+            PLAYER.velocityJump = 30;
+        }else{
+            PLAYER.velocityJump = 16;
+        }
+        PLAYER.canUseJumpPad = false;
         PLAYER.stillJumping = true;
         if(PLAYER.crouched){
             unCrouch(PLAYER);
@@ -3038,3 +3075,13 @@ window.addEventListener("keyup", (event) => {
         player2.alreadyPunched = false;
     }
 });
+
+characters.style.display = "none";
+    player =  "./res/img/rioter.png";
+    heart1.src = "./res/img/heart_ruby.png";
+    heart2.src = "./res/img/heart_ruby.png";
+    heart3.src = "./res/img/heart_ruby.png";
+    playingAsRioter = true;
+    playingAsRuby = false;
+    //playingMultiplayer = true;
+    movingCharactersAndFullBlack();
