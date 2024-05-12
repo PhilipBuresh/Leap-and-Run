@@ -6,6 +6,7 @@
 <b>LAST UPDATE (1.1)</b><br>
 
  - <b>MULTIPLAYER Mode ADDED</b><br>
+ - <b>JUMP PAD ADDED</b><br>
  - Player 1 -> <b> W A S D Space</b> (punch)
  - Player 2 -> <b>⬆️ ➡️ ⬇️ ⬅️ Enter</b> (punch)
  - Darkness now works in Multiplayr Mode<br>
