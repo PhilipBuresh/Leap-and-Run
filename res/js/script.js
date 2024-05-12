@@ -3075,13 +3075,3 @@ window.addEventListener("keyup", (event) => {
         player2.alreadyPunched = false;
     }
 });
-
-characters.style.display = "none";
-    player =  "./res/img/rioter.png";
-    heart1.src = "./res/img/heart_ruby.png";
-    heart2.src = "./res/img/heart_ruby.png";
-    heart3.src = "./res/img/heart_ruby.png";
-    playingAsRioter = true;
-    playingAsRuby = false;
-    //playingMultiplayer = true;
-    movingCharactersAndFullBlack();
