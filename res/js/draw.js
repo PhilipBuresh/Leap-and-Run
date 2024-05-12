@@ -360,12 +360,14 @@ const drawGhost = () => {
 
 //----------------------------------------Drawing BOSS
 
+let bossPunchedNumber = 0;
+
 const drawBoss = () => {
     bossImage.src = "./res/img/boss_s.png";
     if(!bossAttacking){
-        c.drawImage(bossImage, currentFrameBoss * 130, 0 * 130, 130, 130, bossX, bossY, 80, 80)
+        c.drawImage(bossImage, currentFrameBoss * 130, (0 + bossPunchedNumber) * 130, 130, 130, bossX, bossY, 80, 80)
     }else{
-        c.drawImage(bossImage, currentFrameBoss * 130, 1 * 130, 130, 130, bossX, bossY, 80, 80)
+        c.drawImage(bossImage, currentFrameBoss * 130, (1 + bossPunchedNumber) * 130, 130, 130, bossX, bossY, 80, 80)
     }
 }
 

@@ -2014,7 +2014,8 @@ const jumpPadCollision = (PLAYER) => {
                 PLAYER.y + PLAYER.height >= platformY &&
                 PLAYER.y + PLAYER.height <= platformY + PLAYER.height &&
                 PLAYER.x + PLAYER.width >= platformX &&
-                PLAYER.x <= platformX + 32
+                PLAYER.x <= platformX + 32 &&
+                inGame
             ) {
                 PLAYER.canUseJumpPad = true;
                 jump(PLAYER)
@@ -2660,6 +2661,8 @@ let canPlayBreakSound = true;
 
 let currentHp = 100;
 
+let punchedBossTimeout;
+
 const punch = (PLAYER) => {
     if(!PLAYER.crouched && !PLAYER.punchCooldown){
         PLAYER.punchCooldown = true;
@@ -2702,6 +2705,11 @@ const punch = (PLAYER) => {
             }else{
                 currentHp -= 5.5566; //5.5566
             }
+            bossPunchedNumber = 2;
+            clearTimeout(punchedBossTimeout);
+            punchedBossTimeout = setTimeout(() => {
+                bossPunchedNumber = 0;
+            }, 400);
             hp.style.width = currentHp + "%";
             if(currentHp <= 0 && !backToLobbyEntered){
                 deadBoss();
@@ -3075,3 +3083,4 @@ window.addEventListener("keyup", (event) => {
         player2.alreadyPunched = false;
     }
 });
+
