@@ -711,40 +711,36 @@ let drawPlayer = () => {
     }else if(player1.velocity > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Fall
         c.drawImage(playerOneImage, 0 * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-    }else if(player1.velocity == 0 && player1.velocityJump == 0 && player1.isMovingRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Run
+    }else if(player1.velocity == 0 && player1.turnedRight && player1.velocityJump == 0 && player1.isMovingRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Run
         c.drawImage(playerOneImage, player1.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-        
-    }else if(player1.velocity == 0 && player1.velocityJump == 0 && player1.isMovingLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Run
+    }else if(player1.velocity == 0 && player1.turnedLeft && player1.velocityJump == 0 && player1.isMovingLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Run
         c.drawImage(playerOneImage, player1.currentFrameRun * sX, 3 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-        
     }else if(player1.punched && player1.turnedRight && !player1.ladderCol){ //Right Punch
         c.drawImage(playerOneImage, player1.currentFramePunch * sX, 8 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-        
     }else if(player1.punched && player1.turnedLeft && !player1.ladderCol){ //Left Punch
         c.drawImage(playerOneImage, player1.currentFramePunch * sX, 9 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
-        
+        cancelAnimationFrame(drawingId); 
     }else if((!player1.isMovingRight && !player1.isMovingLeft && player1.crouched && player1.turnedRight && !player1.punched) || (player1.isMovingRight && player1.isMovingLeft && player1.crouched && player1.turnedRight)){ //Crouched Right
         c.drawImage(playerOneImage, 0 * sX, 6 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
     }else if((!player1.isMovingRight && !player1.isMovingLeft && player1.crouched && player1.turnedLeft && !player1.punched) || (player1.isMovingRight && player1.isMovingLeft && player1.crouched && player1.turnedLeft)){ //Crouched Left
         c.drawImage(playerOneImage, 0 * sX, 7 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-    }else if(player1.isMovingRight && !player1.isMovingLeft && player1.crouched && !player1.punched){ //Crouched Right Moving
+    }else if(player1.isMovingRight && !player1.isMovingLeft && player1.crouched && !player1.punched && player1.turnedRight){ //Crouched Right Moving
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-        
-    }else if(player1.crouched && player1.isMovingLeft && !player1.isMovingRight && !player1.punched){ //Crouched Left Moving
+    }else if(player1.crouched && player1.isMovingLeft && !player1.isMovingRight && !player1.punched && player1.turnedLeft){ //Crouched Left Moving
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-        
     }else if (player1.ladderCol && !player1.crouched){ //Climbing
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
-        
+    }else{
+        c.drawImage(playerOneImage, player1.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }
     //--------------------------------------------------------------------
     // SECOND PLAYER 
@@ -774,10 +770,10 @@ let drawPlayer = () => {
         }else if(player2.velocity > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Fall
             c.drawImage(playerTwoImage, 0 * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
-        }else if(player2.velocity == 0 && player2.velocityJump == 0 && player2.isMovingRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Run
+        }else if(player2.velocity == 0 && player2.turnedRight && player2.velocityJump == 0 && player2.isMovingRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Run
             c.drawImage(playerTwoImage, player2.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
-        }else if(player2.velocity == 0 && player2.velocityJump == 0 && player2.isMovingLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Run
+        }else if(player2.velocity == 0 && player2.turnedLeft && player2.velocityJump == 0 && player2.isMovingLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Run
             c.drawImage(playerTwoImage, player2.currentFrameRun * sX, 3 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }else if(player2.punched && player2.turnedRight && !player2.ladderCol){ //Right Punch
@@ -785,21 +781,24 @@ let drawPlayer = () => {
             cancelAnimationFrame(drawingId);
         }else if(player2.punched && player2.turnedLeft && !player2.ladderCol){ //Left Punch
             c.drawImage(playerTwoImage, player2.currentFramePunch * sX, 9 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
+            cancelAnimationFrame(drawingId); 
         }else if((!player2.isMovingRight && !player2.isMovingLeft && player2.crouched && player2.turnedRight && !player2.punched) || (player2.isMovingRight && player2.isMovingLeft && player2.crouched && player2.turnedRight)){ //Crouched Right
             c.drawImage(playerTwoImage, 0 * sX, 6 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }else if((!player2.isMovingRight && !player2.isMovingLeft && player2.crouched && player2.turnedLeft && !player2.punched) || (player2.isMovingRight && player2.isMovingLeft && player2.crouched && player2.turnedLeft)){ //Crouched Left
             c.drawImage(playerTwoImage, 0 * sX, 7 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
-        }else if(player2.isMovingRight && !player2.isMovingLeft && player2.crouched && !player2.punched){ //Crouched Right Moving
+        }else if(player2.isMovingRight && !player2.isMovingLeft && player2.crouched && !player2.punched && player2.turnedRight){ //Crouched Right Moving
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
-        }else if(player2.crouched && player2.isMovingLeft && !player2.isMovingRight && !player2.punched){ //Crouched Left Moving
+        }else if(player2.crouched && player2.isMovingLeft && !player2.isMovingRight && !player2.punched && player2.turnedLeft){ //Crouched Left Moving
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }else if (player2.ladderCol && !player2.crouched){ //Climbing
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
+            cancelAnimationFrame(drawingId);
+        }else{
+            c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }
     }

@@ -192,7 +192,7 @@ let playingMultiplayer = false;
 
 //This will spawn you
 let spawnCords = () => {
-    player1.x = 80;
+    player1.x = 35;
     player1.y = 500;
     player2.x = 70;
     player2.y = 500;
@@ -2044,12 +2044,12 @@ const stopSlideDetection = (PLAYER) => {
             if (
                 PLAYER.y + PLAYER.height > platformY + 10 &&
                 PLAYER.y < platformY + 10 &&
-                PLAYER.x - PLAYER.velocityLeft < platformX + 32 &&
+                PLAYER.x < platformX + 33 &&
                 PLAYER.x > platformX
                 ||
                 PLAYER.y + PLAYER.height > platformY + 10 &&
                 PLAYER.y < platformY + 10 &&
-                PLAYER.x + PLAYER.width + PLAYER.velocityRight + 0.2 > platformX &&
+                PLAYER.x + PLAYER.width > platformX - 1&&
                 PLAYER.x < platformX + 32
             ) {
                 PLAYER.canSlideOnWall = true;
@@ -2540,7 +2540,6 @@ let moveRight = (PLAYER) => {
                 if(PLAYER.isMovingRight == true){
                     sfxWalkFunction(PLAYER);
                     if(PLAYER.velocityRight < 4 && PLAYER.crouched == false){
-                        PLAYER.turnedRight = true;
                         PLAYER.velocityRight += 0.12;
                     }else if(PLAYER.velocityRight < 1 && PLAYER.crouched == true){
                         PLAYER.velocityRight += 0.12;
@@ -2577,8 +2576,8 @@ let moveRight = (PLAYER) => {
                     ) {
                         stopSlideDetection(PLAYER);
                         if(PLAYER.velocityRight > PLAYER.velocityLeft && PLAYER.isMovingRight){ //Fixing switching sides
-                            PLAYER.turnedLeft = false;
                             PLAYER.turnedRight = true;
+                            PLAYER.turnedLeft = false;
                         }
                         if(PLAYER.velocityRight >= 1 && PLAYER.velocityLeft >= 1){//If you walk to two sides at once, you won't move
                             PLAYER.velocityLeft = 0;
@@ -2633,7 +2632,6 @@ let moveLeft = (PLAYER) => {
                 if(PLAYER.isMovingLeft == true){
                     sfxWalkFunction(PLAYER);
                     if(PLAYER.velocityLeft < 4 && PLAYER.crouched == false){
-                        PLAYER.turnedRight = false;
                         PLAYER.velocityLeft += 0.12;
                     }else if(PLAYER.velocityLeft <= 1 && PLAYER.crouched == true){
                         PLAYER.velocityLeft += 0.12;
@@ -2778,7 +2776,7 @@ const punch = (PLAYER) => {
                         (PLAYER.y + PLAYER.height > platformY &&
                         PLAYER.y< platformY + 32 &&
                         PLAYER.x < platformX + 42 &&
-                        PLAYER.x > platformX + 32 &&  PLAYER.turnedLeft)
+                        PLAYER.x > platformX + 32 && PLAYER.turnedLeft)
                     ) {
                         platformLevel1[i] = 0;
                         if(canPlayBreakSound){ //When you hit 2 blocks, sound will be played once
@@ -3118,8 +3116,8 @@ window.addEventListener("keyup", (event) => {
         player2.canSlideOnWall = false;
         player2.isMovingLeft = false;
         if(player2.velocityLeft <= player2.velocityRight && player2.isMovingRight){ //Fixing switching sides
-            player2.turnedLeft = true;
-            player2.turnedRight = false;
+            player2.turnedLeft = false;
+            player2.turnedRight = true;
         }
     }
     if (event.key == "ArrowDown") {
