@@ -78,6 +78,9 @@ ironKeyImage.src = "./res/img/iron_key.png"
 const trophyImage = new Image();
 trophyImage.src = "./res/img/trophy.png"
 
+const honeyImage = new Image();
+honeyImage.src = "./res/img/honey_wood.png"
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -128,6 +131,8 @@ let cordsPortalY2 = 0
 // 33 = Iron Block with Key hole
 // 34 = Doors - Boss (Finish)
 // 35 = Trophy
+// 36 = Honey Left
+// 37 = Honey Right
 // 50 - 64 = Doors in the Lobby (Level 1 - 15)
 
 //-----------------------------Drawing Platform
@@ -176,6 +181,10 @@ const drawPlatform = () => {
             c.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }else if(platformLevel1[index] == 29){
             c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 36){
+            c.drawImage(honeyImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+        }else if(platformLevel1[index] == 37){
+            c.drawImage(honeyImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -274,6 +283,8 @@ const drawBackBlocks = () => {
 
 let darkness = false;
 
+let gradient2;
+
 const dark = () => {
     if (darkness) {
         c_d.clearRect(0, 0, canvas.width, canvas.height);
@@ -283,11 +294,13 @@ const dark = () => {
         const gradient1 = c_d.createRadialGradient(player1.x + 10, player1.y + 15, 0, player1.x + 10, player1.y + 15, 150);
         gradient1.addColorStop(0, 'rgba(0, 0, 0, 1)');
         gradient1.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        
-        const gradient2 = c_d.createRadialGradient(player2.x + 10, player2.y + 15, 0, player2.x + 10, player2.y + 15, 150);
-        gradient2.addColorStop(0, 'rgba(0, 0, 0, 1)');
-        gradient2.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        
+
+        if(playingMultiplayer){
+            gradient2 = c_d.createRadialGradient(player2.x + 10, player2.y + 15, 0, player2.x + 10, player2.y + 15, 150);
+            gradient2.addColorStop(0, 'rgba(0, 0, 0, 1)');
+            gradient2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+        }
+
         c_d.globalCompositeOperation = 'destination-out';
         
         c_d.fillStyle = gradient1;
@@ -295,12 +308,14 @@ const dark = () => {
         c_d.arc(player1.x + 10, player1.y + 15, 150, 0, Math.PI * 2);
         c_d.closePath();
         c_d.fill();
-        
-        c_d.fillStyle = gradient2;
-        c_d.beginPath();
-        c_d.arc(player2.x + 10, player2.y + 15, 150, 0, Math.PI * 2);
-        c_d.closePath();
-        c_d.fill();
+
+        if(playingMultiplayer){
+            c_d.fillStyle = gradient2;
+            c_d.beginPath();
+            c_d.arc(player2.x + 10, player2.y + 15, 150, 0, Math.PI * 2);
+            c_d.closePath();
+            c_d.fill();
+        }
         
         c_d.globalCompositeOperation = 'source-over';
     } else {
@@ -677,7 +692,13 @@ let drawPlayer = () => {
         cancelAnimationFrame(drawingId);
     }else if(player1.velocity == 0 && player1.velocityJump == 0 && !player1.isMovingRight && !player1.isMovingLeft && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Stand
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);  
+        cancelAnimationFrame(drawingId);
+    }else if(player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol && player1.canSlideOnWall && player1.velocityJump <= 0.4){ //Right Slide
+        c.drawImage(playerOneImage, 1 * sX, 11 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
+    }else if(player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol && player1.canSlideOnWall && player1.velocityJump <= 0.4){ //Left Slide
+        c.drawImage(playerOneImage, 0 * sX, 11 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
+        cancelAnimationFrame(drawingId);
     }else if(player1.velocityJump > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Jump
         c.drawImage(playerOneImage, 0 * sX, 4 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         cancelAnimationFrame(drawingId);
@@ -734,6 +755,12 @@ let drawPlayer = () => {
             cancelAnimationFrame(drawingId);
         }else if(player2.velocity == 0 && player2.velocityJump == 0 && !player2.isMovingRight && !player2.isMovingLeft && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Stand
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
+            cancelAnimationFrame(drawingId);
+        }else if(player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol && player2.canSlideOnWall && player2.velocityJump <= 0.4){ //Right Slide
+            c.drawImage(playerTwoImage, 1 * sX, 11 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
+            cancelAnimationFrame(drawingId);
+        }else if(player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol && player2.canSlideOnWall && player2.velocityJump <= 0.4){ //Left Slide
+            c.drawImage(playerTwoImage, 0 * sX, 11 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             cancelAnimationFrame(drawingId);
         }else if(player2.velocityJump > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Jump
             c.drawImage(playerTwoImage, 0 * sX, 4 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
