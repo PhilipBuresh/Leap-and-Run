@@ -6,11 +6,12 @@
 <b>LAST UPDATE (1.1)</b><br>
 
  - <b>MULTIPLAYER Mode ADDED</b><br>
+ - <b>HONEY WALL ADDED (you can slide/jump on walls)</b><br>
  - <b>JUMP PAD ADDED</b><br>
  - Player 1 -> <b> W A S D Space</b> (punch)
  - Player 2 -> <b>⬆️ ➡️ ⬇️ ⬅️ Enter</b> (punch)
  - Darkness now works in Multiplayr Mode<br>
- - Crimson Reaper (Boss) now has in Multiplayer Mode 2x more HP<br>
+ - Crimson Reaper (Boss) now has in Multiplayer Mode 1.5x more HP<br>
  - Boss targets nearest player in Multiplayer Mode<br>
  --------------------------------------------------------------------<br>
 ![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
