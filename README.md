@@ -7,7 +7,7 @@
 
  - <b>MULTIPLAYER Mode ADDED</b><br>
  - <b>HONEY WALL ADDED (you can slide/jump on walls)</b><br>
- - <b>JUMP PAD ADDED</b><br>
+ - <b>JUMP PAD ADDED (now you can do 4 block jump)</b><br>
  - Player 1 -> <b> W A S D Space</b> (punch)
  - Player 2 -> <b>⬆️ ➡️ ⬇️ ⬅️ Enter</b> (punch)
  - Darkness now works in Multiplayr Mode<br>
