@@ -3133,12 +3133,3 @@ window.addEventListener("keyup", (event) => {
     }
 });
 
-characters.style.display = "none";
-    player =  "./res/img/rioter.png";
-    heart1.src = "./res/img/heart_rioter.png";
-    heart2.src = "./res/img/heart_rioter.png";
-    heart3.src = "./res/img/heart_rioter.png";
-    playingAsRioter = true;
-    playingAsRuby = false;
-    movingCharactersAndFullBlack();
-
