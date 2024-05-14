@@ -2044,18 +2044,18 @@ const stopSlideDetection = (PLAYER) => {
             if (
                 PLAYER.y + PLAYER.height > platformY + 10 &&
                 PLAYER.y < platformY + 10 &&
-                PLAYER.x < platformX + 33 &&
+                PLAYER.x < platformX + 32.5 &&
                 PLAYER.x > platformX
                 ||
                 PLAYER.y + PLAYER.height > platformY + 10 &&
                 PLAYER.y < platformY + 10 &&
-                PLAYER.x + PLAYER.width > platformX - 1&&
+                PLAYER.x + PLAYER.width > platformX - 1 &&
                 PLAYER.x < platformX + 32
             ) {
                 PLAYER.canSlideOnWall = true;
                 break;
             } else {
-                PLAYER.canSlideOnWall = false;  
+                PLAYER.canSlideOnWall = false;
             }
         } 
     }
@@ -2419,7 +2419,7 @@ let gravity = (PLAYER) => {
                     sfx_walk2.pause();
                 }
             }
-            
+            stopSlideDetection(PLAYER)
             PLAYER.velocityGoingUp = 0;
             orbCollision(PLAYER);
             jumpPadCollision(PLAYER);
@@ -2574,7 +2574,6 @@ let moveRight = (PLAYER) => {
                         PLAYER.x + PLAYER.width + PLAYER.velocityRight + 0.2 > platformX &&
                         PLAYER.x < platformX + 32
                     ) {
-                        stopSlideDetection(PLAYER);
                         if(PLAYER.velocityRight > PLAYER.velocityLeft && PLAYER.isMovingRight){ //Fixing switching sides
                             PLAYER.turnedRight = true;
                             PLAYER.turnedLeft = false;
@@ -2664,7 +2663,6 @@ let moveLeft = (PLAYER) => {
                         PLAYER.x - PLAYER.velocityLeft < platformX + 32 &&
                         PLAYER.x > platformX 
                     ) {
-                        stopSlideDetection(PLAYER);
                         if(PLAYER.velocityRight <= PLAYER.velocityLeft && PLAYER.isMovingLeft){ //Fixing switching sides
                             PLAYER.turnedLeft = true;
                             PLAYER.turnedRight = false;
@@ -2925,7 +2923,6 @@ window.addEventListener("keydown", (event) => {
         player1.turnedRight = true;
         player1.turnedLeft = false;
         cancelAnimationFrame(player1.animationIdRight);
-        player1.canSlideOnWall = false;
         moveRight(player1);
     // A - Moving Left / Climbing Left
     } else if ((event.key == left || event.key == LEFT) && !player1.isMovingLeft && inGame) {
@@ -2933,7 +2930,6 @@ window.addEventListener("keydown", (event) => {
         player1.turnedRight = false;
         player1.turnedLeft = true;
         cancelAnimationFrame(player1.animationIdLeft);
-        player1.canSlideOnWall = false;
         moveLeft(player1);
     // S - Crouching / Climbing Down
     } else if ((event.key == down || event.key == DOWN) && !player1.punched) {
@@ -3002,7 +2998,6 @@ window.addEventListener("keydown", (event) => {
             player2.turnedRight = true;
             player2.turnedLeft = false;
             cancelAnimationFrame(player2.animationIdRight);
-            player2.canSlideOnWall = false;
             moveRight(player2);
         // ArrowLeft - Moving Left / Climbing Left
         } else if (event.key == "ArrowLeft" && !player2.isMovingLeft && inGame) {
@@ -3010,7 +3005,6 @@ window.addEventListener("keydown", (event) => {
             player2.turnedRight = false;
             player2.turnedLeft = true;
             cancelAnimationFrame(player2.animationIdLeft);
-            player2.canSlideOnWall = false;
             moveLeft(player2);
         // Enter - Punching BOSS / Breaking Cracked Blocks
         } else if (event.key == "Enter") {
@@ -3049,7 +3043,6 @@ window.addEventListener("keyup", (event) => {
     // D - Stop Moving Right
     if (event.key == right || event.key == RIGHT) {
         player1.isMovingRight = false;
-        player1.canSlideOnWall = false;
         if(player1.velocityRight <= player1.velocityLeft && player1.isMovingLeft){ //Fixing switching sides
             player1.turnedLeft = true;
             player1.turnedRight = false;
@@ -3058,7 +3051,6 @@ window.addEventListener("keyup", (event) => {
     // A - Stop Moving Left
     if (event.key == left || event.key == LEFT) {
         player1.isMovingLeft = false;
-        player1.canSlideOnWall = false;
         if(player1.velocityRight > player1.velocityLeft && player1.isMovingRight){ //Fixing switching sides
             player1.turnedLeft = false;
             player1.turnedRight = true;
@@ -3105,7 +3097,6 @@ window.addEventListener("keyup", (event) => {
         player2.velocityGoingUp = 0;
     }
     if (event.key == "ArrowRight") {
-        player2.canSlideOnWall = false;
         player2.isMovingRight = false;
         if(player2.velocityRight <= player2.velocityLeft && player2.isMovingLeft){ //Fixing switching sides
             player2.turnedLeft = true;
@@ -3113,7 +3104,6 @@ window.addEventListener("keyup", (event) => {
         }
     }
     if (event.key == "ArrowLeft") {
-        player2.canSlideOnWall = false;
         player2.isMovingLeft = false;
         if(player2.velocityLeft <= player2.velocityRight && player2.isMovingRight){ //Fixing switching sides
             player2.turnedLeft = false;
@@ -3142,4 +3132,13 @@ window.addEventListener("keyup", (event) => {
     }
     }
 });
+
+characters.style.display = "none";
+    player =  "./res/img/rioter.png";
+    heart1.src = "./res/img/heart_rioter.png";
+    heart2.src = "./res/img/heart_rioter.png";
+    heart3.src = "./res/img/heart_rioter.png";
+    playingAsRioter = true;
+    playingAsRuby = false;
+    movingCharactersAndFullBlack();
 
