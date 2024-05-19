@@ -3,7 +3,14 @@
 --------------------------------------------------------------------<br>
  - <h2><b>You must complete the level before the door closes and kill the Boss at the end.</b></h2><br>
 
+<b>COMING SOON</b><br>
+ - <b>NEW Dungeon - SteamPunk</b><br>
+ 
 <b>LAST UPDATE (1.1)</b><br>
+
+ - <b>ADDED - SteamPunk</b> Dungeon preview<br>
+ 
+
 
  - <b>MULTIPLAYER Mode ADDED</b><br>
  - <b>HONEY WALL ADDED (you can slide/jump on walls)</b><br>
