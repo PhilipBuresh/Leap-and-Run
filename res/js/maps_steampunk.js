@@ -21,6 +21,13 @@ const setDungeonToSteamPunk = () => {
      }
      spawnCords();
 
+     let spawnMovingPlatformCords = () => {
+          xMovingPlatform = 600;
+          yMovingPlatform = 282;
+      }
+      
+      spawnMovingPlatformCords();
+
      //---------------------------------------------------------- Lobby
 
      platformLevel1 =      [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,

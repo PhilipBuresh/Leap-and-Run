@@ -55,6 +55,13 @@ const setDungeonToCastle = () => {
     }
     spawnCords();
 
+    let spawnMovingPlatformCords = () => {
+        xMovingPlatform = 10000;
+        yMovingPlatform = 10000;
+    }
+    
+    spawnMovingPlatformCords();
+
     //---------------------------------------------------------- Lobby
 
     platformLevel1 =   [1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,

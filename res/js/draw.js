@@ -485,7 +485,7 @@ let spawnMovingPlatformCords = () => {
     yMovingPlatform = 10000;
 }
 
-//spawnMovingPlatformCords();
+spawnMovingPlatformCords();
 
 const drawMovingPlatform = () => {
     movingPlatformImage.src = "./res/img/moving_platform.png";
