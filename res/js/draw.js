@@ -81,6 +81,27 @@ trophyImage.src = "./res/img/trophy.png"
 const honeyImage = new Image();
 honeyImage.src = "./res/img/honey_wood.png"
 
+const ironBlockImage = new Image();
+ironBlockImage.src = "./res/img/block_iron.png"
+
+const copperBlockImage = new Image();
+copperBlockImage.src = "./res/img/copper_block.png"
+
+const brickBlockImage = new Image();
+brickBlockImage.src = "./res/img/brick_block.png"
+
+const ironSticksImage = new Image();
+ironSticksImage.src = "./res/img/iron_sticks.png"
+
+const ropeImage = new Image();
+ropeImage.src = "./res/img/rope.png"
+
+const smallCircleImage = new Image();
+smallCircleImage.src = "./res/img/small_circle.png"
+
+const bigCircleImage = new Image();
+bigCircleImage.src = "./res/img/big_circle.png"
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -141,51 +162,120 @@ const drawPlatform = () => {
     xBlock = 0;
     yBlock = 0;
     for (let index = 0; index < platformLevel1.length; index++) {
-        if(platformLevel1[index] == 1){
-            c.drawImage(platformImage, xBlock,yBlock,32,32)
-        }else if(platformLevel1[index] == 2){
-            c.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 3){
-            c.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 4){
-            c.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 5){
-            c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 6){
-            c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 7){
-            c.drawImage(woodsImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 8){
-            c.drawImage(chainImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 9){
-            c.drawImage(bookImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 10){
-            c.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 20){
-            c.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 21){
-            c.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 22){
-            c.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 23){
-            c.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 24){
-            c.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 32){
-            c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 33){
-            c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 18){
-            c.drawImage(barrelImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 19){
-            c.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 29){
-            c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 36){
-            c.drawImage(honeyImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 37){
-            c.drawImage(honeyImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+//-----------------------------------------------------------
+// CASTLE DUNGEON
+//-----------------------------------------------------------
+        if(!playingSteamPunk){
+            if(platformLevel1[index] == 1){
+                c.drawImage(platformImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 2){
+                c.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 3){
+                c.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 4){
+                c.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 5){
+                c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 6){
+                c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 7){
+                c.drawImage(woodsImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 8){
+                c.drawImage(chainImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 9){
+                c.drawImage(bookImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 10){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 20){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 21){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 22){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 23){
+                c.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 24){
+                c.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 32){
+                c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 33){
+                c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 18){
+                c.drawImage(barrelImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 19){
+                c.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 29){
+                c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 36){
+                c.drawImage(honeyImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 37){
+                c.drawImage(honeyImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }
+//-----------------------------------------------------------
+// STEAMPUNK DUNGEON
+//-----------------------------------------------------------
+        }else if(playingSteamPunk){
+            if(platformLevel1[index] == 1){
+                c.drawImage(ironBlockImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 2){
+                c.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 3){
+                c.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 4){
+                c.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 5){
+                c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 6){
+                c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 7){
+                c.drawImage(woodsImage, 0 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 19){
+                c.drawImage(woodsImage, 1 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 29){
+                c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 12){
+                c.drawImage(brickBlockImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 68){
+                c.drawImage(brickBlockImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 69){
+                c.drawImage(ironSticksImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 70){
+                c.drawImage(ironSticksImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 8){
+                c.drawImage(chainImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 72){
+                c.drawImage(ropeImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 18){
+                c.drawImage(barrelImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 71){
+                c.drawImage(copperBlockImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 10){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 20){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 21){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 22){
+                c.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 23){
+                c.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 24){
+                c.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 65){
+                c.save();
+                c.translate(xBlock, yBlock);
+                c.rotate(rotationAngle * -1);
+                c.drawImage(bigCircleImage, -32, -32, 64, 64);
+                c.restore();
+            }else if(platformLevel1[index] == 66){
+                c.save();
+                c.translate(xBlock, yBlock);
+                c.rotate(rotationAngle);
+                c.drawImage(smallCircleImage, -16, -16, 32, 32);
+                c.restore();
+            }
         }
+        
         if((index + 1) % 32 == 0){
             xBlock = 0;
             yBlock += 32;
@@ -203,72 +293,73 @@ const drawBackBlocks = () => {
     xBlock = 0;
     yBlock = 0;
     for (let index = 0; index < platformLevel1.length; index++) {
-        if(platformLevel1[index] == 13){
-            c.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 11){
-            cordsPortalX1 = xBlock - 32;
-            cordsPortalY1 = yBlock + 22;
-            c.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-        }else if(platformLevel1[index] == 12){
-            cordsPortalX2 = xBlock + 32;
-            cordsPortalY2 = yBlock + 22;
-            c.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-        }else if(platformLevel1[index] == 14){
-            c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 15){
-            c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 16){
-            c.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 17){
-            c.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 25){
-            c.drawImage(doorImage, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 26){
-            c.drawImage(ladderImage, xBlock, yBlock, 32, 32);
-        }else if(platformLevel1[index] == 27){
-            c.drawImage(woodsImage, 2 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 28){
-            c.drawImage(woodsImage, 3 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-        }else if(platformLevel1[index] == 30){
-            c.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 31){
-            c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 34){
-            c.drawImage(chainDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 35){
-            c.drawImage(trophyImage, xBlock, yBlock, 32, 32);
-        }
-        //---DOORS IN MENU
-        else if(platformLevel1[index] == 50){
-            c.drawImage(doorsImage, 0 * 64, finished[0] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 51){
-            c.drawImage(doorsImage, 1 * 64, finished[1] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 52){
-            c.drawImage(doorsImage, 2 * 64, finished[2] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 53){
-            c.drawImage(doorsImage, 3 * 64, finished[3] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 54){
-            c.drawImage(doorsImage, 4 * 64, finished[4] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 55){
-            c.drawImage(doorsImage, 5 * 64, finished[5] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 56){
-            c.drawImage(doorsImage, 6 * 64, finished[6] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 57){
-            c.drawImage(doorsImage, 7 * 64, finished[7] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 58){
-            c.drawImage(doorsImage, 8 * 64, finished[8] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 59){
-            c.drawImage(doorsImage, 9 * 64, finished[9] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 60){
-            c.drawImage(doorsImage, 10 * 64, finished[10] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 61){
-            c.drawImage(doorsImage, 11 * 64, finished[11] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 62){
-            c.drawImage(doorsImage, 12 * 64, finished[12] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 63){
-            c.drawImage(doorsImage, 13 * 64, finished[13] * 64, 64, 64, xBlock, yBlock, 64, 64);
-        }else if(platformLevel1[index] == 64){
-            c.drawImage(doorsImage, 14 * 64, finished[14] * 64, 64, 64, xBlock, yBlock, 64, 64);
+//-----------------------------------------------------------
+// CASTLE DUNGEON
+//-----------------------------------------------------------
+        if(!playingSteamPunk){
+            if(platformLevel1[index] == 13){
+                c.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 11){
+                cordsPortalX1 = xBlock - 32;
+                cordsPortalY1 = yBlock + 22;
+                c.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
+            }else if(platformLevel1[index] == 12){
+                cordsPortalX2 = xBlock + 32;
+                cordsPortalY2 = yBlock + 22;
+                c.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
+            }else if(platformLevel1[index] == 14){
+                c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 15){
+                c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 16){
+                c.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 17){
+                c.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 25){
+                c.drawImage(doorImage, xBlock, yBlock, 64, 64);
+            }else if(platformLevel1[index] == 26){
+                c.drawImage(ladderImage, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 27){
+                c.drawImage(woodsImage, 2 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 28){
+                c.drawImage(woodsImage, 3 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 30){
+                c.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            }else if(platformLevel1[index] == 31){
+                c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            }else if(platformLevel1[index] == 34){
+                c.drawImage(chainDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            }else if(platformLevel1[index] == 35){
+                c.drawImage(trophyImage, xBlock, yBlock, 32, 32);
+            }
+            //---DOORS IN MENU
+            if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
+                c.drawImage(doorsImage, (platformLevel1[index] - 50) * 64, finished[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            }
+//-----------------------------------------------------------
+// STEAMPUNK DUNGEON
+//-----------------------------------------------------------
+        }else if(playingSteamPunk){
+            if(platformLevel1[index] == 13){
+                c.drawImage(ironBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 14){
+                c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 15){
+                c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 27){
+                c.drawImage(woodsImage, 2 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 28){
+                c.drawImage(woodsImage, 3 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 17){
+                c.drawImage(copperBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 67){
+                c.drawImage(brickBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 26){
+                c.drawImage(ladderImage, xBlock, yBlock, 32, 32);
+            }
+            if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
+                c.drawImage(doorsImage, (platformLevel1[index] - 50) * 64, finished[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            }
         }
         if((index + 1) % 32 == 0){
             xBlock = 0;
@@ -337,6 +428,16 @@ let ghostVelocity = 2
 let ghostFrame1 = 0;
 let ghostFrame2 = 2;
 
+//Ghost COORDINATES
+let xGhost = 70000;
+let yGhost = 310
+
+//This will spawn the Ghost
+let spawnGhostCords = () => {
+    xGhost = 10000;
+    yGhost = 10000;
+}
+
 const drawGhost = () => {
     ghostImage.src = "./res/img/ghost.png";
     if(ghostVelocity == 2){
@@ -355,22 +456,117 @@ const drawGhost = () => {
                 xGhost <= platformX + 32
             ) {
                 ghostVelocity = -2;
-            }else if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18|| platformLevel1[i] == 19) {
-                let platformX = (i % 32) * 32;
-                let platformY = Math.floor(i / 32) * 32;
-                if (
-                    yGhost + player1.height >= platformY &&
-                    yGhost <= platformY + 32 &&
-                    xGhost + ghostVelocity <= platformX + 32 &&
-                    xGhost >= platformX
-                ) {
-                    ghostVelocity = 2;
-                }
+            }else if (
+                yGhost + player1.height >= platformY &&
+                yGhost <= platformY + 32 &&
+                xGhost + ghostVelocity <= platformX + 32 &&
+                xGhost >= platformX
+            ) {
+                ghostVelocity = 2;
             }
         }
     }
-    cancelAnimationFrame(drawingId);
-    drawing();
+}
+
+//----------------------------------------Drawing Moving Platform
+
+let movingPlatformImage = new Image();
+movingPlatformImage.src = "./res/img/moving_platform.png";
+
+let movingPlatformVelocity = 1;
+
+//Moving Platform COORDINATES
+let xMovingPlatform = 600;
+let yMovingPlatform = 282;
+
+//This will spawn the Ghost
+let spawnMovingPlatformCords = () => {
+    xMovingPlatform = 10000;
+    yMovingPlatform = 10000;
+}
+
+//spawnMovingPlatformCords();
+
+const drawMovingPlatform = () => {
+    movingPlatformImage.src = "./res/img/moving_platform.png";
+    c.drawImage(movingPlatformImage, 0 * 64, 0 * 32, 64, 32, xMovingPlatform, yMovingPlatform, 64, 32);
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
+            platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
+            platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
+            platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                yMovingPlatform + player1.height >= platformY &&
+                yMovingPlatform <= platformY + 32 &&
+                xMovingPlatform + player1.width + movingPlatformVelocity >= platformX - 32 &&
+                xMovingPlatform <= platformX + 32
+            ) {
+                movingPlatformVelocity = -1;
+            }else if (
+                yMovingPlatform + player1.height >= platformY &&
+                yMovingPlatform <= platformY + 32 &&
+                xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
+                xMovingPlatform >= platformX
+            ) {
+                movingPlatformVelocity = 1;
+            }
+        }
+    }
+}
+
+//----------------------------------------Drawing Saw
+
+let sawImage = new Image();
+sawImage.src = "./res/img/saw.png";
+
+let sawVelocity = 1.5;
+
+//SAW COORDINATES
+let xSaw = 600;
+let ySaw = 462;
+
+//This will spawn the Ghost
+let spawnSawCords = () => {
+    xSaw = 10000;
+    ySaw = 10000;
+}
+
+spawnSawCords();
+
+let rotationAngle = 0;
+
+const drawSaw = () => {
+    
+    rotationAngle -= Math.PI / 120;
+    c.save();
+    c.translate(xSaw + 32, ySaw + 32);
+    c.rotate(rotationAngle);
+    c.drawImage(sawImage, -32, -32, 64, 64);
+    c.restore();
+
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                ySaw + player1.height >= platformY &&
+                ySaw <= platformY + 32 &&
+                xSaw + player1.width + sawVelocity >= platformX - 32 &&
+                xSaw <= platformX + 32
+            ) {
+                sawVelocity = -1.5;
+            } else if (
+                ySaw + player1.height >= platformY &&
+                ySaw <= platformY + 32 &&
+                xSaw + sawVelocity <= platformX + 32 &&
+                xSaw >= platformX
+            ) {
+                sawVelocity = 1.5;
+            }
+        }
+    }
 }
 
 //----------------------------------------Drawing BOSS
@@ -388,8 +584,7 @@ const drawBoss = () => {
 
 //----------------------------------------SPRITE SHEET ANIMATIONS
 
-let nowPlayer, nowLava, nowSpike, nowPortal, nowTorch, nowLantern, nowOrb, now24, now6, now8, now4, nowGhost, nowGhostS, nowDoor, nowBoss;
-let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor, deltaBoss;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor, deltaBoss, deltaMP, deltaSaw;
 let thenPlayer = Date.now();
 let thenLava = Date.now();
 let thenSpike = Date.now();
@@ -405,6 +600,8 @@ let thenGhost = Date.now();
 let thenGhostS = Date.now();
 let thenDoor = Date.now();
 let thenBoss = Date.now();
+let thenMP = Date.now();
+let thenSaw = Date.now();
 
 let drawingId;
 
@@ -430,251 +627,203 @@ let lavaIncreaseValue = 3.6;
 let risingIncreaseValue = 0.6;
 
 const drawing = () => {
+
+    const now = Date.now();
+
     drawingId = requestAnimationFrame(drawing);
-    //Player
-    nowPlayer = Date.now();
-    deltaPlayer = nowPlayer - thenPlayer;
+
+    // Player
+    deltaPlayer = now - thenPlayer;
     if (deltaPlayer > 1) {
-        thenPlayer = nowPlayer - (deltaPlayer % 1);
+        thenPlayer = now - (deltaPlayer % 1);
         drawPlayer();
     }
-    //Lava
-    nowLava = Date.now();
-    deltaLava = nowLava - thenLava;
+
+    // Lava
+    deltaLava = now - thenLava;
     if (deltaLava > 150) {
-        thenLava = nowLava - (deltaLava % 150);
-        frameLava++
-        if(frameLava == 3){
-            frameLava = 0;
-        }
+        thenLava = now - (deltaLava % 150);
+        frameLava = (frameLava + 1) % 3;
     }
-    //Spike
-    nowSpike = Date.now();
-    deltaSpike = nowSpike - thenSpike;
+
+    // Spike
+    deltaSpike = now - thenSpike;
     if (deltaSpike > 175) {
-        thenSpike = nowSpike - (deltaSpike % 175);
-        frameSpike++;
-        if(frameSpike == 0 || frameSpike >= 10){
-            canDieOnSpike = false;
-        }else{
-            canDieOnSpike = true;
-        }
-        if(frameSpike == 17){
-            frameSpike = 0;
-        }
+        thenSpike = now - (deltaSpike % 175);
+        frameSpike = (frameSpike + 1) % 17;
+        canDieOnSpike = frameSpike > 0 && frameSpike < 10;
     }
-    //Portals
-    nowPortal = Date.now();
-    deltaPortal = nowPortal - thenPortal;
+
+    // Portals
+    deltaPortal = now - thenPortal;
     if (deltaPortal > 200) {
-        thenPortal = nowPortal - (deltaPortal % 200);
-        framePortal++;
-        if(framePortal == 2){
-            framePortal = 0;
-        }
+        thenPortal = now - (deltaPortal % 200);
+        framePortal = (framePortal + 1) % 2;
     }
-    //Torch
-    nowTorch = Date.now();
-    deltaTorch = nowTorch - thenTorch;
+
+    // Torch
+    deltaTorch = now - thenTorch;
     if (deltaTorch > 200) {
-        thenTorch = nowTorch - (deltaTorch % 200);
-        frameTorch++;
-        if(frameTorch == 5){
-            frameTorch = 0;
-        }
+        thenTorch = now - (deltaTorch % 200);
+        frameTorch = (frameTorch + 1) % 5;
     }
-    //Lantern
-    nowLantern = Date.now();
-    deltaLantern = nowLantern - thenLantern;
+
+    // Lantern
+    deltaLantern = now - thenLantern;
     if (deltaLantern > 200) {
-        thenLantern = nowLantern - (deltaLantern % 200);
-        frameLantern++;
-        if(frameLantern == 4){
-            frameLantern = 0;
-        }
+        thenLantern = now - (deltaLantern % 200);
+        frameLantern = (frameLantern + 1) % 4;
     }
-    //Orb
-    nowOrb = Date.now();
-    deltaOrb = nowOrb - thenOrb;
+
+    // Orb
+    deltaOrb = now - thenOrb;
     if (deltaOrb > 200) {
-        thenOrb = nowOrb - (deltaOrb % 200);
-        frameOrb++;
-        if(frameOrb == 2){
-            frameOrb = 0;
-        }
+        thenOrb = now - (deltaOrb % 200);
+        frameOrb = (frameOrb + 1) % 2;
     }
-    //Chain Door
-    if(doorTimeout){
-        nowDoor = Date.now();
-        deltaDoor = nowDoor - thenDoor;
+
+    // Chain Door
+    if (doorTimeout) {
+        deltaDoor = now - thenDoor;
         if (deltaDoor > 100) {
-            thenDoor = nowDoor - (deltaDoor % 100);
-            if(frameDoor != 3){
+            thenDoor = now - (deltaDoor % 100);
+            if (frameDoor < 3) {
                 frameDoor++;
-            }else{
-                if(playingBossFight){
+            } else {
+                if (playingBossFight) {
                     hearts = 0;
                 }
                 dead();
             }
         }
     }
-    //Rising Lava
-    if(risingLavaActivated){
-        nowRise = Date.now();
-        deltaRise = nowRise - thenRise;
+
+    // Rising Lava
+    if (risingLavaActivated) {
+        deltaRise = now - thenRise;
         if (deltaRise > 200) {
-            thenRise = nowRise - (deltaRise % 200);
-            if(playingBossFight){
-                risingPercent += risingIncreaseValue;;
-            }else{
-                risingPercent += 0.3;
-            }
-            rising.style.bottom = risingPercent + "%"
-            if(playingBossFight){
-                lavaY -= lavaIncreaseValue;
-            }else{
-                lavaY -= 1.8;
-            }
-            if (player1.y + player1.height >= lavaY) {
-                if(playingBossFight){
+            thenRise = now - (deltaRise % 200);
+            risingPercent += playingBossFight ? risingIncreaseValue : 0.3;
+            rising.style.bottom = risingPercent + "%";
+            lavaY -= playingBossFight ? lavaIncreaseValue : 1.8;
+
+            if ((player1.y + player1.height >= lavaY) ||
+                (playingMultiplayer && (player1.y + player1.height >= lavaY || player2.y + player2.height >= lavaY))) {
+                if (playingBossFight) {
                     resistence = false;
                 }
                 dead();
             }
-            if(playingMultiplayer){
-                if(player1.y + player1.height >= lavaY || player2.y + player2.height >= lavaY){
-                    if(playingBossFight){
-                        resistence = false;
-                    }
-                    dead();
-                }
-            }
         }
     }
-    //----Sprite sheet Player
-    //Animate24 (Stand)
-    now24 = Date.now();
-    delta24 = now24 - then24;
+
+    // Sprite sheet Player
+    delta24 = now - then24;
     if (delta24 > 100) {
-        then24 = now24 - (delta24 % 100);
-        player1.currentFrameStand++
-        if(player1.currentFrameStand % 24 == 0){
-            player1.currentFrameStand = 0;
-        }
-        if(playingMultiplayer){
-            player2.currentFrameStand++
-            if(player2.currentFrameStand % 24 == 0){
-                player2.currentFrameStand = 0;
-            } 
+        then24 = now - (delta24 % 100);
+        player1.currentFrameStand = (player1.currentFrameStand + 1) % 24;
+        if (playingMultiplayer) {
+            player2.currentFrameStand = (player2.currentFrameStand + 1) % 24;
         }
     }
-    //Animate6 (Punch)
-    now6 = Date.now();
-    delta6 = now6 - then6;
+
+    delta6 = now - then6;
     if (delta6 > 100) {
-        then6 = now6 - (delta6 % 100);
-        if(player1.punched){
-            player1.currentFramePunch++;
-            if(player1.currentFramePunch % 6 == 0){
-                player1.currentFramePunch = 0;
+        then6 = now - (delta6 % 100);
+        if (player1.punched) {
+            player1.currentFramePunch = (player1.currentFramePunch + 1) % 6;
+            if (player1.currentFramePunch === 0) {
                 player1.punchCooldown = false;
                 player1.punched = false;
             }
         }
-        if(player2.punched && playingMultiplayer){
-            player2.currentFramePunch++;
-            if(player2.currentFramePunch % 6 == 0){
-                player2.currentFramePunch = 0;
+        if (playingMultiplayer && player2.punched) {
+            player2.currentFramePunch = (player2.currentFramePunch + 1) % 6;
+            if (player2.currentFramePunch === 0) {
                 player2.punchCooldown = false;
                 player2.punched = false;
             }
         }
     }
-    //Animate8 (Run)
-    now8 = Date.now();
-    delta8 = now8 - then8;
+
+    delta8 = now - then8;
     if (delta8 > 80) {
-        then8 = now8 - (delta8 % 80);
-        player1.currentFrameRun++
-        if(player1.currentFrameRun % 8 == 0){
-            player1.currentFrameRun = 0;
-        }
-        if(playingMultiplayer){
-            player2.currentFrameRun++
-            if(player2.currentFrameRun % 8 == 0){
-                player2.currentFrameRun = 0;
-            }
+        then8 = now - (delta8 % 80);
+        player1.currentFrameRun = (player1.currentFrameRun + 1) % 8;
+        if (playingMultiplayer) {
+            player2.currentFrameRun = (player2.currentFrameRun + 1) % 8;
         }
     }
-    //Animate4 (Crouch & Climb)
-    now4 = Date.now();
-    delta4 = now4 - then4;
+
+    delta4 = now - then4;
     if (delta4 > 100) {
-        then4 = now4 - (delta4 % 100);
-        if(player1.ladderCol && player1.velocityGoingDown <= 0.1 && player1.velocityGoingUp <= 0.1 && player1.velocityRight <= 0.1 && player1.velocityLeft <= 0.1){
-            player1.currentFrameCrouch = 0
-        }else{
-            player1.currentFrameCrouch++;
-            if(player1.currentFrameCrouch % 4 == 0){
-                player1.currentFrameCrouch = 0;
-            }
+        then4 = now - (delta4 % 100);
+        if (player1.ladderCol && player1.velocityGoingDown <= 0.1 && player1.velocityGoingUp <= 0.1 && player1.velocityRight <= 0.1 && player1.velocityLeft <= 0.1) {
+            player1.currentFrameCrouch = 0;
+        } else {
+            player1.currentFrameCrouch = (player1.currentFrameCrouch + 1) % 4;
         }
-        if(playingMultiplayer){
-            if(player2.ladderCol && player2.velocityGoingDown <= 0.1 && player2.velocityGoingUp <= 0.1 && player2.velocityRight <= 0.1 && player2.velocityLeft <= 0.1){
-                player2.currentFrameCrouch = 0
-            }else{
-                player2.currentFrameCrouch++;
-                if(player2.currentFrameCrouch % 4 == 0){
-                    player2.currentFrameCrouch = 0;
-                }
+        if (playingMultiplayer) {
+            if (player2.ladderCol && player2.velocityGoingDown <= 0.1 && player2.velocityGoingUp <= 0.1 && player2.velocityRight <= 0.1 && player2.velocityLeft <= 0.1) {
+                player2.currentFrameCrouch = 0;
+            } else {
+                player2.currentFrameCrouch = (player2.currentFrameCrouch + 1) % 4;
             }
         }
     }
-    //---Ghost
-    //Ghost Velocity
-    nowGhost = Date.now();
-    deltaGhost = nowGhost - thenGhost;
+
+    // Ghost Velocity
+    deltaGhost = now - thenGhost;
     if (deltaGhost > 25) {
-        thenGhost = nowGhost - (deltaGhost % 25);
+        thenGhost = now - (deltaGhost % 25);
         xGhost += ghostVelocity;
     }
-    //--------------------Ghost Sprite sheet
-    nowGhostS = Date.now();
-    deltaGhostS = nowGhostS - thenGhostS;
+
+    // Moving Platform Velocity
+    deltaMP = now - thenMP;
+    if (deltaMP > 25) {
+        thenMP = now - (deltaMP % 25);
+        xMovingPlatform += movingPlatformVelocity;
+    }
+
+    // Saw Velocity
+    deltaSaw = now - thenSaw;
+    if (deltaSaw > 25) {
+        thenSaw = now - (deltaSaw % 25);
+        xSaw += sawVelocity;
+    }
+
+    // Ghost Sprite sheet
+    deltaGhostS = now - thenGhostS;
     if (deltaGhostS > 200) {
-        thenGhostS = nowGhostS - (deltaGhostS % 200);
+        thenGhostS = now - (deltaGhostS % 200);
         if (ghostVelocity == 2) {
-            ghostFrame1++;
-            if(ghostFrame1 == 2){
-                ghostFrame1 = 0;
-            }
-        }else{
-            ghostFrame2++;
-            if(ghostFrame2 == 4){
-                ghostFrame2 = 2;
-            }
+            ghostFrame1 = (ghostFrame1 + 1) % 2;
+        } else {
+            ghostFrame2 = (ghostFrame2 + 1) % 4;
+            if (ghostFrame2 < 2) ghostFrame2 = 2;
         }
     }
-    //--------------------BOSS Sprite sheet
-    nowBoss = Date.now();
-    deltaBoss = nowBoss - thenBoss;
+
+    // Boss Sprite sheet
+    deltaBoss = now - thenBoss;
     if (deltaBoss > 250) {
-        thenBoss = nowBoss - (deltaBoss % 100);
-        currentFrameBoss++
-        if(currentFrameBoss == 6){
-            sfx.src = "./res/sfx/boss_slash.mp3"
+        thenBoss = now - (deltaBoss % 250);
+        currentFrameBoss++;
+        if (currentFrameBoss === 6) {
+            sfx.src = "./res/sfx/boss_slash.mp3";
             sfx.play();
         }
-        if(currentFrameBoss % 4 == 0 && !bossAttacking){
+        if (currentFrameBoss % 4 === 0 && !bossAttacking) {
             currentFrameBoss = 0;
-        }else if(currentFrameBoss % 13 == 0 && bossAttacking){
+        } else if (currentFrameBoss % 13 === 0 && bossAttacking) {
             bossAttacking = false;
             bossVelocity = 1;
             currentFrameBoss = 0;
         }
     }
 }
+
 //----------------------------------------Drawing Player
 
 let playerOneImage = new Image();
@@ -689,58 +838,40 @@ let drawPlayer = () => {
     drawBackBlocks();
     if(player1.velocity == 0 && player1.velocityJump == 0 && !player1.isMovingRight && !player1.isMovingLeft && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Stand
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocity == 0 && player1.velocityJump == 0 && !player1.isMovingRight && !player1.isMovingLeft && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Stand
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocity > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol && !player1.canSlideOnWall){ //Right Fall
         c.drawImage(playerOneImage, 0 * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocity > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol && !player1.canSlideOnWall){ //Left Fall
         c.drawImage(playerOneImage, 0 * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol && player1.canSlideOnWall && player1.velocityJump <= 0.2){ //Right Slide
         c.drawImage(playerOneImage, 1 * sX, 11 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol && player1.canSlideOnWall && player1.velocityJump <= 0.2){ //Left Slide
         c.drawImage(playerOneImage, 0 * sX, 11 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocityJump > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Jump
         c.drawImage(playerOneImage, 0 * sX, 4 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocityJump > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Jump
         c.drawImage(playerOneImage, 0 * sX, 5 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocity == 0 && player1.turnedRight && player1.velocityJump == 0 && player1.isMovingRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Run
         c.drawImage(playerOneImage, player1.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.velocity == 0 && player1.turnedLeft && player1.velocityJump == 0 && player1.isMovingLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Run
         c.drawImage(playerOneImage, player1.currentFrameRun * sX, 3 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.punched && player1.turnedRight && !player1.ladderCol){ //Right Punch
         c.drawImage(playerOneImage, player1.currentFramePunch * sX, 8 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.punched && player1.turnedLeft && !player1.ladderCol){ //Left Punch
         c.drawImage(playerOneImage, player1.currentFramePunch * sX, 9 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId); 
     }else if((!player1.isMovingRight && !player1.isMovingLeft && player1.crouched && player1.turnedRight && !player1.punched) || (player1.isMovingRight && player1.isMovingLeft && player1.crouched && player1.turnedRight)){ //Crouched Right
         c.drawImage(playerOneImage, 0 * sX, 6 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if((!player1.isMovingRight && !player1.isMovingLeft && player1.crouched && player1.turnedLeft && !player1.punched) || (player1.isMovingRight && player1.isMovingLeft && player1.crouched && player1.turnedLeft)){ //Crouched Left
         c.drawImage(playerOneImage, 0 * sX, 7 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.isMovingRight && !player1.isMovingLeft && player1.crouched && !player1.punched && player1.turnedRight){ //Crouched Right Moving
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if(player1.crouched && player1.isMovingLeft && !player1.isMovingRight && !player1.punched && player1.turnedLeft){ //Crouched Left Moving
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else if (player1.ladderCol && !player1.crouched){ //Climbing
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }else{
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-        cancelAnimationFrame(drawingId);
     }
     //--------------------------------------------------------------------
     // SECOND PLAYER 
@@ -748,63 +879,51 @@ let drawPlayer = () => {
     if(playingMultiplayer){
         if(player2.velocity == 0 && player2.velocityJump == 0 && !player2.isMovingRight && !player2.isMovingLeft && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Stand
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocity == 0 && player2.velocityJump == 0 && !player2.isMovingRight && !player2.isMovingLeft && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Stand
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocity > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol && !player2.canSlideOnWall){ //Right Fall
             c.drawImage(playerTwoImage, 0 * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocity > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol && !player2.canSlideOnWall){ //Left Fall
             c.drawImage(playerTwoImage, 0 * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol && player2.canSlideOnWall && player2.velocityJump <= 0.2){ //Right Slide
             c.drawImage(playerTwoImage, 1 * sX, 11 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol && player2.canSlideOnWall && player2.velocityJump <= 0.2){ //Left Slide
             c.drawImage(playerTwoImage, 0 * sX, 11 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocityJump > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Jump
             c.drawImage(playerTwoImage, 0 * sX, 4 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocityJump > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Jump
             c.drawImage(playerTwoImage, 0 * sX, 5 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocity == 0 && player2.turnedRight && player2.velocityJump == 0 && player2.isMovingRight && !player2.punched && !player2.crouched && !player2.ladderCol){ //Right Run
             c.drawImage(playerTwoImage, player2.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.velocity == 0 && player2.turnedLeft && player2.velocityJump == 0 && player2.isMovingLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Run
             c.drawImage(playerTwoImage, player2.currentFrameRun * sX, 3 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.punched && player2.turnedRight && !player2.ladderCol){ //Right Punch
             c.drawImage(playerTwoImage, player2.currentFramePunch * sX, 8 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.punched && player2.turnedLeft && !player2.ladderCol){ //Left Punch
             c.drawImage(playerTwoImage, player2.currentFramePunch * sX, 9 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId); 
         }else if((!player2.isMovingRight && !player2.isMovingLeft && player2.crouched && player2.turnedRight && !player2.punched) || (player2.isMovingRight && player2.isMovingLeft && player2.crouched && player2.turnedRight)){ //Crouched Right
             c.drawImage(playerTwoImage, 0 * sX, 6 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if((!player2.isMovingRight && !player2.isMovingLeft && player2.crouched && player2.turnedLeft && !player2.punched) || (player2.isMovingRight && player2.isMovingLeft && player2.crouched && player2.turnedLeft)){ //Crouched Left
             c.drawImage(playerTwoImage, 0 * sX, 7 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.isMovingRight && !player2.isMovingLeft && player2.crouched && !player2.punched && player2.turnedRight){ //Crouched Right Moving
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if(player2.crouched && player2.isMovingLeft && !player2.isMovingRight && !player2.punched && player2.turnedLeft){ //Crouched Left Moving
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else if (player2.ladderCol && !player2.crouched){ //Climbing
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }else{
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-            cancelAnimationFrame(drawingId);
         }
     }
+    cancelAnimationFrame(drawingId);
     drawing();
-    drawGhost();
     drawPlatform();
+    if(!playingSteamPunk){
+        drawGhost();
+    }else{
+        drawMovingPlatform();
+        drawSaw();
+    }
     objectsCollision(player1);
     orbCollision(player1);
     jumpPadCollision(player1);
@@ -817,6 +936,8 @@ let drawPlayer = () => {
         objectsCollision(player2);
         doorsCollision(player2);
     }
-    drawBoss();
+    if(!playingMultiplayer){
+        drawBoss();
+    }
     dark();
 };

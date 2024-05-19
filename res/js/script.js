@@ -1,203 +1,3 @@
-//Player 1
-const player1 = {
-    // Coordinates
-    x : 0,
-    y : 500,
-    height : 40,
-    width : 30,
-    // Frames
-    currentFrameStand : 0,
-    currentFramePunch : 0,
-    currentFrameRun : 0,
-    currentFrameCrouch : 0,
-    // Help punch variables
-    punched : false,
-    punchCooldown : false,
-    alreadyPunched : false,
-    // Velocity
-    velocity : 0,
-    velocityJump : 0,
-    velocityRight : 0,
-    velocityLeft : 0,
-    velocityGoingDown : 0,
-    velocityGoingUp : 0,
-    // Help move variables
-    isMovingRight : false,
-    isMovingLeft : false,
-    // Animation
-    turnedRight : true,
-    turnedLeft : false,
-    animationIdRight : null,
-    animationIdLeft : null,
-    ahCollision : null,
-    underCollision : null,
-    jumpingId : null,
-    goingUpId : null,
-    goingDownId : null,
-    // NOW THEN DELTA
-    nowLeft : null,
-    thenLeft : Date.now(),
-    deltaLeft : null,
-    //
-    nowRight : null,
-    thenRight : Date.now(),
-    deltaRight : null,
-    //
-    nowDown : null,
-    thenDown : Date.now(),
-    deltaDown : null,
-    //
-    nowUp : null,
-    thenUp : Date.now(),
-    deltaUp : null,
-    //
-    nowGoingUp : null,
-    thenGoingUp : Date.now(),
-    deltaGoingUp : null,
-    //
-    nowGoingDown : null,
-    thenGoingDown : Date.now(),
-    deltaGoingDown : null,
-    // Help Jump variables
-    stillJumping : false,
-    // Help Crouch variables
-    crouched : false,
-    downPressed : false,
-    canStandUp : true,
-    wasUnder : true,
-    // Gravity
-    onRock : false,
-    onWood : false,
-    orbUsed : false,
-    canOrbJump : false,
-    gravityId : null,
-    // Ladder
-    ladderCol : false,
-    canGravityActivate : false,
-    alreadyGoingDown : false,
-    wPressed : false,
-    // Jump
-    headHit : null,
-    bounced : false,
-    jumpInterval : null,
-    jumpIntervalSet : false,
-    isJumping : null,
-    canUseJumpPad : false,
-    // Doors
-    doorCol : false,
-    closingDoorCol : false,
-    // Boss
-    canAttack : false,
-    //Slide
-    canSlideOnWall : false,
-    slideJumped : false,
-}
-
-//Player 2
-const player2 = {
-    // Coordinates
-    x : 0,
-    y : 500,
-    height : 40,
-    width : 30,
-    // Frames
-    currentFrameStand : 0,
-    currentFramePunch : 0,
-    currentFrameRun : 0,
-    currentFrameCrouch : 0,
-    // Help punch variables
-    punched : false,
-    punchCooldown : false,
-    alreadyPunched : false,
-    // Velocity
-    velocity : 0,
-    velocityJump : 0,
-    velocityRight : 0,
-    velocityLeft : 0,
-    velocityGoingDown : 0,
-    velocityGoingUp : 0,
-    // Help move variables
-    isMovingRight : false,
-    isMovingLeft : false,
-    // Animation
-    turnedRight : true,
-    turnedLeft : false,
-    animationIdRight : null,
-    animationIdLeft : null,
-    ahCollision : null,
-    underCollision : null,
-    jumpingId : null,
-    goingUpId : null,
-    goingDownId : null,
-    // NOW THEN DELTA
-    nowLeft : null,
-    thenLeft : Date.now(),
-    deltaLeft : null,
-    //
-    nowRight : null,
-    thenRight : Date.now(),
-    deltaRight : null,
-    //
-    nowDown : null,
-    thenDown : Date.now(),
-    deltaDown : null,
-    //
-    nowUp : null,
-    thenUp : Date.now(),
-    deltaUp : null,
-    //
-    nowGoingUp : null,
-    thenGoingUp : Date.now(),
-    deltaGoingUp : null,
-    //
-    nowGoingDown : null,
-    thenGoingDown : Date.now(),
-    deltaGoingDown : null,
-    // Help Jump variables
-    stillJumping : false,
-    // Help Crouch variables
-    crouched : false,
-    downPressed : false,
-    canStandUp : true,
-    wasUnder : true,
-    // Gravity
-    onRock : false,
-    onWood : false,
-    orbUsed : false,
-    canOrbJump : false,
-    gravityId : null,
-    // Ladder
-    ladderCol : false,
-    canGravityActivate : false,
-    alreadyGoingDown : false,
-    wPressed : false,
-    // Jump
-    headHit : null,
-    bounced : false,
-    jumpInterval : null,
-    jumpIntervalSet : false,
-    isJumping : null,
-    canUseJumpPad : false,
-    // Doors
-    doorCol : false,
-    closingDoorCol : false,
-    // Boss
-    canAttack : false,
-    //Slide
-    canSlideOnWall : false,
-    slideJumped : false,
-}
-
-let playingMultiplayer = false;
-
-//This will spawn you
-let spawnCords = () => {
-    player1.x = 35;
-    player1.y = 500;
-    player2.x = 70;
-    player2.y = 500;
-}
-spawnCords();
 
 const canvas = document.getElementById("canvas");
 const canvas_darkness = document.getElementById("canvas_darkness");
@@ -249,6 +49,7 @@ const playButton = document.getElementById("playButton");
 const playButtonMulti = document.getElementById("playButtonMulti");
 const tutorialButton = document.getElementById("tutorialButton");
 const creditsButton = document.getElementById("creditsButton");
+const dungeonButton = document.getElementById("dungeonButton");
 const hp = document.getElementById("hp");
 const myHp = document.getElementById("myHp");
 const startMenu = document.getElementById("startMenu");
@@ -310,11 +111,8 @@ const setSfxVolume = () => {
     scene.volume = sfxVolume;
 }
 
-
 setMusicVolume();
 setSfxVolume();
-
-//music.volume = 0;
 
 //Turn Music UP by 5%
 notInvertArrow1.onclick = () => {
@@ -475,6 +273,7 @@ playButton.onclick = () => {
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
     playButtonMulti.style.display = "none";
+    dungeonButton.style.display = "none";
     text.style.opacity = "0";
     setTimeout(() => {
         tutorialBtnSliding = false;
@@ -493,6 +292,7 @@ playButtonMulti.onclick = () => {
     playButtonMulti.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
+    dungeonButton.style.display = "none";
     text.style.opacity = "0";
     setTimeout(() => {
         tutorialBtnSliding = false;
@@ -570,6 +370,19 @@ credits_list.onclick = () => {
     recommend.style.display = "block";
 }
 
+//Dungeon Button
+dungeonButton.onclick = () => {
+    if(dungeonButton.innerHTML == "Dungeon: Castle"){
+        dungeonButton.innerHTML = "Dungeon: SteamPunk"
+        background.src = "./res/img/wall_steampunk.png"
+        setDungeonToSteamPunk();
+    }else{
+        dungeonButton.innerHTML = "Dungeon: Castle";
+        background.src = "./res/img/wall.png"
+        setDungeonToCastle();
+    }
+}
+
 //This function will send you to the game
 const menuToLobby = () => {
     music.src = "./res/music/lobby_music.mp3";
@@ -584,16 +397,6 @@ const menuToLobby = () => {
     setTimeout(() => {
         black.style.opacity = "0";
     }, 50)
-}
-
-//Ghost COORDINATES
-let xGhost = 70000;
-let yGhost = 310
-
-//This will spawn the Ghost
-let spawnGhostCords = () => {
-    xGhost = 10000;
-    yGhost = 10000;
 }
 
 let player;
@@ -816,10 +619,10 @@ const bossMoveX = () => {
 let entered = false;
 
 window.addEventListener("keydown", (event) => {
-    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter & !playingMultiplayer ) {
+    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && !playingSteamPunk) {
         entered = true;
         enterFunction();
-    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1]) {
+    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && !playingSteamPunk) {
         entered = true;
         enterFunction();
     }
@@ -1696,6 +1499,7 @@ button_menu.onclick = () => {
         startMenu.style.display = "block";
         playButton.style.pointerEvents = "auto";
         playButton.style.display = "block";
+        dungeonButton.style.display = "block";
         playButtonMulti.style.pointerEvents = "auto";
         playButtonMulti.style.display = "block";
         creditsButton.style.display = "block";
@@ -1808,6 +1612,10 @@ const objectsCollision = (PLAYER) => {
         bossCollision(PLAYER);
     }
     ghostCollision(PLAYER);
+    sawCollision(PLAYER);
+    if(PLAYER.velocityJump <= 0.1){
+        movingPlatformCollision(PLAYER);
+    }
     for (let i = 0; i < platformLevel1.length; i++) {
         //Spikes and Moving Spikes
         if ((platformLevel1[i] == 2 || platformLevel1[i] == 4 || platformLevel1[i] == 23 || platformLevel1[i] == 24) || (platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22) && canDieOnSpike == true) {
@@ -2092,6 +1900,39 @@ const ghostCollision = (PLAYER) => {
     }
 }
 
+const movingPlatformCollision = (PLAYER) => {
+    if (
+        (PLAYER.y + PLAYER.height >= yMovingPlatform - PLAYER.velocity) &&
+        (PLAYER.y <= yMovingPlatform - 39) &&
+        (PLAYER.x + PLAYER.width >= xMovingPlatform) &&
+        (PLAYER.x <= xMovingPlatform + 64)
+    ){
+        PLAYER.velocity = 0;
+        cancelAnimationFrame(PLAYER.gravityId);
+        PLAYER.y = yMovingPlatform - PLAYER.height;
+        PLAYER.onMovingPlatform = true;
+        PLAYER.onWood = false;
+        PLAYER.onRock = true; 
+        if(!sfx_walk.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 || PLAYER.velocity>= 0.3 || PLAYER.isJumping){
+            sfx_walk.pause();
+        }
+    } else if (PLAYER.onMovingPlatform) {
+        PLAYER.onMovingPlatform = false;
+        gravity(PLAYER);
+    }
+}
+
+const sawCollision = (PLAYER) => {
+    if (
+        (PLAYER.y + 5 + PLAYER.height - 10 >= ySaw) &&
+        (PLAYER.y + 5 <= ySaw + 64) &&
+        (PLAYER.x + 5 + PLAYER.width - 10 >= xSaw) &&
+        (PLAYER.x + 5 <= xSaw + 64)
+    ){
+        dead()
+    }
+}
+
 //---------------------------------------- Crouch and Stand (Player)
 
 //This Function is checking, if you do not have a block above you (then you can stand up)
@@ -2099,7 +1940,10 @@ let aboveHeadCollision = (PLAYER) => {
     PLAYER.ahCollision = window.requestAnimationFrame(() => aboveHeadCollision(PLAYER));
     if (PLAYER.crouched == true) {
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || platformLevel1[i] == 37) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
+                platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || 
+                platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || 
+                platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -2121,7 +1965,7 @@ let aboveHeadCollision = (PLAYER) => {
 //Crouching Function
 
 let crouch = (PLAYER) => {
-    if(!PLAYER.stillJumping && !PLAYER.ladderCol){
+    if(!PLAYER.stillJumping || PLAYER.onMovingPlatform && !PLAYER.ladderCol){
         PLAYER.crouched = true;
         PLAYER.height = 20;
         PLAYER.y += 20;
@@ -2156,7 +2000,10 @@ let under = (PLAYER) => {
 
 const bottomCollision = (PLAYER) => {
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || platformLevel1[i] == 37) {
+        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
+             platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
+              platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
+               platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -2190,7 +2037,8 @@ const bottomCollision = (PLAYER) => {
                 PLAYER.velocityGoingDown = 0;
                 PLAYER.orbUsed = false;
                 PLAYER.slideJumped = false;
-                if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 || platformLevel1[i] == 33){ //You are on Rock
+                if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 ||
+                    platformLevel1[i] == 33 || platformLevel1[i] == 68 || platformLevel1[i] == 71){ //You are on Rock
                     PLAYER.onRock = true; 
                     PLAYER.onWood = false;
                 }else if(platformLevel1[i] == 7 || platformLevel1[i] == 19 || platformLevel1[i] == 18 || platformLevel1[i] == 9){ //You are on Wood
@@ -2226,11 +2074,14 @@ const upCollision = (PLAYER) => {
         PLAYER.velocityJump = PLAYER.velocityJump/1.22
         PLAYER.y-= PLAYER.velocityJump;
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || platformLevel1[i] == 37) {
+            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
+                 platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
+                  platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
+                   platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32 + 42;
                 if (
-                    PLAYER.y + PLAYER.height >= platformY &&
+                    PLAYER.y + PLAYER.height >= platformY && 
                     PLAYER.y + PLAYER.height <= platformY + 32 &&
                     PLAYER.x + PLAYER.width >= platformX &&
                     PLAYER.x <= platformX + 32
@@ -2419,6 +2270,7 @@ let gravity = (PLAYER) => {
                     sfx_walk2.pause();
                 }
             }
+            movingPlatformCollision(PLAYER);
             stopSlideDetection(PLAYER)
             PLAYER.velocityGoingUp = 0;
             orbCollision(PLAYER);
@@ -2442,7 +2294,7 @@ if(playingMultiplayer){
 //---------------------------------------- Jumping Function (Player)
 
 let jump = (PLAYER) => {
-    if((PLAYER.stillJumping == false || PLAYER.canOrbJump == true && PLAYER.orbUsed == false) || PLAYER.canUseJumpPad || PLAYER.bounced || PLAYER.canSlideOnWall && !PLAYER.slideJumped){
+    if((PLAYER.stillJumping == false || PLAYER.canOrbJump == true && PLAYER.orbUsed == false) || PLAYER.canUseJumpPad || PLAYER.bounced || PLAYER.canSlideOnWall && !PLAYER.slideJumped || PLAYER.onMovingPlatform){
         if(PLAYER.canSlideOnWall){
             setTimeout(() => {
                 PLAYER.slideJumped = false;
@@ -2565,7 +2417,10 @@ let moveRight = (PLAYER) => {
             
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || platformLevel1[i] == 37) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
+                     platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
+                      platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
+                       platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -2654,7 +2509,10 @@ let moveLeft = (PLAYER) => {
                 }
             }
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || platformLevel1[i] == 37) {
+                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
+                     platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
+                      platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
+                       platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -2903,7 +2761,7 @@ window.addEventListener("keydown", (event) => {
             if(!player1.jumpIntervalSet && player1.stillJumping){ //Better W pressed detection
                 jump(player1)
                 player1.jumpInterval = setInterval(() => {
-                    if(player1.canOrbJump && player1.velocity== 0 && player1.slideJumped){
+                    if(player1.canOrbJump && player1.velocity== 0 && player1.slideJumped || player1.onMovingPlatform){
                         clearInterval(player1.jumpInterval)
                     }else{
                         jump(player1)
@@ -2978,7 +2836,7 @@ window.addEventListener("keydown", (event) => {
                 if(!player2.jumpIntervalSet && player2.stillJumping){ //Better ArrowUp pressed detection
                     jump(player2)
                     player2.jumpInterval = setInterval(() => {
-                        if(player2.canOrbJump && player2.velocity == 0 && player2.slideJumped){
+                        if(player2.canOrbJump && player2.velocity == 0 && player2.slideJumped || player2.onMovingPlatform){
                             clearInterval(player2.jumpInterval)
                         }else{
                             jump(player2)
@@ -3132,4 +2990,3 @@ window.addEventListener("keyup", (event) => {
     }
     }
 });
-
