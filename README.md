@@ -7,6 +7,9 @@
 
  - <b>ADDED - SteamPunk</b> Dungeon<br>
  - <b>NEW MECHANIC</b> - Moving Platform LEVEL (Level 5 SteamPunk)<br>
+ - ADDED <b>Pipes</b> in SteamPunk Dungeon (you can walk through them) <br>
+ - ADDED <b>Saw</b> in SteamPunk Dungeon<br>
+ - Added <b>Moving Platform</b> in SteamPunk Dungeon<br>
  - <b>AVAIBLE 1 -> 5 Levels</b> in SteamPunk Dungeon<br>
  --------------------------------------------------------------------<br>
 ![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
