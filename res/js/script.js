@@ -620,10 +620,10 @@ const bossMoveX = () => {
 let entered = false;
 
 window.addEventListener("keydown", (event) => {
-    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer) {
+    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && (playingSteamPunk && helpNum <= 4 || !playingSteamPunk)) {
         entered = true;
         enterFunction();
-    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1]) {
+    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && (playingSteamPunk && helpNum <= 4 || !playingSteamPunk)) {
         entered = true;
         enterFunction();
     }
