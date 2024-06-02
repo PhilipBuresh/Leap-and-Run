@@ -173,7 +173,6 @@ note_button.onclick = () => {
         }
     }
 }
-
 //Music Editor -> You can here adjust volume of Music or SFX by yourself
 music_editor_back.onclick = () => {
     if(musicEditorOpened){
@@ -445,6 +444,8 @@ const movingCharactersAndFullBlack = () => {
             note_button.style.zIndex = "11";
             escape_button.style.zIndex = "11";
         }, 800);
+        gravity(player1);
+        gravity(player2);
     }, 1000);
 }
 
@@ -619,10 +620,10 @@ const bossMoveX = () => {
 let entered = false;
 
 window.addEventListener("keydown", (event) => {
-    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && !playingSteamPunk) {
+    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer) {
         entered = true;
         enterFunction();
-    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && !playingSteamPunk) {
+    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1]) {
         entered = true;
         enterFunction();
     }
@@ -646,6 +647,7 @@ const enterFunction = () => {
     music.pause();
     inGame = false;
     ghostVelocity = 2;
+    sawVelocity = 1.5;
     setTransitionCords();
     fadeInTransition();
     setTimeout(() => {
@@ -657,250 +659,364 @@ const enterFunction = () => {
         inGame = true;
         platformLevel1 = [...map[helpNum]];
         originalPlatform1 = [...platformLevel1];
-        if(helpNum == 0){ //Level 1
-            spawnCords = () =>{
-                player1.x = 40;
-                player1.y = 500;
-                if(playingMultiplayer){
-                    player2.x = 40;
-                    player2.y = 500;
+        movingPlatformVelocity = 1;
+        if(!playingSteamPunk){
+            if(helpNum == 0){ //Level 1
+                spawnCords = () =>{
+                    player1.x = 40;
+                    player1.y = 500;
+                    if(playingMultiplayer){
+                        player2.x = 40;
+                        player2.y = 500;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song0.mp3";
-            doorsTime = 30000;
-            music.play(); 
-            spawnGhostCords = () =>{
-                xGhost = 900;
-                yGhost = 500;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 1){ //Level 2
-            spawnCords = () =>{
-                player1.x = 40;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 40;
-                    player2.y = 515;
-                }  
-            }
-            spawnCords();
-            music.src = "./res/music/song1.mp3";
-            doorsTime = 28000;
-            music.play();
-            spawnGhostCords = () =>{
-                xGhost = 400;
-                yGhost = 240;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 2){ //Level 3
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y = 390;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 390;
+                spawnCords();
+                music.src = "./res/music/song0.mp3";
+                doorsTime = 30000;
+                music.play(); 
+                spawnGhostCords = () =>{
+                    xGhost = 900;
+                    yGhost = 500;
                 }
-            }
-            spawnCords();
-            darkness = true;
-            music.src = "./res/music/song2.mp3";
-            doorsTime = 37000;
-            music.play();
-        }else if(helpNum == 3){ //Level 4
-            spawnCords = () =>{
-                player1.x = 40;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 40;
-                    player2.y = 515;
+                spawnGhostCords();
+            }else if(helpNum == 1){ //Level 2
+                spawnCords = () =>{
+                    player1.x = 40;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 40;
+                        player2.y = 515;
+                    }  
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song3.mp3";
-            doorsTime = 31000;
-            music.play();
-            spawnGhostCords = () => {
-                xGhost = 670;
-                yGhost = 310;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 4){ //Level 5
-            rising.style.display = "block";
-            risingLavaActivated = true;
-            spawnCords = () =>{
-                player1.x = 512;
-                player1.y = 485;
-                if(playingMultiplayer){
-                    player2.x = 512;
-                    player2.y = 485;
+                spawnCords();
+                music.src = "./res/music/song1.mp3";
+                doorsTime = 28000;
+                music.play();
+                spawnGhostCords = () =>{
+                    xGhost = 400;
+                    yGhost = 240;
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song4.mp3";
-            doorsTime = 23000;
-            music.play();
-        }else if(helpNum == 5){ //Level 6
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y= 485;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y= 485;
+                spawnGhostCords();
+            }else if(helpNum == 2){ //Level 3
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 390;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 390;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song5.mp3";
-            doorsTime = 30000;
-            music.play();
-            spawnGhostCords = () => {
-                xGhost = 400;
-                yGhost = 245;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 6){ //Level 7
-            spawnCords = () =>{
-                player1.x = 500;
-                player1.y = 485;
-                if(playingMultiplayer){
-                    player2.x = 500;
-                    player2.y = 485;
+                spawnCords();
+                darkness = true;
+                music.src = "./res/music/song2.mp3";
+                doorsTime = 37000;
+                music.play();
+            }else if(helpNum == 3){ //Level 4
+                spawnCords = () =>{
+                    player1.x = 40;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 40;
+                        player2.y = 515;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song6.mp3";
-            doorsTime = 39000;
-            music.play();
-        }else if(helpNum == 7){ //Level 8
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 515;
+                spawnCords();
+                music.src = "./res/music/song3.mp3";
+                doorsTime = 31000;
+                music.play();
+                spawnGhostCords = () => {
+                    xGhost = 670;
+                    yGhost = 310;
                 }
-            }
-            spawnCords();
-            darkness = true;
-            music.src = "./res/music/song7.mp3";
-            doorsTime = 48000;
-            music.play();
-        }else if(helpNum == 8){ //Level 9
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y = 420;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 420;
+                spawnGhostCords();
+            }else if(helpNum == 4){ //Level 5
+                rising.style.display = "block";
+                risingLavaActivated = true;
+                spawnCords = () =>{
+                    player1.x = 512;
+                    player1.y = 485;
+                    if(playingMultiplayer){
+                        player2.x = 512;
+                        player2.y = 485;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song8.mp3";
-            doorsTime = 40000;
-            music.play();
-        }else if(helpNum == 9){ //Level 10
-            rising.style.display = "block";
-            risingLavaActivated = true;
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y = 485;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 485;
+                spawnCords();
+                music.src = "./res/music/song4.mp3";
+                doorsTime = 23000;
+                music.play();
+            }else if(helpNum == 5){ //Level 6
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y= 485;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y= 485;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song9.mp3";
-            doorsTime = 28000;
-            music.play();
-        }else if(helpNum == 10){ //Level 11
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 515;
+                spawnCords();
+                music.src = "./res/music/song5.mp3";
+                doorsTime = 30000;
+                music.play();
+                spawnGhostCords = () => {
+                    xGhost = 400;
+                    yGhost = 245;
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song10.mp3";
-            doorsTime = 30000;
-            music.play();
-            spawnGhostCords = () => {
-                xGhost = 600;
-                yGhost = 150;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 11){ //Level 12
-            spawnCords = () =>{
-                player1.x = 500;
-                player1.y = 70;
-                if(playingMultiplayer){
-                    player2.x = 500;
-                    player2.y = 70;
+                spawnGhostCords();
+            }else if(helpNum == 6){ //Level 7
+                spawnCords = () =>{
+                    player1.x = 500;
+                    player1.y = 485;
+                    if(playingMultiplayer){
+                        player2.x = 500;
+                        player2.y = 485;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song11.mp3";
-            doorsTime = 36000;
-            music.play();
-        }else if(helpNum == 12){ //Level 13
-            spawnCords = () =>{
-                player1.x = 20;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 515;
+                spawnCords();
+                music.src = "./res/music/song6.mp3";
+                doorsTime = 39000;
+                music.play();
+            }else if(helpNum == 7){ //Level 8
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 515;
+                    }
                 }
-            }
-            spawnCords();
-            darkness = true;
-            music.src = "./res/music/song12.mp3";
-            doorsTime = 36000;
-            music.play();
-            spawnGhostCords = () => {
-                xGhost = 400;
-                yGhost = 210;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 13){ //Level 14
-            spawnCords = () =>{
-                player1.x = 40;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 40;
-                    player2.y = 515;
+                spawnCords();
+                darkness = true;
+                music.src = "./res/music/song7.mp3";
+                doorsTime = 48000;
+                music.play();
+            }else if(helpNum == 8){ //Level 9
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 420;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 420;
+                    }
                 }
-            }
-            spawnCords();
-            music.src = "./res/music/song13.mp3";
-            doorsTime = 54000;
-            music.play();
-            spawnGhostCords = () => {
-                xGhost = 700;
-                yGhost = 310;
-            }
-            spawnGhostCords();
-        }else if(helpNum == 14){ //Level 15 (Boss Fight)
-            bossLevel();
-        }else if(helpNum == 15){ // Level 16 (Trophy Room)
-            spawnCords = () =>{
-                player1.x = 40;
-                player1.y = 515;
-                if(playingMultiplayer){
-                    player2.x = 40;
-                    player2.y = 515;
+                spawnCords();
+                music.src = "./res/music/song8.mp3";
+                doorsTime = 40000;
+                music.play();
+            }else if(helpNum == 9){ //Level 10
+                rising.style.display = "block";
+                risingLavaActivated = true;
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 485;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 485;
+                    }
                 }
+                spawnCords();
+                music.src = "./res/music/song9.mp3";
+                doorsTime = 28000;
+                music.play();
+            }else if(helpNum == 10){ //Level 11
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 515;
+                    }
+                }
+                spawnCords();
+                music.src = "./res/music/song10.mp3";
+                doorsTime = 30000;
+                music.play();
+                spawnGhostCords = () => {
+                    xGhost = 600;
+                    yGhost = 150;
+                }
+                spawnGhostCords();
+            }else if(helpNum == 11){ //Level 12
+                spawnCords = () =>{
+                    player1.x = 500;
+                    player1.y = 70;
+                    if(playingMultiplayer){
+                        player2.x = 500;
+                        player2.y = 70;
+                    }
+                }
+                spawnCords();
+                music.src = "./res/music/song11.mp3";
+                doorsTime = 36000;
+                music.play();
+            }else if(helpNum == 12){ //Level 13
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 515;
+                    }
+                }
+                spawnCords();
+                darkness = true;
+                music.src = "./res/music/song12.mp3";
+                doorsTime = 36000;
+                music.play();
+                spawnGhostCords = () => {
+                    xGhost = 400;
+                    yGhost = 210;
+                }
+                spawnGhostCords();
+            }else if(helpNum == 13){ //Level 14
+                spawnCords = () =>{
+                    player1.x = 40;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 40;
+                        player2.y = 515;
+                    }
+                }
+                spawnCords();
+                music.src = "./res/music/song13.mp3";
+                doorsTime = 54000;
+                music.play();
+                spawnGhostCords = () => {
+                    xGhost = 700;
+                    yGhost = 310;
+                }
+                spawnGhostCords();
+            }else if(helpNum == 14){ //Level 15 (Boss Fight)
+                bossLevel();
+            }else if(helpNum == 15){ // Level 16 (Trophy Room)
+                spawnCords = () =>{
+                    player1.x = 40;
+                    player1.y = 515;
+                    if(playingMultiplayer){
+                        player2.x = 40;
+                        player2.y = 515;
+                    }
+                }
+                finished[14] = 1; //Boss Beated -> Level 15 Doors are now green
+                spawnCords();
+                music.src = "./res/music/ending.mp3";
+                music.play();
             }
-            finished[14] = 1; //Boss Beated -> Level 15 Doors are now green
-            spawnCords();
-            music.src = "./res/music/ending.mp3";
-            music.play();
+        }else if(playingSteamPunk){
+            if(helpNum == 0){ //Level 1 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 520;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 520;
+                    }
+                }
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000;
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                spawnCords();
+                music.src = "./res/music/song0_sp.mp3";
+                doorsTime = 31000;
+                music.play();
+            }else if(helpNum == 1){ //Level 2 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 520;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 520;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 720
+                    yMovingPlatform = 346;
+                }
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    ySaw = 142;
+                    xSaw = 400;
+                }
+                spawnSawCords();
+                music.src = "./res/music/song1_sp.mp3";
+                doorsTime = 30000;
+                music.play();
+            }else if(helpNum == 2){ //Level 3 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 520;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 520;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song2_sp.mp3";
+                doorsTime = 27000;
+                music.play();
+                darkness = true;
+            }else if(helpNum == 3){ //Level 4 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = canvas.width / 2 - player1.width / 2;
+                    player1.y = 460;
+                    if(playingMultiplayer){
+                        player2.x = canvas.width / 2 - player2.width / 2;
+                        player2.y = 460;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    ySaw = 303;
+                    xSaw = 800;
+                }
+                spawnSawCords();
+                music.src = "./res/music/song3_sp.mp3";
+                doorsTime = 30000;
+                music.play();
+            }else if(helpNum == 4){ //Level 5 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 60;
+                    player1.y = 390;
+                    if(playingMultiplayer){
+                        player2.x = 60;
+                        player2.y = 390;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    yMovingPlatform = 474;
+                    xMovingPlatform = -40;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song4_sp.mp3";
+                doorsTime = 50000;
+                music.play();
+            }
         }
         setTransitionCords();
         fadeOutTransition();
+        // Save Cords
         saveGhostCordsX = xGhost;
         saveGhostCordsY = yGhost;
+
+        saveMovingPlatformCordsX = xMovingPlatform;
+        saveMovingPlatformCordsY = yMovingPlatform;
+
+        saveSawCordsX = xSaw;
+        saveSawCordsY = ySaw;
+        //
         if(helpNum != 15){
             timeNow = doorsTime/1000;
             timerFunction();
@@ -1101,6 +1217,8 @@ const dead = () => {
                 ghostVelocity = 2;
                 spawnGhostCords();
             }
+            
+            // Respawn Ghost, Saw, ...
             if(ghostKilled){
                 spawnGhostCords = () => {
                     xGhost = saveGhostCordsX;
@@ -1109,6 +1227,20 @@ const dead = () => {
                 ghostKilled = false;
                 spawnGhostCords();
             }
+            spawnMovingPlatformCords = () => {
+                xMovingPlatform = saveMovingPlatformCordsX;
+                yMovingPlatform = saveMovingPlatformCordsY;
+            }
+            sawVelocity = 1.5;
+            spawnMovingPlatformCords();
+            spawnSawCords = () => {
+                xSaw = saveSawCordsX;
+                ySaw = saveSawCordsY;
+            }
+            movingPlatformVelocity = 1;
+            spawnSawCords();
+            //
+
             frameSpike = 0;
             frameLava = 0;
             player1.velocity= 0;
@@ -1323,6 +1455,8 @@ const backToLobby = () => {
     setTimeout(() => {
         music.src = "./res/music/lobby_music.mp3";
         music.play();
+        movingPlatformVelocity = 1;
+        movingPlatformVelocityY = 0;
         if(playingBossFight){
             lives = 3;
             playingBossFight = false;
@@ -1347,112 +1481,233 @@ const backToLobby = () => {
             yGhost = 20000;
         }
         spawnGhostCords();
-        if(helpNum == 0){ // Go to lobby From Levels 1 - 15
-            player1.x = 120;
-            player1.y = 500;
-            if(playingMultiplayer){
-                player2.x = 120;
-                player2.y = 500;
+        spawnMovingPlatformCords = () => {
+            xMovingPlatform = 600;
+            yMovingPlatform = 282;
+        }
+        spawnMovingPlatformCords();
+        spawnSawCords = () => {
+            xSaw = 10000;
+            ySaw = 10000;
+        }
+        spawnSawCords();
+
+        if(!playingSteamPunk){
+            if(helpNum == 0){ // Go to lobby From Levels 1 - 15
+                player1.x = 120;
+                player1.y = 500;
+                if(playingMultiplayer){
+                    player2.x = 120;
+                    player2.y = 500;
+                }
+            }else if(helpNum == 1){
+                player1.x = 300;
+                player1.y = 410;
+                if(playingMultiplayer){
+                    player2.x = 300;
+                    player2.y = 4095;
+                }
+            }else if(helpNum == 2){
+                player1.x = 560;
+                player1.y = 370;
+                if(playingMultiplayer){
+                    player2.x = 560;
+                    player2.y = 370;
+                }
+            }else if(helpNum == 3){
+                player1.x = 720;
+                player1.y = 500;
+                if(playingMultiplayer){
+                    player2.x = 720;
+                    player2.y = 500;
+                }
+            }else if(helpNum == 4){
+                player1.x = 910;
+                player1.y = 400;
+                if(playingMultiplayer){
+                    player2.x = 910;
+                    player2.y = 400;
+                }
+            }else if(helpNum == 5){
+                player1.x = 880;
+                player1.y = 300;
+                if(playingMultiplayer){
+                    player2.x = 880;
+                    player2.y = 300;
+                }
+            }else if(helpNum == 6){
+                player1.x = 582;
+                player1.y = 290;
+                if(playingMultiplayer){
+                    player2.x = 582;
+                    player2.y = 290;
+                }
+            }else if(helpNum == 7){
+                player1.x = 400;
+                player1.y = 300;
+                if(playingMultiplayer){
+                    player2.x = 400;
+                    player2.y = 300;
+                }
+            }else if(helpNum == 8){
+                player1.x = 220;
+                player1.y= 300;
+                if(playingMultiplayer){
+                    player2.x = 220;
+                    player2.y= 300;
+                }
+            }else if(helpNum == 9){
+                player1.x = 20;
+                player1.y = 260;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 260;
+                }
+            }else if(helpNum == 10){
+                player1.x = 20;
+                player1.y= 80;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 80;
+                }
+            }else if(helpNum == 11){
+                player1.x = 240;
+                player1.y= 80;
+                if(playingMultiplayer){
+                    player2.x = 240;
+                    player2.y = 80; 
+                }
+            }else if(helpNum == 12){
+                player1.x = 560;
+                player1.y = 50;
+                if(playingMultiplayer){
+                    player2.x = 560;
+                    player2.y = 50;
+                }
+            }else if(helpNum == 13){
+                player1.x = 880;
+                player1.y = 200;
+                if(playingMultiplayer){
+                    player2.x = 880;
+                    player2.y = 200;
+                }
+            }else if(helpNum == 14 || helpNum == 15){
+                player1.x = 920;
+                player1.y = 80;
+                if(playingMultiplayer){
+                    player2.x = 920;
+                    player2.y = 80;
+                }
             }
-        }else if(helpNum == 1){
-            player1.x = 300;
-            player1.y = 410;
-            if(playingMultiplayer){
-                player2.x = 300;
-                player2.y = 410;
-            }
-        }else if(helpNum == 2){
-            player1.x = 560;
-            player1.y = 370;
-            if(playingMultiplayer){
-                player2.x = 560;
-                player2.y = 370;
-            }
-        }else if(helpNum == 3){
-            player1.x = 720;
-            player1.y = 500;
-            if(playingMultiplayer){
-                player2.x = 720;
-                player2.y = 500;
-            }
-        }else if(helpNum == 4){
-            player1.x = 910;
-            player1.y = 400;
-            if(playingMultiplayer){
-                player2.x = 910;
-                player2.y = 400;
-            }
-        }else if(helpNum == 5){
-            player1.x = 880;
-            player1.y = 300;
-            if(playingMultiplayer){
-                player2.x = 880;
-                player2.y = 300;
-            }
-        }else if(helpNum == 6){
-            player1.x = 582;
-            player1.y = 290;
-            if(playingMultiplayer){
-                player2.x = 582;
-                player2.y = 290;
-            }
-        }else if(helpNum == 7){
-            player1.x = 400;
-            player1.y = 300;
-            if(playingMultiplayer){
-                player2.x = 400;
-                player2.y = 300;
-            }
-        }else if(helpNum == 8){
-            player1.x = 220;
-            player1.y= 300;
-            if(playingMultiplayer){
-                player2.x = 220;
-                player2.y= 300;
-            }
-        }else if(helpNum == 9){
-            player1.x = 20;
-            player1.y = 260;
-            if(playingMultiplayer){
-                player2.x = 20;
-                player2.y = 260;
-            }
-        }else if(helpNum == 10){
-            player1.x = 20;
-            player1.y= 80;
-            if(playingMultiplayer){
-                player2.x = 20;
-                player2.y = 80;
-            }
-        }else if(helpNum == 11){
-            player1.x = 240;
-            player1.y= 80;
-            if(playingMultiplayer){
-                player2.x = 240;
-                player2.y = 80; 
-            }
-        }else if(helpNum == 12){
-            player1.x = 560;
-            player1.y = 50;
-            if(playingMultiplayer){
-                player2.x = 560;
-                player2.y = 50;
-            }
-        }else if(helpNum == 13){
-            player1.x = 880;
-            player1.y = 200;
-            if(playingMultiplayer){
-                player2.x = 880;
-                player2.y = 200;
-            }
-        }else if(helpNum == 14 || helpNum == 15){
-            player1.x = 920;
-            player1.y = 80;
-            if(playingMultiplayer){
-                player2.x = 920;
-                player2.y = 80;
+        }else if(playingSteamPunk){
+            if(helpNum == 0){ // Go to lobby From Levels 1 - 15
+                player1.x = 120;
+                player1.y = 500;
+                if(playingMultiplayer){
+                    player2.x = 120;
+                    player2.y = 500;
+                }
+            }else if(helpNum == 1){
+                player1.x = 240;
+                player1.y = 405;
+                if(playingMultiplayer){
+                    player2.x = 240;
+                    player2.y = 405;
+                }
+            }else if(helpNum == 2){
+                player1.x = 400;
+                player1.y = 500;
+                if(playingMultiplayer){
+                    player2.x = 400;
+                    player2.y = 500;
+                }
+            }else if(helpNum == 3){
+                player1.x = 660;
+                player1.y = 340;
+                if(playingMultiplayer){
+                    player2.x = 660;
+                    player2.y = 340;
+                }
+            }else if(helpNum == 4){
+                player1.x = 910;
+                player1.y = 400;
+                if(playingMultiplayer){
+                    player2.x = 910;
+                    player2.y = 400;
+                }
+            }else if(helpNum == 5){
+                player1.x = 880;
+                player1.y = 300;
+                if(playingMultiplayer){
+                    player2.x = 880;
+                    player2.y = 300;
+                }
+            }else if(helpNum == 6){
+                player1.x = 582;
+                player1.y = 290;
+                if(playingMultiplayer){
+                    player2.x = 582;
+                    player2.y = 290;
+                }
+            }else if(helpNum == 7){
+                player1.x = 400;
+                player1.y = 300;
+                if(playingMultiplayer){
+                    player2.x = 400;
+                    player2.y = 300;
+                }
+            }else if(helpNum == 8){
+                player1.x = 220;
+                player1.y= 300;
+                if(playingMultiplayer){
+                    player2.x = 220;
+                    player2.y= 300;
+                }
+            }else if(helpNum == 9){
+                player1.x = 20;
+                player1.y = 260;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 260;
+                }
+            }else if(helpNum == 10){
+                player1.x = 20;
+                player1.y= 80;
+                if(playingMultiplayer){
+                    player2.x = 20;
+                    player2.y = 80;
+                }
+            }else if(helpNum == 11){
+                player1.x = 240;
+                player1.y= 80;
+                if(playingMultiplayer){
+                    player2.x = 240;
+                    player2.y = 80; 
+                }
+            }else if(helpNum == 12){
+                player1.x = 560;
+                player1.y = 50;
+                if(playingMultiplayer){
+                    player2.x = 560;
+                    player2.y = 50;
+                }
+            }else if(helpNum == 13){
+                player1.x = 880;
+                player1.y = 200;
+                if(playingMultiplayer){
+                    player2.x = 880;
+                    player2.y = 200;
+                }
+            }else if(helpNum == 14 || helpNum == 15){
+                player1.x = 920;
+                player1.y = 80;
+                if(playingMultiplayer){
+                    player2.x = 920;
+                    player2.y = 80;
+                }
             }
         }
+
         setTransitionCords();
         fadeOutTransition()
         backToLobbyEntered = false;
@@ -1463,6 +1718,15 @@ const backToLobby = () => {
         }
     }, 1300);
 }
+
+const tellLocation = () => {
+    setInterval(() => {
+        console.log(player1.x, player1.y)
+    }, 100);
+}
+
+//tellLocation()
+
 //Back from Level to the Lobby
 button_back.onclick = () => {
     canEnter = false; //Now you cant spam "e"
@@ -1900,27 +2164,63 @@ const ghostCollision = (PLAYER) => {
     }
 }
 
+let saveMovingPlatformCordsX = 0;
+let saveMovingPlatformCordsY = 0;
+
 const movingPlatformCollision = (PLAYER) => {
     if (
         (PLAYER.y + PLAYER.height >= yMovingPlatform - PLAYER.velocity) &&
         (PLAYER.y <= yMovingPlatform - 39) &&
         (PLAYER.x + PLAYER.width >= xMovingPlatform) &&
         (PLAYER.x <= xMovingPlatform + 64)
+        ||
+        (PLAYER.y + PLAYER.height >= yMovingPlatform - PLAYER.velocity) &&
+        (PLAYER.y <= yMovingPlatform - 19) &&
+        (PLAYER.x + PLAYER.width >= xMovingPlatform) &&
+        (PLAYER.x <= xMovingPlatform + 64)
     ){
-        PLAYER.velocity = 0;
+        sidesCollision(PLAYER);
         cancelAnimationFrame(PLAYER.gravityId);
         PLAYER.y = yMovingPlatform - PLAYER.height;
         PLAYER.onMovingPlatform = true;
         PLAYER.onWood = false;
-        PLAYER.onRock = true; 
-        if(!sfx_walk.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 || PLAYER.velocity>= 0.3 || PLAYER.isJumping){
+        PLAYER.onRock = true;
+        if(PLAYER.downPressed && !PLAYER.crouched){ //You will still crouch
+            crouch(PLAYER);
+        }
+        if(!sfx_walk.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 || PLAYER.velocity >= 0.3 || PLAYER.isJumping){
             sfx_walk.pause();
         }
-    } else if (PLAYER.onMovingPlatform) {
+        if(PLAYER.velocity > 0){
+            if(PLAYER == player1){
+                if(sfx_land.paused && sfx_land.src != "./res/sfx/small_land.mp3" && PLAYER.velocity >= 3 && PLAYER.velocity < 8 && !PLAYER.ladderCol){
+                    sfx_land.src = "./res/sfx/small_land.mp3"
+                    sfx_land.play();
+                }else if(sfx_land.paused && sfx_land.src != "./res/sfx/large_land.mp3" && PLAYER.velocity >= 8 && !PLAYER.ladderCol){
+                    sfx_land.src = "./res/sfx/large_land.mp3"
+                    sfx_land.play();
+                }
+                sfx_climb.pause()
+            }else{
+                if(sfx_land2.paused && sfx_land.src != "./res/sfx/small_land.mp3" && PLAYER.velocity >= 3 && PLAYER.velocity < 8 && !PLAYER.ladderCol){
+                    sfx_land2.src = "./res/sfx/small_land.mp3"
+                    sfx_land2.play();
+                }else if(sfx_land2.paused && sfx_land.src != "./res/sfx/large_land.mp3" && PLAYER.velocity >= 8 && !PLAYER.ladderCol){
+                    sfx_land2.src = "./res/sfx/large_land.mp3"
+                    sfx_land2.play();
+                }
+                sfx_climb2.pause()
+            }
+        }
+        PLAYER.velocity = 0;
+    } else if (PLAYER.onMovingPlatform && !PLAYER.crouched)  {
         PLAYER.onMovingPlatform = false;
         gravity(PLAYER);
     }
 }
+
+let saveSawCordsX = 0
+let saveSawCordsY = 0
 
 const sawCollision = (PLAYER) => {
     if (
@@ -1933,17 +2233,83 @@ const sawCollision = (PLAYER) => {
     }
 }
 
+const pipesCollision = (PLAYER) => {
+    if(playingSteamPunk){
+        for (let i = 0; i < platformLevel1.length; i++) {
+            //Pipe RIGHT
+        if (platformLevel1[i] == 80) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                PLAYER.y + PLAYER.height > platformY &&
+                PLAYER.y < platformY + 32 &&
+                PLAYER.x + PLAYER.width + 1 > platformX &&
+                PLAYER.x < platformX + 32
+                && PLAYER.crouched
+            ) {
+                shakePipes();
+                PLAYER.inPipe = true;
+                PLAYER.x = -100000;
+                PLAYER.y = -100000;
+                if(PLAYER == player1){
+                    sfx.src = "./res/sfx/pipe.mp3";
+                    sfx.play();
+                }else{
+                    sfx2.src = "./res/sfx/pipe.mp3";
+                    sfx2.play();
+                }
+                setTimeout(() => {
+                    unCrouch(PLAYER);
+                    PLAYER.inPipe = false;
+                    PLAYER.velocity = 0;
+                    PLAYER.x = cordsPipeX2;
+                    PLAYER.y = cordsPipeY2; 
+                }, 2400);
+            }
+        }
+        //Pipe LEFT
+        if (platformLevel1[i] == 79) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                PLAYER.y + PLAYER.height > platformY &&
+                PLAYER.y < platformY + 32 &&
+                PLAYER.x - 1 < platformX + 32 &&
+                PLAYER.x > platformX
+                && PLAYER.crouched
+            ) {
+                shakePipes();
+                PLAYER.inPipe = true;
+                PLAYER.x = 100000;
+                PLAYER.y = -100000;
+                if(PLAYER == player1){
+                    sfx.src = "./res/sfx/pipe.mp3";
+                    sfx.play();
+                }else{
+                    sfx2.src = "./res/sfx/pipe.mp3";
+                    sfx2.play();
+                }
+                setTimeout(() => {
+                    unCrouch(PLAYER);
+                    PLAYER.inPipe = false;
+                    PLAYER.velocity = 0;
+                    PLAYER.x = cordsPipeX1;
+                    PLAYER.y = cordsPipeY1;  
+                }, 2400);
+            }
+        }
+    }
+}
+}
+
 //---------------------------------------- Crouch and Stand (Player)
 
 //This Function is checking, if you do not have a block above you (then you can stand up)
-let aboveHeadCollision = (PLAYER) => {
+const aboveHeadCollision = (PLAYER) => {
     PLAYER.ahCollision = window.requestAnimationFrame(() => aboveHeadCollision(PLAYER));
-    if (PLAYER.crouched == true) {
+    if (PLAYER.crouched) {
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
-                platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 || 
-                platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 || 
-                platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+            if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -1951,6 +2317,12 @@ let aboveHeadCollision = (PLAYER) => {
                     PLAYER.y + PLAYER.height <= platformY + 64 &&
                     PLAYER.x + PLAYER.width >= platformX &&
                     PLAYER.x <= platformX + 32
+                    ||
+                    PLAYER.y + PLAYER.height >= platformY + 64 - 6&&
+                    PLAYER.y + PLAYER.height <= platformY + 64 - 6 &&
+                    PLAYER.x + PLAYER.width >= platformX &&
+                    PLAYER.x <= platformX + 32 &&
+                    PLAYER.onMovingPlatform
                 ) {
                     PLAYER.canStandUp = false;
                     break;
@@ -1960,17 +2332,16 @@ let aboveHeadCollision = (PLAYER) => {
             }
         }
     }
-};
+}
 
 //Crouching Function
-
 let crouch = (PLAYER) => {
     if(!PLAYER.stillJumping || PLAYER.onMovingPlatform && !PLAYER.ladderCol){
         PLAYER.crouched = true;
         PLAYER.height = 20;
         PLAYER.y += 20;
-        aboveHeadCollision(PLAYER)
-    }
+        aboveHeadCollision(PLAYER);
+    };
 }
 
 //UnCrouching Function (Stand Up)
@@ -1989,8 +2360,9 @@ let unCrouch = (PLAYER) => {
 //You will Stand Up if you do not have above you a block
 let under = (PLAYER) => {
     PLAYER.underCollision = window.requestAnimationFrame(() => under(PLAYER));
-    if(PLAYER.canStandUp == true){
+    if(PLAYER.canStandUp == true && PLAYER.velocity <= 0){
         unCrouch(PLAYER);
+        console.log(1)
         PLAYER.wasUnder = true;
         cancelAnimationFrame(PLAYER.underCollision);
     }
@@ -2000,10 +2372,7 @@ let under = (PLAYER) => {
 
 const bottomCollision = (PLAYER) => {
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
-             platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
-              platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
-               platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+        if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -2074,10 +2443,7 @@ const upCollision = (PLAYER) => {
         PLAYER.velocityJump = PLAYER.velocityJump/1.22
         PLAYER.y-= PLAYER.velocityJump;
         for (let i = 0; i < platformLevel1.length; i++) {
-            if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
-                 platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
-                  platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
-                   platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+            if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32 + 42;
                 if (
@@ -2251,7 +2617,7 @@ let gravity = (PLAYER) => {
         PLAYER.deltaDown = PLAYER.nowDown - PLAYER.thenDown;
         if (PLAYER.deltaDown > interval) {
             PLAYER.thenDown = PLAYER.nowDown - (PLAYER.deltaDown % interval);
-            if(PLAYER.crouched && PLAYER.velocity> 1){
+            if(PLAYER.crouched && PLAYER.velocity >= 2.5){
                 unCrouch(PLAYER);
             }
             if(PLAYER.velocity >= 0.6){
@@ -2269,6 +2635,9 @@ let gravity = (PLAYER) => {
                 if(!sfx_walk2.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
                     sfx_walk2.pause();
                 }
+            }
+            if(PLAYER.onMovingPlatform){
+                PLAYER.onMovingPlatform = false;
             }
             movingPlatformCollision(PLAYER);
             stopSlideDetection(PLAYER)
@@ -2302,6 +2671,7 @@ let jump = (PLAYER) => {
         }
         PLAYER.onRock = false;
         PLAYER.onWood = false;
+        PLAYER.onMovingPlatform = false;
         if(PLAYER == player1){
             sfx_walk.currentTime = 0;
             if(!sfx_walk.paused) {
@@ -2387,7 +2757,9 @@ let moveRight = (PLAYER) => {
             if(PLAYER.crouched == true && PLAYER.velocityRight >= 1){
                 PLAYER.velocityRight -= 0.12;
                 cancelAnimationFrame(PLAYER.gravityId);
-                gravity(PLAYER);
+                if(!PLAYER.onMovingPlatform){
+                    gravity(PLAYER);
+                }
             }else{ //Not Crouched
                 if(PLAYER.isMovingRight == true){
                     sfxWalkFunction(PLAYER);
@@ -2416,11 +2788,9 @@ let moveRight = (PLAYER) => {
                 }
             
             }
+            pipesCollision(PLAYER);
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
-                     platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
-                      platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
-                       platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+                if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -2508,18 +2878,16 @@ let moveLeft = (PLAYER) => {
                     }
                 }
             }
+            pipesCollision(PLAYER);
             for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
-                     platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
-                      platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
-                       platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+                if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
                         PLAYER.y+ PLAYER.height > platformY &&
                         PLAYER.y< platformY + 32 &&
                         PLAYER.x - PLAYER.velocityLeft < platformX + 32 &&
-                        PLAYER.x > platformX 
+                        PLAYER.x > platformX
                     ) {
                         if(PLAYER.velocityRight <= PLAYER.velocityLeft && PLAYER.isMovingLeft){ //Fixing switching sides
                             PLAYER.turnedLeft = true;
@@ -2557,6 +2925,42 @@ let moveLeft = (PLAYER) => {
     };
     movingLeft();
 };
+
+let sidesCol = false;
+let sideRightCol = false;
+let sideLeftCol = false;
+
+const sidesCollision = (PLAYER) => {
+    sidesCol = false;
+    sideRightCol = false;
+    sideLeftCol = false;
+
+    for (let i = 0; i < platformLevel1.length; i++) {
+        if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68].includes(platformLevel1[i])) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+            if (
+                PLAYER.y + PLAYER.height > platformY &&
+                PLAYER.y < platformY + 32 &&
+                PLAYER.x + PLAYER.width + 2 > platformX &&
+                PLAYER.x < platformX + 32
+            ) {
+                sidesCol = true;
+                sideLeftCol = true;
+            }
+            if (
+                PLAYER.y + PLAYER.height > platformY &&
+                PLAYER.y < platformY + 32 &&
+                PLAYER.x < platformX + 32 + 2 &&
+                PLAYER.x > platformX
+            ) {
+                sidesCol = true;
+                sideRightCol = true;
+            }
+        }
+    }
+}
+
 
 //--------------------------PUNCH Function
 
@@ -2761,7 +3165,7 @@ window.addEventListener("keydown", (event) => {
             if(!player1.jumpIntervalSet && player1.stillJumping){ //Better W pressed detection
                 jump(player1)
                 player1.jumpInterval = setInterval(() => {
-                    if(player1.canOrbJump && player1.velocity== 0 && player1.slideJumped || player1.onMovingPlatform){
+                    if(player1.canOrbJump && player1.velocity== 0 || player1.slideJumped || player1.onMovingPlatform){
                         clearInterval(player1.jumpInterval)
                     }else{
                         jump(player1)
@@ -2800,7 +3204,7 @@ window.addEventListener("keydown", (event) => {
         player1.downPressed = true;
     // SPACE - Punching BOSS / Breaking Cracked Blocks
     } else if (event.key == space) {
-        if(!player1.alreadyPunched && !player1.ladderCol && inGame){
+        if(!player1.alreadyPunched && !player1.ladderCol && !player1.inPipe && inGame){
             punch(player1);
         }
         player1.alreadyPunched = true;
@@ -2836,7 +3240,7 @@ window.addEventListener("keydown", (event) => {
                 if(!player2.jumpIntervalSet && player2.stillJumping){ //Better ArrowUp pressed detection
                     jump(player2)
                     player2.jumpInterval = setInterval(() => {
-                        if(player2.canOrbJump && player2.velocity == 0 && player2.slideJumped || player2.onMovingPlatform){
+                        if(player2.canOrbJump && player2.velocity == 0 || player2.slideJumped || player2.onMovingPlatform){
                             clearInterval(player2.jumpInterval)
                         }else{
                             jump(player2)
@@ -2866,7 +3270,7 @@ window.addEventListener("keydown", (event) => {
             moveLeft(player2);
         // Enter - Punching BOSS / Breaking Cracked Blocks
         } else if (event.key == "Enter") {
-            if(!player2.alreadyPunched && !player2.ladderCol && inGame){
+            if(!player2.alreadyPunched && !player2.ladderCol && !player2.inPipe && inGame){
                 punch(player2);
             }
             player2.alreadyPunched = true;
@@ -2990,3 +3394,17 @@ window.addEventListener("keyup", (event) => {
     }
     }
 });
+/*
+characters.style.display = "none";
+    player =  "./res/img/rioter.png";
+    heart1.src = "./res/img/heart_rioter.png";
+    heart2.src = "./res/img/heart_rioter.png";
+    heart3.src = "./res/img/heart_rioter.png";
+    playingAsRioter = true;
+    playingAsRuby = false;
+    setDungeonToSteamPunk();
+    movingCharactersAndFullBlack();
+    player1.x = 890;
+    player1.y = 200;
+    //music.volume = 0;
+    */

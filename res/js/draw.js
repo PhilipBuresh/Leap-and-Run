@@ -102,6 +102,10 @@ smallCircleImage.src = "./res/img/small_circle.png"
 const bigCircleImage = new Image();
 bigCircleImage.src = "./res/img/big_circle.png"
 
+const pipeImage = new Image();
+pipeImage.src = "./res/img/pipes.png"
+
+
 const frameWidth = 30;
 const frameHeight = 40;
 
@@ -113,7 +117,68 @@ let sY = 40;
 let cordsPortalX1 = 0;
 let cordsPortalY1 = 0;
 let cordsPortalX2 = 0;
-let cordsPortalY2 = 0
+let cordsPortalY2 = 0;
+
+let cordsPipeX1 = 0;
+let cordsPipeY1 = 0;
+let cordsPipeX2 = 0;
+let cordsPipeY2 = 0;
+
+let shakePipeX = 0
+let shakePipeY = 0
+
+const shakePipes = () => {
+    shakePipeX = 1;
+    shakePipeY = 1;
+    setTimeout(() => {
+        shakePipeX = 0;
+        shakePipeY = 0;
+    }, 200);
+    setTimeout(() => {
+        shakePipeX = -1;
+        shakePipeY = 1;
+    }, 400);
+    setTimeout(() => {
+        shakePipeX = 0;
+        shakePipeY = 0;
+    }, 600);
+    setTimeout(() => {
+        shakePipeX = 1;
+        shakePipeY = 1;
+    }, 800);
+    setTimeout(() => {
+        shakePipeX = -1;
+        shakePipeY = 1;
+    }, 1000);
+    setTimeout(() => {
+        shakePipeX = 1;
+        shakePipeY = -1;
+    }, 1200);
+    setTimeout(() => {
+        shakePipeX = 0;
+        shakePipeY = 0;
+    }, 1400);
+    setTimeout(() => {
+        shakePipeX = -1;
+        shakePipeY = 1;
+    }, 1600);
+    setTimeout(() => {
+        shakePipeX = 0;
+        shakePipeY = 0;
+    }, 1800);
+    setTimeout(() => {
+        shakePipeX = 1;
+        shakePipeY = 1;
+    }, 2000);
+    setTimeout(() => {
+        shakePipeX = -1;
+        shakePipeY = 1;
+    }, 2200);
+    setTimeout(() => {
+        shakePipeX = 0;
+        shakePipeY = 0;
+    }, 2400);
+}
 
 //----------------------------------- Blocks
 
@@ -233,6 +298,10 @@ const drawPlatform = () => {
                 c.drawImage(woodsImage, 1 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 29){
                 c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 32){
+                c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 33){
+                c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
             }else if(platformLevel1[index] == 12){
                 c.drawImage(brickBlockImage, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 68){
@@ -243,8 +312,26 @@ const drawPlatform = () => {
                 c.drawImage(ironSticksImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 8){
                 c.drawImage(chainImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 72){
-                c.drawImage(ropeImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 73){
+                c.drawImage(pipeImage, 0 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 74){
+                c.drawImage(pipeImage, 1 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 75){
+                c.drawImage(pipeImage, 2 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 76){
+                c.drawImage(pipeImage, 3 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 77){
+                c.drawImage(pipeImage, 4 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 78){
+                c.drawImage(pipeImage, 5 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 79){
+                cordsPipeX2 = xBlock + 35;
+                cordsPipeY2 = yBlock - 11;
+                c.drawImage(pipeImage, 6 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
+            }else if(platformLevel1[index] == 80){
+                cordsPipeX1 = xBlock - 35;
+                cordsPipeY1 = yBlock - 11;
+                c.drawImage(pipeImage, 7 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
             }else if(platformLevel1[index] == 18){
                 c.drawImage(barrelImage, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 71){
@@ -346,16 +433,34 @@ const drawBackBlocks = () => {
                 c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
             }else if(platformLevel1[index] == 15){
                 c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 25){
+                c.drawImage(doorImage, xBlock, yBlock, 64, 64);
             }else if(platformLevel1[index] == 27){
                 c.drawImage(woodsImage, 2 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 28){
                 c.drawImage(woodsImage, 3 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 30){
+                c.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
+            }else if(platformLevel1[index] == 31){
+                c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
             }else if(platformLevel1[index] == 17){
                 c.drawImage(copperBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 67){
                 c.drawImage(brickBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 26){
                 c.drawImage(ladderImage, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 72){
+                c.drawImage(ropeImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 82){
+                c.drawImage(ropeImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 83){
+                c.drawImage(ropeImage, 2 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 84){
+                c.drawImage(ropeImage, 3 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 85){
+                c.drawImage(ropeImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
+            }else if(platformLevel1[index] == 86){
+                c.drawImage(ropeImage, 5 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }
             if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
                 c.drawImage(doorsImage, (platformLevel1[index] - 50) * 64, finished[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
@@ -474,6 +579,7 @@ let movingPlatformImage = new Image();
 movingPlatformImage.src = "./res/img/moving_platform.png";
 
 let movingPlatformVelocity = 1;
+let movingPlatformVelocityY = 0;
 
 //Moving Platform COORDINATES
 let xMovingPlatform = 600;
@@ -491,10 +597,7 @@ const drawMovingPlatform = () => {
     movingPlatformImage.src = "./res/img/moving_platform.png";
     c.drawImage(movingPlatformImage, 0 * 64, 0 * 32, 64, 32, xMovingPlatform, yMovingPlatform, 64, 32);
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 7 ||
-            platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19 ||
-            platformLevel1[i] == 32 || platformLevel1[i] == 33 || platformLevel1[i] == 36 ||
-            platformLevel1[i] == 37 || platformLevel1[i] == 71 || platformLevel1[i] == 68) {
+        if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80, 83, 84, 85, 86].includes(platformLevel1[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -502,6 +605,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY + 32 &&
                 xMovingPlatform + player1.width + movingPlatformVelocity >= platformX - 32 &&
                 xMovingPlatform <= platformX + 32
+                && ![83, 84, 85, 86].includes(platformLevel1[i])
             ) {
                 movingPlatformVelocity = -1;
             }else if (
@@ -509,8 +613,61 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY + 32 &&
                 xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
                 xMovingPlatform >= platformX
+                && ![83, 84, 85, 86].includes(platformLevel1[i])
             ) {
                 movingPlatformVelocity = 1;
+            }else if (
+                yMovingPlatform + player1.height >= platformY &&
+                yMovingPlatform <= platformY + 32 &&
+                xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
+                xMovingPlatform >= platformX - 16
+                && platformLevel1[i] == 83
+            ){
+                movingPlatformVelocity = 0;
+                movingPlatformVelocityY = -1;
+            }else if (
+                yMovingPlatform + player1.height >= platformY &&
+                yMovingPlatform <= platformY - 6 &&
+                xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
+                xMovingPlatform >= platformX - 16
+                && platformLevel1[i] == 84
+            ){
+                movingPlatformVelocity = 1;
+                movingPlatformVelocityY = 0;
+            }else if (
+                yMovingPlatform + player1.height >= platformY &&
+                yMovingPlatform <= platformY - 6 &&
+                xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
+                xMovingPlatform >= platformX - 16
+                && platformLevel1[i] == 85
+            ){
+                movingPlatformVelocity =  0;
+                movingPlatformVelocityY = 1;
+            } else if (
+                yMovingPlatform + player1.height >= platformY + 34 &&
+                yMovingPlatform <= platformY + 32 &&
+                xMovingPlatform + movingPlatformVelocity <= platformX - 16 &&
+                xMovingPlatform >= platformX - 16
+                && platformLevel1[i] == 86
+            ){
+                movingPlatformVelocity = 1;
+                movingPlatformVelocityY = 0;
+            }else if (
+                xMovingPlatform <= player1.x - player1.width ||
+                xMovingPlatform >= player1.x + player1.width
+            ){
+                if(player1.onMovingPlatform){
+                    gravity(player1)
+                }
+                player1.onMovingPlatform = false;
+            }else if (
+                xMovingPlatform <= player2.x - player2.width ||
+                xMovingPlatform >= player2.x + player2.width
+            ){
+                if(player2.onMovingPlatform){
+                    gravity(player2)
+                }
+                player2.onMovingPlatform = false;
             }
         }
     }
@@ -524,8 +681,8 @@ sawImage.src = "./res/img/saw.png";
 let sawVelocity = 1.5;
 
 //SAW COORDINATES
-let xSaw = 600;
-let ySaw = 462;
+let xSaw = 10000;
+let ySaw = 10000;
 
 //This will spawn the Ghost
 let spawnSawCords = () => {
@@ -547,7 +704,7 @@ const drawSaw = () => {
     c.restore();
 
     for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+        if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -784,6 +941,29 @@ const drawing = () => {
     if (deltaMP > 25) {
         thenMP = now - (deltaMP % 25);
         xMovingPlatform += movingPlatformVelocity;
+        yMovingPlatform += movingPlatformVelocityY;
+        if(!sidesCol){
+            if(player1.onMovingPlatform){
+                player1.x += movingPlatformVelocity
+            }
+            if(playingMultiplayer){
+                if(player2.onMovingPlatform){
+                    player2.x += movingPlatformVelocity
+                }
+            }
+        }
+        if(player1.onMovingPlatform){
+            if((sideRightCol && movingPlatformVelocity == 1) || (sideLeftCol && movingPlatformVelocity == -1) || movingPlatformVelocity == 0){
+                player1.x += movingPlatformVelocity
+                player1.y += movingPlatformVelocityY
+            }
+        }
+        if(player2.onMovingPlatform){
+            if((sideRightCol && movingPlatformVelocity == 1) || (sideLeftCol && movingPlatformVelocity == -1) || movingPlatformVelocity == 0){
+                player2.x += movingPlatformVelocity
+                player2.y += movingPlatformVelocityY
+            }
+        }
     }
 
     // Saw Velocity

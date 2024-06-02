@@ -93,6 +93,9 @@ const player1 = {
     slideJumped : false,
     //Moving platform
     onMovingPlatform : false,
+    onMovingPlatformDelaySet : false,
+    // Pipe
+    inPipe : false,
 }
 
 //Player 2
@@ -190,6 +193,9 @@ const player2 = {
     slideJumped : false,
     //Moving platform
     onMovingPlatform : false,
+    onMovingPlatformDelaySet : false,
+    // Pipe
+    inPipe : false,
 }
 
 let playingMultiplayer = false;
@@ -199,6 +205,6 @@ let spawnCords = () => {
     player1.x = 35;
     player1.y = 500;
     player2.x = 70;
-    player2.y = 500;
+    player2.y = 500; 
 }
 spawnCords();
