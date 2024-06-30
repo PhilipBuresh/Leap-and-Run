@@ -7,6 +7,7 @@
 
  - <b>AVAIBLE 1 -> 14 Levels</b> in SteamPunk Dungeon<br>
  - Fixed Moving Platform bug<br>
+ - For now all levels are unlocked<br>
  - COMING SOON: SteamPunk BossFight, Skin changer<br>
  --------------------------------------------------------------------<br>
 ![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
