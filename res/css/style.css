@@ -320,7 +320,7 @@ p{
     font-size:20px;
     cursor: pointer;
 }
-#playButton:hover, #playButtonMulti:hover, #tutorialButton:hover, #creditsButton:hover, #dungeonButton:hover{
+#playButton:hover, #playButtonMulti:hover, #tutorialButton:hover, #creditsButton:hover{
     color: black;
     background-color: white;
 }
@@ -386,6 +386,53 @@ p{
     margin: 0.5em;
 }
 
+#chooseDungeon {
+    border: 3px solid white;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-image:url("../img/wall_verydark.png");
+    box-shadow: 1px -1px 40px 7px rgb(0, 0, 0);
+    transform: translate(-50%, 150%);
+    animation-duration: 1000ms;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-name: bottomToMid;
+    pointer-events: none;
+}
+#chooseDungeon div{
+    margin: 20px;
+}
+#chooseDungeon img{
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 20px;
+    transition: 0.3s;
+}
+#chooseDungeon img:hover{
+    filter:brightness(130%);
+    transform:scale(1.02);
+}
+#chooseDungeon p{
+    font-size: 40px;
+    color: white;
+    margin: -5px;
+}
+#castleDungeon{
+    border:2px solid rgb(151, 151, 151);
+}
+#steampunkDungeon{
+    border:2px solid rgb(177, 97, 43);
+}
 #choose {
     color: white;
     font-size:60px;

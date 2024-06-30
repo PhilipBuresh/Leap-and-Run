@@ -9,6 +9,9 @@ const text = document.getElementById("text");
 const characters = document.getElementById("characters");
 const man = document.getElementById("man");
 const woman = document.getElementById("woman");
+const chooseDungeon = document.getElementById("chooseDungeon");
+const castleDungeon = document.getElementById("castleDungeon");
+const steampunkDungeon = document.getElementById("steampunkDungeon");
 const music = document.getElementById("music");
 const timer = document.getElementById("timer");
 const sfx = document.getElementById("sfx");
@@ -49,7 +52,6 @@ const playButton = document.getElementById("playButton");
 const playButtonMulti = document.getElementById("playButtonMulti");
 const tutorialButton = document.getElementById("tutorialButton");
 const creditsButton = document.getElementById("creditsButton");
-const dungeonButton = document.getElementById("dungeonButton");
 const hp = document.getElementById("hp");
 const myHp = document.getElementById("myHp");
 const startMenu = document.getElementById("startMenu");
@@ -272,7 +274,6 @@ playButton.onclick = () => {
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
     playButtonMulti.style.display = "none";
-    dungeonButton.style.display = "none";
     text.style.opacity = "0";
     setTimeout(() => {
         tutorialBtnSliding = false;
@@ -285,38 +286,24 @@ playButtonMulti.onclick = () => {
     playButton.style.display = "none";
     playButtonMulti.style.animationName = "blink"
     playButtonMulti.style.animationPlayState = "running";
-    black.style.opacity = "1";
     tutorialButton.style.opacity = "0%";
     tutorialButton.style.pointerEvents = "none";
     playButtonMulti.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
-    dungeonButton.style.display = "none";
     text.style.opacity = "0";
-    setTimeout(() => {
-        tutorialBtnSliding = false;
-        tutorialBtnShowed = true;
-    }, 1000);
-    fullBlack.style.display = "block";
     note_button.style.zIndex = "3";
     escape_button.style.zIndex = "3";
-    setTimeout(() => {
-        fullBlack.style.opacity = "1";
-    }, 10);
-    setTimeout(() => {
-        menuToLobby();
-        drawing();
-        fullBlack.style.opacity = "0";
-        setTimeout(() => {
-            note_button.style.zIndex = "11";
-            escape_button.style.zIndex = "11";
-        }, 800);
-    }, 1000);
     player =  "./res/img/rioter.png";
     heart1.src = "./res/img/heart_rioter.png";
     heart2.src = "./res/img/heart_rioter.png";
     heart3.src = "./res/img/heart_rioter.png";
-    gravity(player2)
+    chooseDungeon.style.animationName = "bottomToMid"
+    chooseDungeon.style.animationPlayState = "running";
+    chooseDungeon.style.display = "flex";
+    setTimeout(() => {
+        chooseDungeon.style.pointerEvents = "auto";
+    }, 700);
     playingAsRioter = true;
     playingAsRuby = false;
 }
@@ -369,19 +356,6 @@ credits_list.onclick = () => {
     recommend.style.display = "block";
 }
 
-//Dungeon Button
-dungeonButton.onclick = () => {
-    if(dungeonButton.innerHTML == "Dungeon: Castle"){
-        dungeonButton.innerHTML = "Dungeon: SteamPunk"
-        background.src = "./res/img/wall_steampunk.png"
-        setDungeonToSteamPunk();
-    }else{
-        dungeonButton.innerHTML = "Dungeon: Castle";
-        background.src = "./res/img/wall.png"
-        setDungeonToCastle();
-    }
-}
-
 //This function will send you to the game
 const menuToLobby = () => {
     music.src = "./res/music/lobby_music.mp3";
@@ -404,32 +378,66 @@ let playingAsRuby;
 
 man.onclick = () => { //Choosing Character - Rioter
     characters.style.display = "none";
+    playButton.style.display = "none";
     player =  "./res/img/rioter.png";
     heart1.src = "./res/img/heart_rioter.png";
     heart2.src = "./res/img/heart_rioter.png";
     heart3.src = "./res/img/heart_rioter.png";
     playingAsRioter = true;
     playingAsRuby = false;
-    movingCharactersAndFullBlack();
+    characters.style.display = "block";
+    characters.style.animationName = "midToBottom"
+    characters.style.animationPlayState = "running";
+    setTimeout(() => {
+        chooseDungeon.style.animationName = "bottomToMid"
+        chooseDungeon.style.animationPlayState = "running";
+        chooseDungeon.style.display = "flex";
+        setTimeout(() => {
+            chooseDungeon.style.pointerEvents = "auto";
+        }, 700);
+    }, 200);
 }
 woman.onclick = () => { //Choosing Character - Ruby
     characters.style.display = "none";
+    playButton.style.display = "none";
     player =  "./res/img/ruby.png";
     heart1.src = "./res/img/heart_ruby.png";
     heart2.src = "./res/img/heart_ruby.png";
     heart3.src = "./res/img/heart_ruby.png";
     playingAsRioter = false;
     playingAsRuby = true;
+    characters.style.display = "block";
+    characters.style.animationName = "midToBottom"
+    characters.style.animationPlayState = "running";
+    setTimeout(() => {
+        chooseDungeon.style.animationName = "bottomToMid"
+        chooseDungeon.style.animationPlayState = "running";
+        chooseDungeon.style.display = "flex";
+        setTimeout(() => {
+            chooseDungeon.style.pointerEvents = "auto";
+        }, 700);
+    }, 200);
+}
+
+//Choosing Castle Dungeon
+castleDungeon.onclick = () => {
+    chooseDungeon.style.pointerEvents = "none";
+    playingSteamPunk = false;
+    setDungeonToCastle();
+    movingCharactersAndFullBlack();
+}
+
+//Choosing SteamPunk Dungeon
+steampunkDungeon.onclick = () => {
+    chooseDungeon.style.pointerEvents = "none";
+    playingSteamPunk = true;
+    setDungeonToSteamPunk();
     movingCharactersAndFullBlack();
 }
 
 //If you choose a character -> Transition will be activated and you will be send to the game by function menuToLobby()
 const movingCharactersAndFullBlack = () => {
-    characters.style.display = "block";
-    characters.style.animationName = "midToBottom"
-    characters.style.animationPlayState = "running";
     fullBlack.style.display = "block";
-    playButton.style.display = "none";
     note_button.style.zIndex = "3";
     escape_button.style.zIndex = "3";
     setTimeout(() => {
@@ -446,6 +454,8 @@ const movingCharactersAndFullBlack = () => {
         }, 800);
         gravity(player1);
         gravity(player2);
+        chooseDungeon.style.display = "none";
+        chooseDungeon.style.transform = "translate(-50%, -50%)";
     }, 1000);
 }
 
@@ -620,10 +630,10 @@ const bossMoveX = () => {
 let entered = false;
 
 window.addEventListener("keydown", (event) => {
-    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && (playingSteamPunk && helpNum <= 4 || !playingSteamPunk)) {
+    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && (playingSteamPunk && helpNum <= 13 || !playingSteamPunk)) {
         entered = true;
         enterFunction();
-    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && (playingSteamPunk && helpNum <= 4 || !playingSteamPunk)) {
+    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && (playingSteamPunk && helpNum <= 13 || !playingSteamPunk)) {
         entered = true;
         enterFunction();
     }
@@ -959,7 +969,7 @@ const enterFunction = () => {
                 }
                 spawnMovingPlatformCords();
                 music.src = "./res/music/song2_sp.mp3";
-                doorsTime = 27000;
+                doorsTime = 36000;
                 music.play();
                 darkness = true;
             }else if(helpNum == 3){ //Level 4 STEAMPUNK
@@ -1002,6 +1012,190 @@ const enterFunction = () => {
                 spawnMovingPlatformCords();
                 music.src = "./res/music/song4_sp.mp3";
                 doorsTime = 50000;
+                music.play();
+            }else if(helpNum == 5){ //Level 6 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 60;
+                    player1.y = 500;
+                    if(playingMultiplayer){
+                        player2.x = 60;
+                        player2.y = 500;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    yMovingPlatform = 346;
+                    xMovingPlatform = 260;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song5_sp.mp3";
+                doorsTime = 30000;
+                music.play();
+            }else if(helpNum == 6){ //Level 7 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 60;
+                    player1.y = 340;
+                    if(playingMultiplayer){
+                        player2.x = 60;
+                        player2.y = 340;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song6_sp.mp3";
+                doorsTime = 32000;
+                music.play();
+            }else if(helpNum == 7){ //Level 8 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 50;
+                    player1.y = 500;
+                    if(playingMultiplayer){
+                        player2.x = 50;
+                        player2.y = 500;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    xSaw = 500;
+                    ySaw = 175;
+                }
+                spawnSawCords();
+                music.src = "./res/music/song7_sp.mp3";
+                doorsTime = 41000;
+                music.play();
+                darkness = true;
+            }else if(helpNum == 8){ //Level 9 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = canvas.width / 2 - 15;
+                    player1.y = 400;
+                    if(playingMultiplayer){
+                        player2.x = canvas.width / 2 - 15;
+                        player2.y = 400;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    xSaw = 800;
+                    ySaw = 335;
+                }
+                spawnSawCords();
+                music.src = "./res/music/song8_sp.mp3";
+                doorsTime = 34000;
+                music.play();
+            }else if(helpNum == 9){ //Level 10 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 374;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 374;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    yMovingPlatform = 474;
+                    xMovingPlatform = -40;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song9_sp.mp3";
+                doorsTime = 58000;
+                music.play();
+            }else if(helpNum == 10){ //Level 11 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 500;
+                    player1.y = 374;
+                    if(playingMultiplayer){
+                        player2.x = 500;
+                        player2.y = 374;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    xSaw = 100;
+                    ySaw = 304;
+                }
+                spawnSawCords();
+                music.src = "./res/music/song10_sp.mp3";
+                doorsTime = 44000;
+                music.play();
+            }else if(helpNum == 11){ //Level 12 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 210;
+                    player1.y = 434;
+                    if(playingMultiplayer){
+                        player2.x = 210;
+                        player2.y = 434;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song11_sp.mp3";
+                doorsTime = 57000;
+                music.play();
+            }else if(helpNum == 12){ //Level 13 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 60;
+                    player1.y = 520;
+                    if(playingMultiplayer){
+                        player2.x = 60;
+                        player2.y = 520;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 10000
+                    yMovingPlatform = 10000;
+                }
+                spawnMovingPlatformCords();
+                music.src = "./res/music/song12_sp.mp3";
+                doorsTime = 50000;
+                music.play();
+                darkness = true;
+            }else if(helpNum == 13){ //Level 14 STEAMPUNK
+                spawnCords = () =>{
+                    player1.x = 20;
+                    player1.y = 435;
+                    if(playingMultiplayer){
+                        player2.x = 20;
+                        player2.y = 435;
+                    }
+                }
+                spawnCords();
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = 630
+                    yMovingPlatform = 506;
+                }
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    xSaw = 800;
+                    ySaw = 303;
+                }
+                spawnSawCords();
+                music.src = "./res/music/song13_sp.mp3";
+                doorsTime = 53000;
                 music.play();
             }
         }
@@ -1240,7 +1434,7 @@ const dead = () => {
             movingPlatformVelocity = 1;
             spawnSawCords();
             //
-
+            movingPlatformVelocityY = 0;
             frameSpike = 0;
             frameLava = 0;
             player1.velocity= 0;
@@ -1637,66 +1831,66 @@ const backToLobby = () => {
                 }
             }else if(helpNum == 5){
                 player1.x = 880;
-                player1.y = 300;
+                player1.y = 210;
                 if(playingMultiplayer){
                     player2.x = 880;
-                    player2.y = 300;
+                    player2.y = 210;
                 }
             }else if(helpNum == 6){
-                player1.x = 582;
-                player1.y = 290;
+                player1.x = 660;
+                player1.y = 180;
                 if(playingMultiplayer){
-                    player2.x = 582;
-                    player2.y = 290;
+                    player2.x = 660;
+                    player2.y = 180;
                 }
             }else if(helpNum == 7){
-                player1.x = 400;
-                player1.y = 300;
+                player1.x = 432;
+                player1.y = 214;
                 if(playingMultiplayer){
-                    player2.x = 400;
-                    player2.y = 300;
+                    player2.x = 432;
+                    player2.y = 214;
                 }
             }else if(helpNum == 8){
-                player1.x = 220;
-                player1.y= 300;
+                player1.x = 272;
+                player1.y= 214;
                 if(playingMultiplayer){
-                    player2.x = 220;
-                    player2.y= 300;
+                    player2.x = 272;
+                    player2.y= 214;
                 }
             }else if(helpNum == 9){
                 player1.x = 20;
-                player1.y = 260;
+                player1.y = 278;
                 if(playingMultiplayer){
                     player2.x = 20;
-                    player2.y = 260;
+                    player2.y = 278;
                 }
             }else if(helpNum == 10){
                 player1.x = 20;
-                player1.y= 80;
+                player1.y= 118;
                 if(playingMultiplayer){
                     player2.x = 20;
-                    player2.y = 80;
+                    player2.y = 118;
                 }
             }else if(helpNum == 11){
-                player1.x = 240;
-                player1.y= 80;
+                player1.x = 242;
+                player1.y = 86;
                 if(playingMultiplayer){
-                    player2.x = 240;
-                    player2.y = 80; 
+                    player2.x = 242;
+                    player2.y = 86; 
                 }
             }else if(helpNum == 12){
-                player1.x = 560;
-                player1.y = 50;
+                player1.x = 500;
+                player1.y = 86;
                 if(playingMultiplayer){
-                    player2.x = 560;
-                    player2.y = 50;
+                    player2.x = 500;
+                    player2.y = 86;
                 }
             }else if(helpNum == 13){
-                player1.x = 880;
-                player1.y = 200;
+                player1.x = 820;
+                player1.y = 86;
                 if(playingMultiplayer){
-                    player2.x = 880;
-                    player2.y = 200;
+                    player2.x = 820;
+                    player2.y = 86;
                 }
             }else if(helpNum == 14 || helpNum == 15){
                 player1.x = 920;
@@ -1763,7 +1957,6 @@ button_menu.onclick = () => {
         startMenu.style.display = "block";
         playButton.style.pointerEvents = "auto";
         playButton.style.display = "block";
-        dungeonButton.style.display = "block";
         playButtonMulti.style.pointerEvents = "auto";
         playButtonMulti.style.display = "block";
         creditsButton.style.display = "block";
@@ -1867,7 +2060,7 @@ const unlockAll = () => {
     }
 }
 
-//unlockAll()
+unlockAll()
 
 //---------------------------------------- OBJECTS Collision
 
@@ -2225,7 +2418,7 @@ let saveSawCordsY = 0
 const sawCollision = (PLAYER) => {
     if (
         (PLAYER.y + 5 + PLAYER.height - 10 >= ySaw) &&
-        (PLAYER.y + 5 <= ySaw + 64) &&
+        (PLAYER.y + 5 <= ySaw + 69) &&
         (PLAYER.x + 5 + PLAYER.width - 10 >= xSaw) &&
         (PLAYER.x + 5 <= xSaw + 64)
     ){
@@ -2821,7 +3014,7 @@ let moveRight = (PLAYER) => {
                 }
             }
             PLAYER.x += PLAYER.velocityRight;
-            if  (PLAYER.x >= canvas.width - PLAYER.width) {
+            if  (PLAYER.x >= canvas.width - PLAYER.width && !PLAYER.inPipe) {
                 PLAYER.x = canvas.width - PLAYER.width;
                 PLAYER.velocityRight = 0;
                 cancelAnimationFrame(PLAYER.animationIdRight);
@@ -2911,7 +3104,7 @@ let moveLeft = (PLAYER) => {
                 }
             }
             PLAYER.x -= PLAYER.velocityLeft;
-            if  (PLAYER.x <= 0) {
+            if  (PLAYER.x <= 0 && !PLAYER.inPipe) {
                 PLAYER.x = 0;
                 PLAYER.velocityLeft = 0;
                 cancelAnimationFrame(PLAYER.animationIdLeft);
@@ -3408,3 +3601,5 @@ characters.style.display = "none";
     player1.y = 200;
     //music.volume = 0;
     */
+
+    unlockAll();
