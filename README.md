@@ -5,7 +5,7 @@
  
 <b>LAST UPDATE (1.5)</b><br>
 
- - <b>AVAIBLE 1 -> 14 Levels</b> in SteamPunk Dungeon<br>
+ - <b>AVAILABLE 1 -> 14 Levels</b> in SteamPunk Dungeon<br>
  - Fixed Moving Platform bug<br>
  - For now all levels are unlocked<br>
  - COMING SOON: SteamPunk BossFight, Skin changer<br>
