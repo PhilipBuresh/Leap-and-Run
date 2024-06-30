@@ -635,7 +635,7 @@ window.addEventListener("keydown", (event) => {
         enterFunction();
     } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && (playingSteamPunk && helpNum <= 13 || !playingSteamPunk)) {
         entered = true;
-        enterFunction();
+        enterFunction(); 
     }
 })
 
@@ -1675,17 +1675,18 @@ const backToLobby = () => {
             yGhost = 20000;
         }
         spawnGhostCords();
-        spawnMovingPlatformCords = () => {
-            xMovingPlatform = 600;
-            yMovingPlatform = 282;
+        if(playingSteamPunk){
+            spawnMovingPlatformCords = () => {
+                xMovingPlatform = 600;
+                yMovingPlatform = 282;
+            }
+            spawnMovingPlatformCords();
+            spawnSawCords = () => {
+                xSaw = 10000;
+                ySaw = 10000;
+            }
+            spawnSawCords();
         }
-        spawnMovingPlatformCords();
-        spawnSawCords = () => {
-            xSaw = 10000;
-            ySaw = 10000;
-        }
-        spawnSawCords();
-
         if(!playingSteamPunk){
             if(helpNum == 0){ // Go to lobby From Levels 1 - 15
                 player1.x = 120;
