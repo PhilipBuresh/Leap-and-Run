@@ -11,8 +11,10 @@
  - ADDED Skin Changer<br>
  - ADDED Hanging Spiders<br>
  - ADDED Moving Camera in Boss Levels<br>
- - Better Local Storage<br>
+ - Better Local Storage (Saving progress + skins) <br>
  - Fixed drawing player<br>
+ - If you want to try the Boss, you can unlock all the levels:<br>
+                   - Write to the console: <b>unlockAll()</b><br>
  --------------------------------------------------------------------<br>
 ![player_an](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/c5094b69-b54d-4cf5-a6b2-c2112b94bd09)
 ![output-onlinegiftools](https://github.com/PhilipBuresh/Leap-and-Run/assets/114904886/3f542c81-fdb6-4717-821a-9dbf8fa37242)
