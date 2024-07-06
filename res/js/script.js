@@ -37,7 +37,6 @@ const sfx_jump2 = document.getElementById("sfx_jump2");
 const sfx_punch2 = document.getElementById("sfx_punch2");
 const sfx_extra_jump2 = document.getElementById("sfx_extra_jump2");
 const game = document.getElementById("game");
-const background = document.getElementById("background");
 const black = document.getElementById("black");
 const fullBlack = document.getElementById("fullBlack");
 const paper = document.getElementById("paper");
@@ -45,7 +44,6 @@ const recommend = document.getElementById("recommend");
 const credits_list = document.getElementById("credits_list");
 const transition1 = document.getElementById("transition1");
 const transition2 = document.getElementById("transition2");
-const scene = document.getElementById("scene");
 const rising = document.getElementById("rising");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
@@ -54,6 +52,10 @@ const tutorialButton = document.getElementById("tutorialButton");
 const creditsButton = document.getElementById("creditsButton");
 const hp = document.getElementById("hp");
 const myHp = document.getElementById("myHp");
+const divider1 = document.getElementById("divider1");
+const divider2 = document.getElementById("divider2");
+const divider3 = document.getElementById("divider3");
+const divider4 = document.getElementById("divider4");
 const startMenu = document.getElementById("startMenu");
 const button_back = document.getElementById("button_back");
 const button_resume = document.getElementById("button_resume");
@@ -73,6 +75,18 @@ const sfx_value = document.getElementById("sfx_value");
 const note_button = document.getElementById("note_button");
 const music_editor = document.getElementById("music_editor");
 const music_editor_back = document.getElementById("music_editor_back");
+const leftArrow = document.getElementById("leftArrow");
+const rightArrow = document.getElementById("rightArrow");
+const leftSkinImg = document.getElementById("leftSkinImg");
+const middleSkinImg = document.getElementById("middleSkinImg");
+const rightSkinImg = document.getElementById("rightSkinImg");
+const chooseSkinBtn = document.getElementById("chooseSkinBtn");
+const choose_rioter = document.getElementById("choose_rioter");
+const choose_ruby = document.getElementById("choose_ruby");
+const skinChangerBox = document.getElementById("skinChangerBox");
+const skins = document.getElementById("skins");
+const steampunkLevelsDone = document.getElementById("steampunkLevelsDone");
+const castleLevelsDone = document.getElementById("castleLevelsDone");
 
 let helpNum = 0; //Help Number for level detection (doors)
 
@@ -110,7 +124,6 @@ const setSfxVolume = () => {
     sfx_boss_talk.volume = sfxVolume;
     sfx_boss_laugh.volume = sfxVolume;
     sfx_land.volume = sfxVolume;
-    scene.volume = sfxVolume;
 }
 
 setMusicVolume();
@@ -160,14 +173,12 @@ note_button.onclick = () => {
     if(inGame && !escShowed){
         if(musicEditorOpened){
             canvas.style.filter = "blur(0)"
-            background.style.filter = "blur(0)"
             rising.style.filter = "blur(0)"
             music_editor.style.display = "none";
             musicEditorOpened = false;
             black.style.opacity = "0";
         }else{
             canvas.style.filter = "blur(1px)"
-            background.style.filter = "blur(1px)"
             rising.style.filter = "blur(1px)"
             music_editor.style.display = "flex";
             musicEditorOpened = true;
@@ -182,7 +193,6 @@ music_editor_back.onclick = () => {
         musicEditorOpened = false;
         black.style.opacity = "0";
         canvas.style.filter = "blur(0)"
-        background.style.filter = "blur(0)"
         rising.style.filter = "blur(0)"
     }
 }
@@ -274,6 +284,9 @@ playButton.onclick = () => {
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
     playButtonMulti.style.display = "none";
+    skins.style.animationName = "midToRightSkins";
+    skins.style.animationPlayState = "running";
+    skins.style.pointerEvents = "none";
     text.style.opacity = "0";
     setTimeout(() => {
         tutorialBtnSliding = false;
@@ -291,13 +304,18 @@ playButtonMulti.onclick = () => {
     playButtonMulti.style.pointerEvents = "none";
     tutorialButton.style.pointerEvents = "none";
     creditsButton.style.display = "none";
+    skins.style.animationName = "midToRightSkins";
+    skins.style.animationPlayState = "running";
+    skins.style.pointerEvents = "none";
     text.style.opacity = "0";
     note_button.style.zIndex = "3";
     escape_button.style.zIndex = "3";
-    player =  "./res/img/rioter.png";
+    selectedRioter = true;
+    setSkins();
     heart1.src = "./res/img/heart_rioter.png";
     heart2.src = "./res/img/heart_rioter.png";
     heart3.src = "./res/img/heart_rioter.png";
+    chooseDungeon.style.animationDuration = "1s";
     chooseDungeon.style.animationName = "bottomToMid"
     chooseDungeon.style.animationPlayState = "running";
     chooseDungeon.style.display = "flex";
@@ -379,7 +397,9 @@ let playingAsRuby;
 man.onclick = () => { //Choosing Character - Rioter
     characters.style.display = "none";
     playButton.style.display = "none";
-    player =  "./res/img/rioter.png";
+    selectedRioter = true;
+    selectedRuby = false;
+    setSkins();
     heart1.src = "./res/img/heart_rioter.png";
     heart2.src = "./res/img/heart_rioter.png";
     heart3.src = "./res/img/heart_rioter.png";
@@ -388,19 +408,22 @@ man.onclick = () => { //Choosing Character - Rioter
     characters.style.display = "block";
     characters.style.animationName = "midToBottom"
     characters.style.animationPlayState = "running";
+    chooseDungeon.style.animationDuration = "1s";
     setTimeout(() => {
+        chooseDungeon.style.display = "flex";
         chooseDungeon.style.animationName = "bottomToMid"
         chooseDungeon.style.animationPlayState = "running";
-        chooseDungeon.style.display = "flex";
         setTimeout(() => {
             chooseDungeon.style.pointerEvents = "auto";
         }, 700);
-    }, 200);
+    }, 400);
 }
 woman.onclick = () => { //Choosing Character - Ruby
     characters.style.display = "none";
     playButton.style.display = "none";
-    player =  "./res/img/ruby.png";
+    selectedRioter = false;
+    selectedRuby = true;
+    setSkins();
     heart1.src = "./res/img/heart_ruby.png";
     heart2.src = "./res/img/heart_ruby.png";
     heart3.src = "./res/img/heart_ruby.png";
@@ -409,20 +432,20 @@ woman.onclick = () => { //Choosing Character - Ruby
     characters.style.display = "block";
     characters.style.animationName = "midToBottom"
     characters.style.animationPlayState = "running";
+    chooseDungeon.style.animationDuration = "1s";
     setTimeout(() => {
+        chooseDungeon.style.display = "flex";
         chooseDungeon.style.animationName = "bottomToMid"
         chooseDungeon.style.animationPlayState = "running";
-        chooseDungeon.style.display = "flex";
         setTimeout(() => {
             chooseDungeon.style.pointerEvents = "auto";
         }, 700);
-    }, 200);
+    }, 400);
 }
 
 //Choosing Castle Dungeon
 castleDungeon.onclick = () => {
     chooseDungeon.style.pointerEvents = "none";
-    playingSteamPunk = false;
     setDungeonToCastle();
     movingCharactersAndFullBlack();
 }
@@ -430,7 +453,6 @@ castleDungeon.onclick = () => {
 //Choosing SteamPunk Dungeon
 steampunkDungeon.onclick = () => {
     chooseDungeon.style.pointerEvents = "none";
-    playingSteamPunk = true;
     setDungeonToSteamPunk();
     movingCharactersAndFullBlack();
 }
@@ -455,7 +477,9 @@ const movingCharactersAndFullBlack = () => {
         gravity(player1);
         gravity(player2);
         chooseDungeon.style.display = "none";
-        chooseDungeon.style.transform = "translate(-50%, -50%)";
+        chooseDungeon.style.animationDuration = "0s";
+        chooseDungeon.style.animationName = "midToBottom"
+        chooseDungeon.style.animationPlayState = "running";
     }, 1000);
 }
 
@@ -490,9 +514,7 @@ const doorsCollision = (PLAYER) => {
                 PLAYER.x + PLAYER.width >= platformX + 24 &&
                 PLAYER.x <= platformX + 40
             ) {
-                if(platformLevel1[i] == 34 && frameDoorFinal == 0){
-                    helpNum = 15;
-                }else if(platformLevel1[i] != 34 && inGame){
+                if(platformLevel1[i] != 34 && inGame){
                     helpNum = platformLevel1[i] - 50;
                     lobbyDoorCol = true;
                 }
@@ -504,21 +526,23 @@ const doorsCollision = (PLAYER) => {
                 }
                 PLAYER.doorCol = true;
                 c.font = "20px VT323, monospace";
-                if(finished[helpNum] == 2 || !finalDoorUnlocked){
+                if((finished_castle[helpNum] == 2 && playingCastle) || (finished_steampunk[helpNum] == 2 && playingSteamPunk) || !finalDoorUnlocked && platformLevel1[i] != 34){
                     c.fillStyle = "red";
                     c.fillText("LOCKED", platformX + 7, platformY);
                 }else{
-                    if(playingMultiplayer){
-                        if(player1.doorCol && !player2.doorCol || !player1.doorCol && player2.doorCol || helpNumbers[0] != helpNumbers[1]){
-                            c.fillStyle = "yellow";
-                            c.fillText("1 / 2", platformX + 11, platformY);
-                        }else if(player1.doorCol && player2.doorCol && helpNumbers[0] == helpNumbers[1]){
+                    if((playingSteamPunk && platformLevel1[i] != 34) || (playingCastle && platformLevel1[i] != 34)){
+                        if(playingMultiplayer){
+                            if(player1.doorCol && !player2.doorCol || !player1.doorCol && player2.doorCol || helpNumbers[0] != helpNumbers[1]){
+                                c.fillStyle = "yellow";
+                                c.fillText("1 / 2", platformX + 11, platformY);
+                            }else if(player1.doorCol && player2.doorCol && helpNumbers[0] == helpNumbers[1]){
+                                c.fillStyle = "lime";
+                                c.fillText("Enter [e]", platformX - 3, platformY);
+                            }
+                        }else{
                             c.fillStyle = "lime";
                             c.fillText("Enter [e]", platformX - 3, platformY);
                         }
-                    }else{
-                        c.fillStyle = "lime";
-                        c.fillText("Enter [e]", platformX - 3, platformY);
                     }
                 }
                 break;
@@ -624,28 +648,39 @@ const bossMoveX = () => {
     }
 }
 
-
 //---------------------------------------Enter to the Level Function
 
 let entered = false;
 
 window.addEventListener("keydown", (event) => {
-    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && (playingSteamPunk && helpNum <= 13 || !playingSteamPunk)) {
+    if ((event.key == "e" || event.key == "E") && player1.doorCol && !entered && ((finished_castle[helpNum] != 2 && playingCastle) || (finished_steampunk[helpNum] != 2 && playingSteamPunk)) && finalDoorUnlocked && inGame && canEnter && !playingMultiplayer && (playingSteamPunk && helpNum <= 15 || playingCastle)) {
         entered = true;
         enterFunction();
-    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && finished[helpNum] != 2 && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && (playingSteamPunk && helpNum <= 13 || !playingSteamPunk)) {
+    } else if ((event.key == "e" || event.key == "E") && player1.doorCol && player2.doorCol && !entered && ((finished_castle[helpNum] != 2 && playingCastle) || (finished_steampunk[helpNum] != 2 && playingSteamPunk)) && finalDoorUnlocked && inGame && canEnter && helpNumbers[0] == helpNumbers[1] && (playingSteamPunk && helpNum <= 15 || playingCastle)) {
         entered = true;
         enterFunction(); 
     }
 })
 
 //Boss Phases
-let breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, bossLava3;
+let reaperStartMoving, breakBottom, bossLava, endBossLava, bossDarkness, endBossDarkness, bossLava2, bossLava3;
 let nonStopShake;
 
 let canEnter = true;
 
 let timeNow = 0;
+
+const clearBossTimeouts = () => {
+    clearTimeout(reaperStartMoving);
+    clearTimeout(breakBottom);
+    clearTimeout(bossLava);
+    clearTimeout(bossLava2);
+    clearTimeout(bossLava3);
+    clearTimeout(endBossLava);
+    clearTimeout(bossDarkness);
+    clearTimeout(endBossDarkness);
+    clearInterval(nonStopShake);
+}
 
 //Enter Function
 const enterFunction = () => {
@@ -670,7 +705,7 @@ const enterFunction = () => {
         platformLevel1 = [...map[helpNum]];
         originalPlatform1 = [...platformLevel1];
         movingPlatformVelocity = 1;
-        if(!playingSteamPunk){
+        if(playingCastle){
             if(helpNum == 0){ //Level 1
                 spawnCords = () =>{
                     player1.x = 40;
@@ -906,7 +941,7 @@ const enterFunction = () => {
                         player2.y = 515;
                     }
                 }
-                finished[14] = 1; //Boss Beated -> Level 15 Doors are now green
+                finished_castle[14] = 1; //Boss Beated -> Level 15 Doors are now green
                 spawnCords();
                 music.src = "./res/music/ending.mp3";
                 music.play();
@@ -949,6 +984,8 @@ const enterFunction = () => {
                     ySaw = 142;
                     xSaw = 400;
                 }
+                spider1Y = -120;
+                spider1X = 408;
                 spawnSawCords();
                 music.src = "./res/music/song1_sp.mp3";
                 doorsTime = 30000;
@@ -992,6 +1029,8 @@ const enterFunction = () => {
                     xSaw = 800;
                 }
                 spawnSawCords();
+                spider1Y = -130;
+                spider1X = 128;
                 music.src = "./res/music/song3_sp.mp3";
                 doorsTime = 30000;
                 music.play();
@@ -1028,6 +1067,10 @@ const enterFunction = () => {
                     xMovingPlatform = 260;
                 }
                 spawnMovingPlatformCords();
+                spider1X = 13*32;
+                spider1Y = -10;
+                spider2X = 24*32;
+                spider2Y = -200;
                 music.src = "./res/music/song5_sp.mp3";
                 doorsTime = 30000;
                 music.play();
@@ -1093,6 +1136,8 @@ const enterFunction = () => {
                     ySaw = 335;
                 }
                 spawnSawCords();
+                spider1X = 3*32 - 16;
+                spider1Y = -132;
                 music.src = "./res/music/song8_sp.mp3";
                 doorsTime = 34000;
                 music.play();
@@ -1111,6 +1156,8 @@ const enterFunction = () => {
                     xMovingPlatform = -40;
                 }
                 spawnMovingPlatformCords();
+                spider1X = 14*32;
+                spider1Y = -32;
                 music.src = "./res/music/song9_sp.mp3";
                 doorsTime = 58000;
                 music.play();
@@ -1194,11 +1241,16 @@ const enterFunction = () => {
                     ySaw = 303;
                 }
                 spawnSawCords();
+                spider1X = 19*32;
+                spider1Y = -26;
                 music.src = "./res/music/song13_sp.mp3";
-                doorsTime = 53000;
+                doorsTime = 51000;
                 music.play();
+            }else if(helpNum == 14){ //Level 15 STEAMPUNK - Spider Boss
+                spiderBossLevel();
             }
         }
+        
         setTransitionCords();
         fadeOutTransition();
         // Save Cords
@@ -1227,115 +1279,6 @@ const enterFunction = () => {
         }
             }, 1300);
 }
-
-//----------------------------------------BOSS LEVEL
-const bossLevel = () => {
-    finalDoorUnlocked = false;
-    if(playingMultiplayer){
-        setTarget();
-    }
-    generatorAttackFunction();
-    gravity(player1);
-    if(playingMultiplayer){
-        gravity(player2)
-    }
-    spawnCords = () => {
-        player1.x = 500;
-        player1.y= 220;
-        if(playingMultiplayer){
-            player2.x = 500;
-            player2.y= 220;        
-        }
-    }
-    spawnCords();
-    myHp.style.display = "flex";
-    hps.style.display = "block";
-    heart1.style.display = "block";
-    heart2.style.display = "block";
-    heart3.style.display = "block";
-    hearts = 3;
-    bossX = 474;
-    bossY = 450;
-    playingBossFight = true;
-    sfx_boss_talk.src = "./res/sfx/killyou.mp3";
-    sfx_boss_talk.play();
-    music.currentTime = 0;
-    music.src = "./res/music/finalboss.mp3";
-    doorsTime = 76000;
-    music.play();
-    cancelAnimationFrame(bossMoveXId);
-    cancelAnimationFrame(bossMoveYId);
-    bossMoveY();
-    bossMoveX();
-    breakBottom = setTimeout(() => {
-        for (let index = 0; index < platformLevel1.length; index++) {
-            if(platformLevel1[index] == 6){
-                platformLevel1[index] = 0;
-            }
-        }
-        shake();
-        gravity(player1);
-        if(playingMultiplayer){
-            gravity(player2)
-        }
-    }, 13000);
-    bossLava = setTimeout(() => {
-        shake()
-        risingLavaActivated = true;
-        rising.style.display = "block";
-    }, 25000);
-    endBossLava = setTimeout(() => {
-        shake();
-        black.style.transition = "opacity 0s"
-        black.style.opacity = 1;
-        risingLavaActivated = false;
-        lavaIncreaseValue = 3.6;
-        lavaY = 576;
-        risingPercent = risingPercentOriginal;
-        rising.style.bottom = risingPercent + "%"
-        rising.style.display = "none";
-        setTimeout(() => {
-            black.style.transition = "opacity 0.3s"
-            black.style.opacity = 0; 
-        }, 20);
-    }, 36200);
-    bossDarkness = setTimeout(() => {
-        shake();
-        black.style.transition = "opacity 0s"
-        black.style.opacity = 1;
-        setTimeout(() => {
-            black.style.transition = "opacity 0.3s"
-            black.style.opacity = 0; 
-        }, 20);
-        darkness = true;
-    }, 43800);
-    endBossDarkness = setTimeout(() => {
-        shake();
-        black.style.transition = "opacity 0s"
-        black.style.opacity = 1;
-        setTimeout(() => {
-            black.style.transition = "opacity 0.3s"
-            black.style.opacity = 0; 
-        }, 20);
-        darkness = false;
-    }, 52000);
-    bossLava2 = setTimeout(() => {
-        shake()
-        risingLavaActivated = true;
-        rising.style.display = "block";
-    }, 61500);
-    bossLava3 = setTimeout(() => {
-        shake()
-        risingLavaActivated = true;
-        rising.style.display = "block";
-        risingIncreaseValue = 1.32;
-        lavaIncreaseValue = 7.92;
-        nonStopShake = setInterval(() => {
-            shake()
-        }, 300);
-    }, 67000);
-}
-
 //----------------------------------------Boss Attack Generator
 
 let bossAttacking = false;
@@ -1343,9 +1286,15 @@ let attackNum = 0;
 
 let bossAttackGenerator;
 
+let firstReaperAttack = false;
+
 const generatorAttackFunction = () => {
     bossAttackGenerator = setInterval(() => {
         attackNum = Math.floor(Math.random() * 2)
+        if(firstReaperAttack){
+            attackNum = 1;
+            firstReaperAttack = false;
+        }
         if(attackNum == 1 && !bossAttacking){
             bossVelocity = 1.5;
             currentFrameBoss = 0;
@@ -1354,28 +1303,385 @@ const generatorAttackFunction = () => {
     }, 500);
 }
 
+//----------------------------------------Spider Jump
+
+let spiderJumpingId;
+let velocitySpiderJump = 8;
+let velocitySpiderDrop = 1;
+
+let nowSpiderUp
+let thenSpiderUp = Date.now()
+let deltaSpiderUp
+
+let spiderBossJumping = false;
+
+let spiderBossJumpDamage = false;
+
+const spiderJump = () => {
+    if(music.currentTime > 3){
+        sfx.src = "./res/sfx/spider_jump.mp3";
+        sfx.play();
+    }
+    const spiderJumping = () => {
+        spiderJumpingId = requestAnimationFrame(() => spiderJumping());
+        nowSpiderUp = Date.now();
+        deltaSpiderUp = nowSpiderUp - thenSpiderUp;
+        if (deltaSpiderUp > interval) {
+            thenSpiderUp = nowSpiderUp - (deltaSpiderUp % interval);
+            if(velocitySpiderJump > 1){
+                velocitySpiderJump = velocitySpiderJump / 1.05
+                bossY -= velocitySpiderJump;
+            }else{
+                velocitySpiderDrop = velocitySpiderDrop * 1.1
+                bossY += velocitySpiderDrop;
+                if(bossY >= canvas.height - 5*32 - 80){
+                    bossY = canvas.height - 5*32 - 80;
+                    velocitySpiderJump = 8;
+                    velocitySpiderDrop = 1;
+                    spiderBossJumping = false;
+                    spiderFell = true;
+                    currentFrameSpiderBoss = 0;
+                    spiderBossNumber = 1;
+                    if(!smallSpiderJump){
+                        shake();
+                        spiderBossJumpDamage = true;
+                        sfx.src = "./res/sfx/spider_land.mp3";
+                        sfx.play();
+                    }
+                    cancelAnimationFrame(spiderJumpingId);
+                }
+            }
+            
+        }
+    }
+    spiderJumping();
+}
+
+//----------------------------------------Spider Move X
+
+let spiderMovingId;
+let spiderMoveSet = false;
+let movingSpiderNumber = 2;
+let slowingSpeedSpiderInterval;
+let canAddSpiderSpeed = true;
+let spiderFell = false;
+
+let nowSpiderX
+let thenSpiderX = Date.now()
+let deltaSpiderX
+
+const spiderMove = () => {
+    const spiderMoving = () => {
+        spiderMovingId = requestAnimationFrame(() => spiderMoving());
+        nowSpiderX = Date.now();
+        deltaSpiderX = nowSpiderX - thenSpiderX;
+        if (deltaSpiderX > interval) {
+            thenSpiderX = nowSpiderX - (deltaSpiderX % interval);
+            if(movingSpiderNumber > -3 && movingSpiderNumber < 3 && canAddSpiderSpeed){
+                movingSpiderNumber *= 1.1;
+            }else if(canAddSpiderSpeed){
+                canAddSpiderSpeed = false;
+            }
+            bossX += movingSpiderNumber;
+            for (let i = 0; i < platformLevel1.length; i++) {
+                if ([1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 71, 68, 73, 74, 75, 76, 77, 78, 79, 80].includes(platformLevel1[i])) {
+                    let platformX = (i % 32) * 32;
+                    let platformY = Math.floor(i / 32) * 32;
+                    if (
+                        bossY + 80 > platformY &&
+                        bossY < platformY + 32 &&
+                        bossX - 2 < platformX + 32 && // Spider Moving LEFT Collision
+                        bossX > platformX &&
+                        movingSpiderNumber < 0
+                    ) {
+                        bossX = platformX + 32;
+                        canAddSpiderSpeed = true;
+                        cancelAnimationFrame(spiderMovingId);
+                    }else if (
+                        bossY + 80 > platformY &&
+                        bossY < platformY + 32 &&
+                        bossX + 80 > platformX && // Spider Moving RIGHT Collision
+                        bossX < platformX + 32 &&
+                        movingSpiderNumber > 0
+                    ) {
+                        bossX = platformX - 80;
+                        canAddSpiderSpeed = true;
+                        cancelAnimationFrame(spiderMovingId);
+                    }
+                }
+            }
+            if(!spiderMoveSet){
+                spiderMoveSet = true;
+                setTimeout(() => {
+                    slowingSpeedSpiderInterval = setInterval(() => {
+                        if(smallSpiderJump){
+                            movingSpiderNumber /= 1.4;
+                        }else{
+                            movingSpiderNumber /= 1.08;
+                        }
+                        
+                    }, 20);
+                }, 900);
+                if(smallSpiderJump){
+                    setTimeout(() => {
+                        spiderMoveSet = false;
+                        canAddSpiderSpeed = true;
+                        smallSpiderJump = false;
+                        cancelAnimationFrame(spiderMovingId);
+                        clearInterval(slowingSpeedSpiderInterval);
+                    }, 1500);
+                }else{
+                    setTimeout(() => {
+                        spiderMoveSet = false;
+                        canAddSpiderSpeed = true;
+                        cancelAnimationFrame(spiderMovingId);
+                        clearInterval(slowingSpeedSpiderInterval);
+                    }, 1500);
+                }
+                
+            }
+        }
+    }
+    spiderMoving();
+}
+
+// Moving Walls in Spider Boss
+
+let noWallX
+let thenWallX = Date.now()
+let deltaWallrX
+
+let wallSpiderMovingId;
+
+const wallSpiderMove = () => {
+    const wallSpiderMoving = () => {
+        wallSpiderMovingId = requestAnimationFrame(() => wallSpiderMoving());
+        noWallX = Date.now();
+        deltaWallrX = noWallX - thenWallX;
+        if (deltaWallrX > interval) {
+            thenWallX = noWallX - (deltaWallrX % interval);
+            rightWallX -= 0.455;
+            leftWallX += 0.455;
+            if(leftWallX >= 0){
+                leftWallX = 0;
+                rightWallX = canvas.width - 160;
+                shake();
+                cancelAnimationFrame(wallSpiderMovingId);
+            }
+        }
+    }
+    wallSpiderMoving()
+}
+
+//----------------------------------------Spider Boss Generator
+
+let spiderBossWarning = false;
+let spiderBossAttacking = false;
+let warningNum = 0;
+
+let spiderBossGenerator;
+let smallSpiderJump;
+
+let generatorInterval = 1000;
+
+let chasePlayerNum = 0;
+let chasedPlayer;
+
+const spiderJumpMoment = () => {
+    if(inGame){
+        spiderJump();
+        spiderBossJumping = true;
+        if(!playingMultiplayer){
+            if(player1.x + 30 <= bossX + 80){
+                movingSpiderNumber = -0.4;
+                if(bossX < 175 + 150){
+                    movingSpiderNumber = 0.4;
+                }
+            }else if(player1.x >= bossX){
+                movingSpiderNumber = 0.4;
+                if(bossX > 830 - 150){
+                    movingSpiderNumber = -0.4;
+                }
+            }
+        }else{
+            chasePlayerNum = Math.floor(Math.random() * 2 + 1);
+            if(chasePlayerNum == 1){
+                chasedPlayer = player1.x;
+            }else{
+                chasedPlayer = player2.x;
+            }
+            if(chasedPlayer + 30 <= bossX + 80){
+                movingSpiderNumber = -0.4;
+                if(bossX < 175 + 150){
+                    movingSpiderNumber = 0.4;
+                }
+            }else if(chasedPlayer >= bossX){
+                movingSpiderNumber = 0.4;
+                if(bossX > 830 - 150){
+                    movingSpiderNumber = -0.4;
+                }
+            }
+        }
+        spiderMove();
+    }
+
+}
+
+const generatorSpiderFunction = () => {
+    spiderBossGenerator = setInterval(() => {
+        warningNum = Math.floor(Math.random() * 3 + 1)
+        if(music.currentTime < 20.5 && warningNum == 2){ // Soon for big jumps
+            warningNum = 3;
+        }
+        if(warningNum == 1 && !spiderBossWarning && !smokeActivated && (!spiderBossJumping || !smallSpiderJump)){ // Smoke Attack
+            currentFrameSpiderBoss = 0;
+            currentFrameSmoke = 0;
+            spiderBossNumber = 2;
+            spiderBossWarning = true;
+            spiderBossAttacking = true
+        }else if(warningNum == 2 && !spiderBossJumping && !spiderMoveSet && !spiderBossWarning){ // Big Jump
+            spiderBossNumber = 1;
+            currentFrameSpiderBoss = 0;
+        }else if(warningNum == 3 && !spiderBossJumping && !spiderMoveSet && !spiderBossWarning){ // Small Jump
+            spiderBossNumber = 1;
+            currentFrameSpiderBoss = 0;
+            smallSpiderJump = true;
+            velocitySpiderJump = 3;
+        }
+    }, generatorInterval);
+}
+
+//----------------------------------------Smoke Collision
+const smokeCollision = (PLAYER) => {
+    if (
+        PLAYER.y + PLAYER.height >= bossY - 20 &&
+        PLAYER.y <= bossY + 120 - 20 &&
+        PLAYER.x + PLAYER.width >= bossX - 20 &&
+        PLAYER.x <= bossX + 120 - 20
+        && smokeActivated
+        && currentFrameSmoke < 2
+    ) {
+        dead();
+    }
+};
+
+//----------------------------------------Spider Boss Collision
+const spiderBossCollision = (PLAYER) => {
+    if (
+        PLAYER.y + PLAYER.height >= bossY &&
+        PLAYER.y <= bossY + 80 &&
+        PLAYER.x + PLAYER.width >= bossX &&
+        PLAYER.x <= bossX + 80
+        && spiderBossJumpDamage
+        && !PLAYER.stillJumping
+    ) {
+        dead();
+    }
+};
+
+//----------------------------------------SPIDERS
+
+let hangingSpidersFunctionId;
+let nowSpiders;
+let thenSpiders = Date.now();
+let deltaSpiders;
+
+let spidersVelocity = 0.1;
+
+let spiderGoingDown = false;
+let spiderGoingUp = false;
+let canSpidersMoving = false;
+
+let spidersOrderNum = 1;
+let spidersSlowing = false;
+
+let startingMovingInSpiderBoss = false;
+
+const hangingSpiders = () => {
+    const hangingSpidersFunction = () => {
+        hangingSpidersFunctionId = requestAnimationFrame(() => hangingSpidersFunction());
+        nowSpiders = Date.now();
+        deltaSpiders = nowSpiders - thenSpiders;
+        if (deltaSpiders > interval) {
+            thenSpiders = nowSpiders - (deltaSpiders % interval);
+            if(spiderGoingDown){
+                if(spider1Y > -220){
+                    spidersVelocity /= 1.06;
+                    if(spidersVelocity < 0.1){
+                        spidersVelocity = 0.1;
+                        cancelAnimationFrame(hangingSpidersFunctionId);
+                    }
+                }
+                spider1Y += spidersVelocity;
+                spider2Y += spidersVelocity;
+                spider3Y += spidersVelocity;
+                spider4Y += spidersVelocity;
+            }
+            if(spiderGoingUp){
+                    spidersVelocity *= 1.08;
+                    if(spider1Y < - 500){
+                        spidersVelocity = 0.1;
+                        cancelAnimationFrame(hangingSpidersFunctionId);
+                    }
+                    spider1Y -= spidersVelocity;
+                    spider2Y -= spidersVelocity;
+                    spider3Y -= spidersVelocity;
+                    spider4Y -= spidersVelocity;
+                }
+            if(canSpidersMoving){
+                if(spidersOrderNum == 1){
+                    spider1Y -= spidersVelocity;
+                    spider3Y -= spidersVelocity;
+                    if(!startingMovingInSpiderBoss){
+                        spider2Y += spidersVelocity;
+                        spider4Y += spidersVelocity;
+                    }
+                }else{
+                    startingMovingInSpiderBoss = false
+                    spider1Y += spidersVelocity;
+                    spider2Y -= spidersVelocity;
+                    spider3Y += spidersVelocity;
+                    spider4Y -= spidersVelocity;
+                }
+                if(spidersVelocity < 13 && !spidersSlowing){
+                    spidersVelocity *= 1.193;
+                }else{
+                    spidersSlowing = true;
+                    spidersVelocity /= 1.193;
+                }
+                if(spidersVelocity > 0.1 && spidersSlowing){
+                    spidersVelocity = 0.1;
+                    spidersSlowing = false;
+                    if(spidersOrderNum == 1){
+                        spidersOrderNum = 2;
+                    }else{
+                        spidersOrderNum = 1;
+                    }
+                    
+                }
+            }
+        }
+    }
+    hangingSpidersFunction();
+}
+
 //----------------------------------------SHAKE Function
 
 const shake = () => {
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "50.5%";
-        background.style.top = "50.5%";background.style.left = "50.5%";
     }, 50);
     setTimeout(() => {
         canvas.style.top = "49.5%";canvas.style.left = "50%";
-        background.style.top = "49.5%";background.style.left = "50%";
     }, 100);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50.5%";
-        background.style.top = "50%";background.style.left = "50.5%";
     }, 150);
     setTimeout(() => {
         canvas.style.top = "50.5%";canvas.style.left = "49.5%";
-        background.style.top = "50.5%";background.style.left = "49.5%";
     }, 200);
     setTimeout(() => {
         canvas.style.top = "50%";canvas.style.left = "50%";
-        background.style.top = "50%";background.style.left = "50%";
     }, 250);
 }
 
@@ -1404,159 +1710,496 @@ const grayScaleEffect = () => {
 
 //---------------------------------------- Death Function (Player)
 
+let godMode = false;
+
 const dead = () => {
-    if(!goingBackToTheLobby){
-        if(!playingBossFight){ //You are not playing BOSS FIGHT
-            if(yGhost < 2000 && xGhost < 2000){
-                ghostVelocity = 2;
-                spawnGhostCords();
-            }
-            
-            // Respawn Ghost, Saw, ...
-            if(ghostKilled){
-                spawnGhostCords = () => {
-                    xGhost = saveGhostCordsX;
-                    yGhost = saveGhostCordsY;
+    if(!godMode){
+        if(!goingBackToTheLobby){
+            if(!playingBossFight){ //You are not playing BOSS FIGHT
+                if(yGhost < 2000 && xGhost < 2000){
+                    ghostVelocity = 2;
+                    spawnGhostCords();
                 }
-                ghostKilled = false;
-                spawnGhostCords();
-            }
-            spawnMovingPlatformCords = () => {
-                xMovingPlatform = saveMovingPlatformCordsX;
-                yMovingPlatform = saveMovingPlatformCordsY;
-            }
-            sawVelocity = 1.5;
-            spawnMovingPlatformCords();
-            spawnSawCords = () => {
-                xSaw = saveSawCordsX;
-                ySaw = saveSawCordsY;
-            }
-            movingPlatformVelocity = 1;
-            spawnSawCords();
-            //
-            movingPlatformVelocityY = 0;
-            frameSpike = 0;
-            frameLava = 0;
-            player1.velocity= 0;
-            player1.velocityRight = 0;
-            player1.velocityLeft = 0;
-            player1.velocityJump = 0;
-            music.currentTime = 0;
-            clearTimeout(setTimeoutDoor)
-            setTimeoutDoor = setTimeout(() => {
-                doorTimeout = true;
-            }, doorsTime);
-            spawnCords();
-            unCrouch(player1);
-            unCrouch(player2);
-            platformLevel1 = [...originalPlatform1];
-            drawPlatform();
-            dark();
-            if(risingLavaActivated){
-                risingIncreaseValue = 0.6;
-                lavaIncreaseValue = 3.6;
-                lavaY = 576;
-                risingPercent = risingPercentOriginal;
-                rising.style.bottom = risingPercent + "%"
-            }
-            if(frameDoor == 3){
-                shake();
-                doorTimeout = false;
-                frameDoor = 0;
-            }
-            grayScaleEffect();
-            restartTimer();
-            timerFunction();
-        }else{
-            if(!resistence || frameDoor == 3 || usedRetry){
-                if(hearts == 3){
-                    heart3.style.display = "none";
-                }else if(hearts == 2){
-                    heart2.style.display = "none";
-                }else if(hearts == 1){
-                    heart1.style.display = "none";
+                // Respawn Ghost, Saw, ...
+                if(ghostKilled){
+                    spawnGhostCords = () => {
+                        xGhost = saveGhostCordsX;
+                        yGhost = saveGhostCordsY;
+                    }
+                    ghostKilled = false;
+                    spawnGhostCords();
                 }
-                resistence = true;
-                hearts--;
+                spawnMovingPlatformCords = () => {
+                    xMovingPlatform = saveMovingPlatformCordsX;
+                    yMovingPlatform = saveMovingPlatformCordsY;
+                }
+                sawVelocity = 1.5;
+                spawnMovingPlatformCords();
+                spawnSawCords = () => {
+                    xSaw = saveSawCordsX;
+                    ySaw = saveSawCordsY;
+                }
+                movingPlatformVelocity = 1;
+                spawnSawCords();
+                //
+                movingPlatformVelocityY = 0;
+                frameSpike = 0;
+                frameLava = 0;
                 player1.velocity= 0;
                 player1.velocityRight = 0;
                 player1.velocityLeft = 0;
                 player1.velocityJump = 0;
-                if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
-                    if(playingMultiplayer){
-                        clearInterval(targetInterval);
-                    }
-                    clearInterval(bossAttackGenerator);
-                    grayScaleEffect();
-                    sfx_boss_laugh.pause();
-                    if(usedRetry){
-                        usedRetry = false;
-                    }
-                    cancelAnimationFrame(bossMoveXId);
-                    cancelAnimationFrame(bossMoveYId);
-                    clearTimeout(setTimeoutDoor)
-                    setTimeoutDoor = setTimeout(() => {
-                        doorTimeout = true;
-                    }, doorsTime);
-                    currentFrameBoss = 0;
-                    bossAttacking = false;
-                    currentHp = 100;
-                    hp.style.width = currentHp + "%";
-                    setTimeout(() => { // Fixing bug
-                        currentHp = 100;
-                        hp.style.width = currentHp + "%";
-                    }, 100);
-                    platformLevel1 = [...map[14]]
-                    risingLavaActivated = false;
+                music.currentTime = 0;
+                clearTimeout(setTimeoutDoor)
+                setTimeoutDoor = setTimeout(() => {
+                    doorTimeout = true;
+                }, doorsTime);
+                spawnCords();
+                unCrouch(player1);
+                unCrouch(player2);
+                platformLevel1 = [...originalPlatform1];
+                drawPlatform();
+                dark();
+                divider1.style.opacity = 1;
+                divider2.style.opacity = 1;
+                divider3.style.opacity = 1;
+                divider4.style.opacity = 1;
+                spiderPhase2 = false;
+                spiderPhase3 = false;
+                spiderPhase4 = false;
+                spiderPhase5 = false;
+                shieldActive = false;
+                if(risingLavaActivated){
                     risingIncreaseValue = 0.6;
                     lavaIncreaseValue = 3.6;
                     lavaY = 576;
                     risingPercent = risingPercentOriginal;
                     rising.style.bottom = risingPercent + "%"
-                    rising.style.display = "none";
-                    darkness = false;
-                    heart1.style.display = "block";
-                    heart2.style.display = "block";
-                    heart3.style.display = "block";
-                    hearts = 3;
-                    clearTimeout(breakBottom);
-                    clearTimeout(bossLava);
-                    clearTimeout(bossLava2);
-                    clearTimeout(bossLava3);
-                    clearTimeout(endBossLava);
-                    clearTimeout(bossDarkness);
-                    clearTimeout(endBossDarkness);
-                    clearInterval(nonStopShake);
-                    restartTimer();
-                    timerFunction();
-                    bossLevel();
-                }else{
-                    sfx_boss_laugh.src = "./res/sfx/laugh.mp3";
-                    sfx_boss_laugh.play();
                 }
+                if(frameDoor == 3){
+                    shake();
+                    doorTimeout = false;
+                    frameDoor = 0;
+                }
+                grayScaleEffect();
+                restartTimer();
+                timerFunction();
+            }else{
+                if(!resistence || frameDoor == 3 || usedRetry){
+                    if(hearts == 3){
+                        heart3.style.display = "none";
+                    }else if(hearts == 2){
+                        heart2.style.display = "none";
+                    }else if(hearts == 1){
+                        heart1.style.display = "none";
+                    }
+                    resistence = true;
+                    if(!usedRetry){
+                        playerFlashing();
+                    }
+                    hearts--;
+                    player1.velocity = 0;
+                    player1.velocityRight = 0;
+                    player1.velocityLeft = 0;
+                    player1.velocityJump = 0;
+                    player2.velocity = 0;
+                    player2.velocityRight = 0;
+                    player2.velocityLeft = 0;
+                    player2.velocityJump = 0;
+                    if(hearts == 0 || frameDoor == 3 || usedRetry || risingPercent >= -95){
+                        playerNowFlashing = false;
+                        clearInterval(flashingInterval)
+                        if(playingMultiplayer){
+                            clearInterval(targetInterval);
+                        }
+                        clearInterval(bossAttackGenerator);
+                        grayScaleEffect();
+                        sfx_boss_laugh.pause();
+                        if(usedRetry){
+                            usedRetry = false;
+                        }
+                        music.pause();
+                        cancelAnimationFrame(bossMoveXId);
+                        cancelAnimationFrame(bossMoveYId);
+                        clearTimeout(setTimeoutDoor)
+                        setTimeoutDoor = setTimeout(() => {
+                            doorTimeout = true;
+                        }, doorsTime);
+                        currentFrameBoss = 0;
+                        bossAttacking = false;
+                        platformLevel1 = [...map[14]]
+                        risingLavaActivated = false;
+                        risingIncreaseValue = 0.6;
+                        lavaIncreaseValue = 3.6;
+                        lavaY = 576;
+                        risingPercent = risingPercentOriginal;
+                        rising.style.bottom = risingPercent + "%"
+                        rising.style.display = "none";
+                        darkness = false;
+                        heart1.style.display = "block";
+                        heart2.style.display = "block";
+                        heart3.style.display = "block";
+                        cancelPlayerMovement();
+                        player1.turnedRight = true;
+                        player2.turnedRight = true;
+                        player1.turnedLeft = false;
+                        player2.turnedLeft = false;
+                        clearBossTimeouts();
+                        inGame = false;
+                        black.style.transition = "opacity 0s"
+                        black.style.opacity = 1;
+                        setTimeout(() => {
+                            black.style.transition = "opacity 0.3s"
+                            black.style.opacity = 0;
+                            currentHp = 100;
+                            hp.style.width = currentHp + "%";
+                            hearts = 3;
+                            restartTimer();
+                            timerFunction();
+                            setTimeout(() => { // Fixing bug
+                                currentHp = 100;
+                                hp.style.width = currentHp + "%";
+                            }, 100);
+                            if(playingCastle){
+                                bossLevel();
+                                inGame = true;
+                            }else if(playingSteamPunk){
+                                spawnSawCords = () => {
+                                    xSaw = 226;
+                                    ySaw = 175;
+                                }
+                                spawnSawCords();
+                                sawVelocitySpeeder = 0;
+                                currentFrameSpiderBoss = 0;
+                                spider1Y = -500;
+                                spider2Y = -500;
+                                spider3Y = -500;
+                                spider4Y = -500;
+                                spiderGoingDown = false;
+                                spiderGoingUp = false;
+                                canSpidersMoving = false;
+                                generatorInterval = 1000;
+                                playerOneImage.src = playerSkin1;
+                                playerTwoImage.src = playerSkin2;
+                                clearInterval(flashingInterval);
+                                clearInterval(spiderBossGenerator);
+                                clearSpiderBossTimeouts();
+                                cancelAnimationFrame(hangingSpidersFunctionId);
+                                cancelAnimationFrame(spiderJumpingId);
+                                cancelAnimationFrame(spiderMovingId);
+                                spidersVelocity = 0.1;
+                                startingMovingInSpiderBoss = false;
+                                cameraX = 0;
+                                cameraY = 0;
+                                canCameraStop = false;
+                                cameraMoveXCount = 0;
+                                spiderBossCamera1 = true;
+                                spiderBossCamera2 = false;
+                                spiderBossNumber = 0;
+                                spiderBossWarning = false;
+                                spiderBossAttacking = false
+                                smallSpiderJump = false;
+                                smokeActivated = false;
+                                spiderBossDead = false;
+                                cancelAnimationFrame(wallSpiderMovingId);
+                                rightWallX = canvas.width;
+                                leftWallX = -160;
+                                platformLevel1 = [...map[14]];
+                                originalPlatform1 = [...platformLevel1];
+                                spiderBossLevel();
+                            }
+                        }, 500);
+                    }else{
+                        if(playingCastle){
+                            sfx_boss_laugh.src = "./res/sfx/laugh.mp3";
+                            sfx_boss_laugh.play();
+                        }
+                    }
+                    setTimeout(() => {
+                        resistence = false
+                    }, 2000);
+                    if(playingCastle){
+                        spawnCords();
+                    }
+                }
+                if(frameDoor == 3){
+                    doorTimeout = false;
+                    frameDoor = 0;
+                }
+            }
+            if(deadSoundCanBeUse){
+                sfx_dead.src = "./res/sfx/died.mp3";
+                sfx_dead.play();
+                deadSoundCanBeUse = false;
                 setTimeout(() => {
-                    resistence = false
+                    deadSoundCanBeUse = true;
                 }, 2000);
-                spawnCords();
             }
-            if(frameDoor == 3){
-                doorTimeout = false;
-                frameDoor = 0;
+            gravity(player1);
+            if(playingMultiplayer){
+                gravity(player2)
             }
-        }
-        if(deadSoundCanBeUse){
-            sfx_dead.src = "./res/sfx/died.mp3";
-            sfx_dead.play();
-            deadSoundCanBeUse = false;
-            setTimeout(() => {
-                deadSoundCanBeUse = true;
-            }, 300);
-        }
-        gravity(player1);
-        if(playingMultiplayer){
-            gravity(player2)
         }
     }
+}
+
+let playerSkin1 = "./res/img/rioter.png";
+let playerSkin2 = "./res/img/ruby.png";
+
+let selectedRioter = true;
+let selectedRuby = false;
+
+choose_rioter.onclick = () => {
+    skinChangerBox.style.animationName = "bottomToMid";
+    skinChangerBox.style.animationPlayState = "running";
+    skinChangerBox.style.display = "flex";
+    skins.style.animationName = "midToRightSkins";
+    skins.style.animationPlayState = "running";
+    skins.style.pointerEvents = "none";
+    selectedRioter = true;
+    selectedRuby = false;
+    updateSkins();
+}
+
+choose_ruby.onclick = () => {
+    skinChangerBox.style.display = "flex";
+    skinChangerBox.style.animationName = "bottomToMid";
+    skinChangerBox.style.animationPlayState = "running";
+    skins.style.animationName = "midToRightSkins";
+    skins.style.animationPlayState = "running";
+    skins.style.pointerEvents = "none";
+    selectedRioter = false;
+    selectedRuby = true;
+    updateSkins();
+}
+
+let redRioter = "./res/img/red_rioter.png";
+let whiteRioter = "./res/img/white_rioter.png";
+let pinkRioter = "./res/img/pink_rioter.png";
+let greenRioter = "./res/img/green_rioter.png";
+let yellowRioter = "./res/img/yellow_rioter.png";
+let blueRioter = "./res/img/blue_rioter.png";
+let purpleRioter = "./res/img/purple_rioter.png";
+let blackRioter = "./res/img/black_rioter.png";
+
+let redRuby = "./res/img/red_ruby.png";
+let whiteRuby = "./res/img/white_ruby.png";
+let pinkRuby = "./res/img/pink_ruby.png";
+let greenRuby = "./res/img/green_ruby.png";
+let yellowRuby = "./res/img/yellow_ruby.png";
+let blueRuby = "./res/img/blue_ruby.png";
+let purpleRuby = "./res/img/purple_ruby.png";
+let blackRuby = "./res/img/black_ruby.png";
+
+let rioterSkins = [redRioter, whiteRioter, pinkRioter, greenRioter, yellowRioter, blueRioter, purpleRioter, blackRioter];
+let rubySkins = [redRuby, whiteRuby, pinkRuby, greenRuby, yellowRuby, blueRuby, purpleRuby, blackRuby];
+
+let currentIndexSkinsRioter = 0;
+let currentIndexSkinsRuby = 0;
+
+const setSkins = () => {
+    if(selectedRioter){
+        switch (currentIndexSkinsRioter) {
+            case 0:
+                playerSkin1 = "./res/img/rioter.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 1:
+                playerSkin1 = "./res/img/rioter_white.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 2:
+                playerSkin1 = "./res/img/rioter_pink.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 3:
+                playerSkin1 = "./res/img/rioter_green.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 4:
+                playerSkin1 = "./res/img/rioter_yellow.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 5:
+                playerSkin1 = "./res/img/rioter_blue.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 6:
+                playerSkin1 = "./res/img/rioter_purple.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+            case 7:
+                playerSkin1 = "./res/img/rioter_black.png";
+                choose_rioter.src = rioterSkins[currentIndexSkinsRioter];
+                man.src = rioterSkins[currentIndexSkinsRioter];
+                break;
+        }
+    }
+    if(selectedRuby || playingMultiplayer){
+        switch (currentIndexSkinsRuby) {
+            case 0:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 1:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_white.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_white.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 2:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_pink.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_pink.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 3:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_green.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_green.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 4:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_yellow.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_yellow.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 5:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_blue.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_blue.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 6:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_purple.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_purple.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break;
+            case 7:
+                if(!playingMultiplayer){
+                    playerSkin1 = "./res/img/ruby_black.png";
+                }else{
+                    playerSkin2 = "./res/img/ruby_black.png";
+                }
+                choose_ruby.src = rubySkins[currentIndexSkinsRuby];
+                woman.src = rubySkins[currentIndexSkinsRuby];
+                break; 
+        }
+    }
+    
+};
+
+chooseSkinBtn.onclick = () => {
+    middleSkinImg.style.filter = "drop-shadow(1px 1px 0 lime) drop-shadow(-1px -1px 0 lime) drop-shadow(1px -1px 0 lime) drop-shadow(-1px 1px 0 lime)";
+    skinChangerBox.style.pointerEvents = "none";
+    chooseSkinBtn.innerHTML = "EQUIPPED"
+    chooseSkinBtn.style.color = "rgb(200, 200, 200)"
+    chooseSkinBtn.style.backgroundColor = "black";
+    setTimeout(() => {
+        skinChangerBox.style.animationName = "midToBottom";
+        skinChangerBox.style.animationPlayState = "running";
+        skins.style.animationName = "rightToMidSkins";
+        skins.style.animationPlayState = "running";
+        setTimeout(() => {
+            skinChangerBox.style.pointerEvents = "auto";
+            skinChangerBox.style.display = "none";
+            chooseSkinBtn.innerHTML = "EQUIP"
+            chooseSkinBtn.style.color = "white"
+            chooseSkinBtn.style.backgroundColor = "rgba(0, 0, 0, 0)";
+            middleSkinImg.style.filter = "drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white) drop-shadow(1px -1px 0 white) drop-shadow(-1px 1px 0 white)";
+            skins.style.pointerEvents = "auto";
+        }, 1200);
+    }, 500);
+    setSkins();
+};
+
+const updateSkins = () => {
+    if(selectedRioter && !selectedRuby){
+        leftSkinImg.src = rioterSkins[(currentIndexSkinsRioter + rioterSkins.length - 1) % rioterSkins.length];
+        middleSkinImg.src = rioterSkins[currentIndexSkinsRioter];
+        rightSkinImg.src = rioterSkins[(currentIndexSkinsRioter + 1) % rioterSkins.length];
+        localStorage.setItem('currentIndexSkinsRioter', currentIndexSkinsRioter);
+    }else if(selectedRuby && !selectedRioter){
+        leftSkinImg.src = rubySkins[(currentIndexSkinsRuby + rubySkins.length - 1) % rubySkins.length];
+        middleSkinImg.src = rubySkins[currentIndexSkinsRuby];
+        rightSkinImg.src = rubySkins[(currentIndexSkinsRuby + 1) % rubySkins.length];
+        localStorage.setItem('currentIndexSkinsRuby', currentIndexSkinsRuby);
+    }
+};
+
+leftArrow.onclick = () => {
+    if(selectedRioter){
+        currentIndexSkinsRioter = (currentIndexSkinsRioter + rioterSkins.length - 1) % rioterSkins.length;
+    }else{
+        currentIndexSkinsRuby = (currentIndexSkinsRuby + rubySkins.length - 1) % rubySkins.length;
+    }
+    updateSkins();
+}
+
+rightArrow.onclick = () => {
+    if(selectedRioter){
+        currentIndexSkinsRioter = (currentIndexSkinsRioter + 1) % rioterSkins.length;
+    }else{
+        currentIndexSkinsRuby = (currentIndexSkinsRuby + 1) % rubySkins.length;
+    }
+    updateSkins();
+}
+
+// PLAYER Flashing
+
+let flashingInterval;
+let playerNowFlashing = false;
+
+const playerFlashing = () => {
+    playerSkin1 = playerOneImage.src;
+    playerSkin2 = playerTwoImage.src;
+    flashingInterval = setInterval(() => {
+        if(!playerNowFlashing){
+            playerOneImage.src = "./res/img/nothing.png"
+            playerTwoImage.src = "./res/img/nothing.png"
+            playerNowFlashing = true;
+        }else{
+            playerOneImage.src = playerSkin1;
+            playerTwoImage.src = playerSkin2;
+            playerNowFlashing = false;
+        }
+    }, 100);
+    setTimeout(() => {
+        playerNowFlashing = false;
+        clearInterval(flashingInterval) 
+    }, 2000);
 }
 
 //Fade **IN** Transition Function
@@ -1612,6 +2255,8 @@ const backToLobby = () => {
     clearTimeout(setTimeoutDoor);
     cancelAnimationFrame(bossMoveXId);
     cancelAnimationFrame(bossMoveYId)
+    bossX = 100000;
+    bossY = 100000;
     restartTimer();
     timer.style.top = "-5%"
     transition2.addEventListener("ended", () => {
@@ -1621,7 +2266,6 @@ const backToLobby = () => {
         usedRetry = false;
     }
     canvas.style.filter = "blur(0)";
-    background.style.filter = "blur(0)";
     rising.style.filter = "blur(0)";
     black.style.opacity = "0";
     risingLavaActivated = false;
@@ -1646,6 +2290,23 @@ const backToLobby = () => {
     fadeInTransition();
     esc.style.display = "none"; 
     escShowed = false;
+    clearSpiderBossTimeouts();
+    clearInterval(spiderBossGenerator);
+    currentFrameSpiderBoss = 0;
+    playerNowFlashing = false;
+    clearInterval(flashingInterval);
+    cameraX = 0;
+    cameraY = 0;
+    canCameraStop = false;
+    cameraMoveXCount = 0;
+    spiderBossCamera1 = false;
+    spiderBossCamera2 = false;
+    spiderBossNumber = 0;
+    spiderBossWarning = false;
+    spiderBossAttacking = false
+    smallSpiderJump = false;
+    smokeActivated = false;
+    spiderBossDead = true;
     setTimeout(() => {
         music.src = "./res/music/lobby_music.mp3";
         music.play();
@@ -1660,6 +2321,17 @@ const backToLobby = () => {
             bossX = 1000000;
             bossY = 0;
         }
+        spider1Y = -500;
+        spider2Y = -500;
+        spider3Y = -500;
+        spider4Y = -500;
+        spiderGoingDown = false;
+        spiderGoingUp = false;
+        canSpidersMoving = false;
+        cancelAnimationFrame(wallSpiderMovingId);
+        rightWallX = canvas.width;
+        leftWallX = -160;
+        sawVelocitySpeeder = 1;
         frameDoorFinal = 3;
         risingIncreaseValue = 0.6;
         lavaIncreaseValue = 3.6;
@@ -1687,7 +2359,7 @@ const backToLobby = () => {
             }
             spawnSawCords();
         }
-        if(!playingSteamPunk){
+        if(playingCastle){
             if(helpNum == 0){ // Go to lobby From Levels 1 - 15
                 player1.x = 120;
                 player1.y = 500;
@@ -1894,10 +2566,10 @@ const backToLobby = () => {
                     player2.y = 86;
                 }
             }else if(helpNum == 14 || helpNum == 15){
-                player1.x = 920;
+                player1.x = 980;
                 player1.y = 80;
                 if(playingMultiplayer){
-                    player2.x = 920;
+                    player2.x = 980;
                     player2.y = 80;
                 }
             }
@@ -1930,7 +2602,6 @@ button_back.onclick = () => {
 //Resume Function
 button_resume.onclick = () => {
     canvas.style.filter = "blur(0)"
-    background.style.filter = "blur(0)"
     rising.style.filter = "blur(0)"
     esc.style.display = "none"; 
     escShowed = false;
@@ -1939,6 +2610,7 @@ button_resume.onclick = () => {
 //Back from Lobby to the Menu Function
 button_menu.onclick = () => {
     inGame = false;
+    howManyLevelsDoneFunction();
     text.style.opacity = "1";
     note_button.style.zIndex = "3";
     escape_button.style.zIndex = "3";
@@ -1951,7 +2623,6 @@ button_menu.onclick = () => {
     music.currentTime = 0; //OFF Lobby Music 
     music.pause();
     canvas.style.filter = "blur(0)";
-    background.style.filter = "blur(0)";
     rising.style.filter = "blur(0)";
     setTimeout(() => {
         game.style.display = "none";
@@ -1961,10 +2632,15 @@ button_menu.onclick = () => {
         playButtonMulti.style.pointerEvents = "auto";
         playButtonMulti.style.display = "block";
         creditsButton.style.display = "block";
+        skins.style.animationDuration = "0s";
+        skins.style.animationPlayState = "running";
+        skins.style.animationName = "rightToMidSkins";
+        skins.style.pointerEvents = "auto";
         black.style.opacity = "0";
         fullBlack.style.opacity = "0";
         playingMultiplayer = false;
         setTimeout(() => {
+            skins.style.animationDuration = "1s";
             fullBlack.style.display = "none";
             note_button.style.zIndex = "11";
             escape_button.style.zIndex = "11";
@@ -1983,7 +2659,6 @@ button_retry.onclick = () => {
     }
     black.style.opacity = "0";
     canvas.style.filter = "blur(0)"
-    background.style.filter = "blur(0)"
     rising.style.filter = "blur(0)"
     dead();
 }
@@ -1993,7 +2668,6 @@ button_retry.onclick = () => {
  
 const escFunction = () => {
     canvas.style.filter = "blur(1px)";
-    background.style.filter = "blur(1px)";
     rising.style.filter = "blur(1px)";
     if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){ //When Lobby and current level are not same
         button_back.style.display = "block";
@@ -2009,7 +2683,6 @@ const escFunction = () => {
             black.style.opacity = "0.6";
         }else if(escShowed){
             canvas.style.filter = "blur(0)";
-            background.style.filter = "blur(0)";
             rising.style.filter = "blur(0)";
             esc.style.display = "none"; 
             escShowed = false;
@@ -2026,7 +2699,6 @@ const escFunction = () => {
             black.style.opacity = "0.6";
         }else if(escShowed){
             canvas.style.filter = "blur(0)";
-            background.style.filter = "blur(0)";
             rising.style.filter = "blur(0)";
             esc.style.display = "none"; 
             escShowed = false;
@@ -2043,34 +2715,58 @@ escape_button.onclick = () => {
 
 //----------------------------------------Finished level
 
-let finished = new Array (15)
+let finished_castle = new Array (15)
+let doneCastleLevels = 0
 
-for (let index = 0; index < finished.length; index++) {
-    finished[index] = 2;
+for (let index = 0; index < finished_castle.length; index++) {
+    finished_castle[index] = 2;
 }
 
-finished[helpNum] = 0; // Unlock 1st level
+finished_castle[helpNum] = 0; // Unlock 1st level
+
+//----------------------------------------Finished level
+
+let finished_steampunk = new Array (15)
+let doneSteampunkLevels = 0
+
+for (let index = 0; index < finished_steampunk.length; index++) {
+    finished_steampunk[index] = 2;
+}
+
+finished_steampunk[helpNum] = 0; // Unlock 1st level
 
 //----------------------------------------UNLOCK ALL DOORS FUNCTION
 
 const unlockAll = () => {
-    for (let index = 0; index < finished.length; index++) {
-        if(finished[index] != 1){
-            finished[index] = 0;
+    for (let index = 0; index < finished_castle.length; index++) {
+        if(finished_castle[index] != 1){
+            finished_castle[index] = 0;
+        }
+    }
+    for (let index = 0; index < finished_steampunk.length; index++) {
+        if(finished_steampunk[index] != 1){
+            finished_steampunk[index] = 0;
         }
     }
 }
 
-unlockAll()
+//unlockAll()
 
 //---------------------------------------- OBJECTS Collision
 
 const objectsCollision = (PLAYER) => {
     if(playingBossFight){
         bossCollision(PLAYER);
+        smokeCollision(PLAYER);
+        spiderBossCollision(PLAYER);
+        movingWallsSpiderCollision(PLAYER);
+        spidersCollision(PLAYER, spider2X, spider2Y);
+        spidersCollision(PLAYER, spider3X, spider3Y);
+        spidersCollision(PLAYER, spider4X, spider4Y);
     }
     ghostCollision(PLAYER);
     sawCollision(PLAYER);
+    spidersCollision(PLAYER, spider1X, spider1Y);
     if(PLAYER.velocityJump <= 0.1){
         movingPlatformCollision(PLAYER);
     }
@@ -2147,7 +2843,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         //Closing Doors
-        if (platformLevel1[i] == 30) {
+        if (platformLevel1[i] == 30 || (platformLevel1[i] == 34 && frameDoorFinal == 0)) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -2168,17 +2864,31 @@ const objectsCollision = (PLAYER) => {
                     canEnter = false; //Now you cant spam "e"
                     sfx.src = "./res/sfx/completed.mp3";
                     sfx.play();
-                    finished[helpNum] = 1; // Level Completed -> Doors are now GREEN
-                    if(finished[helpNum + 1] != 1){
-                        finished[helpNum + 1] = 0; // Another Level is available -> removed LOCK
+                    if(playingCastle){
+                        finished_castle[helpNum] = 1; // Level Completed -> Doors are now GREEN
+                        if(finished_castle[helpNum + 1] != 1){
+                            finished_castle[helpNum + 1] = 0; // Another Level is available -> removed LOCK
+                        }
+                    }else if(playingSteamPunk){
+                        finished_steampunk[helpNum] = 1; // Level Completed -> Doors are now GREEN
+                        if(finished_steampunk[helpNum + 1] != 1){
+                            finished_steampunk[helpNum + 1] = 0; // Another Level is available -> removed LOCK
+                        }
                     }
                     backToLobby();
                     backToLobbyEntered = true;
                     if(usedRetry){
                         usedRetry = false;
                     }
-                    localStorage.setItem("finished_" + helpNum, finished[helpNum]);
-                    localStorage.setItem("unlocked_" + helpNum, finished[helpNum + 1]);
+                    if(playingCastle){
+                        localStorage.setItem("finished_castle_" + helpNum, finished_castle[helpNum]);
+                        localStorage.setItem("unlocked_castle_" + helpNum, finished_castle[helpNum + 1]);
+                    }else if(playingSteamPunk){
+                        localStorage.setItem("finished_steampunk_" + helpNum, finished_steampunk[helpNum]);
+                        localStorage.setItem("unlocked_steampunk_" + helpNum, finished_steampunk[helpNum + 1]);
+                    }
+                    
+                    
                 }
             } else {
                 PLAYER.closingDoorCol = false;
@@ -2225,30 +2935,96 @@ const objectsCollision = (PLAYER) => {
     }
 }
 
+const howManyLevelsDoneFunction = () => {
 
-//This will load you progress which was saved
+    doneCastleLevels = 0;
+    doneSteampunkLevels = 0;
+
+    for (let index = 0; index < finished_castle.length - 1; index++) {
+        if(finished_castle[index] == 1){
+            doneCastleLevels++;
+        }
+    }
+
+    for (let index = 0; index < finished_steampunk.length - 1; index++) {
+        if(finished_steampunk[index] == 1){
+            doneSteampunkLevels++;
+        }
+    }
+    castleLevelsDone.innerHTML = doneCastleLevels + " / 15"
+    steampunkLevelsDone.innerHTML = doneSteampunkLevels + " / 15"
+}
+
 window.onload =  () => {
+
+    window.scrollTo(0, 0);
+
+    //This will load you progress which was saved
+    //Load Levels
     for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("unlocked_" + i);
+        let savedValue = localStorage.getItem("unlocked_castle_" + i);
         if (savedValue !== null) {
-            finished[i + 1] = parseInt(savedValue); // Convert to numbers
+            finished_castle[i + 1] = parseInt(savedValue); // Convert to numbers
         }
     }
     for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("finished_" + i);
+        let savedValue = localStorage.getItem("finished_castle_" + i);
         if (savedValue !== null) {
-            finished[i] = parseInt(savedValue); // Convert to numbers
+            finished_castle[i] = parseInt(savedValue); // Convert to numbers
         }
     }
+    for (let i = 0; i <= 15; i++) {
+        let savedValue = localStorage.getItem("unlocked_steampunk_" + i);
+        if (savedValue !== null) {
+            finished_steampunk[i + 1] = parseInt(savedValue); // Convert to numbers
+        }
+    }
+    for (let i = 0; i <= 15; i++) {
+        let savedValue = localStorage.getItem("finished_steampunk_" + i);
+        if (savedValue !== null) {
+            finished_steampunk[i] = parseInt(savedValue); // Convert to numbers
+        }
+    }
+
+    howManyLevelsDoneFunction();
+    
+    //Load Skins
+    selectedRioter = true;
+    selectedRuby = true;
+    let savedValueRioter = localStorage.getItem('currentIndexSkinsRioter');
+    if (savedValueRioter !== null) {
+        currentIndexSkinsRioter = parseInt(savedValueRioter);
+    }
+    let savedValueRuby = localStorage.getItem('currentIndexSkinsRuby');
+    if (savedValueRuby !== null) {
+        currentIndexSkinsRuby = parseInt(savedValueRuby);
+    }
+    updateSkins()
+    setSkins();
+    selectedRuby = false;
+
+    fullBlack.style.opacity = 0;
+
+    setTimeout(() => {
+        fullBlack.style.display = "none";
+        fullBlack.style.pointerEvents = "auto";
+    }, 1000);
+
 }
 
 //Reset Local Storage Function
 const resetLocalStorage = () => {
     for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("finished_" + i);
+        localStorage.removeItem("finished_castle_" + i);
     }
     for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("unlocked_" + i);
+        localStorage.removeItem("unlocked_castle_" + i);
+    }
+    for (let i = 0; i <= 15; i++) {
+        localStorage.removeItem("finished_steampunk_" + i);
+    }
+    for (let i = 0; i <= 15; i++) {
+        localStorage.removeItem("unlocked_steampunk_" + i);
     }
 }
 
@@ -2427,6 +3203,17 @@ const sawCollision = (PLAYER) => {
     }
 }
 
+const spidersCollision = (PLAYER, spiderX, spiderY) => {
+    if (
+        PLAYER.y + PLAYER.height >= spiderY + 352 - 32 && 
+        PLAYER.y <= spiderY + 352 &&
+        PLAYER.x + PLAYER.width >= spiderX &&
+        PLAYER.x <= spiderX + 32
+    ) {
+        dead();
+    }
+}
+
 const pipesCollision = (PLAYER) => {
     if(playingSteamPunk){
         for (let i = 0; i < platformLevel1.length; i++) {
@@ -2496,6 +3283,14 @@ const pipesCollision = (PLAYER) => {
 }
 }
 
+const movingWallsSpiderCollision = (PLAYER) => {
+    if(
+        PLAYER.x < leftWallX + 155 || PLAYER.x + 30 > rightWallX + 5
+    ){
+        dead();
+    }
+}
+
 //---------------------------------------- Crouch and Stand (Player)
 
 //This Function is checking, if you do not have a block above you (then you can stand up)
@@ -2556,7 +3351,6 @@ let under = (PLAYER) => {
     PLAYER.underCollision = window.requestAnimationFrame(() => under(PLAYER));
     if(PLAYER.canStandUp == true && PLAYER.velocity <= 0){
         unCrouch(PLAYER);
-        console.log(1)
         PLAYER.wasUnder = true;
         cancelAnimationFrame(PLAYER.underCollision);
     }
@@ -3020,6 +3814,10 @@ let moveRight = (PLAYER) => {
                 PLAYER.velocityRight = 0;
                 cancelAnimationFrame(PLAYER.animationIdRight);
             }
+            if(PLAYER.x > rightWallX - 2){
+                    PLAYER.velocityRight = 0;
+                    PLAYER.x = rightWallX - 1.8;
+                }
             if(PLAYER.stillJumping == false && !PLAYER.crouched){
                 PLAYER.stillJumping = true;
                 cancelAnimationFrame(PLAYER.gravityId);
@@ -3110,6 +3908,12 @@ let moveLeft = (PLAYER) => {
                 PLAYER.velocityLeft = 0;
                 cancelAnimationFrame(PLAYER.animationIdLeft);
             }
+            if(playingBossFight && playingSteamPunk){
+                if(PLAYER.x < leftWallX + 128){
+                    PLAYER.velocityLeft = 0;
+                    PLAYER.x = leftWallX + 128.2;
+                }
+            }
             if(PLAYER.stillJumping == false && !PLAYER.crouched){
                 PLAYER.stillJumping = true;
                 cancelAnimationFrame(PLAYER.gravityId);
@@ -3195,24 +3999,95 @@ const punch = (PLAYER) => {
         }
         if(PLAYER.canAttack){
             if(PLAYER == player1){
-                sfx_punch.src = "./res/sfx/punch.mp3";
-                sfx_punch.play();
+                if(shieldActive){
+                    setTimeout(() => {
+                        sfx_punch.src = "./res/sfx/shield_hit.mp3";
+                        sfx_punch.play();
+                    }, 100);
+                }else{
+                    sfx_punch.src = "./res/sfx/punch.mp3";
+                    sfx_punch.play();
+                }
             }else{
-                sfx_punch2.src = "./res/sfx/punch.mp3";
-                sfx_punch2.play();
+                if(shieldActive){
+                    setTimeout(() => {
+                        sfx_punch2.src = "./res/sfx/shield_hit.mp3";
+                        sfx_punch2.play();
+                    }, 100);
+                }else{
+                    sfx_punch2.src = "./res/sfx/punch.mp3";
+                    sfx_punch2.play();
+                }
             }
-            if(playingMultiplayer){
-                currentHp -= 5.5566 / 1.5;
-            }else{
-                currentHp -= 5.5566; //5.5566
+            if(playingCastle && helpNum == 14){ // Crimson Reaper Boss Hit
+                if(currentHp == 85 && !reaperPhase2){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(currentHp == 65 && !reaperPhase3 && reaperPhase2){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(currentHp == 45 && !reaperPhase4 && reaperPhase3){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(currentHp == 25 && !reaperPhase5 && reaperPhase4){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(shieldActive){
+                    currentHp -= 0;
+                }else{
+                    currentHp -= 5;
+                }
+            }else if(playingSteamPunk && helpNum == 14){ // Spider Boss Hit
+                if(currentHp == 85 && !spiderPhase2){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(currentHp == 65 && !spiderPhase3 && spiderPhase2){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(currentHp == 45 && !spiderPhase4 && spiderPhase3){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(currentHp == 25 && !spiderPhase5 && spiderPhase4){
+                    currentHp -= 5;
+                    setTimeout(() => {
+                        shieldActive = true; 
+                    }, 10);
+                }else if(shieldActive){
+                    currentHp -= 0;
+                }else{
+                    currentHp -= 5;
+                }
             }
-            bossPunchedNumber = 2;
+            if(playingCastle && !shieldActive){
+                bossPunchedNumber = 2;
+            }else if(playingSteamPunk && !shieldActive){
+                bossPunchedNumber = 3;
+            }
             clearTimeout(punchedBossTimeout);
             punchedBossTimeout = setTimeout(() => {
                 bossPunchedNumber = 0;
-            }, 400);
+            }, 400);;
+            
             hp.style.width = currentHp + "%";
-            if(currentHp <= 0 && !backToLobbyEntered){
+            if(currentHp <= 0 && !backToLobbyEntered && playingCastle){
+                deadBoss();
+                finalDoorUnlocked = true;
+            }else if(currentHp <= 0 && !backToLobbyEntered && playingSteamPunk){
+                finalSceneSpiderBoss();
                 deadBoss();
                 finalDoorUnlocked = true;
             }
@@ -3256,78 +4131,25 @@ const punch = (PLAYER) => {
 
 //--------------------------Dead Boss Function
 
-const deadBoss = () => {
-    restartTimer();
-    timer.style.top = "-5%"
-    player1.canAttack = false;
-    if(playingMultiplayer){
-        player2.canAttack = false;
-    }
-    inGame = false;
-    sfx_boss_laugh.pause();
-    black.style.opacity = "1";
-    setTimeout(() => {
-        frameDoorFinal = 0; 
-    }, 2000);
-    scene.addEventListener("ended", () => {
-        scene.style.display = "none";
-        black.style.opacity = "0";
-        inGame = true;
-        spawnCords();
-        gravity(player1);
-        if(playingMultiplayer){
-            gravity(player2)
-        }
-    });
-    clearTimeout(setTimeoutDoor);
-    music.pause();
-    lives = 3;
-    playingBossFight = false;
-    clearInterval(targetInterval);
-    bossX = 1000000;
-    bossY = 0;
-    if(playingAsRioter){
-        scene.src = "./res/vid/rioter_scene.mp4";
-    }else{
-        scene.src = "./res//vid/ruby_scene.mp4";
-    }
-    scene.style.display = "block";
-    scene.play();
-    clearInterval(bossAttackGenerator);
-    if(usedRetry){
-        usedRetry = false;
-    }
-    cancelAnimationFrame(bossMoveXId);
-    cancelAnimationFrame(bossMoveYId);
-    clearTimeout(setTimeoutDoor)
-    bossAttacking = false;
-    hp.style.width = currentHp + "%";
-    hps.style.display = "none"
-    myHp.style.display = "none"
-    risingLavaActivated = false;
-    lavaIncreaseValue = 3;
-    lavaY = 576;
-    risingPercent = risingPercentOriginal;
-    rising.style.bottom = risingPercent + "%"
-    rising.style.display = "none";
-    darkness = false;
-    heart1.style.display = "block";
-    heart2.style.display = "block";
-    heart3.style.display = "block";
-    hearts = 3;
-    clearTimeout(breakBottom);
-    clearTimeout(bossLava);
-    clearTimeout(bossLava2);
-    clearTimeout(bossLava3);
-    clearTimeout(endBossLava);
-    clearTimeout(bossDarkness);
-    clearTimeout(endBossDarkness);
-    clearInterval(nonStopShake);
-    spawnCords();
-    player1.velocity= 0;
-    cancelAnimationFrame(player1.gravityId);
-    platformLevel1 = [...map[14]];
-    originalPlatform1 = [...platformLevel1];
+const cancelPlayerMovement = () => {
+    player1.velocity = 0;
+    player1.velocityRight = 0;
+    player1.velocityLeft = 0;
+    player1.velocityJump = 0;
+    player2.velocity = 0;
+    player2.velocityRight = 0;
+    player2.velocityLeft = 0;
+    player2.velocityJump = 0;
+    sfx_walk.pause();
+    sfx_walk2.pause();
+    cancelAnimationFrame(player1.animationIdRight);
+    cancelAnimationFrame(player1.animationIdLeft);
+    cancelAnimationFrame(player2.animationIdRight);
+    cancelAnimationFrame(player2.animationIdLeft);
+    player1.isMovingRight = false;
+    player1.isMovingLeft = false;
+    player2.isMovingRight = false;
+    player2.isMovingLeft = false;
 }
 
 //-------------------------- Pressing KEYBOARD Buttons
@@ -3408,7 +4230,6 @@ window.addEventListener("keydown", (event) => {
             musicEditorOpened = false;
             black.style.opacity = "0";
             canvas.style.filter = "blur(0)"
-            background.style.filter = "blur(0)"
             rising.style.filter = "blur(0)"
         }else{
             escFunction();
@@ -3588,19 +4409,3 @@ window.addEventListener("keyup", (event) => {
     }
     }
 });
-/*
-characters.style.display = "none";
-    player =  "./res/img/rioter.png";
-    heart1.src = "./res/img/heart_rioter.png";
-    heart2.src = "./res/img/heart_rioter.png";
-    heart3.src = "./res/img/heart_rioter.png";
-    playingAsRioter = true;
-    playingAsRuby = false;
-    setDungeonToSteamPunk();
-    movingCharactersAndFullBlack();
-    player1.x = 890;
-    player1.y = 200;
-    //music.volume = 0;
-    */
-
-    unlockAll();

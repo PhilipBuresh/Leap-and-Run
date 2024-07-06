@@ -63,6 +63,9 @@ bookshelfBackImage.src = "./res/img/bookshelf_back.png"
 const barrelImage = new Image();
 barrelImage.src = "./res/img/barrel.png"
 
+const backWallImage = new Image();
+backWallImage.src = "./res/img/wall_steampunk.png"
+
 const ladderImage = new Image();
 ladderImage.src = "./res/img/ladder.png"
 
@@ -74,6 +77,12 @@ doorsImageSp.src = "./res/img/doors_sp.png"
 
 const bossImage = new Image();
 bossImage.src = "./res/img/boss_s.png"
+
+const bossSpiderImage = new Image();
+bossSpiderImage.src = "./res/img/boss_spider.png"
+
+const smokeImage = new Image();
+smokeImage.src = "./res/img/smoke.png"
 
 const keyImage = new Image();
 keyImage.src = "./res/img/key.png"
@@ -113,6 +122,15 @@ bigCircleImage.src = "./res/img/big_circle.png"
 
 const pipeImage = new Image();
 pipeImage.src = "./res/img/pipes.png"
+
+const movingWallsImage = new Image();
+movingWallsImage.src = "./res/img/moving_walls.png"
+
+const spidersImage = new Image();
+spidersImage.src = "./res/img/spiders.png"
+
+const shieldImage = new Image();
+shieldImage.src = "./res/img/shield.png"
 
 
 const frameWidth = 30;
@@ -239,7 +257,7 @@ const drawPlatform = () => {
 //-----------------------------------------------------------
 // CASTLE DUNGEON
 //-----------------------------------------------------------
-        if(!playingSteamPunk){
+        if(playingCastle){
             if(platformLevel1[index] == 1){
                 c.drawImage(platformImage, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 2){
@@ -392,7 +410,7 @@ const drawBackBlocks = () => {
 //-----------------------------------------------------------
 // CASTLE DUNGEON
 //-----------------------------------------------------------
-        if(!playingSteamPunk){
+        if(playingCastle){
             if(platformLevel1[index] == 13){
                 c.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 11){
@@ -430,7 +448,7 @@ const drawBackBlocks = () => {
             }
             //---DOORS IN MENU
             if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
-                c.drawImage(doorsImage, (platformLevel1[index] - 50) * 64, finished[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+                c.drawImage(doorsImage, (platformLevel1[index] - 50) * 64, finished_castle[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
             }
 //-----------------------------------------------------------
 // STEAMPUNK DUNGEON
@@ -458,6 +476,8 @@ const drawBackBlocks = () => {
                 c.drawImage(brickBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 26){
                 c.drawImage(ladderImage, xBlock, yBlock, 32, 32);
+            }else if(platformLevel1[index] == 34){
+                c.drawImage(spDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
             }else if(platformLevel1[index] == 72){
                 c.drawImage(ropeImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }else if(platformLevel1[index] == 82){
@@ -472,7 +492,7 @@ const drawBackBlocks = () => {
                 c.drawImage(ropeImage, 5 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }
             if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
-                c.drawImage(doorsImageSp, (platformLevel1[index] - 50) * 64, finished[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+                c.drawImage(doorsImageSp, (platformLevel1[index] - 50) * 64, finished_steampunk[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
             }
         }
         if((index + 1) % 32 == 0){
@@ -492,7 +512,7 @@ let gradient2;
 
 const dark = () => {
     if (darkness) {
-        c_d.clearRect(0, 0, canvas.width, canvas.height);
+        c_d.clearRect(0, 0, canvas.width , canvas.height);
         c_d.fillStyle = "black";
         c_d.fillRect(0, 0, canvas.width, canvas.height);
         
@@ -524,12 +544,37 @@ const dark = () => {
         
         c_d.globalCompositeOperation = 'source-over';
     } else {
+        if(!smallDarkness)
         c_d.clearRect(0, 0, canvas.width, canvas.height);
     }
 };
 
+let smallDarkness = true;
 
+const smallDark = () => {
+    if (smallDarkness){
+        c_d.clearRect(0, 0, canvas.width, canvas.height);
+        c_d.fillStyle = "black";
+        c_d.fillRect(0, 0, canvas.width, canvas.height);
+        
+        const gradient1 = c_d.createRadialGradient(canvas.width/2, canvas.height/2, 0, canvas.width/2, canvas.height/2, 1600);
+        gradient1.addColorStop(0, 'rgba(0, 0, 0, 1)');
+        gradient1.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
+        c_d.globalCompositeOperation = 'destination-out';
+        
+        c_d.fillStyle = gradient1;
+        c_d.beginPath();
+        c_d.arc(canvas.width/2, canvas.height/2, 1600, 0, Math.PI * 2);
+        c_d.closePath();
+        c_d.fill();
+        
+        c_d.globalCompositeOperation = 'source-over';
+
+    } else {
+        c_d.clearRect(0, 0, canvas.width, canvas.height);
+    }
+}
 //----------------------------------------Drawing Ghost
 
 let ghostImage = new Image();
@@ -582,6 +627,17 @@ const drawGhost = () => {
     }
 }
 
+//---------------------------------------- Drawing back wall
+
+const drawBackWall = () => {
+    if(playingCastle){
+        backWallImage.src = "./res/img/wall.png";
+    }else{
+        backWallImage.src = "./res/img/wall_steampunk.png";
+    }
+    
+    c.drawImage(backWallImage, 0, 0, 1024, 576, 0, 0, 1024, 576);
+}
 //----------------------------------------Drawing Moving Platform
 
 let movingPlatformImage = new Image();
@@ -689,6 +745,8 @@ sawImage.src = "./res/img/saw.png";
 
 let sawVelocity = 1.5;
 
+let sawVelocitySpeeder = 1;
+
 //SAW COORDINATES
 let xSaw = 10000;
 let ySaw = 10000;
@@ -704,8 +762,11 @@ spawnSawCords();
 let rotationAngle = 0;
 
 const drawSaw = () => {
-    
-    rotationAngle -= Math.PI / 120;
+    if(sawVelocitySpeeder >= 1){
+        rotationAngle -= Math.PI / 120;
+    }else{
+        rotationAngle -= Math.PI / 120 * sawVelocitySpeeder / 2;
+    }
     c.save();
     c.translate(xSaw + 32, ySaw + 32);
     c.rotate(rotationAngle);
@@ -719,14 +780,14 @@ const drawSaw = () => {
             if (
                 ySaw + player1.height >= platformY &&
                 ySaw <= platformY + 32 &&
-                xSaw + player1.width + sawVelocity >= platformX - 32 &&
+                xSaw + player1.width + sawVelocity * sawVelocitySpeeder >= platformX - 32 &&
                 xSaw <= platformX + 32
             ) {
                 sawVelocity = -1.5;
             } else if (
                 ySaw + player1.height >= platformY &&
                 ySaw <= platformY + 32 &&
-                xSaw + sawVelocity <= platformX + 32 &&
+                xSaw + sawVelocity * sawVelocitySpeeder <= platformX + 32 &&
                 xSaw >= platformX
             ) {
                 sawVelocity = 1.5;
@@ -739,18 +800,118 @@ const drawSaw = () => {
 
 let bossPunchedNumber = 0;
 
+let reaperBossFlipped = false;
+let reaperBossNotHere = false;
+
 const drawBoss = () => {
-    bossImage.src = "./res/img/boss_s.png";
-    if(!bossAttacking){
+    if(reaperBossNotHere){
+        bossImage.src = "./res/img/nothing.png";
+    }else{
+        bossImage.src = "./res/img/boss_s.png";
+    }
+    if(reaperBossFlipped){
+        c.save();
+        c.translate(bossX + 40, bossY + 40);
+        c.rotate(Math.PI / 2);
+        c.drawImage(bossImage, currentFrameBoss * 130, (1 + bossPunchedNumber) * 130, 130, 130, -40, -40, 80, 80);
+        c.restore();
+    }else if(!bossAttacking){
         c.drawImage(bossImage, currentFrameBoss * 130, (0 + bossPunchedNumber) * 130, 130, 130, bossX, bossY, 80, 80)
     }else{
         c.drawImage(bossImage, currentFrameBoss * 130, (1 + bossPunchedNumber) * 130, 130, 130, bossX, bossY, 80, 80)
     }
+    if(shieldActive){
+        drawShield()
+    }
+}
+
+//----------------------------------------Drawing SPIDER BOSS and SMOKE
+
+let spiderBossNumber = 0;
+let smokeActivated = false;
+let spiderWarning = false;
+
+let spiderBossDead = false;
+let spiderBossFlipped = false
+let spiderBossNotHere = false;
+
+const drawSpiderBoss = () => {
+    if(spiderBossNotHere){
+        bossSpiderImage.src = "./res/img/nothing.png";
+    }else{
+        bossSpiderImage.src = "./res/img/boss_spider.png";
+    }
+    if(spiderBossFlipped){
+        c.save();
+        c.translate(bossX + 40, bossY + 40);
+        c.rotate(Math.PI / 2);
+        c.drawImage(bossSpiderImage, currentFrameSpiderBoss * 130, (1 + bossPunchedNumber) * 130, 130, 130, -40, -40, 80, 80);
+        c.restore();
+    }else if(spiderBossDead && !spiderBossFlipped){
+        c.drawImage(bossSpiderImage, currentFrameSpiderBoss * 130, (1 + bossPunchedNumber) * 130, 130, 130, bossX, bossY, 80, 80);
+    }else{
+        c.drawImage(bossSpiderImage, currentFrameSpiderBoss * 130, (spiderBossNumber + bossPunchedNumber) * 130, 130, 130, bossX, bossY, 80, 80);
+    }
+
+    if(smokeActivated){
+        smokeImage.src = "./res/img/smoke.png";
+        c.drawImage(smokeImage, currentFrameSmoke * 200, 0 * 200, 200, 200, bossX - 20, bossY - 20, 120, 120)
+    }
+    if(shieldActive){
+        drawShield()
+    }
+}
+
+let shieldActive = false;
+let spiderPhase2 = false;
+let spiderPhase3 = false;
+let spiderPhase4 = false;
+let spiderPhase5 = false;
+
+let reaperPhase2 = false;
+let reaperPhase3 = false;
+let reaperPhase4 = false;
+let reaperPhase5 = false;
+
+const drawShield = () => {
+    shieldImage.src = "./res/img/shield.png";
+    c.drawImage(shieldImage, 0, 0, 80, 80, bossX + 20, bossY - 25, 40, 40)
+}
+
+//----------------------------------------Drawing SPIDERS
+
+let spider1Y = -500;
+let spider2Y = -500;
+let spider3Y = -500;
+let spider4Y = -500;
+
+let spider1X = 256;
+let spider2X = 416;
+let spider3X = 576;
+let spider4X = 736;
+
+const drawSpiders = () => {
+    spidersImage.src = "./res/img/spiders.png";
+    c.drawImage(spidersImage, frameOrb * 32, 0 * 352, 32, 352, spider1X, spider1Y, 32, 352)
+    c.drawImage(spidersImage, frameOrb * 32, 0 * 352, 32, 352, spider2X, spider2Y, 32, 352)
+    c.drawImage(spidersImage, frameOrb * 32, 0 * 352, 32, 352, spider3X, spider3Y, 32, 352)
+    c.drawImage(spidersImage, frameOrb * 32, 0 * 352, 32, 352, spider4X, spider4Y, 32, 352)
+}
+
+//----------------------------------------Drawing MOVING WALLS in Bossfight Spider
+
+let rightWallX = canvas.width;
+let leftWallX = -160;
+
+const drawMovingWalls = () => {
+    movingWallsImage.src = "./res/img/moving_walls.png";
+    c.drawImage(movingWallsImage, 0, 0, 160, 384, leftWallX, 32, 160, 384) //Left Wall
+    c.drawImage(movingWallsImage, 160, 0, 160, 384, rightWallX, 32, 160, 384) //Left Wall
 }
 
 //----------------------------------------SPRITE SHEET ANIMATIONS
 
-let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor, deltaBoss, deltaMP, deltaSaw;
+let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch, deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost, deltaGhostS, deltaDoor, deltaBoss, deltaMP, deltaSaw, deltaSpiderBoss, deltaSmoke;
 let thenPlayer = Date.now();
 let thenLava = Date.now();
 let thenSpike = Date.now();
@@ -766,12 +927,16 @@ let thenGhost = Date.now();
 let thenGhostS = Date.now();
 let thenDoor = Date.now();
 let thenBoss = Date.now();
+let thenSpiderBoss = Date.now();
 let thenMP = Date.now();
 let thenSaw = Date.now();
+let thenSmoke = Date.now();
 
 let drawingId;
 
 let currentFrameBoss = 0;
+let currentFrameSpiderBoss = 0;
+let currentFrameSmoke = 0;
 
 let frameLava = 0;
 let frameSpike = 0;
@@ -979,7 +1144,7 @@ const drawing = () => {
     deltaSaw = now - thenSaw;
     if (deltaSaw > 25) {
         thenSaw = now - (deltaSaw % 25);
-        xSaw += sawVelocity;
+        xSaw += sawVelocity * sawVelocitySpeeder;
     }
 
     // Ghost Sprite sheet
@@ -1011,6 +1176,66 @@ const drawing = () => {
             currentFrameBoss = 0;
         }
     }
+
+    // Boss Spider Sprite sheet
+    deltaSpiderBoss = now - thenSpiderBoss;
+    if (deltaSpiderBoss > 250) {
+        thenSpiderBoss = now - (deltaSpiderBoss % 250);
+        currentFrameSpiderBoss++;
+        if(!spiderBossWarning){
+            if(currentFrameSpiderBoss == 4){
+                currentFrameSpiderBoss = 0;
+            }
+        }else if(spiderBossWarning){
+            if(currentFrameSpiderBoss == 4 && spiderBossWarning && !spiderBossDead){
+                currentFrameSpiderBoss = 0;
+                spiderBossWarning = false;
+                spiderBossNumber = 0;
+                smokeActivated = true;
+                shake();
+            }
+        }
+        if(spiderBossNumber == 1 && currentFrameSpiderBoss == 3 && !spiderFell){
+            spiderBossNumber = 0;
+            currentFrameSpiderBoss = 0;
+            spiderJumpMoment();
+        }
+        if(spiderFell && currentFrameSpiderBoss == 1){
+            spiderBossJumpDamage = false;
+        }
+        if(spiderFell && currentFrameSpiderBoss == 3){
+            spiderBossNumber = 0;
+            currentFrameSpiderBoss = 0;
+            spiderFell = false;
+        }
+        if(spiderBossFlipped || (spiderBossDead && currentFrameSpiderBoss == 3)){
+            currentFrameSpiderBoss = 0;
+        }
+    }
+
+    // Smoke Sprite sheet
+    if(smokeActivated){
+        deltaSmoke = now - thenSmoke;
+        if (deltaSmoke > 90) {
+            thenSmoke = now - (deltaSmoke % 90);
+            if(!spiderBossDead){
+                currentFrameSmoke++;
+                if(currentFrameSmoke == 1){
+                    sfx.src = "./res/sfx/smoke.mp3";
+                    sfx.play();
+                }
+                if(currentFrameSmoke == 10){
+                    currentFrameSmoke = 0;
+                    smokeActivated = false;
+                    spiderBossAttacking = false;
+                }
+            }else{
+                currentFrameSmoke = 10;
+                spiderBossAttacking = false;
+            }
+        }
+    }
+    
 }
 
 //----------------------------------------Drawing Player
@@ -1022,16 +1247,26 @@ let playerTwoImage = new Image();
 playerTwoImage.src = "./res/img/ruby.png";
 
 let drawPlayer = () => {
-    playerOneImage.src = player;
+    // Fix ladder colliison
+    ladderCollision(player1);
+    if(playingMultiplayer){
+        ladderCollision(player2);
+    }
+
+    if(!playerNowFlashing){
+        playerOneImage.src = playerSkin1
+        playerTwoImage.src = playerSkin2;
+    }
     c.clearRect(0, 0, canvas.width, canvas.height);
+    drawBackWall();
     drawBackBlocks();
     if(player1.velocity == 0 && player1.velocityJump == 0 && !player1.isMovingRight && !player1.isMovingLeft && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol){ //Right Stand
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
     }else if(player1.velocity == 0 && player1.velocityJump == 0 && !player1.isMovingRight && !player1.isMovingLeft && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol){ //Left Stand
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-    }else if(player1.velocity > 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol && !player1.canSlideOnWall){ //Right Fall
+    }else if(player1.velocity > 0 && player1.velocityJump == 0 && player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol && !player1.canSlideOnWall){ //Right Fall
         c.drawImage(playerOneImage, 0 * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
-    }else if(player1.velocity > 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol && !player1.canSlideOnWall){ //Left Fall
+    }else if(player1.velocity > 0 && player1.velocityJump == 0 && player1.turnedLeft && !player1.punched && !player1.crouched && !player1.ladderCol && !player1.canSlideOnWall){ //Left Fall
         c.drawImage(playerOneImage, 0 * sX, 1 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
     }else if(player1.turnedRight && !player1.punched && !player1.crouched && !player1.ladderCol && player1.canSlideOnWall && player1.velocityJump <= 0.2){ //Right Slide
         c.drawImage(playerOneImage, 1 * sX, 11 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
@@ -1053,12 +1288,13 @@ let drawPlayer = () => {
         c.drawImage(playerOneImage, 0 * sX, 6 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
     }else if((!player1.isMovingRight && !player1.isMovingLeft && player1.crouched && player1.turnedLeft && !player1.punched) || (player1.isMovingRight && player1.isMovingLeft && player1.crouched && player1.turnedLeft)){ //Crouched Left
         c.drawImage(playerOneImage, 0 * sX, 7 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-    }else if(player1.isMovingRight && !player1.isMovingLeft && player1.crouched && !player1.punched && player1.turnedRight){ //Crouched Right Moving
+    }else if(player1.isMovingRight && !player1.isMovingLeft && player1.crouched && !player1.punched && !player1.ladderCol && (player1.turnedRight || player1.velocityRight >= player1.velocityLeft)){ //Crouched Right Moving
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-    }else if(player1.crouched && player1.isMovingLeft && !player1.isMovingRight && !player1.punched && player1.turnedLeft){ //Crouched Left Moving
+    }else if(player1.crouched && player1.isMovingLeft && !player1.isMovingRight && !player1.punched && !player1.ladderCol &&(player1.turnedLeft || player1.velocityRight <= player1.velocityLeft)){ //Crouched Left Moving
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, player1.x, player1.y - player1.height, frameWidth, frameHeight);
-    }else if (player1.ladderCol && !player1.crouched){ //Climbing
+    }else if (player1.ladderCol){ //Climbing
         c.drawImage(playerOneImage, player1.currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
+        console.log(player1.ladderCol)
     }else{
         c.drawImage(playerOneImage, player1.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
     }
@@ -1070,9 +1306,9 @@ let drawPlayer = () => {
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
         }else if(player2.velocity == 0 && player2.velocityJump == 0 && !player2.isMovingRight && !player2.isMovingLeft && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol){ //Left Stand
             c.drawImage(playerTwoImage, player2.currentFrameStand * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-        }else if(player2.velocity > 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol && !player2.canSlideOnWall){ //Right Fall
+        }else if(player2.velocity > 0 && player2.velocityJump == 0 && player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol && !player2.canSlideOnWall){ //Right Fall
             c.drawImage(playerTwoImage, 0 * sX, 0 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
-        }else if(player2.velocity > 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol && !player2.canSlideOnWall){ //Left Fall
+        }else if(player2.velocity > 0 && player2.velocityJump == 0 && player2.turnedLeft && !player2.punched && !player2.crouched && !player2.ladderCol && !player2.canSlideOnWall){ //Left Fall
             c.drawImage(playerTwoImage, 0 * sX, 1 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
         }else if(player2.turnedRight && !player2.punched && !player2.crouched && !player2.ladderCol && player2.canSlideOnWall && player2.velocityJump <= 0.2){ //Right Slide
             c.drawImage(playerTwoImage, 1 * sX, 11 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
@@ -1094,9 +1330,9 @@ let drawPlayer = () => {
             c.drawImage(playerTwoImage, 0 * sX, 6 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
         }else if((!player2.isMovingRight && !player2.isMovingLeft && player2.crouched && player2.turnedLeft && !player2.punched) || (player2.isMovingRight && player2.isMovingLeft && player2.crouched && player2.turnedLeft)){ //Crouched Left
             c.drawImage(playerTwoImage, 0 * sX, 7 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
-        }else if(player2.isMovingRight && !player2.isMovingLeft && player2.crouched && !player2.punched && player2.turnedRight){ //Crouched Right Moving
+        }else if(player2.isMovingRight && !player2.isMovingLeft && player2.crouched && !player2.punched && !player2.ladderCol &&(player2.turnedRight || player2.velocityRight >= player2.velocityLeft)){ //Crouched Right Moving
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 6 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
-        }else if(player2.crouched && player2.isMovingLeft && !player2.isMovingRight && !player2.punched && player2.turnedLeft){ //Crouched Left Moving
+        }else if(player2.crouched && player2.isMovingLeft && !player2.isMovingRight && !player2.punched && !player2.ladderCol &&(player2.turnedLeft || player2.velocityRight <= player2.velocityLeft)){ //Crouched Left Moving
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 7 * sY, sWidth, sHeight, player2.x, player2.y - player2.height, frameWidth, frameHeight);
         }else if (player2.ladderCol && !player2.crouched){ //Climbing
             c.drawImage(playerTwoImage, player2.currentFrameCrouch * sX, 10 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
@@ -1107,7 +1343,7 @@ let drawPlayer = () => {
     cancelAnimationFrame(drawingId);
     drawing();
     drawPlatform();
-    if(!playingSteamPunk){
+    if(playingCastle){
         drawGhost();
     }else{
         drawMovingPlatform();
@@ -1116,17 +1352,22 @@ let drawPlayer = () => {
     objectsCollision(player1);
     orbCollision(player1);
     jumpPadCollision(player1);
-    ladderCollision(player1);
     doorsCollision(player1);
     if(playingMultiplayer){
         orbCollision(player2);
         jumpPadCollision(player2);
-        ladderCollision(player2);
         objectsCollision(player2);
         doorsCollision(player2);
     }
-    if(!playingMultiplayer){
+    if(playingCastle){
         drawBoss();
+    }else if(playingSteamPunk){
+        drawSpiders();
     }
+    if(playingSteamPunk && helpNum == 14){
+        drawSpiderBoss();
+        drawMovingWalls();
+    }
+    smallDark();
     dark();
 };

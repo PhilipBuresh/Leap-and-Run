@@ -28,8 +28,9 @@ p{
     z-index: 10;
     z-index: 3;
     transition: opacity 0.8s;
-    opacity: 0;
-    display: none;
+    opacity: 1;
+    display: block;
+    pointer-events: none;
 }
 #game{
     display:none;
@@ -145,15 +146,6 @@ p{
     margin-top:-10px;
     font-size: 20px;
 }
-#hps{
-    display: none;
-    width: 30%;
-    position: absolute;
-    top: 9%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 100px;
-}
 #myHp{
     display: none;
     margin-top:0.5em;
@@ -163,30 +155,56 @@ p{
     margin-right:0.2em;
     width: 60px;
 }
-#hp_bar{
-    height: 25px;
-    display:flex;
-    justify-content: left;
-    align-items: left;
-    border:3px solid white;
-    position:relative;
-}
-#name{
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color:white;
-    font-style: bold;
-    font-family: 'VT323', monospace;
-    letter-spacing: 3px;
-    font-size: 25px;
-}
-#hp{
+#hp {
     width: 100%;
     height: 100%;
     background-color: red;
     transition: width 0.1s ease-out;
+}
+
+#hp_bar {
+    height: 25px;
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    border: 3px solid white;
+    position: relative;
+    width: 100%;
+}
+
+.divider {
+    height: 100%;
+    width: 5px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    transition: 0.3s;
+    opacity: 1;
+}
+
+#divider1 { left: 20%; }
+#divider2 { left: 40%; }
+#divider3 { left: 60%; }
+#divider4 { left: 80%; }
+
+#name {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-family: 'VT323', monospace;
+    letter-spacing: 3px;
+    font-size: 25px;
+}
+#hps {
+    display: none;
+    width: 30%;
+    position: absolute;
+    top: 9%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 100px;
 }
 #escape_button {
     display:flex;
@@ -375,8 +393,6 @@ p{
     height: auto;
     transition: 0.3s;
     cursor: pointer;
-    margin-left:-5em;
-    margin-right:-5em;
 }
 
 #characters p {
@@ -392,7 +408,6 @@ p{
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     display: none;
     flex-direction: row;
     justify-content: center;
@@ -468,15 +483,6 @@ p{
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
-}
-#background {
-    width: 100%;
-    height: auto;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
 }
 #esc{
     font-family: ' VT323', monospace;
@@ -571,6 +577,149 @@ p{
     display: flex;
     align-items:center;
 }
+#skins{
+    max-width: 20%;
+    position: absolute;
+    bottom: 0px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    font-family: 'VT323', monospace;
+    margin:10px;
+    animation-duration: 1000ms;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-name: none;
+}
+@keyframes rightToMidSkins {
+    0% {right: -1000px;}
+    100% {right: 10px;;}
+}
+@keyframes midToRightSkins {
+    0% {right: 10px;}
+    100% {right: -1000px;;}
+}
+#skins span{
+    border:5px solid black;
+    border-radius: 10px;
+    background-color: rgb(15, 1, 1);
+    background: rgb(0,0,0);
+    background: linear-gradient(328deg, rgba(2,2,2,1) 0%, rgba(5,0,0,1) 30%, rgba(2,2,2,1) 100%);
+}
+#skins h1{
+    text-align: center;
+    margin: 0;
+    letter-spacing: 3px;
+    font-size: 60px;
+    color:rgb(255, 255, 255);
+    margin-bottom: 10px;
+}
+#skins #names{
+    display: flex;
+    flex-direction: row;
+}
+#skins #names p{
+    width: 50%;
+    text-align: center;
+    color:white;
+    font-size: 40px;
+    margin-bottom: -5px;
+}
+#skins_img{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+#skins img{
+    width: 50%;
+    height: auto;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+#skins img:hover{
+    filter: brightness(70%);
+}
+#skinChangerBox{
+    display: none;
+    flex-direction: row;
+    width: 70%;
+    height: 70%;
+    border:5px solid rgb(0, 0, 0);
+    border-radius: 10px;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 1) 0px 22px 70px 4px;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%, 150%);
+    background-image: url("../img/wall_verydark.png");
+    overflow: hidden;
+    animation-duration: 1000ms;
+    animation-play-state: paused;
+    animation-fill-mode: forwards;
+    animation-name: bottomToMid;
+}
+#leftSkin, #middleSkin, #rightSkin{
+    height: 100%;
+    width: 33.333%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+}
+#middleSkinImg{
+    transition: 0.2s;
+    width: 60%;
+    height: auto;
+    filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white) drop-shadow(1px -1px 0 white) drop-shadow(-1px 1px 0 white);
+}
+#leftSkinImg, #rightSkinImg{
+    filter: blur(3px) brightness(40%);
+    width: 40%;
+    height: auto;
+}
+#bottomBox{
+    display:block;
+    position: absolute;
+    bottom: 0%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+#chooseSkinBtn{
+    font-family: ' VT323', monospace;
+    text-align: center;
+    color:white;
+    border-radius: 4px;
+    padding: 15px 10px;
+    font-size: 22px;
+    border:3px solid white;
+    width: 40%;
+    height: 30%;
+    cursor: pointer;
+}
+#chooseSkinBtn:hover{
+    background-color: white;
+    color:black;
+}
+#leftArrow{
+    transform: rotate(270deg);
+    cursor: pointer;
+    transition: 0.2s;
+}
+#rightArrow{
+    transform: rotate(90deg);
+    cursor: pointer;
+    transition: 0.2s;
+}
+#rightArrow:hover, #leftArrow:hover{
+    opacity: 50%;
+}
 #black {
     background-color: black;
     width: 150%;
@@ -593,16 +742,6 @@ p{
     z-index: 5;
     opacity: 0;
     pointer-events: none;
-}
-#scene {
-    width: 100%;
-    top: 50%;
-    left: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    z-index: 5;
-    pointer-events: none;
-    display:none;
 }
 #text{
     max-width: fit-content;

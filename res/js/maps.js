@@ -43,11 +43,12 @@ let originalPlatform1
 let lobby
 let map = new Array (16);
 
+let playingCastle;
+
 const setDungeonToCastle = () => {
 
+    playingCastle = true;
     playingSteamPunk = false;
-
-    background.src = "./res/img/wall.png";
 
     let spawnCords = () => {
         player1.x = 35;
