@@ -232,6 +232,11 @@ const spiderBossLevel = () => {
     divider4.style.opacity = 1;
     shieldActive = false;
 
+    spider1X = 256;
+    spider2X = 416;
+    spider3X = 576;
+    spider4X = 736;
+
     bossPunchedNumber = 0;
     spiderBossDead = false;
     spiderPhase2 = false;
