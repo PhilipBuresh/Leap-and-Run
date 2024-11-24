@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="./res/img/icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500&family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./res/css/style.css">
+    <title>Leap&Run</title>
+</head>
+<body>
+    <video autoplay loop muted playsinline id="background-video">
+        <source src="./res/vid/room.mp4" type="video/mp4">
+    </video>
+    <audio loop id="music" src="" type="audio/mpeg"></audio>
+    <audio id="sfx" type="audio/mpeg"></audio>
+    <audio id="sfx_land" type="audio/mpeg"></audio>
+    <audio id="sfx_miss" type="audio/mpeg"></audio>
+    <audio id="sfx_dead" type="audio/mpeg"></audio>
+    <audio id="sfx_player" type="audio/mpeg"></audio>
+    <audio id="sfx_walk" type="audio/mpeg"></audio> 
+    <audio id="sfx_climb" type="audio/mpeg"></audio>
+    <audio id="sfx_jump" type="audio/mpeg"></audio>
+    <audio id="sfx_punch" type="audio/mpeg"></audio>
+    <audio id="sfx_extra_jump" type="audio/mpeg"></audio>
+    <audio id="sfx_boss_talk" type="audio/mpeg"></audio>
+    <audio id="sfx_boss_laugh" type="audio/mpeg"></audio>
+    <audio id="sfx_achievement" type="audio/mpeg"></audio>
+    <audio id="sfx_laser" type="audio/mpeg"></audio>
+
+    <audio id="sfx2" type="audio/mpeg"></audio>
+    <audio id="sfx_land2" type="audio/mpeg"></audio>
+    <audio id="sfx_miss2" type="audio/mpeg"></audio>
+    <audio id="sfx_dead2" type="audio/mpeg"></audio>
+    <audio id="sfx_player2" type="audio/mpeg"></audio>
+    <audio id="sfx_walk2" type="audio/mpeg"></audio>
+    <audio id="sfx_climb2" type="audio/mpeg"></audio>
+    <audio id="sfx_jump2" type="audio/mpeg"></audio>
+    <audio id="sfx_punch2" type="audio/mpeg"></audio>
+    <audio id="sfx_extra_jump2" type="audio/mpeg"></audio>
+    <audio id="sfx_laser2" type="audio/mpeg"></audio>
+    <div id="container">
+        <div id="startMenu">
+            <div id="recommend">
+                <h2>Recommended</h2>
+                <h4>Have +60hz monitor</h4>
+                <h4>Have a strong CPU</h4>
+            </div>
+            <img id="text" src="./res/img/name.png" alt="name" draggable="false">
+            <p id="clock"></p>
+            <div id="startMenuBtns">
+                <span id="startBtns">
+                    <div id="playButton">Singleplayer</div>
+                    <div id="playButtonMulti">Mutliplayer</div>
+                </span>
+                <span id="otherBtns">
+                    <div id="achievementsButton">Achievements</div>
+                    <div id="tutorialButton">Tutorial</div>
+                    <div id="creditsButton">Credits</div>
+                </span>
+            </div>
+        </div>
+        <div id="esc">
+            <div id="button_resume">Resume [esc]</div>
+            <div id="button_retry">Retry</div>
+            <div id="button_back">Back to Lobby</div>
+            <div id="button_menu">Back to Menu</div>
+        </div>
+        <div id="skins">
+            <h1>
+                SKIN CHANGER
+            </h1>
+            <span>
+                <div id="names">
+                    <p>Rioter</p>
+                    <p>Ruby</p>
+                </div> 
+                <div id="skins_img">
+                    <img id="choose_rioter_hat" src="./res/hats/rioter_none.png" alt="hat" draggable="false">
+                    <img id="choose_ruby_hat" src="./res/hats/ruby_none.png" alt="hat" draggable="false">
+                    <img id="choose_rioter_shine" src="./res/gif/shine.gif" alt="shine" draggable="false">
+                    <img id="choose_ruby_shine" src="./res/gif/shine.gif" alt="shine" draggable="false">
+                    <img id="choose_rioter" src="./res/skins/red_rioter.png" alt="rioter" draggable="false">
+                    <img id="choose_ruby" src="./res/skins/red_ruby.png" alt="rioter" draggable="false">
+                </div>
+            </span>
+        </div>
+        <div id="credits_list"></div>
+        <img id="red_cross_achievements" src="./res/img/red_cross.png" draggable="false" alt="cross">
+        <div id="achievements_list">
+            <h2>Hall of Achievements</h2>
+            <h3 id="achievements_counter">0 / 30</h3>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/hot.png" alt="Hot Achievement">
+                <p id="achievement_text_in_list">Do you know that lava burns? Now you know.</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/mario.png" alt="Mario Achievement">
+                <p id="achievement_text_in_list">Don't copy Mario's mechanic, how embarrassing...</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/shift.png" alt="Shift Achievement">
+                <p id="achievement_text_in_list">I... am STEVE!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/giveup.png" alt="Give Up Achievement">
+                <p id="achievement_text_in_list">Never gonna give you up.</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/hi.png" alt="Hi Achievement">
+                <p id="achievement_text_in_list">Hey! Did you notice me? I'm hereeeeeee</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/ship.png" alt="Ship Achievement">
+                <p id="achievement_text_in_list">I knew that you would wreck the ship</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/noob.png" alt="Noob Achievement">
+                <p id="achievement_text_in_list">How... How could you only survive for ONE second.</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/pink.png" alt="Pink Achievement">
+                <p id="achievement_text_in_list">The pink one really suits you</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/timer.png" alt="Timer Achievement">
+                <p id="achievement_text_in_list">Did you notice there is a timer?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/shield.png" alt="Shield Achievement">
+                <p id="achievement_text_in_list">Are you blind? Can't you see he has a shield?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/head.png" alt="Head Achievement">
+                <p id="achievement_text_in_list">Doesn't it give you a headache?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/draezlyr.png" alt="Draezlyr Achievement">
+                <p id="achievement_text_in_list">Don't try to be a Draezlyr Wielder</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/portal.png" alt="Portal Achievement">
+                <p id="achievement_text_in_list">Let's hope it doesn't teleport you to the Nether</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/punch.png" alt="Punch Achievement">
+                <p id="achievement_text_in_list">You are stronger than One Punch Man</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/friend.png" alt="Punch Achievement">
+                <p id="achievement_text_in_list">The Power of FRIENDSHIP!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/afk.png" alt="AFK Achievement">
+                <p id="achievement_text_in_list">Well, just sleep, I'll wait...</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/that_was_close.png" alt="That Was Close Achievement">
+                <p id="achievement_text_in_list">THAT WAS CLOSE!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/pipe.png" alt="Pipe Achievement">
+                <p id="achievement_text_in_list">These pipes are better than the green ones, right?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/shoes.png" alt="Shoes Achievement">
+                <p id="achievement_text_in_list">Don't your legs hurt from the fall?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/jump_pad.png" alt="Jump Pad Achievement">
+                <p id="achievement_text_in_list">To infinity and BEYOND!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_silver.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/gravity_orb.png" alt="Gravity Orb Achievement">
+                <p id="achievement_text_in_list">Well, this is not Geometry Dash</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/castle.png" alt="Castle Achievement">
+                <p id="achievement_text_in_list">Castle Dungeon COMPLETED!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/steampunk.png" alt="Steampunk Achievement">
+                <p id="achievement_text_in_list">Steampunk Dungeon COMPLETED!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/spaceship.png" alt="Spaceship Achievement">
+                <p id="achievement_text_in_list">Spaceship Dungeon COMPLETED!</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/so_much_time.png" alt="So Much Time Achievement">
+                <p id="achievement_text_in_list">So much time to give away...</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/jump_orb.png" alt="Jump Orb Achievement">
+                <p id="achievement_text_in_list">Do you finally understand how the Jump Orb works?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/hundred.png" alt="Hundred Achievement">
+                <p id="achievement_text_in_list">Congratulations! You have already died 100 times...</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/king.png" alt="King Achievement">
+                <p id="achievement_text_in_list">Did you beat them all? You are the king of Leap&Run</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/god.png" alt="God Achievement">
+                <p id="achievement_text_in_list">Without any death? I think you are god.</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+            <div id="achievement_in_list" style="background-image: url('./res/img/achievement_gold.png');">
+                <img id="achievement_img_in_list" src="./res/achievements/golden_egg.png" alt="Golden Egg Achievement">
+                <p id="achievement_text_in_list">You found me... But why did you wait?</p>
+                <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
+            </div>
+        </div>
+        <img id="gate" src="./res/img/gate.png" alt="gate" draggable="false">
+        <img id="red_cross_tutorials" src="./res/img/red_cross.png" draggable="false" alt="cross">
+        <div id="tutorials_list">
+            <h2>TUTORIAL</h2>
+            <div id="tutorials_players">
+                <div id="tutorials_p1">
+                    <h3>PLAYER 1</h3>
+                    <img src="./res/img/player1_buttons.png" alt="player1_buttons" draggable="false">
+                </div>
+                <div id="tutorials_p2">
+                    <h3>PLAYER 2</h3>
+                    <img src="./res/img/player2_buttons.png" alt="player2_buttons" draggable="false">
+                </div>
+            </div>
+        </div>
+        <div id="tutorials"></div>
+        <div id="characters">
+            <div id="images">
+                <div>
+                    <p>Rioter</p>
+                    <div id="rioter">
+                        <img id="man_hat" src="#" alt="hat">
+                        <img id="man_shine" src="./res/gif/shine.gif" alt="shine">
+                        <img id="man" src="./res/skins/red_rioter.png" alt="man" draggable="false">
+                    </div>
+                </div>
+                <div>
+                    <p>Ruby</p>
+                    <div id="ruby">
+                        <img id="woman_hat" src="#" alt="hat">
+                        <img id="woman_shine" src="./res/gif/shine.gif" alt="shine">
+                        <img id="woman" src="./res/skins/red_ruby.png" alt="woman" draggable="false">
+                    </div>
+                </div>
+            </div>
+            <div id="choose">Choose your Character!</div>
+        </div>
+        <div id="chooseDungeon">
+            <div>
+                <div>
+                    <img id="castleDungeon" src="./res/gif/choose_castle.gif" alt="castle" draggable="false">
+                    <p id="castleLevelsDone">0 / 15</p>
+                </div>
+                <p>Castle Dungeon</p>
+                <p>(EASY)</p>
+            </div>
+            <div>
+                <div>
+                    <img id="steampunkDungeon" src="./res/gif/choose_steampunk.gif" alt="steampunk" draggable="false">
+                    <p id="steampunkLevelsDone"> 0 / 15</p>
+                </div>
+                <p>Steampunk Dungeon</p>
+                <p>(MEDIUM)</p>
+            </div>
+            <div>
+                <div>
+                    <img id="spaceshipDungeon" src="./res/gif/choose_spaceship.gif" alt="spaceship" draggable="false">
+                    <p id="spaceshipLevelsDone"> 0 / 15</p>
+                </div>
+                <p>Spaceship Dungeon</p>
+                <p>(HARD)</p>
+            </div>
+        </div>
+        <div id="music_editor">
+            <div id="music_volume">
+                <div>
+                    <img id="note_logo" src="./res/img/note.png" alt="note" draggable="false">
+                    <p id="whichAudio">Music</p>
+                </div>
+                <p id="music_value">50%</p>
+                <img id="not_invert_arrow1" src="./res/img/arrow.png" alt="arrow" draggable="false">
+                <img id="invert_arrow1" src="./res/img/arrow.png" alt="arrow" draggable="false">
+            </div>
+            <div id="sfx_volume">
+                <div>
+                    <img id="sfx_logo" src="./res/img/sfx.png" alt="sfx">
+                    <p id="whichAudio">SFX</p>
+                </div>
+                <p id="sfx_value">50%</p>
+                <img id="not_invert_arrow2" src="./res/img/arrow.png" alt="arrow" draggable="false">
+                <img id="invert_arrow2" src="./res/img/arrow.png" alt="arrow" draggable="false">
+            </div>
+            <p id="music_editor_back">Resume [esc]</p>
+        </div>
+        <div id="skinChangerBox">
+            <div id="leftHat">
+                <img id="leftHatImg" src="./res/hats/rioter_bow.png" alt="#" draggable="false">
+            </div>
+            <div id="middleHat">
+                <img id="leftArrowHat" src="./res/img/arrow.png" alt="arrow" draggable="false">
+                <img id="middleHatImg" src="./res/hats/rioter_bow.png" alt="#" draggable="false">
+                <img id="rightArrowHat" src="./res/img/arrow.png" alt="arrow" draggable="false">
+            </div>
+            <div id="rightHat">
+                <img id="rightHatImg" src="./res/hats/rioter_bow.png" alt="#" draggable="false">
+            </div>
+            <div id="leftSkin">
+                <img id="leftSkinImg" src="#" alt="#" draggable="false">
+            </div>
+            <div id="middleSkin">
+                <img id="middleSkinImg" src="#" alt="#" draggable="false">
+                <img id="middleSkinImgWithHat" src="./res/hats/rioter_crown.png" alt="#" draggable="false">
+                <img id="middleSkinImgShine" src="./res/gif/shine.gif" alt="shine" draggable="false">
+                <div id="bottomBox">
+                    <img id="leftArrow" src="./res/img/arrow.png" alt="arrow" draggable="false">
+                    <div id="chooseSkinBtn">EQUIP</div>
+                    <div id="locked">
+                        <img id="lock" src="./res/img/lock.png" alt="lock" draggable="false">
+                        <p id="lock_text">Get at least 5 Achievements</p>
+                    </div>
+                    <img id="rightArrow" src="./res/img/arrow.png" alt="arrow" draggable="false">
+                </div>
+            </div>
+            <div id="rightSkin">
+                <img id="rightSkinImg" src="#" alt="#" draggable="false">
+            </div>
+        </div>
+        <div id="game">
+            <div id="myHp">
+                <img id="heart1" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+                <img id="heart2" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+                <img id="heart3" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+            </div>
+            <div id="hps">
+                <div id="name">BOSS</div>
+                <div id="hp_bar">
+                    <div class="divider" id="divider1"></div>
+                    <div class="divider" id="divider2"></div>
+                    <div class="divider" id="divider3"></div>
+                    <div class="divider" id="divider4"></div>
+
+                    <div class="alien_divider" id="alien_divider1"></div>
+                    <div class="alien_divider" id="alien_divider2"></div>
+                    <div class="alien_divider" id="alien_divider3"></div>
+                    <div id="hp"></div>
+                </div>
+            </div>
+            <div id="canvas_container">
+                <img id="rising" src="./res/gif/rising.gif" alt="rising">
+                <div id="skip_credits">Skip Credits ></div>
+                <div id="credits_boss">
+                    <img id="leap_and_run_credits" src="./res/img/name.png" alt="name" draggable="false">
+                    <h1>Game by - Filip Bureš</h1>
+                    <h2>CREDITS:</h2>
+                </div>
+                <canvas id="canvas" width="1024" height="576"></canvas>
+                <canvas id="canvas_darkness" width="1024" height="576"></canvas>
+                <p id="timer">Time: 0s</p>
+                <img id="black" src="./res/img/black.png" alt="black">
+                <video id="transition1">
+                    <source src="./res/vid/transition1.webm" type="video/webm" draggable="false">
+                </video>
+                <video id="transition2">
+                    <source src="./res/vid/transition2.webm" type="video/webm" draggable="false">
+                </video>
+                <div id="achievement">
+                    <img id="achievement_img" src="#" alt="draezlyr">
+                    <p id="achievement_text"></p>
+                    <img id="correct_symbol" src="#" alt="correct_transparent">
+                </div>
+            </div>
+            <div id="right_buttons">
+                <div id="escape_button">
+                    <div id="first_col"></div>
+                    <div id="second_col"></div>
+                </div>
+                <div id="note_button">
+                    <img id="note" src="./res/img/note.png" alt="note" draggable="false">
+                </div>
+                    <div id="achievement_button">
+                    <img id="trophy" src="./res/img/trophy_logo.png" alt="note" draggable="false">
+                </div>
+                <h3 id="achievement_counter_in_right">0 / 30</h3>
+            </div>
+        </div>
+        <div id="load_container">
+            <img id="running_rioter" src="./res/gif/rioter_running.gif" alt="rioter" draggable="false">
+            <div id="loading_bar">
+                <p id="loading_text">Loading</p>
+                <span id="loading_color"></span>
+            </div>
+        </div>
+        <div id="buttons">
+            <div id="left_buttons_arrows">
+                <div id="button_up" ontouchstart = "go_up()" ontouchend = "go_up_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="button_punch" ontouchstart = "go_punch()" ontouchend = "go_punch_return()"><img src="./res/img/punch.png" alt="punch"></div>
+                <div id="button_down" ontouchstart = "go_down()" ontouchend = "go_down_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+            </div>
+            <div id="right_buttons_arrows">
+                <div id="button_left" ontouchstart = "go_left()" ontouchend = "go_left_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="button_right" ontouchstart = "go_right()" ontouchend = "go_right_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+            </div>
+        </div>
+        <img id="fullBlack" src="./res/img/black.png" alt="black" draggable="false">
+    </div>
+    <script src="./res/js/players.js"></script>
+    <script src="./res/js/skins.js"></script>
+    <script src="./res/js/achievements.js"></script>
+    <script src="./res/js/draw.js"></script>
+    <script src="./res/js/maps.js"></script>
+    <script src="./res/js/maps_steampunk.js"></script>
+    <script src="./res/js/maps_space.js"></script>
+    <script src="./res/js/script.js"></script>
+    <script src="./res/js/camera.js"></script>
+    <script src="./res/js/boss_levels.js"></script>
+    <script src="./res/js/load_json.js"></script>
+    <script src="./res/js/load_files.js"></script>
+    <script src="./res/js/phone_detected.js"></script>
+</body>
+</html>

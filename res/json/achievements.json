@@ -1,0 +1,176 @@
+[
+    {
+        "icon": "./res/achievements/hot.png",
+        "text": "Do you know that lava burns? Now you know.",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/mario.png",
+        "text": "Don't copy Mario's mechanic, how embarrassing...",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/shift.png",
+        "text": "I... am STEVE!",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/giveup.png",
+        "text": "Never gonna give you up.",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/hi.png",
+        "text": "Hey! Did you notice me? I'm hereeeeeee",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/ship.png",
+        "text": "I knew that you would wreck the ship",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/noob.png",
+        "text": "How... How could you only survive for ONE second.",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/pink.png",
+        "text": "The pink one really suits you",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/timer.png",
+        "text": "Did you notice there is a timer?",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/shield.png",
+        "text": "Are you blind? Can't you see he has a shield?",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/head.png",
+        "text": "Doesn't it give you a headache?",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/draezlyr.png",
+        "text": "Don't try to be a Draezlyr Wielder",
+        "type": "./res/img/achievement_bronze.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/portal.png",
+        "text": "Let's hope it doesn't teleport you to the Nether",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/punch.png",
+        "text": "You are stronger than One Punch Man",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/afk.png",
+        "text": "Well, just sleep, I'll wait...",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/that_was_close.png",
+        "text": "THAT WAS CLOSE!",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/pipe.png",
+        "text": "These pipes are better than the green ones, right?",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/shoes.png",
+        "text": "Don't your legs hurt from the fall?",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/jump_pad.png",
+        "text": "To infinity and BEYOND!",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/gravity_orb.png",
+        "text": "Well, this is not Geometry Dash",
+        "type": "./res/img/achievement_silver.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/castle.png",
+        "text": "Castle Dungeon COMPLETED!",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/steampunk.png",
+        "text": "Steampunk Dungeon COMPLETED!",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/spaceship.png",
+        "text": "Spaceship Dungeon COMPLETED!",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/so_much_time.png",
+        "text": "So much time to give away...",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/jump_orb.png",
+        "text": "Do you finally understand how the Jump Orb works?",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/hundred.png",
+        "text": "Congratulations! You have already died 100 times...",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/king.png",
+        "text": "Did you beat them all? You are the king of Leap&Run",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/god.png",
+        "text": "Without any death? I think you are god.",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    },
+    {
+        "icon": "./res/achievements/golden_egg.png",
+        "text": "You found me... But why did you wait?",
+        "type": "./res/img/achievement_gold.png",
+        "symbol": "./res/img/correct_transparent.png"
+    }
+]

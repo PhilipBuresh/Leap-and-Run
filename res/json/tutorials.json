@@ -1,0 +1,79 @@
+[
+    {
+        "name": "Walking",
+        "video": "./res/tutorials/walking.mp4"
+    },
+    {
+        "name": "Jumping",
+        "video": "./res/tutorials/jumping.mp4"
+    },
+    {
+        "name": "Crouching",
+        "video": "./res/tutorials/crouching.mp4"
+    },
+    {
+        "name": "Punching",
+        "video": "./res/tutorials/punching.mp4"
+    },
+    {
+        "name": "Climbing",
+        "video": "./res/tutorials/ladder.mp4"
+    },
+    {
+        "name": "Jump Orb",
+        "video": "./res/tutorials/jumping_orb.mp4"
+    },
+    {
+        "name": "Ghost",
+        "video": "./res/tutorials/ghost.mp4"
+    },
+    {
+        "name": "Jump Pad",
+        "video": "./res/tutorials/jump_pad.mp4"
+    },
+    {
+        "name": "Sliding on Honey/Slime",
+        "video": "./res/tutorials/sliding.mp4"
+    },
+    {
+        "name": "Portals",
+        "video": "./res/tutorials/portal.mp4"
+    },
+    {
+        "name": "Key",
+        "video": "./res/tutorials/key.mp4"
+    },
+    {
+        "name": "Moving Spikes",
+        "video": "./res/tutorials/moving_spikes.mp4"
+    },
+    {
+        "name": "Moving Platform",
+        "video": "./res/tutorials/moving_platform.mp4"
+    },
+    {
+        "name": "Pipes",
+        "video": "./res/tutorials/pipes.mp4"
+    },
+    {
+        "name": "Booster",
+        "video": "./res/tutorials/booster.mp4"
+    },
+    {
+        "name": "Gravity Orb",
+        "video": "./res/tutorials/gravity_orb.mp4"
+    },
+    {
+        "name": "Button to switch holograms",
+        "video": "./res/tutorials/button.mp4"
+    },
+    {
+        "name": "Detector Laser",
+        "video": "./res/tutorials/laser.mp4"
+    },
+    {
+        "name": "Ship (Flying and Shooting)",
+        "video": "./res/tutorials/ship.mp4"
+    }
+]
+  
