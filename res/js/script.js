@@ -98,6 +98,7 @@ const achievement_button = document.getElementById("achievement_button");
 const trophy = document.getElementById("trophy");
 const first_col = document.getElementById("first_col");
 const second_col = document.getElementById("second_col");
+const button_enter = document.getElementById("button_enter");
 
 let helpNum = 0; //Help Number for level detection (doors)
 
@@ -817,6 +818,9 @@ const doorsCollision = (PLAYER) => {
                         }else{
                             c.fillStyle = "lime";
                             c.fillText("Enter [e]", platformX - 3, platformY);
+                        }
+                        if(deviceDetect && inGame){
+                            button_enter.style.display = "flex";
                         }
                     }
                 }
@@ -3757,6 +3761,7 @@ window.onload =  () => {
     selectedRuby = false;
 
     preloadItems();
+
 }
 
 //Reset Local Storage Function

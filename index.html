@@ -45,7 +45,7 @@
         <div id="startMenu">
             <div id="recommend">
                 <h2>Recommended</h2>
-                <h4>Have +60hz monitor</h4>
+                <h4>Have +60hz display</h4>
                 <h4>Have a strong CPU</h4>
             </div>
             <img id="text" src="./res/img/name.png" alt="name" draggable="false">
@@ -427,9 +427,14 @@
         </div>
         <div id="buttons">
             <div id="left_buttons_arrows">
-                <div id="button_up" ontouchstart = "go_up()" ontouchend = "go_up_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
-                <div id="button_punch" ontouchstart = "go_punch()" ontouchend = "go_punch_return()"><img src="./res/img/punch.png" alt="punch"></div>
-                <div id="button_down" ontouchstart = "go_down()" ontouchend = "go_down_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+                <div id="buttons_left_column">
+                    <div id="button_up" ontouchstart = "go_up()" ontouchend = "go_up_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+                    <div id="button_punch" ontouchstart = "go_punch()" ontouchend = "go_punch_return()"><img src="./res/img/punch.png" alt="punch"></div>
+                    <div id="button_down" ontouchstart = "go_down()" ontouchend = "go_down_return()"><img src="./res/img/arrow.png" alt="arrow"></div>
+                </div>
+                <div id="buttons_right_column">
+                    <div id="button_enter" ontouchstart = "enterFunction()"><p>Enter</p></div>
+                </div>
             </div>
             <div id="right_buttons_arrows">
                 <div id="button_left" ontouchstart = "go_left()" ontouchend = "go_left_return()"><img src="./res/img/arrow.png" alt="arrow"></div>

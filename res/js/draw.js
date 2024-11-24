@@ -2124,6 +2124,7 @@ let playerTwoImage = new Image();
 playerTwoImage.src = "./res/skins/ruby.png";
 
 let drawPlayer = () => {
+    button_enter.style.display = "none";
     // Fix ladder colliison
     ladderCollision(player1);
     if(playingMultiplayer){

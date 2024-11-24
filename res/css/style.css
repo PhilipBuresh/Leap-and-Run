@@ -1,20 +1,27 @@
 body {
     background-color: black;
-    overflow: hidden;
     height: 100vh;
     width: auto;
     background-image: url("../img/wall_dark.png");
     pointer-events: none;
 }
 
+html, body {
+    overflow: hidden; /* Zamezí scrollování */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+
 #background-video {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
+    width: 100vw; /* Nastaví šířku na 100% šířky viewportu */
+    height: 100vh; /* Nastaví výšku na 100% výšky viewportu */
+    object-fit: cover; /* Ujistí se, že video pokrývá celý prostor */
     z-index: -1;
 }
 *{
@@ -40,12 +47,15 @@ p{
         display: none;
     }
 }
-#container{
+#container {
+    position: relative;
     height: 100vh;
-    width: auto;
+    width: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
+
 #fullBlack{
     position:absolute;
     top: 50%;
@@ -189,6 +199,7 @@ p{
     margin:1vw;
 }
 #achievements_list{
+    display: none;
     background-color: rgb(15, 15, 15);
     background-image: url("../img/wall_verydark.png");
     color:white;
@@ -200,7 +211,6 @@ p{
     width: 45%;
     overflow-y: auto;
     z-index: 1;
-    display: none;
 
     animation-duration: 1000ms;
     animation-play-state: paused;
@@ -818,12 +828,12 @@ p{
     animation-name: bottomToMid;
 }
 @keyframes bottomToMid {
-    1% {transform: translate(-50%, 150%);}
+    1% {transform: translate(-50%, 500%);}
     100% {transform: translate(-50%, -50%)}
 }
 @keyframes midToBottom {
     0% {transform: translate(-50%, -50%);}
-    100% {transform: translate(-50%, 150%)}
+    100% {transform: translate(-50%, 500%)}
 }
 
 #characters #images {
@@ -1338,12 +1348,42 @@ p{
 #buttons{
     display:none;
 }
+#buttons img{
+    max-width: 70px;
+    max-height: 70px;
+}
+#button_enter{
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width:  83px;
+    height: 83px;
+    margin-left:0.5em;
+    color:white;
+    font-size: 15px;
+    border:5px solid rgba(255, 255, 255, 0.6);
+    background-color:rgba(0, 0, 0, 0.6);
+    margin-bottom: 10px;
+    border-radius: 1em;
+}
+#buttons_right_column{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#buttons_left_column{
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
 #left_buttons_arrows, #right_buttons_arrows {
     position: absolute;
     bottom: 10px;
 }
 #left_buttons_arrows {
     left: 1%;
+    display:flex
 }
 #right_buttons_arrows {
     right: 1%;

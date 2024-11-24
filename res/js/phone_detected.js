@@ -1,10 +1,12 @@
 const buttons = document.getElementById("buttons");
+const clock = document.getElementById("clock");
 
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect) {
     buttons.style.display = "block";
     playButton.innerHTML = "PLAY!";
     playButtonMulti.style.display = "none";
+    clock.style.display = "none";
 }
 
 const go_up = () => {
