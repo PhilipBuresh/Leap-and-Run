@@ -83,8 +83,10 @@ const gameFiles = [
     "./res/sfx/pipe.mp3",
     "./res/sfx/portal_sfx.mp3",
     "./res/sfx/punch.mp3",
-    "./res/sfx/rioter_attack.mp3",
-    "./res/sfx/ruby_attack.mp3",
+    "./res/sfx/rioter_attack1.mp3",
+    "./res/sfx/rioter_attack2.mp3",
+    "./res/sfx/ruby_attack1.mp3",
+    "./res/sfx/ruby_attack2.mp3",
     "./res/sfx/shield_hit_alien.mp3",
     "./res/sfx/shield_hit.mp3",
     "./res/sfx/small_land.mp3",
@@ -94,11 +96,10 @@ const gameFiles = [
     "./res/sfx/stone_steps.mp3",
     "./res/sfx/wall_break.mp3",
     "./res/sfx/wood_steps.mp3",
+    "./res/sfx/metal_steps.mp3",
 
     //Videos
     "./res/vid/room.mp4",
-    "./res/vid/transition1.webm",
-    "./res/vid/transition2.webm",
 
     //Tutorials
     "./res/tutorials/booster.mp4",
@@ -151,6 +152,8 @@ const gameFiles = [
     "./res/img/correct_transparent.png",
     "./res/img/cracked.png",
     "./res/img/darkness1.png",
+    "./res/img/dead_rioter.png",
+    "./res/img/dead_ruby.png",
     "./res/img/dj.png",
     "./res/img/door.png",
     "./res/img/doors.png",

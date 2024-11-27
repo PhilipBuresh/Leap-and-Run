@@ -55,10 +55,12 @@ const loadCreditsInAlienBoss = async () => {
     goldenEgg.src = "./res/img/egg.png";
     goldenEgg.alt = "egg";
     goldenEgg.draggable = false;
+    goldenEgg.zIndex = 3;
     creditsList.appendChild(goldenEgg);
 
     goldenEgg.onclick = () => {
         achievementGoldenEgg()
+        goldenEgg.style.display = "none";
     };
 }
 

@@ -1,15 +1,42 @@
 const buttons = document.getElementById("buttons");
 const clock = document.getElementById("clock");
+const button_up = document.getElementById("button_up");
+const button_punch = document.getElementById("button_punch");
+const button_down = document.getElementById("button_down");
+const button_enter = document.getElementById("button_enter");
+const button_left = document.getElementById("button_left");
+const button_right = document.getElementById("button_right");
+
+const  goFullScreen = () => {
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+        element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) { // Firefox
+        element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) { // IE/Edge
+        element.msRequestFullscreen();
+    }
+}
+
 
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect) {
-    buttons.style.display = "block";
     playButton.innerHTML = "PLAY!";
     playButtonMulti.style.display = "none";
     clock.style.display = "none";
 }
 
+document.body.onclick = () => {
+    if(deviceDetect){
+        goFullScreen();
+    }
+}
+
 const go_up = () => {
+    afkAchievementProgress();
+    button_up.style.filter = "invert(0)";
     if (player1.canStandUp && inGame && !player1.isJumping && !player1.flying) {
         isJumping = true;
         if(player1.ladderCol){
@@ -65,6 +92,8 @@ const go_up = () => {
 }
 
 const go_up_return = () => {
+    button_up.style.filter = "invert(0.15)";
+    afkAchievementProgress();
     if(!player1.flying){
         player1.isJumping = false;
         player1.jumpIntervalSet = false;
@@ -84,6 +113,8 @@ const go_up_return = () => {
 }
 
 const go_punch = () => {
+    button_punch.style.filter = "invert(0)";
+    afkAchievementProgress();
     if(!player1.alreadyPunched && !player1.ladderCol && !player1.inPipe && inGame){
         punch(player1);
     }
@@ -91,10 +122,14 @@ const go_punch = () => {
 }
 
 const go_punch_return = () => {
+    button_punch.style.filter = "invert(0.15)";
+    afkAchievementProgress();
     player1.alreadyPunched = false;
 }
 
 const go_down = () => {
+    button_down.style.filter = "invert(0)";
+    afkAchievementProgress();
     if(!player1.crouched && !player1.punched && !player1.downPressed && !player1.ladderCol && inGame){
         crouch(player1);     
     } else if (player1.ladderCol && !player1.alreadyGoingDown){
@@ -105,6 +140,8 @@ const go_down = () => {
 }
 
 const go_down_return = () => {
+    button_down.style.filter = "invert(0.15)";
+    afkAchievementProgress();
     player1.downPressed = false;
         if(player1.velocity <= 0.35 && player1.crouched == true && player1.canStandUp == true && player1.ladderCol == false){
             unCrouch(player1);
@@ -123,6 +160,8 @@ const go_down_return = () => {
 }
 
 const go_right = () => {
+    button_right.style.filter = "invert(0)";
+    afkAchievementProgress();
     if (player1.isMovingRight == false) {
         player1.isMovingRight = true;
         player1.turnedRight = true;
@@ -133,6 +172,8 @@ const go_right = () => {
 }
 
 const go_right_return = () => {
+    button_right.style.filter = "invert(0.15)";
+    afkAchievementProgress();
     player1.isMovingRight = false;
     if(player1.velocityRight <= player1.velocityLeft && player1.isMovingLeft){ //Fixing switching sides
         player1.turnedLeft = true;
@@ -141,6 +182,8 @@ const go_right_return = () => {
 }
 
 const go_left = () => {
+    button_left.style.filter = "invert(0)";
+    afkAchievementProgress();
     if (player1.isMovingLeft == false) {
         player1.isMovingLeft = true;
         player1.turnedRight = false;
@@ -151,6 +194,8 @@ const go_left = () => {
 }
 
 const go_left_return = () => {
+    button_left.style.filter = "invert(0.15)";
+    afkAchievementProgress();
     player1.isMovingLeft = false;
     if(player1.velocityRight > player1.velocityLeft && player1.isMovingRight){ //Fixing switching sides
         player1.turnedLeft = false;

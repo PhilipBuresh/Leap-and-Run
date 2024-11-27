@@ -810,6 +810,30 @@ const dark = () => {
     }
 };
 
+let circleSize = 1500;
+let circleTransitionValue = 0
+let transitionIsEnabled = false;
+
+const circleTransition = () => {
+    c_t.clearRect(0, 0, canvas.width , canvas.height);
+    c_t.fillStyle = "black";
+    c_t.fillRect(0, 0, canvas.width, canvas.height);
+    
+    const gradient1 = c_t.createRadialGradient(player1.x + 10, player1.y + 15, 0, player1.x + 10, player1.y + 15, circleSize * 20);
+    gradient1.addColorStop(0, 'rgba(0, 0, 0, 1)');
+    gradient1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+
+    c_t.globalCompositeOperation = 'destination-out';
+
+    c_t.fillStyle = gradient1;
+    c_t.beginPath();
+    c_t.arc(player1.x + 10, player1.y + 15, circleSize, 0, Math.PI * 2);
+    c_t.closePath();
+    c_t.fill();
+
+    c_t.globalCompositeOperation = 'source-over';
+}
+
 let smallDarkness = true;
 let smallDarknessAlienBoss = false;
 let darknessValue = 650;
@@ -1635,7 +1659,7 @@ let deltaPlayer, deltaLava, deltaSpike, deltaPortal, deltaTorch,
 deltaLantern, deltaOrb, delta24, delta6, delta8, delta4, deltaGhost,
 deltaGhostS, deltaDoor, deltaBoss, deltaMP, deltaSaw, deltaSpiderBoss,
 deltaSmoke, deltaWindow, deltaHologram , deltaLaserCannon, deltaComputer,
-deltaDarkness, deltaBg, deltaAlienBoss, deltaShine;
+deltaDarkness, deltaBg, deltaAlienBoss, deltaShine, deltaTransition;
 
 let thenPlayer = Date.now();
 let thenLava = Date.now();
@@ -1664,6 +1688,7 @@ let thenDarkness = Date.now();
 let thenBg = Date.now();
 let thenAlienBoss = Date.now();
 let thenShine = Date.now();
+let thenTransition = Date.now();
 
 let drawingId;
 
@@ -1709,6 +1734,22 @@ const drawing = () => {
     deltaPlayer = now - thenPlayer;
     if (deltaPlayer > 1) {
         thenPlayer = now - (deltaPlayer % 1);
+        if(circleSize >= 0 && circleSize <= 1500){
+            if(circleSize == 0){
+                circleTransitionValue = 0;
+            }
+            circleSize += 15 * circleTransitionValue;
+            if(circleSize == 1501){
+                transitionIsEnabled = false;
+                canEnter = true;
+            }
+        }
+    }
+
+    // Circle Transition
+    deltaTransition = now - thenTransition;
+    if (deltaTransition > 1) {
+        thenTransition = now - (deltaTransition % 1);
         drawPlayer();
     }
 
@@ -2215,6 +2256,7 @@ let drawPlayer = () => {
         drawHatsOnPLayer("Climbing", player1)
         player1.hatX = player1.x + 11;
     }else{
+        c.drawImage(playerOneImage, player1.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player1.x, player1.y, frameWidth, frameHeight);
         drawHatsOnPLayer("Else", player1);
     }
     
@@ -2306,6 +2348,7 @@ let drawPlayer = () => {
             drawHatsOnPLayer("Climbing", player2)
             player2.hatX = player2.x + 11;
         }else{
+            c.drawImage(playerTwoImage, player2.currentFrameRun * sX, 2 * sY, sWidth, sHeight, player2.x, player2.y, frameWidth, frameHeight);
             drawHatsOnPLayer("Else", player2);
         }
         
@@ -2362,4 +2405,7 @@ let drawPlayer = () => {
     }
     smallDark();
     dark();
+    if(transitionIsEnabled && !player1.inPipe && !player2.inPipe){
+        circleTransition();
+    }
 };

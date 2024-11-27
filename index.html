@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/x-icon" href="./res/img/icon.png">
@@ -87,7 +87,10 @@
                 </div>
             </span>
         </div>
-        <div id="credits_list"></div>
+        <div id="credits_list">
+            <img id="red_cross_credits" src="./res/img/red_cross.png" draggable="false" alt="cross"> 
+        </div>
+
         <img id="red_cross_achievements" src="./res/img/red_cross.png" draggable="false" alt="cross">
         <div id="achievements_list">
             <h2>Hall of Achievements</h2>
@@ -119,7 +122,7 @@
             </div>
             <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
                 <img id="achievement_img_in_list" src="./res/achievements/ship.png" alt="Ship Achievement">
-                <p id="achievement_text_in_list">I knew that you would wreck the ship</p>
+                <p id="achievement_text_in_list">Why did I give you a rocket driver's license?</p>
                 <img id="correct_symbol_in_list" src="./res/img/correct_transparent.png" alt="Correct Symbol">
             </div>
             <div id="achievement_in_list" style="background-image: url('./res/img/achievement_bronze.png');">
@@ -361,13 +364,18 @@
             </div>
         </div>
         <div id="game">
-            <div id="myHp">
-                <img id="heart1" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
-                <img id="heart2" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
-                <img id="heart3" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+            <div id="myStats">
+                <div id="myHp">
+                    <img id="heart1" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+                    <img id="heart2" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+                    <img id="heart3" src="./res/img/heart_rioter.png" alt="heart" draggable="false">
+                </div>
+                <div id="deadImage">
+                    <img id="deadImg" src="./res/img/dead_rioter.png" alt="dead" draggable="false">
+                    <p id="deathCounterShow"></p>
+                </div>
             </div>
             <div id="hps">
-                <div id="name">BOSS</div>
                 <div id="hp_bar">
                     <div class="divider" id="divider1"></div>
                     <div class="divider" id="divider2"></div>
@@ -379,6 +387,7 @@
                     <div class="alien_divider" id="alien_divider3"></div>
                     <div id="hp"></div>
                 </div>
+                <div id="name">BOSS</div>
             </div>
             <div id="canvas_container">
                 <img id="rising" src="./res/gif/rising.gif" alt="rising">
@@ -390,14 +399,9 @@
                 </div>
                 <canvas id="canvas" width="1024" height="576"></canvas>
                 <canvas id="canvas_darkness" width="1024" height="576"></canvas>
+                <canvas id="canvas_transition" width="1024" height="576"></canvas>
                 <p id="timer">Time: 0s</p>
                 <img id="black" src="./res/img/black.png" alt="black">
-                <video id="transition1">
-                    <source src="./res/vid/transition1.webm" type="video/webm" draggable="false">
-                </video>
-                <video id="transition2">
-                    <source src="./res/vid/transition2.webm" type="video/webm" draggable="false">
-                </video>
                 <div id="achievement">
                     <img id="achievement_img" src="#" alt="draezlyr">
                     <p id="achievement_text"></p>

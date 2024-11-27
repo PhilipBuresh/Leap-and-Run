@@ -275,6 +275,11 @@
         "author": "By Glitchedtones"
     },
     {
+        "object": "Walking on Metal",
+        "name": "Sound Effects - Walking on Solid Metal",
+        "author": "By Hush Angel"
+    },
+    {
         "object": "Enter the level",
         "name": "Door opened in bedroom",
         "author": "By Glitchedtones"
@@ -330,12 +335,22 @@
         "author": "By Joshua Chivers"
     },
     {
-        "object": "Rioter Attack (male)",
+        "object": "Rioter Attack 1 (male)",
         "name": "Attacking grunt male",
         "author": "By SmartSound FX"
     },
     {
-        "object": "Ruby Attack (female)",
+        "object": "Rioter Attack 2 (male)",
+        "name": "Attacking grunt soft (Male)",
+        "author": "By SmartSound FX"
+    },
+    {
+        "object": "Ruby Attack 1 (female)",
+        "name": "Fierce Female Combat: Attack Grunts and Fight",
+        "author": "By Femelodia"
+    },
+    {
+        "object": "Ruby Attack 2 (female)",
         "name": "Fierce Female Combat: Attack Grunts and Fight",
         "author": "By Femelodia"
     },
@@ -398,15 +413,5 @@
         "object": "Alien Explosion",
         "name": "Explosion & rumble",
         "author": "By Jeff Kaale"
-    },
-    {
-        "object": "Paper in tutorial",
-        "name": "Free paper textured background",
-        "author": "By rawpixel.com on Freepik"
-    },
-    {
-        "object": "Fade IN/OUT Circle Transition",
-        "name": "Green Screen Circle Animation Full HD",
-        "author": "By dangraf art"
     }
 ]

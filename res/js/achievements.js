@@ -95,7 +95,6 @@ const processNextAchievement = () => {
         achievement_img.src = imgSrc;
         achievement_text.innerHTML = text;
         achievement.style.backgroundImage = `url(${backImgSrc})`;
-        console.log(backImgSrc)
         showAchievement();
     }
 }
@@ -237,8 +236,8 @@ const achievementShip = () => {
     if (!achievementShipCompleted && player1.flying) {
         achievementShipCompleted = true;
         localStorage.setItem('achievementShipCompleted', 'true');
-        queueAchievement("./res/achievements/ship.png", "I knew that you would wreck the ship", "./res/img/achievement_bronze.png");
-        achievementDoneInTheList("I knew that you would wreck the ship");
+        queueAchievement("./res/achievements/ship.png", "Why did I give you a rocket driver's license?", "./res/img/achievement_bronze.png");
+        achievementDoneInTheList("Why did I give you a rocket driver's license?");
     }
 }
 

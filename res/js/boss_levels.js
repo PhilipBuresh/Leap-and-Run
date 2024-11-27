@@ -33,7 +33,7 @@ const bossLevel = () => {
     player1.turnedRight = true;
     player2.turnedRight = true;
     player1.turnedLeft = false;
-    player1.turnedLeft = false;
+    player2.turnedLeft = false;
 
     finalDoorUnlocked = false;
     reaperPhase1 = false;
@@ -94,6 +94,14 @@ const bossLevel = () => {
         sfx_boss_talk.play();
     }, 1500);
     setTimeout(() => {
+        spawnCords = () => {
+            player1.x = 485;
+            player1.y = 200;
+            if(playingMultiplayer){
+                player2.x = 515 ;
+                player2.y = 200;        
+            }
+        }
         inGame = true;
         cancelAnimationFrame(CameraMovingId)
         reaperBossCamera1 = false;
@@ -240,7 +248,7 @@ const spiderBossLevel = () => {
     player1.turnedRight = true;
     player2.turnedRight = true;
     player1.turnedLeft = false;
-    player1.turnedLeft = false;
+    player2.turnedLeft = false;
 
     divider1.style.opacity = 1;
     divider2.style.opacity = 1;
@@ -499,7 +507,7 @@ const alienBossLevel = () => {
     player1.turnedRight = true;
     player2.turnedRight = true;
     player1.turnedLeft = false;
-    player1.turnedLeft = false;
+    player2.turnedLeft = false;
 
     divider1.style.opacity = 0;
     divider2.style.opacity = 0;
@@ -1399,6 +1407,8 @@ const finalSceneSpiderBoss = () => {
     player1.y = 376
     player1.turnedRight = true;
     player2.turnedRight = true;
+    player1.turnedLeft = false;
+    player2.turnedLeft = false;
     if(playingMultiplayer){
         player2.x = 455;
         player2.y = 376
@@ -1441,6 +1451,14 @@ const deadBoss = () => {
         localStorage.setItem('castleDungeonCompleted', castleDungeonCompleted.toString());
         black.style.transition = "opacity 0s"
         black.style.opacity = 1;
+        spawnCords = () => {
+            player1.x = 485;
+            player1.y = 216;
+            if(playingMultiplayer){
+                player2.x = 515 ;
+                player2.y = 216;        
+            }
+        }
         spawnCords();
         bossPunchedNumber = 0;
         bossX = 590;
@@ -1454,10 +1472,8 @@ const deadBoss = () => {
         bossAttacking = false;
         player1.turnedRight = true;
         player2.turnedRight = true;
-        if(playingMultiplayer){
-            player1.turnedLeft = false;
-            player2.turnedLeft = false;
-        }
+        player1.turnedLeft = false;
+        player2.turnedLeft = false;
         setTimeout(() => {
             black.style.transition = "opacity 0.6s"
             black.style.opacity = 0;
@@ -1567,8 +1583,11 @@ const deadBoss = () => {
             cancelAnimationFrame(wallSpiderMovingId);
             rightWallX = canvas.width;
             leftWallX = -160;
-            platformLevel1 = [...map[14]];
-            originalPlatform1 = [...platformLevel1];
+            for (let index = 0; index < platformLevel1.length; index++) {
+                if(platformLevel1[index] == 2){
+                    platformLevel1[index] = 0;
+                }
+            }
             setTimeout(() => {
                 black.style.opacity = 1;
                 setTimeout(() => {

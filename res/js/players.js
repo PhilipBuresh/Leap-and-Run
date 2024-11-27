@@ -71,6 +71,7 @@ const player1 = {
     // Gravity
     onRock : false,
     onWood : false,
+    onMetal : false,
     orbUsed : false,
     canOrbJump : false,
     gravityId : null,
@@ -83,7 +84,7 @@ const player1 = {
     alreadyGoingDown : false,
     wPressed : false,
     // Jump
-    headHit : null,
+    headHit : false,
     bounced : false,
     jumpInterval : null,
     jumpIntervalSet : false,
@@ -223,6 +224,7 @@ const player2 = {
     // Gravity
     onRock : false,
     onWood : false,
+    onMetal : false,
     orbUsed : false,
     canOrbJump : false,
     gravityId : null,
@@ -235,7 +237,7 @@ const player2 = {
     alreadyGoingDown : false,
     wPressed : false,
     // Jump
-    headHit : null,
+    headHit : false,
     bounced : false,
     jumpInterval : null,
     jumpIntervalSet : false,

@@ -1,11 +1,13 @@
 
 const canvas = document.getElementById("canvas");
 const canvas_darkness = document.getElementById("canvas_darkness");
+const canvas_transition = document.getElementById("canvas_transition");
 const canvas_container = document.getElementById("canvas_container");
 const container = document.getElementById("container");
 const backgroundVideo = document.getElementById("background-video");
 const c = canvas.getContext("2d");
 const c_d = canvas_darkness.getContext("2d");
+const c_t = canvas_transition.getContext("2d");
 const text = document.getElementById("text");
 const characters = document.getElementById("characters");
 const man = document.getElementById("man");
@@ -44,10 +46,9 @@ const black = document.getElementById("black");
 const fullBlack = document.getElementById("fullBlack");
 const recommend = document.getElementById("recommend");
 const credits_list = document.getElementById("credits_list");
+const red_cross_credits = document.getElementById("red_cross_credits");
 const credits_boss = document.getElementById("credits_boss");
 const skip_credits = document.getElementById("skip_credits");
-const transition1 = document.getElementById("transition1");
-const transition2 = document.getElementById("transition2");
 const rising = document.getElementById("rising");
 const esc = document.getElementById("esc");
 const playButton = document.getElementById("playButton");
@@ -98,30 +99,32 @@ const achievement_button = document.getElementById("achievement_button");
 const trophy = document.getElementById("trophy");
 const first_col = document.getElementById("first_col");
 const second_col = document.getElementById("second_col");
-const button_enter = document.getElementById("button_enter");
+const deathCounterShow = document.getElementById("deathCounterShow");
+const deadImg = document.getElementById("deadImg");
 
 let helpNum = 0; //Help Number for level detection (doors)
 
 //Timer in menu
 const Clock = () => {
     const today = new Date();
-    
-    const clockFormatter = new Intl.DateTimeFormat('cs-CZ', {
+
+    const clockFormatter = new Intl.DateTimeFormat('en-US', {
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
-        hour12: false
+        hour12: true
     });
 
     const clock = clockFormatter.format(today);
     document.getElementById("clock").textContent = clock;
 };
 
-setInterval(Clock);
+setInterval(Clock, 1000); // Aktualizace každou sekundu
+
 
 //Alien level completed
 
 const alienLevelCompleted = () => {
+    canvas_transition.style.display = "block";
     skip_credits.style.animationName = "midToRight_btn";
     skip_credits.style.animationPlayState = "running";
     skip_credits.style.pointerEvents = "none";
@@ -136,6 +139,7 @@ let movingCreditsInterval
 
 const movingCredits = () => {
     if(!btnBackUsedinAlienLevel){
+        canvas_transition.style.display = "none";
         music.currentTime = 0;
         music.src = "./res/music_spaceship/ending.mp3";
         music.play();
@@ -147,7 +151,7 @@ const movingCredits = () => {
         skip_credits.style.pointerEvents = "auto";
         fullBlack.style.pointerEvents = "none";
         movingCreditsInterval = setInterval(() => {
-            locationCreditsY -= 1.005;
+            locationCreditsY -= 1.05;
             credits_boss.style.top = locationCreditsY + "%";
             if(music.currentTime >= 103){
                 alienLevelCompleted()
@@ -302,9 +306,6 @@ achievement_button.onclick = () => {
     }
 }
 
-let transitionY = 576
-let transitionX = 1024
-
 const resizeTimer = () => {
     let widthCalculator = window.innerWidth;
     let newSize = widthCalculator * 0.02; // Pravidlo pro zmenšení/zvětšení textu můžete upravit podle potřeby
@@ -370,16 +371,6 @@ window.onresize = function() {
     }
 };
 
-//Adjusts the position of the transition on you
-const setTransitionCords = () => {
-    transitionY = (player1.y / 576) * 100 + 3;
-    transitionX =  (player1.x / 1024) * 100 + 2;
-    transition1.style.top = transitionY + "%";
-    transition1.style.left = transitionX + "%";
-    transition2.style.top = transitionY + "%";
-    transition2.style.left = transitionX + "%";
-}
-
 let doorsTime = 0;
 let doorTimeout = false;
 let setTimeoutDoor;
@@ -411,6 +402,7 @@ playButton.onclick = () => {
 
 playButtonMulti.onclick = () => {
     playingMultiplayer = true;
+    deadImg.src = "./res/img/dead_rioter.png";
     playButton.style.display = "none";
     playButtonMulti.style.animationName = "blink"
     playButtonMulti.style.animationPlayState = "running";
@@ -454,13 +446,11 @@ tutorialButton.onclick = () => {
 //Credit Button
 creditsButton.onclick = () => {
     credits_list.style.display = "block";
-    recommend.style.display = "none";
     turnOffButtons();
 }
 //Credits List
-credits_list.onclick = () => {
+red_cross_credits.onclick = () => {
     credits_list.style.display = "none";
-    recommend.style.display = "block";
     turnOnButtons();
 }
 
@@ -625,6 +615,7 @@ man.onclick = () => { //Choosing Character - Rioter
     heart1.src = "./res/img/heart_rioter.png";
     heart2.src = "./res/img/heart_rioter.png";
     heart3.src = "./res/img/heart_rioter.png";
+    deadImg.src = "./res/img/dead_rioter.png";
     playingAsRioter = true;
     playingAsRuby = false;
     characters.style.display = "block";
@@ -650,6 +641,7 @@ woman.onclick = () => { //Choosing Character - Ruby
     heart1.src = "./res/img/heart_ruby.png";
     heart2.src = "./res/img/heart_ruby.png";
     heart3.src = "./res/img/heart_ruby.png";
+    deadImg.src = "./res/img/dead_ruby.png";
     playingAsRioter = false;
     playingAsRuby = true;
     characters.style.display = "block";
@@ -756,6 +748,9 @@ const movingCharactersAndFullBlack = () => {
         chooseDungeon.style.animationPlayState = "running";
         setSkins();
         achievementPinkColor();
+        if (deviceDetect) {
+            buttons.style.display = "block";
+        }
     }, 1000);
 }
 
@@ -976,13 +971,7 @@ const enterFunction = () => {
     inGame = false;
     ghostVelocity = 2;
     sawVelocity = 1.5;
-    setTransitionCords();
     fadeInTransition();
-    setTimeout(() => {
-        transition2.currentTime = 0;
-        transition2.style.opacity = "0";
-        transition2.pause(); 
-    }, 100);
     setTimeout(() => {
         inGame = true;
         platformLevel1 = [...map[helpNum]];
@@ -1192,7 +1181,7 @@ const enterFunction = () => {
                 music.play();
                 spawnGhostCords = () => {
                     xGhost = 400;
-                    yGhost = 210;
+                    yGhost = 200;
                 }
                 spawnGhostCords();
             }else if(helpNum == 13){ //Level 14
@@ -1510,7 +1499,7 @@ const enterFunction = () => {
                 }
                 spawnSawCords();
                 spider1X = 19*32;
-                spider1Y = -26;
+                spider1Y = -16;
                 music.src = "./res/music_steampunk/song14_steampunk.mp3";
                 doorsTime = 51000;
                 music.play();
@@ -1793,8 +1782,6 @@ const enterFunction = () => {
                 alienBossLevel();
             }
         }
-        
-        setTransitionCords();
         fadeOutTransition();
         // Save Cords
         saveGhostCordsX = xGhost;
@@ -2084,7 +2071,7 @@ const generatorSpiderFunction = () => {
         if(music.currentTime < 20.5 && warningNum == 2){ // Soon for big jumps
             warningNum = 3;
         }
-        if(warningNum == 1 && !spiderBossWarning && !smokeActivated && (!spiderBossJumping || !smallSpiderJump)){ // Smoke Attack
+        if(warningNum == 1 && !spiderBossWarning && !smokeActivated && bossY == 336 &&  (!spiderBossJumping || !smallSpiderJump)){ // Smoke Attack
             currentFrameSpiderBoss = 0;
             currentFrameSmoke = 0;
             spiderBossNumber = 2;
@@ -2296,6 +2283,18 @@ let resetAlienBossLevel = () => {
 
 let deathCounter = 0;
 
+const deathCounterEffect = () => {
+    deathCounter++;
+    localStorage.setItem('deathCounter', deathCounter);
+    deathCounterShow.style.transition = "0s"
+    deathCounterShow.style.color = "rgb(241, 89, 89)"
+    deathCounterShow.innerHTML = deathCounter + "x";
+    setTimeout(() => {
+        deathCounterShow.style.transition = "1s"	
+        deathCounterShow.style.color = "white"
+    }, 10);
+}
+
 const dead = () => {
     if(!godMode){
         if(!goingBackToTheLobby){
@@ -2321,6 +2320,9 @@ const dead = () => {
                         cancelAnimationFrame(player2.animationIdRight)
                         cancelAnimationFrame(player2.jumpingId)  
                     }
+                    deathCounterEffect();
+                    player1.y += 40; //Fix spawn bug - Alien boss
+                    player2.y += 40; //Fix spawn bug - Alien boss
                 }else{
                     if(yGhost < 2000 && xGhost < 2000){
                         ghostVelocity = 2;
@@ -2348,8 +2350,7 @@ const dead = () => {
                     movingPlatformVelocity = 1;
                     spawnSawCords();
                     spawnCords();
-                    deathCounter++;
-                    localStorage.setItem('deathCounter', deathCounter);
+                    deathCounterEffect();
                     achievementNoob();
                     achievementTimer();
                 }
@@ -2360,7 +2361,7 @@ const dead = () => {
                 frameLaserCannon = 0;
                 sfx_laser.pause();
                 laserCannonActivated = false;
-                player1.velocity= 0;
+                player1.velocity = 0;
                 player1.velocityRight = 0;
                 player1.velocityLeft = 0;
                 player1.velocityJump = 0;
@@ -2407,6 +2408,9 @@ const dead = () => {
                     doorTimeout = false;
                     frameDoor = 0;
                 }
+                if(player1.flying){
+                    achievementShip();
+                }
                 grayScaleEffect();
                 restartTimer();
                 timerFunction();
@@ -2424,16 +2428,9 @@ const dead = () => {
                         playerFlashing();
                     }
                     hearts--;
-                    player1.velocity = 0;
-                    player1.velocityRight = 0;
-                    player1.velocityLeft = 0;
-                    player1.velocityJump = 0;
-                    player2.velocity = 0;
-                    player2.velocityRight = 0;
-                    player2.velocityLeft = 0;
-                    player2.velocityJump = 0;
+                    cancelPlayerMovement();
                     if(hearts == 0 || frameDoor == 3 || usedRetry || (risingPercent >= -95 && playingCastle)){
-                        deathCounter++;
+                        deathCounterEffect()
                         if(escShowed || usedRetry){
                             escFunction();
                         }
@@ -2476,6 +2473,9 @@ const dead = () => {
                         player2.turnedRight = true;
                         player1.turnedLeft = false;
                         player2.turnedLeft = false;
+                        if(player1.flying){
+                            achievementShip();
+                        }
                         clearBossTimeouts();
                         inGame = false;
                         black.style.transition = "opacity 0s"
@@ -2494,7 +2494,6 @@ const dead = () => {
                             }, 100);
                             if(playingCastle){
                                 bossLevel();
-                                inGame = true;
                             }else if(playingSteamPunk){
                                 spawnSawCords = () => {
                                     xSaw = 226;
@@ -2553,6 +2552,7 @@ const dead = () => {
                         resistence = false
                     }, 2000);
                     if(playingCastle){
+                        cancelPlayerMovement();
                         spawnCords();
                     }
                 }
@@ -2579,37 +2579,16 @@ const dead = () => {
 }
 
 //Fade **IN** Transition Function
-//transition1 = Fade In
 const fadeInTransition = () => {
-    setTimeout(() => {
-        transition2.currentTime = 0;
-    }, 30);
-    transition2.style.opacity = "0";
-    transition2.pause();   
-    transition1.currentTime = 0;
-    setTimeout(() => {
-        transition1.style.opacity = "1";
-        transition1.play(); 
-    }, 30);
-    setTimeout(() => {
-    }, 100);
+    transitionIsEnabled = true;
+    circleSize = 1500;
+    circleTransitionValue = -1;
 }
 
 //Fade **OUT** Transition Function
-//transition2 = Fade Out
 const fadeOutTransition = () => {
-    transition2.currentTime = 0;
-    setTimeout(() => {
-        transition2.style.opacity = "1";
-        transition2.play();  
-    }, 30);
-    setTimeout(() => {
-        transition1.currentTime = 0;
-        setTimeout(() => {
-            transition1.style.opacity = "0";
-            transition1.pause();   
-        }, 30);
-    }, 100);
+    circleSize = 1;
+    circleTransitionValue = 1;
 }
 
 //---------------------------------------- Back to the Lobby (from level)
@@ -2634,9 +2613,6 @@ const backToLobby = () => {
     clearAllAlienTimeouts();
     restartTimer();
     timer.style.top = "-5%"
-    transition2.addEventListener("ended", () => {
-        canEnter = true;
-    });
     if(usedRetry){
         usedRetry = false;
     }
@@ -2659,7 +2635,6 @@ const backToLobby = () => {
     music.pause();
     music.currentTime = 0;
     inGame = false;
-    setTransitionCords();
     fadeInTransition();
     esc.style.display = "none"; 
     escShowed = false;
@@ -2767,17 +2742,17 @@ const backToLobby = () => {
                 }
             }else if(helpNum == 1){
                 player1.x = 300;
-                player1.y = 410;
+                player1.y = 400;
                 if(playingMultiplayer){
                     player2.x = 300;
-                    player2.y = 4095;
+                    player2.y = 400;
                 }
             }else if(helpNum == 2){
                 player1.x = 560;
-                player1.y = 370;
+                player1.y = 400;
                 if(playingMultiplayer){
                     player2.x = 560;
-                    player2.y = 370;
+                    player2.y = 400;
                 }
             }else if(helpNum == 3){
                 player1.x = 720;
@@ -3079,7 +3054,6 @@ const backToLobby = () => {
                 }
             }
         }
-        setTransitionCords();
         fadeOutTransition()
         backToLobbyEntered = false;
         goingBackToTheLobby = false;
@@ -3151,6 +3125,9 @@ button_menu.onclick = () => {
         playButtonMulti.style.pointerEvents = "auto";
         if(!deviceDetect){
             playButtonMulti.style.display = "block";
+        }
+        if (deviceDetect) {
+            buttons.style.display = "none";
         }
         creditsButton.style.display = "block";
         achievementsButton.style.display = "block";
@@ -3366,6 +3343,7 @@ const objectsCollision = (PLAYER) => {
         bossCollision(PLAYER);
         smokeCollision(PLAYER);
         spiderBossCollision(PLAYER);
+        alienBossCollision(PLAYER);
         movingWallsSpiderCollision(PLAYER);
         meteoriteCollision(PLAYER);
         lasersHorizontalInSpace.forEach(laser => {
@@ -3379,10 +3357,10 @@ const objectsCollision = (PLAYER) => {
     ghostCollision(PLAYER);
     sawCollision(PLAYER);
     laserAndDetectorCollision(PLAYER);
+    spidersCollision(PLAYER, spider1X, spider1Y);
     spidersCollision(PLAYER, spider2X, spider2Y);
     spidersCollision(PLAYER, spider3X, spider3Y);
     spidersCollision(PLAYER, spider4X, spider4Y);
-    spidersCollision(PLAYER, spider1X, spider1Y);
     lasersHorizontal.forEach(laser => {
         lasersHorizontalCollision(PLAYER, laser);
     });
@@ -3713,6 +3691,7 @@ window.onload =  () => {
     player2.orbGravityCounter = parseInt(localStorage.getItem('orbCounterP2')) || 0;
 
     deathCounter = parseInt(localStorage.getItem('deathCounter')) || 0;
+    deathCounterShow.innerHTML = deathCounter + "x";;
 
     castleDungeonCompleted = localStorage.getItem('castleDungeonCompleted') === 'true';
     steampunkDungeonCompleted = localStorage.getItem('steampunkDungeonCompleted') === 'true';
@@ -3990,7 +3969,8 @@ const movingPlatformCollision = (PLAYER) => {
         PLAYER.y = yMovingPlatform - PLAYER.height;
         PLAYER.onMovingPlatform = true;
         PLAYER.onWood = false;
-        PLAYER.onRock = true;
+        PLAYER.onRock = false;
+        PLAYER.onMetal = true;
         if(PLAYER.downPressed && !PLAYER.crouched){ //You will still crouch
             crouch(PLAYER);
         }
@@ -4041,10 +4021,10 @@ const sawCollision = (PLAYER) => {
 
 const spidersCollision = (PLAYER, spiderX, spiderY) => {
     if (
-        PLAYER.y + PLAYER.height >= spiderY + 352 - 32 && 
-        PLAYER.y <= spiderY + 352 &&
-        PLAYER.x + PLAYER.width >= spiderX &&
-        PLAYER.x <= spiderX + 32
+        PLAYER.y + PLAYER.height >= spiderY + 352 - 28 && 
+        PLAYER.y <= spiderY + 352 + 4 &&
+        PLAYER.x + PLAYER.width >= spiderX + 4 &&
+        PLAYER.x <= spiderX + 28
     ) {
         dead();
     }
@@ -4383,16 +4363,40 @@ const bottomCollision = (PLAYER) => {
                 PLAYER.velocityGoingDown = 0;
                 PLAYER.orbUsed = false;
                 PLAYER.slideJumped = false;
-                if(platformLevel1[i] == 1 || platformLevel1[i] == 6 || platformLevel1[i] == 32 ||
-                    platformLevel1[i] == 33 || platformLevel1[i] == 68 || platformLevel1[i] == 71 ||
-                    platformLevel1[i] == 41 || platformLevel1[i] == 38
-                ){ //You are on Rock
-                    PLAYER.onRock = true; 
-                    PLAYER.onWood = false;
-                }else if((platformLevel1[i] == 7 || platformLevel1[i] == 19 || platformLevel1[i] == 18 || platformLevel1[i] == 9) && !playingSpace){ //You are on Wood
-                    PLAYER.onRock = false;
-                    PLAYER.onWood = true;
+                let rockSounds, woodSounds, metalSounds;
+
+                if (playingCastle) {
+                    rockSounds = castleRockSounds;
+                    woodSounds = castleWoodSounds;
+                    metalSounds = castleMetalSounds;
+                } else if (playingSteamPunk) {
+                    rockSounds = steampunkRockSounds;
+                    woodSounds = steampunkWoodSounds;
+                    metalSounds = steampunkMetalSounds;
+                } else if (playingSpace) {
+                    rockSounds = spaceshipRockSounds;
+                    woodSounds = spaceshipWoodSounds;
+                    metalSounds = spaceshipMetalSounds;
                 }
+
+                if (rockSounds.includes(platformLevel1[i])) {
+                    PLAYER.onRock = true;
+                    PLAYER.onMetal = false;
+                    PLAYER.onWood = false;
+                } else if (woodSounds.includes(platformLevel1[i])) {
+                    PLAYER.onRock = false;
+                    PLAYER.onMetal = false;
+                    PLAYER.onWood = true;
+                } else if (metalSounds.includes(platformLevel1[i])) {
+                    PLAYER.onRock = false;
+                    PLAYER.onMetal = true;
+                    PLAYER.onWood = false;
+                } else {
+                    PLAYER.onRock = true;
+                    PLAYER.onMetal = false;
+                    PLAYER.onWood = false;
+                }
+
                 if(PLAYER.downPressed && !PLAYER.crouched){ //You will still crouch
                     crouch(PLAYER);
                 }
@@ -4414,6 +4418,19 @@ const bottomCollision = (PLAYER) => {
         cancelAnimationFrame(PLAYER.gravityId);
     }
 }
+
+let castleRockSounds = [1, 6]
+let castleWoodSounds = [7, 9, 18, 19, 36, 37]
+let castleMetalSounds = [32, 33]
+
+let steampunkRockSounds = [1, 68]
+let steampunkWoodSounds = [7, 19]
+let steampunkMetalSounds = [18, 71, 73, 74, 75, 76, 77, 78, 79, 80]
+
+let spaceshipRockSounds = [1, 6, 71, 87]
+let spaceshipWoodSounds = [46, 47, 48]
+let spaceshipMetalSounds = [7, 19, 32, 33, 36, 37, 38, 41, 68]
+
 
 //---------------------------------------- Hitting your head to the block Collision
 
@@ -4516,6 +4533,7 @@ const boostCollision = (PLAYER) => {
                 PLAYER.boostCollision = true;
                 PLAYER.onWood = false;
                 PLAYER.onRock = false;
+                PLAYER.onMetal = false;
                 if(PLAYER.crouched){
                     unCrouch(PLAYER);
                 }
@@ -4550,6 +4568,7 @@ const ladderCollision = (PLAYER) => {
                 }
                 PLAYER.onRock = false;
                 PLAYER.onWood = false;
+                PLAYER.onMetal = false;
                 PLAYER.ladderCol = true;
                 cancelAnimationFrame(PLAYER.gravityId)
                 PLAYER.canGravityActivate = true;
@@ -4563,8 +4582,8 @@ const ladderCollision = (PLAYER) => {
     if(PLAYER.ladderCol == false) {
         cancelAnimationFrame(PLAYER.goingUpId);
         cancelAnimationFrame(PLAYER.goingDownId);
-        if(PLAYER.canGravityActivate == true){
-            PLAYER.velocity= 0;
+        if(PLAYER.canGravityActivate){
+            PLAYER.velocity = 0;
             gravity(PLAYER);
             PLAYER.canGravityActivate = false
         }
@@ -4736,6 +4755,19 @@ const alienBulletCollision = (PLAYER) => {
                 dead();
             }
         }
+    }
+}
+
+//----------------------------------------Alien Boss Collision (UFO MODE)
+const alienBossCollision = (PLAYER) => {
+    if (
+        PLAYER.y <= bossY - 50 + 180 &&
+        PLAYER.y + PLAYER.height >= bossY - 50 &&
+        PLAYER.x + PLAYER.width >= bossX - 50 &&
+        PLAYER.x <= bossX - 50 + 180
+        && player1.flying && currentHp >= 1
+    ) {
+        dead();
     }
 }
 
@@ -4912,13 +4944,13 @@ const goingUp = (PLAYER) => {
     if (PLAYER.deltaGoingUp > interval) {
         PLAYER.thenGoingUp = PLAYER.nowGoingUp - (PLAYER.deltaGoingUp % interval);
         if(PLAYER == player1){
-            if(sfx_climb.paused && PLAYER.ladderCol && (!PLAYER.onWood || !PLAYER.onRock)){
+            if(sfx_climb.paused && PLAYER.ladderCol && (!PLAYER.onWood || !PLAYER.onRock || !PLAYER.onMetal)){
                 sfx_walk.pause();
                 sfx_climb.src = "./res/sfx/ladder.mp3"
                 sfx_climb.play();
             }
         }else{
-            if(sfx_climb2.paused && PLAYER.ladderCol && (!PLAYER.onWood || !PLAYER.onRock)){
+            if(sfx_climb2.paused && PLAYER.ladderCol && (!PLAYER.onWood || !PLAYER.onRock || !PLAYER.onMetal)){
                 sfx_walk2.pause();
                 sfx_climb2.src = "./res/sfx/ladder.mp3"
                 sfx_climb2.play();
@@ -4969,20 +5001,24 @@ const goingDown = (PLAYER) => {
 const sfxWalkFunction = (PLAYER) => {
     if(!PLAYER.flying){
         if(PLAYER == player1){
-            if(sfx_walk.paused && sfx_jump.paused && (PLAYER.onWood || PLAYER.onRock) && (PLAYER.velocityRight > 2 || PLAYER.velocityLeft > 2) && !PLAYER.crouched && !PLAYER.ladderCol && PLAYER.velocity< 0.3 && !PLAYER.isJumping && (PLAYER.currentFrameRun % 2 == 0)) {
+            if(sfx_walk.paused && sfx_jump.paused && (PLAYER.onWood || PLAYER.onRock || PLAYER.onMetal) && (PLAYER.velocityRight > 2 || PLAYER.velocityLeft > 2) && !PLAYER.crouched && !PLAYER.ladderCol && PLAYER.velocity< 0.3 && !PLAYER.isJumping && (PLAYER.currentFrameRun % 2 == 0)) {
                 if(PLAYER.onWood && !PLAYER.ladderCol){
                     sfx_walk.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
                 }else if(PLAYER.onRock && !PLAYER.ladderCol){
                     sfx_walk.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+                }else if(PLAYER.onMetal && !PLAYER.ladderCol){
+                    sfx_walk.src = "./res/sfx/metal_steps.mp3"; //Walking on metal SFX
                 }
                 sfx_walk.play();
             }
         }else{
-            if(sfx_walk2.paused && sfx_jump2.paused && (PLAYER.onWood || PLAYER.onRock) && (PLAYER.velocityRight > 2 || PLAYER.velocityLeft > 2) && !PLAYER.crouched && !PLAYER.ladderCol && PLAYER.velocity< 0.3 && !PLAYER.isJumping && (PLAYER.currentFrameRun % 2 == 0)) {
+            if(sfx_walk2.paused && sfx_jump2.paused && (PLAYER.onWood || PLAYER.onRock || PLAYER.onMetal) && (PLAYER.velocityRight > 2 || PLAYER.velocityLeft > 2) && !PLAYER.crouched && !PLAYER.ladderCol && PLAYER.velocity< 0.3 && !PLAYER.isJumping && (PLAYER.currentFrameRun % 2 == 0)) {
                 if(PLAYER.onWood && !PLAYER.ladderCol){
                     sfx_walk2.src = "./res/sfx/wood_steps.mp3"; //Walking on wood SFX
                 }else if(PLAYER.onRock && !PLAYER.ladderCol){
                     sfx_walk2.src = "./res/sfx/stone_steps.mp3"; //Walking on rock SFX
+                }else if(PLAYER.onMetal && !PLAYER.ladderCol){
+                    sfx_walk2.src = "./res/sfx/metal_steps.mp3"; //Walking on metal SFX
                 }
                 sfx_walk2.play();
             }
@@ -5010,11 +5046,11 @@ let gravity = (PLAYER) => {
                 }
             }
             if(PLAYER == player1){
-                if(!sfx_walk.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
+                if(!sfx_walk.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock || !PLAYER.onMetal) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
                     sfx_walk.pause();
                 }
             }else{
-                if(!sfx_walk2.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
+                if(!sfx_walk2.paused && PLAYER.velocityRight <= 2 && PLAYER.velocityLeft <= 2 && (!PLAYER.onWood || !PLAYER.onRock || !PLAYER.onMetal) || PLAYER.crouched || PLAYER.ladderCol || PLAYER.velocity>= 0.3 || PLAYER.isJumping && PLAYER.currentFrameRun != 1){
                     sfx_walk2.pause();
                 }
             }
@@ -5057,6 +5093,7 @@ let jump = (PLAYER) => {
         }
         PLAYER.onRock = false;
         PLAYER.onWood = false;
+        PLAYER.onMetal = false;
         PLAYER.onMovingPlatform = false;
         if(PLAYER == player1){
             sfx_walk.currentTime = 0;
@@ -5177,6 +5214,9 @@ let moveRight = (PLAYER) => {
             //Crouched
             if(PLAYER.crouched == true && PLAYER.velocityRight >= 1){
                 PLAYER.velocityRight -= 0.12;
+                if(PLAYER.velocityRight < 0){
+                    PLAYER.velocityRight = 0
+                }
                 cancelAnimationFrame(PLAYER.gravityId);
                 if(!PLAYER.onMovingPlatform){
                     gravity(PLAYER);
@@ -5190,8 +5230,8 @@ let moveRight = (PLAYER) => {
                         PLAYER.velocityRight += 0.12;
                         cancelAnimationFrame(PLAYER.gravityId);
                         gravity(PLAYER);
-                    }else if(PLAYER.velocityRight + 0.12 >= 4){
-                        PLAYER.velocityRight = 4;
+                    }else if(PLAYER.velocityRight + 0.12 >= 3.9){
+                        PLAYER.velocityRight = 3.9;
                     }else if(PLAYER.velocityRight >= 2 && PLAYER.velocityLeft >= 2){//If you walk to two sides at once, you won't move
                         PLAYER.velocityRight = 0;
                         PLAYER.velocityLeft = 0;
@@ -5199,6 +5239,9 @@ let moveRight = (PLAYER) => {
                     
                 }else if(PLAYER.isMovingRight == false){
                     PLAYER.velocityRight -= 0.2;
+                    if(PLAYER.velocityRight < 0){
+                        PLAYER.velocityRight = 0
+                    }
                     if(PLAYER.velocityRight <= 0.1){
                         if(PLAYER.velocityRight > PLAYER.velocityLeft && PLAYER.isMovingRight){ //Fixing switching sides
                             PLAYER.turnedLeft = false;
@@ -5255,7 +5298,7 @@ let moveRight = (PLAYER) => {
             }
             PLAYER.x += PLAYER.velocityRight;
             if(PLAYER.x >= canvas.width - PLAYER.width && !PLAYER.inPipe && !PLAYER.flying) {
-                PLAYER.x = canvas.width - PLAYER.width;
+                PLAYER.x = canvas.width - PLAYER.width - 1;
                 PLAYER.velocityRight = 0;
                 cancelAnimationFrame(PLAYER.animationIdRight);
             }else if(PLAYER.x + 15 >= canvas.width - PLAYER.width && PLAYER.flying) {
@@ -5291,6 +5334,9 @@ let moveLeft = (PLAYER) => {
             //Crouched
             if(PLAYER.crouched == true && PLAYER.velocityLeft >= 1){
                 PLAYER.velocityLeft -= 0.12;
+                if(PLAYER.velocityLeft < 0){
+                    PLAYER.velocityLeft = 0
+                }
                 cancelAnimationFrame(PLAYER.gravityId);
                 gravity(PLAYER);
             }else{ //Not Crouched
@@ -5302,14 +5348,17 @@ let moveLeft = (PLAYER) => {
                         PLAYER.velocityLeft += 0.12;
                         cancelAnimationFrame(PLAYER.gravityId);
                         gravity(PLAYER);
-                    }else if(PLAYER.velocityLeft + 0.12 >= 4){
-                        PLAYER.velocityLeft = 4;
+                    }else if(PLAYER.velocityLeft + 0.12 >= 3.9){
+                        PLAYER.velocityLeft = 3.9;
                     }else if(PLAYER.velocityRight >= 2 && PLAYER.velocityLeft >= 2){ //If you walk to two sides at once, you won't move
                         PLAYER.velocityRight = 0;
                         PLAYER.velocityLeft = 0;
                     }
                 }else if(PLAYER.isMovingLeft == false){
                     PLAYER.velocityLeft -= 0.2;
+                    if(PLAYER.velocityLeft < 0){
+                        PLAYER.velocityLeft = 0
+                    }
                     if(PLAYER.velocityLeft <= 0.1){
                         if(PLAYER.velocityRight <= PLAYER.velocityLeft && PLAYER.isMovingLeft){ //Fixing switching sides
                             PLAYER.turnedLeft = true;
@@ -5427,6 +5476,37 @@ const sidesCollision = (PLAYER) => {
 
 //--------------------------PUNCH Function
 
+const soundRandomGenerator = (PLAYER) => {
+    const soundsRioter = [
+        "./res/sfx/rioter_attack1.mp3",
+        "./res/sfx/rioter_attack2.mp3"
+    ];
+
+    const soundsRuby = [
+        "./res/sfx/ruby_attack1.mp3",
+        "./res/sfx/ruby_attack2.mp3"
+    ];
+
+    const randomIndex = Math.floor(Math.random() * soundsRioter.length);
+
+    if(playingMultiplayer){
+        if(PLAYER == player1){
+            sfx_player.src = soundsRioter[randomIndex]; 
+            sfx_player.play();
+        }else{
+            sfx_player2.src = soundsRuby[randomIndex];
+            sfx_player2.play();
+        }
+    }else{
+        if(playingAsRuby){
+            sfx_player.src = soundsRuby[randomIndex];
+        }else if(playingAsRioter){
+            sfx_player.src = soundsRioter[randomIndex]; 
+        }
+        sfx_player.play();
+    }
+};
+
 let canPlayBreakSound = true;
 
 let currentHp = 100;
@@ -5442,22 +5522,7 @@ const punch = (PLAYER) => {
         //-------------------------------
         if(!PLAYER.canUseButton){
             if(!PLAYER.flying){
-                if(playingMultiplayer){
-                    if(PLAYER == player1){
-                        sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
-                        sfx_player.play();
-                    }else{
-                        sfx_player2.src = "./res/sfx/ruby_attack.mp3";
-                        sfx_player2.play();
-                    }
-                }else{
-                    if(playingAsRuby){
-                        sfx_player.src = "./res/sfx/ruby_attack.mp3";
-                    }else if(playingAsRioter){
-                        sfx_player.src = "./res/sfx/rioter_attack.mp3"; 
-                    }
-                    sfx_player.play();
-                }
+                soundRandomGenerator(PLAYER)
                 if(PLAYER == player1){
                     sfx_miss.src = "./res/sfx/miss.mp3"; 
                     sfx_miss.play();
@@ -5688,12 +5753,16 @@ let space = " ";
 let escShowed = false;
 let inGame = false;
 
-window.addEventListener("keydown", (event) => {
+const afkAchievementProgress = () => {
     if(inGame && !achievementAfkCompleted){
         clearInterval(afkTimerInterval);
         afkTimeCounter = 0;
         afkTimer();
     }
+}
+
+window.addEventListener("keydown", (event) => {
+    afkAchievementProgress();
     // W - Jumping / Climbing Up
     if ((event.key == up || event.key == UP) && player1.canStandUp && inGame && !player1.isJumping && !player1.flying) {
         isJumping = true;
@@ -6013,7 +6082,7 @@ doorsTime = 10000000;
     selectedRioter = true;
     selectedRuby = false;
     currentIndexHatsRioter = 0;
-    setDungeonToSpace();
+    setDungeonToSteamPunk();
     //movingCharactersAndFullBlack();
     //darkness = true;
     menuToLobby();
@@ -6031,5 +6100,7 @@ doorsTime = 10000000;
         player1.hatNumber = 0;
         playerOneImage.src = "./res/skins/rioter.png"
         setSkins();
+        helpNum = 13
+        enterFunction()
     }, 200);
-    */
+*/
