@@ -1424,13 +1424,13 @@ p{
     position: absolute;
 }
 #left_buttons_arrows {
-    left: 3%;
+    left: 2%;
     display:flex;
     bottom: 10px;
 }
 #right_buttons_arrows {
-    right: 3%;
-    bottom: 35px;
+    right: 2%;
+    bottom: 50px;
     display: flex;
 }
 #button_up, #button_punch, #button_down {
@@ -1547,6 +1547,25 @@ p{
     }
     #text{
         width: 30vw;
+    }
+    #right_buttons div{
+        height: 40px;
+        width: 40px;
+    }
+    #right_buttons img{
+        height: 30px;
+        width: 30px;
+    }
+    #escape_button div{
+        width: 7px;
+        height: 27px;
+        background-color: white;
+        margin: 4px;
+        border-radius: 0.1em;
+    }
+    #achievement_counter_in_right{
+        margin-left: -6px;
+        font-size: 20px;
     }
 }
 @media (max-width: 1000px) {
