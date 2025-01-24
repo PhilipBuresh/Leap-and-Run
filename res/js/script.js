@@ -356,6 +356,8 @@ const restartTimer = () => {
     clearInterval(timerInterval)
 }
 
+document.body.style.pointerEvents = "none";
+
 window.onresize = function() {
     resizeTimer()
 
