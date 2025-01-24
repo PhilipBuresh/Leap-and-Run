@@ -1564,5 +1564,23 @@ p{
     #achievementsButton, #tutorialButton, #creditsButton{
         font-size: 1.8vw;
     }
+    #credits_boss div{
+        margin-bottom:1em;
+        text-align: center;
+    }
+    #credits_boss h1{
+        font-size: 2vw;
+    }
+    #credits_boss h3{
+        font-size: 2vw;
+    }
+    #credits_boss h2{
+        font-size: 3vw;
+        margin-top:2em;
+    }
+    #credits_boss p{
+        font-size: 2vw;
+        margin-top:-0.5em;
+    }
 }
 
