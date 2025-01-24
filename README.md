@@ -6,6 +6,12 @@
 __________________________
 - Progress is being saved.
 - The game still has bugs and will be gradually fixed.
+__________________________
+- <h3>Fixed BUGS (24.01.2025)</h3>
+- Fixed shining bug effect
+- Fixed Achievement Egg on mobile
+- Fixed SKIN Changer bug
+- Fixed a bug where you couldn't click the buttons
 <b><h1>CLICK on image to see -> FULL GAMEPLAY WALKTHROUGH</h1></b><br>
 [![l&r](https://github.com/user-attachments/assets/501390e8-e0c3-452d-8d29-55c63af017ea)](https://www.youtube.com/watch?v=kd-UTLe-sew&ab_channel=Leap%26Run)<br>
 <b><h2>You can also play on your PHONE/TABLET (Singleplayer only)</h2></b><br>
