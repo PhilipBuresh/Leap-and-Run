@@ -128,7 +128,6 @@ const alienLevelCompleted = () => {
     skip_credits.style.animationName = "midToRight_btn";
     skip_credits.style.animationPlayState = "running";
     skip_credits.style.pointerEvents = "none";
-    fullBlack.style.pointerEvents = "auto";
     levelCompleted();
 }
 
@@ -149,7 +148,6 @@ const movingCredits = () => {
         skip_credits.style.animationName = "rightToMid_btn";
         skip_credits.style.animationPlayState = "running"
         skip_credits.style.pointerEvents = "auto";
-        fullBlack.style.pointerEvents = "none";
         movingCreditsInterval = setInterval(() => {
             locationCreditsY -= 1.05;
             credits_boss.style.top = locationCreditsY + "%";
@@ -979,15 +977,7 @@ const enterFunction = () => {
         movingPlatformVelocity = 1;
         if(playingCastle){
             if(helpNum == 0){ //Level 1
-                spawnCords = () =>{
-                    player1.x = 40;
-                    player1.y = 500;
-                    if(playingMultiplayer){
-                        player2.x = 40;
-                        player2.y = 500;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song1_castle.mp3";
                 doorsTime = 30000;
                 music.play(); 
@@ -997,15 +987,7 @@ const enterFunction = () => {
                 }
                 spawnGhostCords();
             }else if(helpNum == 1){ //Level 2
-                spawnCords = () =>{
-                    player1.x = 40;
-                    player1.y = 515;
-                    if(playingMultiplayer){
-                        player2.x = 40;
-                        player2.y = 515;
-                    }  
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song2_castle.mp3";
                 doorsTime = 28000;
                 music.play();
@@ -2349,7 +2331,7 @@ const dead = () => {
                     }
                     movingPlatformVelocity = 1;
                     spawnSawCords();
-                    spawnCords();
+                    calculateSpawnpointLocation();
                     deathCounterEffect();
                     achievementNoob();
                     achievementTimer();
@@ -2596,8 +2578,71 @@ const fadeOutTransition = () => {
 let backToLobbyEntered = false;
 let goingBackToTheLobby = false;
 
+let doorsNumbers = [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64]
+
+const calculateDoorsLocation = () => {
+
+    let doorLocationXCalc = 0
+    let doorLocationYCalc = 0
+
+    for (let index = 0; index < platformLevel1.length; index++) {
+
+        if(doorLocationXCalc % 1024 == 0){
+            doorLocationXCalc = 0;
+            doorLocationYCalc += 32;
+        }
+
+        doorLocationXCalc += 32
+
+        if (doorsNumbers.includes(platformLevel1[index])) {
+            for (let i = 0; i < doorsNumbers.length; i++) {
+                if(doorsNumbers[i] == platformLevel1[index]){
+                    if(helpNum + 50 == doorsNumbers[i]){
+                        player1.x = doorLocationXCalc - 15;
+                        player1.y = doorLocationYCalc - 8;
+                        console.log(player1.x, player1.y)
+                        if(playingMultiplayer){
+                            player2.x = doorLocationXCalc - 15;
+                            player2.y = doorLocationYCalc - 8;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+const calculateSpawnpointLocation = () => {
+
+    let doorLocationXCalc = 0
+    let doorLocationYCalc = 0
+
+    for (let index = 0; index < platformLevel1.length; index++) {
+
+        if(doorLocationXCalc % 1024 == 0){
+            doorLocationXCalc = 0;
+            doorLocationYCalc += 32;
+        }
+
+        doorLocationXCalc += 32
+
+        if (25 == platformLevel1[index]) {
+            spawnCords = () =>{
+                player1.x = doorLocationXCalc - 15;
+                player1.y = doorLocationYCalc + 8;
+                if(playingMultiplayer){
+                    player2.x = doorLocationXCalc - 15;
+                    player2.y = doorLocationYCalc + 8;
+                }
+            }
+            spawnCords();
+        }
+    }
+}
+
 const backToLobby = () => {
     goingBackToTheLobby = true;
+
     clearInterval(bossAttackGenerator);
     clearTimeout(breakBottom);
     clearTimeout(bossLava);
@@ -2732,328 +2777,9 @@ const backToLobby = () => {
            }
            spawnMovingPlatformCords();
         }
-        if(playingCastle){
-            if(helpNum == 0){ // Go to lobby From Levels 1 - 15
-                player1.x = 120;
-                player1.y = 500;
-                if(playingMultiplayer){
-                    player2.x = 120;
-                    player2.y = 500;
-                }
-            }else if(helpNum == 1){
-                player1.x = 300;
-                player1.y = 400;
-                if(playingMultiplayer){
-                    player2.x = 300;
-                    player2.y = 400;
-                }
-            }else if(helpNum == 2){
-                player1.x = 560;
-                player1.y = 400;
-                if(playingMultiplayer){
-                    player2.x = 560;
-                    player2.y = 400;
-                }
-            }else if(helpNum == 3){
-                player1.x = 720;
-                player1.y = 500;
-                if(playingMultiplayer){
-                    player2.x = 720;
-                    player2.y = 500;
-                }
-            }else if(helpNum == 4){
-                player1.x = 910;
-                player1.y = 400;
-                if(playingMultiplayer){
-                    player2.x = 910;
-                    player2.y = 400;
-                }
-            }else if(helpNum == 5){
-                player1.x = 880;
-                player1.y = 300;
-                if(playingMultiplayer){
-                    player2.x = 880;
-                    player2.y = 300;
-                }
-            }else if(helpNum == 6){
-                player1.x = 582;
-                player1.y = 290;
-                if(playingMultiplayer){
-                    player2.x = 582;
-                    player2.y = 290;
-                }
-            }else if(helpNum == 7){
-                player1.x = 400;
-                player1.y = 300;
-                if(playingMultiplayer){
-                    player2.x = 400;
-                    player2.y = 300;
-                }
-            }else if(helpNum == 8){
-                player1.x = 220;
-                player1.y= 300;
-                if(playingMultiplayer){
-                    player2.x = 220;
-                    player2.y= 300;
-                }
-            }else if(helpNum == 9){
-                player1.x = 20;
-                player1.y = 260;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 260;
-                }
-            }else if(helpNum == 10){
-                player1.x = 20;
-                player1.y= 80;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 80;
-                }
-            }else if(helpNum == 11){
-                player1.x = 240;
-                player1.y= 80;
-                if(playingMultiplayer){
-                    player2.x = 240;
-                    player2.y = 80; 
-                }
-            }else if(helpNum == 12){
-                player1.x = 560;
-                player1.y = 50;
-                if(playingMultiplayer){
-                    player2.x = 560;
-                    player2.y = 50;
-                }
-            }else if(helpNum == 13){
-                player1.x = 880;
-                player1.y = 200;
-                if(playingMultiplayer){
-                    player2.x = 880;
-                    player2.y = 200;
-                }
-            }else if(helpNum == 14 || helpNum == 15){
-                player1.x = 920;
-                player1.y = 80;
-                if(playingMultiplayer){
-                    player2.x = 920;
-                    player2.y = 80;
-                }
-            }
-        }else if(playingSteamPunk){
-            if(helpNum == 0){ // Go to lobby From Levels 1 - 15
-                player1.x = 120;
-                player1.y = 500;
-                if(playingMultiplayer){
-                    player2.x = 120;
-                    player2.y = 500;
-                }
-            }else if(helpNum == 1){
-                player1.x = 240;
-                player1.y = 405;
-                if(playingMultiplayer){
-                    player2.x = 240;
-                    player2.y = 405;
-                }
-            }else if(helpNum == 2){
-                player1.x = 400;
-                player1.y = 500;
-                if(playingMultiplayer){
-                    player2.x = 400;
-                    player2.y = 500;
-                }
-            }else if(helpNum == 3){
-                player1.x = 660;
-                player1.y = 340;
-                if(playingMultiplayer){
-                    player2.x = 660;
-                    player2.y = 340;
-                }
-            }else if(helpNum == 4){
-                player1.x = 910;
-                player1.y = 400;
-                if(playingMultiplayer){
-                    player2.x = 910;
-                    player2.y = 400;
-                }
-            }else if(helpNum == 5){
-                player1.x = 880;
-                player1.y = 210;
-                if(playingMultiplayer){
-                    player2.x = 880;
-                    player2.y = 210;
-                }
-            }else if(helpNum == 6){
-                player1.x = 660;
-                player1.y = 180;
-                if(playingMultiplayer){
-                    player2.x = 660;
-                    player2.y = 180;
-                }
-            }else if(helpNum == 7){
-                player1.x = 432;
-                player1.y = 214;
-                if(playingMultiplayer){
-                    player2.x = 432;
-                    player2.y = 214;
-                }
-            }else if(helpNum == 8){
-                player1.x = 272;
-                player1.y= 214;
-                if(playingMultiplayer){
-                    player2.x = 272;
-                    player2.y= 214;
-                }
-            }else if(helpNum == 9){
-                player1.x = 20;
-                player1.y = 278;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 278;
-                }
-            }else if(helpNum == 10){
-                player1.x = 20;
-                player1.y= 118;
-                if(playingMultiplayer){
-                    player2.x = 20;
-                    player2.y = 118;
-                }
-            }else if(helpNum == 11){
-                player1.x = 242;
-                player1.y = 86;
-                if(playingMultiplayer){
-                    player2.x = 242;
-                    player2.y = 86; 
-                }
-            }else if(helpNum == 12){
-                player1.x = 500;
-                player1.y = 86;
-                if(playingMultiplayer){
-                    player2.x = 500;
-                    player2.y = 86;
-                }
-            }else if(helpNum == 13){
-                player1.x = 820;
-                player1.y = 86;
-                if(playingMultiplayer){
-                    player2.x = 820;
-                    player2.y = 86;
-                }
-            }else if(helpNum == 14 || helpNum == 15){
-                player1.x = 980;
-                player1.y = 80;
-                if(playingMultiplayer){
-                    player2.x = 980;
-                    player2.y = 80;
-                }
-            }
-        }else{
-            if(helpNum == 0){
-                player1.x = 110;
-                player1.y = 500;
-                if(playingMultiplayer){
-                    player2.x = 110;
-                    player2.y = 500;
-                }
-            }else if(helpNum == 1){
-                player1.x = 370;
-                player1.y = 380;
-                if(playingMultiplayer){
-                    player2.x = 370;
-                    player2.y = 380;
-                }
-            }else if(helpNum == 2){
-                player1.x = 530;
-                player1.y = 504;
-                if(playingMultiplayer){
-                    player2.x = 530;
-                    player2.y = 504;
-                }
-            }else if(helpNum == 3){
-                player1.x = 755;
-                player1.y = 472;
-                if(playingMultiplayer){
-                    player2.x = 755;
-                    player2.y = 472;
-                }
-            }else if(helpNum == 4){
-                player1.x = 880;
-                player1.y = 504;
-                if(playingMultiplayer){
-                    player2.x = 880;
-                    player2.y = 504;
-                }
-            }else if(helpNum == 5){
-                player1.x = 780;
-                player1.y = 216;
-                if(playingMultiplayer){
-                    player2.x = 780;
-                    player2.y = 216;
-                }
-            }else if(helpNum == 6){
-                player1.x = 532;
-                player1.y = 344;
-                if(playingMultiplayer){
-                    player2.x = 532;
-                    player2.y = 344;
-                }
-            }else if(helpNum == 7){
-                player1.x = 432;
-                player1.y = 248;
-                if(playingMultiplayer){
-                    player2.x = 432;
-                    player2.y = 248;
-                }
-            }else if(helpNum == 8){
-                player1.x = 210;
-                player1.y = 280;
-                if(playingMultiplayer){
-                    player2.x = 210;
-                    player2.y = 280;
-                }
-            }else if(helpNum == 9){
-                player1.x = 80;
-                player1.y = 280;
-                if(playingMultiplayer){
-                    player2.x = 80;
-                    player2.y = 280;
-                }
-            }else if(helpNum == 10){
-                player1.x = 280;
-                player1.y = 120;
-                if(playingMultiplayer){
-                    player2.x = 280;
-                    player2.y = 120;
-                }
-            }else if(helpNum == 11){
-                player1.x = 435;
-                player1.y = 56;
-                if(playingMultiplayer){
-                    player2.x = 435;
-                    player2.y = 56;
-                }
-            }else if(helpNum == 12){
-                player1.x = 590;
-                player1.y = 120;
-                if(playingMultiplayer){
-                    player2.x = 590;
-                    player2.y = 120;
-                }
-            }else if(helpNum == 13){
-                player1.x = 690;
-                player1.y = 120;
-                if(playingMultiplayer){
-                    player2.x = 690;
-                    player2.y = 120;
-                }
-            }else if(helpNum == 14){
-                player1.x = 980;
-                player1.y = 120;
-                if(playingMultiplayer){
-                    player2.x = 980;
-                    player2.y = 120;       
-                }
-            }
-        }
+
+        calculateDoorsLocation();
+
         fadeOutTransition()
         backToLobbyEntered = false;
         goingBackToTheLobby = false;
@@ -6082,7 +5808,7 @@ doorsTime = 10000000;
     selectedRioter = true;
     selectedRuby = false;
     currentIndexHatsRioter = 0;
-    setDungeonToSteamPunk();
+    setDungeonToSpace();
     //movingCharactersAndFullBlack();
     //darkness = true;
     menuToLobby();
@@ -6095,12 +5821,13 @@ doorsTime = 10000000;
         yMovingPlatform = 100000;
     }
     spawnMovingPlatformCords();
-    music.volume = 0;
+    //music.volume = 0;
+    
     setTimeout(() => {
         player1.hatNumber = 0;
         playerOneImage.src = "./res/skins/rioter.png"
         setSkins();
-        helpNum = 13
+        helpNum = 14
         enterFunction()
     }, 200);
-*/
+    */

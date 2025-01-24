@@ -655,6 +655,7 @@ const playerFlashing = () => {
         if(!playerNowFlashing){
             playerOneImage.src = "./res/img/nothing.png"
             playerTwoImage.src = "./res/img/nothing.png"
+            shineImage.src = "./res/img/nothing.png"
             shipImage.src = "./res/img/nothing.png"
             player1.hatNumber = 0;
             player2.hatNumber = 0;
@@ -663,6 +664,7 @@ const playerFlashing = () => {
             playerOneImage.src = playerSkin1;
             playerTwoImage.src = playerSkin2;
             shipImage.src = "./res/img/ship.png";
+            shineImage.src = "./res/img/shine.png"
             player1.hatNumber = player1.saveHatNumber;
             player2.hatNumber = player2.saveHatNumber;
             playerNowFlashing = false;
@@ -672,6 +674,7 @@ const playerFlashing = () => {
         playerOneImage.src = playerSkin1;
         playerTwoImage.src = playerSkin2;
         shipImage.src = "./res/img/ship.png";
+        shineImage.src = "./res/img/shine.png"
         player1.hatNumber = player1.saveHatNumber;
         player2.hatNumber = player2.saveHatNumber;
         playerNowFlashing = false;

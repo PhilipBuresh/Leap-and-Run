@@ -64,15 +64,6 @@ const bossLevel = () => {
     if(playingMultiplayer){
         gravity(player2)
     }
-    spawnCords = () => {
-        player1.x = 485;
-        player1.y = 216;
-        if(playingMultiplayer){
-            player2.x = 515 ;
-            player2.y = 216;        
-        }
-    }
-    spawnCords();
     myHp.style.display = "flex";
     hps.style.display = "flex";
     heart1.style.display = "block";
@@ -93,15 +84,16 @@ const bossLevel = () => {
         sfx_boss_talk.src = "./res/sfx/killyou.mp3";
         sfx_boss_talk.play();
     }, 1500);
-    setTimeout(() => {
-        spawnCords = () => {
-            player1.x = 485;
-            player1.y = 200;
-            if(playingMultiplayer){
-                player2.x = 515 ;
-                player2.y = 200;        
-            }
+    spawnCords = () => {
+        player1.x = 485;
+        player1.y = 216;
+        if(playingMultiplayer){
+            player2.x = 515 ;
+            player2.y = 216;        
         }
+    }
+    spawnCords();
+    setTimeout(() => {
         inGame = true;
         cancelAnimationFrame(CameraMovingId)
         reaperBossCamera1 = false;
