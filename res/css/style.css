@@ -1422,14 +1422,15 @@ p{
 }
 #left_buttons_arrows, #right_buttons_arrows {
     position: absolute;
-    bottom: 10px;
 }
 #left_buttons_arrows {
     left: 3%;
-    display:flex
+    display:flex;
+    bottom: 10px;
 }
 #right_buttons_arrows {
     right: 3%;
+    bottom: 35px;
     display: flex;
 }
 #button_up, #button_punch, #button_down {
@@ -1530,7 +1531,7 @@ p{
         padding-bottom: 27%;
     }
 }
-@media (max-height: 1000px) {
+@media (max-height: 950px) {
     #myHp img{
         margin-top:-0.3em;
         width: 35px;
