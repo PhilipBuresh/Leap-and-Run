@@ -10,6 +10,7 @@ __________________________
 - <h3>Fixed BUGS (25.01.2025)</h3>
 - Fixed shining bug effect
 - Fixed Achievement Egg on mobile
+- Fixed Achievement Jump Orb counter
 - Fixed SKIN Changer bug
 - Fixed a bug where you couldn't click the buttons
 - Fixed Mobile buttons location
