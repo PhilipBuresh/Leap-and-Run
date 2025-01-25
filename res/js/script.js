@@ -3415,8 +3415,8 @@ window.onload =  () => {
     player1.orbGravityCounter = parseInt(localStorage.getItem('orbGravityCounterP1')) || 0;
     player2.orbGravityCounter = parseInt(localStorage.getItem('orbGravityCounterP2')) || 0;
 
-    player1.orbGravityCounter = parseInt(localStorage.getItem('orbCounterP1')) || 0;
-    player2.orbGravityCounter = parseInt(localStorage.getItem('orbCounterP2')) || 0;
+    player1.orbCounter = parseInt(localStorage.getItem('orbCounterP1')) || 0;
+    player2.orbCounter = parseInt(localStorage.getItem('orbCounterP2')) || 0;
 
     deathCounter = parseInt(localStorage.getItem('deathCounter')) || 0;
     deathCounterShow.innerHTML = deathCounter + "x";;

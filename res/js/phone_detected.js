@@ -60,6 +60,7 @@ const go_up = () => {
                         player1.reversedGravityHat = 0;
                     }
                     achievementGravityOrb(player1);
+                    achievementJumpOrb(player1);
                     sfx.src = "./res/sfx/gravity_orb.mp3";
                     sfx.play();
                     player1.velocity = 0;
