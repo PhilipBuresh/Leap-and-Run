@@ -775,8 +775,8 @@ let helpNumbers = []
 const doorsCollision = (PLAYER) => {
     lobbyDoorCol = false;
     PLAYER.doorCol = false;
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] >= 50 && platformLevel1[i] <= 64 || platformLevel1[i] == 34) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] >= 50 && currentPlatform[i] <= 64 || currentPlatform[i] == 34) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -785,8 +785,8 @@ const doorsCollision = (PLAYER) => {
                 PLAYER.x + PLAYER.width >= platformX + 24 &&
                 PLAYER.x <= platformX + 40
             ) {
-                if(platformLevel1[i] != 34 && inGame){
-                    helpNum = platformLevel1[i] - 50;
+                if(currentPlatform[i] != 34 && inGame){
+                    helpNum = currentPlatform[i] - 50;
                     lobbyDoorCol = true;
                 }
                 if(helpNumbers.length == 2){
@@ -797,11 +797,11 @@ const doorsCollision = (PLAYER) => {
                 }
                 PLAYER.doorCol = true;
                 c.font = "20px VT323, monospace";
-                if((finished_castle[helpNum] == 2 && playingCastle) || (finished_steampunk[helpNum] == 2 && playingSteamPunk) || (finished_spaceship[helpNum] == 2 && playingSpace) || !finalDoorUnlocked && platformLevel1[i] != 34){
+                if((finished_castle[helpNum] == 2 && playingCastle) || (finished_steampunk[helpNum] == 2 && playingSteamPunk) || (finished_spaceship[helpNum] == 2 && playingSpace) || !finalDoorUnlocked && currentPlatform[i] != 34){
                     c.fillStyle = "red";
                     c.fillText("LOCKED", platformX + 7, platformY);
                 }else{
-                    if((playingSteamPunk && platformLevel1[i] != 34) || (playingCastle && platformLevel1[i] != 34) || (playingSpace && platformLevel1[i] != 34)){
+                    if((playingSteamPunk && currentPlatform[i] != 34) || (playingCastle && currentPlatform[i] != 34) || (playingSpace && currentPlatform[i] != 34)){
                         if(playingMultiplayer){
                             if(player1.doorCol && !player2.doorCol || !player1.doorCol && player2.doorCol || helpNumbers[0] != helpNumbers[1]){
                                 c.fillStyle = "yellow";
@@ -963,7 +963,7 @@ const enterFunction = () => {
         sfx.play();
     }
     if(playingSpace){
-        lobby = [...platformLevel1];
+        lobby = [...currentPlatform];
         frameButtonLobby = frameButton;
     }
     frameDoor = 0;
@@ -974,8 +974,8 @@ const enterFunction = () => {
     fadeInTransition();
     setTimeout(() => {
         inGame = true;
-        platformLevel1 = [...map[helpNum]];
-        originalPlatform1 = [...platformLevel1];
+        currentPlatform = [...map[helpNum]];
+        originalPlatform1 = [...currentPlatform];
         movingPlatformVelocity = 1;
         if(playingCastle){
             if(helpNum == 0){ //Level 1
@@ -1900,8 +1900,8 @@ const spiderMove = () => {
                 canAddSpiderSpeed = false;
             }
             bossX += movingSpiderNumber;
-            for (let i = 0; i < platformLevel1.length; i++) {
-                if (solidBlocks.includes(platformLevel1[i]))  {
+            for (let i = 0; i < currentPlatform.length; i++) {
+                if (solidBlocks.includes(currentPlatform[i]))  {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -2362,7 +2362,7 @@ const dead = () => {
                 clearTimeout(player1.inPipeTimeout)
                 clearTimeout(player2.inPipeTimeout)
                 clearShakePipes();
-                platformLevel1 = [...originalPlatform1];
+                currentPlatform = [...originalPlatform1];
                 drawPlatform();
                 dark();
                 if(!playingSpace){
@@ -2438,7 +2438,7 @@ const dead = () => {
                         }, doorsTime);
                         currentFrameBoss = 0;
                         bossAttacking = false;
-                        platformLevel1 = [...map[14]]
+                        currentPlatform = [...map[14]]
                         risingLavaActivated = false;
                         risingIncreaseValue = 0.6;
                         lavaIncreaseValue = 3.6;
@@ -2519,8 +2519,8 @@ const dead = () => {
                                 cancelAnimationFrame(wallSpiderMovingId);
                                 rightWallX = canvas.width;
                                 leftWallX = -160;
-                                platformLevel1 = [...map[14]];
-                                originalPlatform1 = [...platformLevel1];
+                                currentPlatform = [...map[14]];
+                                originalPlatform1 = [...currentPlatform];
                                 spiderBossLevel();
                             }else if(playingSpace){
                                 resetAlienBossLevel();
@@ -2587,7 +2587,7 @@ const calculateDoorsLocation = () => {
     let doorLocationXCalc = 0
     let doorLocationYCalc = 0
 
-    for (let index = 0; index < platformLevel1.length; index++) {
+    for (let index = 0; index < currentPlatform.length; index++) {
 
         if(doorLocationXCalc % 1024 == 0){
             doorLocationXCalc = 0;
@@ -2596,9 +2596,9 @@ const calculateDoorsLocation = () => {
 
         doorLocationXCalc += 32
 
-        if (doorsNumbers.includes(platformLevel1[index])) {
+        if (doorsNumbers.includes(currentPlatform[index])) {
             for (let i = 0; i < doorsNumbers.length; i++) {
-                if(doorsNumbers[i] == platformLevel1[index]){
+                if(doorsNumbers[i] == currentPlatform[index]){
                     if(helpNum + 50 == doorsNumbers[i]){
                         player1.x = doorLocationXCalc - 15;
                         player1.y = doorLocationYCalc - 8;
@@ -2619,7 +2619,7 @@ const calculateSpawnpointLocation = () => {
     let doorLocationXCalc = 0
     let doorLocationYCalc = 0
 
-    for (let index = 0; index < platformLevel1.length; index++) {
+    for (let index = 0; index < currentPlatform.length; index++) {
 
         if(doorLocationXCalc % 1024 == 0){
             doorLocationXCalc = 0;
@@ -2628,7 +2628,7 @@ const calculateSpawnpointLocation = () => {
 
         doorLocationXCalc += 32
 
-        if (25 == platformLevel1[index]) {
+        if (25 == currentPlatform[index]) {
             spawnCords = () =>{
                 player1.x = doorLocationXCalc - 15;
                 player1.y = doorLocationYCalc + 8;
@@ -2755,7 +2755,7 @@ const backToLobby = () => {
         clearInterval(movingCreditsInterval);
         inGame = true;
         frameButton = frameButtonLobby;
-        platformLevel1 = [...lobby];
+        currentPlatform = [...lobby];
         spawnGhostCords = () => {
             xGhost = 20000;
             yGhost = 20000;
@@ -2897,7 +2897,7 @@ button_retry.onclick = () => {
 //----------------------------------------ESC Button Function
  
 const escFunction = () => {
-    if(JSON.stringify(lobby) !== JSON.stringify(platformLevel1)){ //When Lobby and current level are not same
+    if(JSON.stringify(lobby) !== JSON.stringify(currentPlatform)){ //When Lobby and current level are not same
         button_back.style.display = "block";
         button_resume.style.display = "block";
         button_retry.style.display = "block";
@@ -2920,7 +2920,7 @@ const escFunction = () => {
             first_col.style.filter = "invert(0)";
             second_col.style.filter = "invert(0)";
         }
-    }else if(JSON.stringify(lobby) === JSON.stringify(platformLevel1)){ //When Lobby and current level are same
+    }else if(JSON.stringify(lobby) === JSON.stringify(currentPlatform)){ //When Lobby and current level are same
         button_back.style.display = "none";
         button_resume.style.display = "block";
         button_retry.style.display = "none";
@@ -3101,9 +3101,9 @@ const objectsCollision = (PLAYER) => {
 
     PLAYER.canUseButton = false;
 
-    for (let i = 0; i < platformLevel1.length; i++) {
+    for (let i = 0; i < currentPlatform.length; i++) {
         //Spikes and Moving Spikes
-        if ((platformLevel1[i] == 2 || platformLevel1[i] == 4 || platformLevel1[i] == 23 || platformLevel1[i] == 24) || (platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22) && canDieOnSpike == true) {
+        if ((currentPlatform[i] == 2 || currentPlatform[i] == 4 || currentPlatform[i] == 23 || currentPlatform[i] == 24) || (currentPlatform[i] == 10 || currentPlatform[i] == 20 || currentPlatform[i] == 21 || currentPlatform[i] == 22) && canDieOnSpike == true) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3120,7 +3120,7 @@ const objectsCollision = (PLAYER) => {
                 && !PLAYER.reversedGravity && PLAYER.flying
             ) {
                 dead();
-                if(platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22){
+                if(currentPlatform[i] == 10 || currentPlatform[i] == 20 || currentPlatform[i] == 21 || currentPlatform[i] == 22){
                     achievementMovingSpike();
                 }
             } else if (
@@ -3131,13 +3131,13 @@ const objectsCollision = (PLAYER) => {
                 && PLAYER.reversedGravity
             ) {
                 dead();
-                if(platformLevel1[i] == 10 || platformLevel1[i] == 20 || platformLevel1[i] == 21 || platformLevel1[i] == 22){
+                if(currentPlatform[i] == 10 || currentPlatform[i] == 20 || currentPlatform[i] == 21 || currentPlatform[i] == 22){
                     achievementMovingSpike();
                 }
             }
         }
         //Lava and Mini Lasers
-        if (platformLevel1[i] == 3 || platformLevel1[i] == 100 || platformLevel1[i] == 101 || platformLevel1[i] == 102) {
+        if (currentPlatform[i] == 3 || currentPlatform[i] == 100 || currentPlatform[i] == 101 || currentPlatform[i] == 102) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3150,7 +3150,7 @@ const objectsCollision = (PLAYER) => {
                 if(playingBossFight){
                     resistence = false;
                 }
-                if(platformLevel1[i] == 3){
+                if(currentPlatform[i] == 3){
                     achievementHot()
                 }
                 dead();
@@ -3168,7 +3168,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         //Portal 1
-        if (platformLevel1[i] == 11) {
+        if (currentPlatform[i] == 11) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3190,7 +3190,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         //Portal 2
-        if (platformLevel1[i] == 12) {
+        if (currentPlatform[i] == 12) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3212,7 +3212,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         //Closing Doors
-        if (platformLevel1[i] == 30 || (platformLevel1[i] == 34 && frameDoorFinal == 0)) {
+        if (currentPlatform[i] == 30 || (currentPlatform[i] == 34 && frameDoorFinal == 0)) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3235,7 +3235,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         //Key
-        if (platformLevel1[i] == 31) {
+        if (currentPlatform[i] == 31) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3244,18 +3244,18 @@ const objectsCollision = (PLAYER) => {
                 PLAYER.x + PLAYER.width >= platformX &&
                 PLAYER.x <= platformX + 32
             ) {
-                platformLevel1[i] = 0;
+                currentPlatform[i] = 0;
                 sfx.src = "./res/sfx/key_pick.mp3";
                 sfx.play();
-                for (let index = 0; index < platformLevel1.length; index++) {
-                    if(platformLevel1[index] == 32 || platformLevel1[index] == 33){
-                        platformLevel1[index] = 0;
+                for (let index = 0; index < currentPlatform.length; index++) {
+                    if(currentPlatform[index] == 32 || currentPlatform[index] == 33){
+                        currentPlatform[index] = 0;
                     }
                 }
             }
         }
         //Final Trophy
-        if (platformLevel1[i] == 35) {
+        if (currentPlatform[i] == 35) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3273,7 +3273,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         // Button
-        if (platformLevel1[i] == 49) {
+        if (currentPlatform[i] == 49) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3498,8 +3498,8 @@ const resetLocalStorage = () => {
 
 const orbCollision = (PLAYER) => {
     let isTouchingGravityOrb = false;
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 5) { // Jump Orb
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 5) { // Jump Orb
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3515,7 +3515,7 @@ const orbCollision = (PLAYER) => {
             }
         }
 
-        if (platformLevel1[i] == 44) { // Gravity Orb
+        if (currentPlatform[i] == 44) { // Gravity Orb
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3553,8 +3553,8 @@ const resetGravity = () => {
 //---------------------------------------- JUMP PAD Collision
 
 const jumpPadCollision = (PLAYER) => {
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 29) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 29) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32 + 16;
             if (
@@ -3580,8 +3580,8 @@ let beepActivated = false;
 let laserCannonTimeout;
 
 const laserAndDetectorCollision = (PLAYER) => {
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 92 || ((platformLevel1[i] == 90 || platformLevel1[i] == 91) && frameLaserCannon == 0)) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 92 || ((currentPlatform[i] == 90 || currentPlatform[i] == 91) && frameLaserCannon == 0)) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3602,7 +3602,7 @@ const laserAndDetectorCollision = (PLAYER) => {
                 }
             }
         }
-        if (platformLevel1[i] == 93 || platformLevel1[i] == 90 || platformLevel1[i] == 91) {
+        if (currentPlatform[i] == 93 || currentPlatform[i] == 90 || currentPlatform[i] == 91) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3621,8 +3621,8 @@ const laserAndDetectorCollision = (PLAYER) => {
 //---------------------------------------- Stop Slide Collision
 
 const stopSlideDetection = (PLAYER) => {
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 36 || platformLevel1[i] == 37) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 36 || currentPlatform[i] == 37) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3833,9 +3833,9 @@ const playerInPipe = (PLAYER) => {
 
 const pipesCollision = (PLAYER) => {
     if(playingSteamPunk){
-        for (let i = 0; i < platformLevel1.length; i++) {
+        for (let i = 0; i < currentPlatform.length; i++) {
             //Pipe RIGHT
-        if (platformLevel1[i] == 80) {
+        if (currentPlatform[i] == 80) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3856,7 +3856,7 @@ const pipesCollision = (PLAYER) => {
             }
         }
         //Pipe LEFT
-        if (platformLevel1[i] == 79) {
+        if (currentPlatform[i] == 79) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -3908,8 +3908,8 @@ const laserBulletCollision = (PLAYER) => {
             }, 100);
         }, 50);
     }else{
-        for (let i = 0; i < platformLevel1.length; i++) {
-            if (solidBlocks.includes(platformLevel1[i])) {
+        for (let i = 0; i < currentPlatform.length; i++) {
+            if (solidBlocks.includes(currentPlatform[i])) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -3917,9 +3917,9 @@ const laserBulletCollision = (PLAYER) => {
                     PLAYER.laserY - 10 <= platformY + 32 &&
                     PLAYER.laserX + 25 >= platformX &&
                     PLAYER.laserX <= platformX + 32
-                    && platformLevel1[i] == 6
+                    && currentPlatform[i] == 6
                 ) {
-                    platformLevel1[i] = 0;
+                    currentPlatform[i] = 0;
                     if(PLAYER == player1){
                         sfx_punch.src = "./res/sfx/wall_break.mp3";
                         sfx_punch.play();
@@ -3959,8 +3959,8 @@ const laserBulletCollision = (PLAYER) => {
 const aboveHeadCollision = (PLAYER) => {
     PLAYER.ahCollision = window.requestAnimationFrame(() => aboveHeadCollision(PLAYER));
     if (PLAYER.crouched) {
-        for (let i = 0; i < platformLevel1.length; i++) {
-            if (solidBlocks.includes(platformLevel1[i])) {
+        for (let i = 0; i < currentPlatform.length; i++) {
+            if (solidBlocks.includes(currentPlatform[i])) {
                 let platformX = (i % 32) * 32;
                 let platformY = Math.floor(i / 32) * 32;
                 if (
@@ -4033,8 +4033,8 @@ let under = (PLAYER) => {
 //---------------------------------------- Collision Canvas BOTTOM and BLOCKS
 
 const bottomCollision = (PLAYER) => {
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (solidBlocks.includes(platformLevel1[i])) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (solidBlocks.includes(currentPlatform[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -4107,15 +4107,15 @@ const bottomCollision = (PLAYER) => {
                     metalSounds = spaceshipMetalSounds;
                 }
 
-                if (rockSounds.includes(platformLevel1[i])) {
+                if (rockSounds.includes(currentPlatform[i])) {
                     PLAYER.onRock = true;
                     PLAYER.onMetal = false;
                     PLAYER.onWood = false;
-                } else if (woodSounds.includes(platformLevel1[i])) {
+                } else if (woodSounds.includes(currentPlatform[i])) {
                     PLAYER.onRock = false;
                     PLAYER.onMetal = false;
                     PLAYER.onWood = true;
-                } else if (metalSounds.includes(platformLevel1[i])) {
+                } else if (metalSounds.includes(currentPlatform[i])) {
                     PLAYER.onRock = false;
                     PLAYER.onMetal = true;
                     PLAYER.onWood = false;
@@ -4167,8 +4167,8 @@ const upCollision = (PLAYER) => {
         PLAYER.velocityJump = PLAYER.velocityJump/1.22
         PLAYER.y -= PLAYER.velocityJump * PLAYER.reversedGravityNumber;
     }
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (solidBlocks.includes(platformLevel1[i])) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (solidBlocks.includes(currentPlatform[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32 + 42;
             if (
@@ -4244,8 +4244,8 @@ const upCollision = (PLAYER) => {
 const boostCollision = (PLAYER) => {
     let boostDetected = false;
     
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 17 && playingSpace) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 17 && playingSpace) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -4281,8 +4281,8 @@ const boostCollision = (PLAYER) => {
 
 
 const ladderCollision = (PLAYER) => {
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 26) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 26) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -4981,8 +4981,8 @@ let moveRight = (PLAYER) => {
             
             }
             pipesCollision(PLAYER);
-            for (let i = 0; i < platformLevel1.length; i++) {
-                if (solidBlocks.includes(platformLevel1[i])) {
+            for (let i = 0; i < currentPlatform.length; i++) {
+                if (solidBlocks.includes(currentPlatform[i])) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -5097,8 +5097,8 @@ let moveLeft = (PLAYER) => {
                 }
             }
             pipesCollision(PLAYER);
-            for (let i = 0; i < platformLevel1.length; i++) {
-                if (solidBlocks.includes(platformLevel1[i])) {
+            for (let i = 0; i < currentPlatform.length; i++) {
+                if (solidBlocks.includes(currentPlatform[i])) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -5175,8 +5175,8 @@ const sidesCollision = (PLAYER) => {
     sideRightCol = false;
     sideLeftCol = false;
 
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (solidBlocks.includes(platformLevel1[i])) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (solidBlocks.includes(currentPlatform[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -5372,12 +5372,12 @@ const punch = (PLAYER) => {
             }else{
                 frameButton = 0;
             }
-            for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 87) {
-                    platformLevel1[i] = 88;
-                }else if(platformLevel1[i] == 88){
+            for (let i = 0; i < currentPlatform.length; i++) {
+                if (currentPlatform[i] == 87) {
+                    currentPlatform[i] = 88;
+                }else if(currentPlatform[i] == 88){
                     frameHologram = 0;
-                    platformLevel1[i] = 87;
+                    currentPlatform[i] = 87;
                 }
             }
             if(PLAYER == player1){
@@ -5405,8 +5405,8 @@ const punch = (PLAYER) => {
             PLAYER.bulletFrame = 0;
             laserBulletShot(PLAYER);
         }else{
-            for (let i = 0; i < platformLevel1.length; i++) {
-                if (platformLevel1[i] == 6) {
+            for (let i = 0; i < currentPlatform.length; i++) {
+                if (currentPlatform[i] == 6) {
                     let platformX = (i % 32) * 32;
                     let platformY = Math.floor(i / 32) * 32;
                     if (
@@ -5420,7 +5420,7 @@ const punch = (PLAYER) => {
                         PLAYER.x < platformX + 42 &&
                         PLAYER.x > platformX + 32 && PLAYER.turnedLeft)
                     ) {
-                        platformLevel1[i] = 0;
+                        currentPlatform[i] = 0;
                         if(canPlayBreakSound){ //When you hit 2 blocks, sound will be played once
                             canPlayBreakSound = false;
                             if(PLAYER == player1){

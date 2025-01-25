@@ -384,135 +384,135 @@ let solidBlocks = [1, 6, 7, 9, 18, 19, 32, 33, 36, 37, 38, 41, 46, 47, 48, 71, 6
 const drawPlatform = () => {
     xBlock = 0;
     yBlock = 0;
-    for (let index = 0; index < platformLevel1.length; index++) {
+    for (let index = 0; index < currentPlatform.length; index++) {
 //-----------------------------------------------------------
 // CASTLE DUNGEON
 //-----------------------------------------------------------
         if(playingCastle){
-            if(platformLevel1[index] == 1){
+            if(currentPlatform[index] == 1){
                 c.drawImage(platformImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 2){
+            }else if(currentPlatform[index] == 2){
                 c.drawImage(spikeMoveImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 3){
+            }else if(currentPlatform[index] == 3){
                 c.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 4){
+            }else if(currentPlatform[index] == 4){
                 c.drawImage(spikeMoveImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 5){
+            }else if(currentPlatform[index] == 5){
                 c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 6){
+            }else if(currentPlatform[index] == 6){
                 c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 7){
+            }else if(currentPlatform[index] == 7){
                 c.drawImage(woodsImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 8){
+            }else if(currentPlatform[index] == 8){
                 c.drawImage(chainImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 9){
+            }else if(currentPlatform[index] == 9){
                 c.drawImage(bookImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 10){
+            }else if(currentPlatform[index] == 10){
                 c.drawImage(spikeMoveImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 20){
+            }else if(currentPlatform[index] == 20){
                 c.drawImage(spikeMoveImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 21){
+            }else if(currentPlatform[index] == 21){
                 c.drawImage(spikeMoveImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 22){
+            }else if(currentPlatform[index] == 22){
                 c.drawImage(spikeMoveImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 23){
+            }else if(currentPlatform[index] == 23){
                 c.drawImage(spikeMoveImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 24){
+            }else if(currentPlatform[index] == 24){
                 c.drawImage(spikeMoveImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 32){
+            }else if(currentPlatform[index] == 32){
                 c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 33){
+            }else if(currentPlatform[index] == 33){
                 c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 18){
+            }else if(currentPlatform[index] == 18){
                 c.drawImage(barrelImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 19){
+            }else if(currentPlatform[index] == 19){
                 c.drawImage(woodsImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 29){
+            }else if(currentPlatform[index] == 29){
                 c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 36){
+            }else if(currentPlatform[index] == 36){
                 c.drawImage(honeyImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 37){
+            }else if(currentPlatform[index] == 37){
                 c.drawImage(honeyImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
             }
 //-----------------------------------------------------------
 // STEAMPUNK DUNGEON
 //-----------------------------------------------------------
         }else if(playingSteamPunk){
-            if(platformLevel1[index] == 1){
+            if(currentPlatform[index] == 1){
                 c.drawImage(ironBlockImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 2){
+            }else if(currentPlatform[index] == 2){
                 c.drawImage(spikeMoveSpImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 3){
+            }else if(currentPlatform[index] == 3){
                 c.drawImage(lavaImage, frameLava * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 4){
+            }else if(currentPlatform[index] == 4){
                 c.drawImage(spikeMoveSpImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 5){
+            }else if(currentPlatform[index] == 5){
                 c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 6){
+            }else if(currentPlatform[index] == 6){
                 c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 7){
+            }else if(currentPlatform[index] == 7){
                 c.drawImage(woodsImage, 0 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 19){
+            }else if(currentPlatform[index] == 19){
                 c.drawImage(woodsImage, 1 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 29){
+            }else if(currentPlatform[index] == 29){
                 c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 32){
+            }else if(currentPlatform[index] == 32){
                 c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 33){
+            }else if(currentPlatform[index] == 33){
                 c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 12){
+            }else if(currentPlatform[index] == 12){
                 c.drawImage(brickBlockImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 68){
+            }else if(currentPlatform[index] == 68){
                 c.drawImage(brickBlockImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 69){
+            }else if(currentPlatform[index] == 69){
                 c.drawImage(ironSticksImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 70){
+            }else if(currentPlatform[index] == 70){
                 c.drawImage(ironSticksImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 8){
+            }else if(currentPlatform[index] == 8){
                 c.drawImage(chainImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 73){
+            }else if(currentPlatform[index] == 73){
                 c.drawImage(pipeImage, 0 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 74){
+            }else if(currentPlatform[index] == 74){
                 c.drawImage(pipeImage, 1 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 75){
+            }else if(currentPlatform[index] == 75){
                 c.drawImage(pipeImage, 2 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 76){
+            }else if(currentPlatform[index] == 76){
                 c.drawImage(pipeImage, 3 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 77){
+            }else if(currentPlatform[index] == 77){
                 c.drawImage(pipeImage, 4 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 78){
+            }else if(currentPlatform[index] == 78){
                 c.drawImage(pipeImage, 5 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 79){
+            }else if(currentPlatform[index] == 79){
                 cordsPipeX2 = xBlock + 35;
                 cordsPipeY2 = yBlock - 11;
                 c.drawImage(pipeImage, 6 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 80){
+            }else if(currentPlatform[index] == 80){
                 cordsPipeX1 = xBlock - 35;
                 cordsPipeY1 = yBlock - 11;
                 c.drawImage(pipeImage, 7 * 32, 0 * 32, 32, 32, xBlock + shakePipeX, yBlock + shakePipeY, 32, 32)
-            }else if(platformLevel1[index] == 18){
+            }else if(currentPlatform[index] == 18){
                 c.drawImage(barrelImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 71){
+            }else if(currentPlatform[index] == 71){
                 c.drawImage(copperBlockImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 10){
+            }else if(currentPlatform[index] == 10){
                 c.drawImage(spikeMoveSpImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 20){
+            }else if(currentPlatform[index] == 20){
                 c.drawImage(spikeMoveSpImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 21){
+            }else if(currentPlatform[index] == 21){
                 c.drawImage(spikeMoveSpImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 22){
+            }else if(currentPlatform[index] == 22){
                 c.drawImage(spikeMoveSpImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 23){
+            }else if(currentPlatform[index] == 23){
                 c.drawImage(spikeMoveSpImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 24){
+            }else if(currentPlatform[index] == 24){
                 c.drawImage(spikeMoveSpImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 65){
+            }else if(currentPlatform[index] == 65){
                 c.save();
                 c.translate(xBlock, yBlock);
                 c.rotate(rotationAngle * -1);
                 c.drawImage(bigCircleImage, -32, -32, 64, 64);
                 c.restore();
-            }else if(platformLevel1[index] == 66){
+            }else if(currentPlatform[index] == 66){
                 c.save();
                 c.translate(xBlock, yBlock);
                 c.rotate(rotationAngle);
@@ -523,87 +523,87 @@ const drawPlatform = () => {
 // SPACE DUNGEON
 //-----------------------------------------------------------
         }else if(playingSpace){
-            if(platformLevel1[index] == 1){
+            if(currentPlatform[index] == 1){
                 c.drawImage(blockMetalImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 2){
+            }else if(currentPlatform[index] == 2){
                 c.drawImage(spikeMoveSpaceImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 5){
+            }else if(currentPlatform[index] == 5){
                 c.drawImage(orbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 6){
+            }else if(currentPlatform[index] == 6){
                 c.drawImage(crackedImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 4){
+            }else if(currentPlatform[index] == 4){
                 c.drawImage(spikeMoveSpaceImage, 4 * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 7){
+            }else if(currentPlatform[index] == 7){
                 c.drawImage(blockStripesImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 10){
+            }else if(currentPlatform[index] == 10){
                 c.drawImage(spikeMoveSpaceImage, frameSpike * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 14){
+            }else if(currentPlatform[index] == 14){
                 c.drawImage(lanternImage, frameLantern * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 19){
+            }else if(currentPlatform[index] == 19){
                 c.drawImage(blockStripesImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 20){
+            }else if(currentPlatform[index] == 20){
                 c.drawImage(spikeMoveSpaceImage, frameSpike * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 21){
+            }else if(currentPlatform[index] == 21){
                 c.drawImage(spikeMoveSpaceImage, frameSpike * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 22){
+            }else if(currentPlatform[index] == 22){
                 c.drawImage(spikeMoveSpaceImage, frameSpike * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 23){
+            }else if(currentPlatform[index] == 23){
                 c.drawImage(spikeMoveSpaceImage, 4 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 24){
+            }else if(currentPlatform[index] == 24){
                 c.drawImage(spikeMoveSpaceImage, 4 * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 29){
+            }else if(currentPlatform[index] == 29){
                 c.drawImage(jumpPadImage, frameOrb * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 32){
+            }else if(currentPlatform[index] == 32){
                 c.drawImage(ironImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 33){
+            }else if(currentPlatform[index] == 33){
                 c.drawImage(ironKeyImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 36){
+            }else if(currentPlatform[index] == 36){
                 c.drawImage(slimeMetalImage, 0 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 37){
+            }else if(currentPlatform[index] == 37){
                 c.drawImage(slimeMetalImage, 1 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 38){
+            }else if(currentPlatform[index] == 38){
                 c.drawImage(ventImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 41){
+            }else if(currentPlatform[index] == 41){
                 c.drawImage(blockMetalSimpleImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 45){
+            }else if(currentPlatform[index] == 45){
                 c.drawImage(fenceImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 46){
+            }else if(currentPlatform[index] == 46){
                 c.drawImage(tableImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 47){
+            }else if(currentPlatform[index] == 47){
                 c.drawImage(tableImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 48){
+            }else if(currentPlatform[index] == 48){
                 c.drawImage(tableImage, 2 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 44){
+            }else if(currentPlatform[index] == 44){
                 c.drawImage(gravityOrbImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 17){
+            }else if(currentPlatform[index] == 17){
                 c.drawImage(boostImage, frameOrb * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 71){
+            }else if(currentPlatform[index] == 71){
                 c.drawImage(computerImage, frameComputer * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 68){
+            }else if(currentPlatform[index] == 68){
                 c.drawImage(drawerImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 100){
+            }else if(currentPlatform[index] == 100){
                 c.drawImage(lasersImage, 0 * 32, frameOrb * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 101){
+            }else if(currentPlatform[index] == 101){
                 c.drawImage(lasersImage, 1 * 32, frameOrb * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 102){
+            }else if(currentPlatform[index] == 102){
                 c.drawImage(lasersImage, 2 * 32, frameOrb * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 90){
+            }else if(currentPlatform[index] == 90){
                 c.drawImage(laserCannonImage, 0 * 32, frameLaserCannon * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 91){
+            }else if(currentPlatform[index] == 91){
                 c.drawImage(laserCannonImage, 1 * 32, frameLaserCannon * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 92){
+            }else if(currentPlatform[index] == 92){
                 c.drawImage(laserCannonImage, 2 * 32, frameLaserCannon * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 93){
+            }else if(currentPlatform[index] == 93){
                 c.drawImage(laserCannonImage, 3 * 32, frameLaserCannon * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 94){
+            }else if(currentPlatform[index] == 94){
                 c.drawImage(lavaLampsImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 95){
+            }else if(currentPlatform[index] == 95){
                 c.drawImage(lavaLampsImage, frameLantern * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 96){
+            }else if(currentPlatform[index] == 96){
                 c.drawImage(lavaLampsImage, frameLantern * 32, 2 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 97){
+            }else if(currentPlatform[index] == 97){
                 c.drawImage(lavaLampsImage, frameLantern * 32, 3 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 103){
+            }else if(currentPlatform[index] == 103){
                 c.drawImage(djImage, 0 * 32, 0 * 32, 128, 64, xBlock, yBlock, 128, 64)
             }
         }
@@ -623,137 +623,137 @@ let frameDoorFinal = 3;
 const drawBackBlocks = () => {
     xBlock = 0;
     yBlock = 0;
-    for (let index = 0; index < platformLevel1.length; index++) {
+    for (let index = 0; index < currentPlatform.length; index++) {
 //-----------------------------------------------------------
 // CASTLE DUNGEON
 //-----------------------------------------------------------
         if(playingCastle){
-            if(platformLevel1[index] == 13){
+            if(currentPlatform[index] == 13){
                 c.drawImage(blockBackImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 11){
+            }else if(currentPlatform[index] == 11){
                 cordsPortalX1 = xBlock - 32;
                 cordsPortalY1 = yBlock + 22;
                 c.drawImage(portal1Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-            }else if(platformLevel1[index] == 12){
+            }else if(currentPlatform[index] == 12){
                 cordsPortalX2 = xBlock + 32;
                 cordsPortalY2 = yBlock + 22;
                 c.drawImage(portal2Image, framePortal * 32, 0 * 32, 32, 64, xBlock, yBlock, 32, 64);
-            }else if(platformLevel1[index] == 14){
+            }else if(currentPlatform[index] == 14){
                 c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 15){
+            }else if(currentPlatform[index] == 15){
                 c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 16){
+            }else if(currentPlatform[index] == 16){
                 c.drawImage(torchImage, frameTorch * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 17){
+            }else if(currentPlatform[index] == 17){
                 c.drawImage(bookshelfBackImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 25){
+            }else if(currentPlatform[index] == 25){
                 c.drawImage(doorImage, 0 * 64, 0 * 64, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 26){
+            }else if(currentPlatform[index] == 26){
                 c.drawImage(ladderImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 27){
+            }else if(currentPlatform[index] == 27){
                 c.drawImage(woodsImage, 2 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 28){
+            }else if(currentPlatform[index] == 28){
                 c.drawImage(woodsImage, 3 * 32, 0, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 30){
+            }else if(currentPlatform[index] == 30){
                 c.drawImage(chainDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 31){
+            }else if(currentPlatform[index] == 31){
                 c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 34){
+            }else if(currentPlatform[index] == 34){
                 c.drawImage(chainDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 35){
+            }else if(currentPlatform[index] == 35){
                 c.drawImage(trophyImage, xBlock, yBlock, 32, 32);
             }
             //---DOORS IN MENU
-            if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
-                c.drawImage(doorsImage, (platformLevel1[index] - 50) * 64, finished_castle[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            if (currentPlatform[index] >= 50 && currentPlatform[index] <= 64) {
+                c.drawImage(doorsImage, (currentPlatform[index] - 50) * 64, finished_castle[currentPlatform[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
             }
 //-----------------------------------------------------------
 // STEAMPUNK DUNGEON
 //-----------------------------------------------------------
         }else if(playingSteamPunk){
-            if(platformLevel1[index] == 13){
+            if(currentPlatform[index] == 13){
                 c.drawImage(ironBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 14){
+            }else if(currentPlatform[index] == 14){
                 c.drawImage(lanternImage, frameLantern * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 15){
+            }else if(currentPlatform[index] == 15){
                 c.drawImage(chainBackImage, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 25){
+            }else if(currentPlatform[index] == 25){
                 c.drawImage(doorImage, 1 * 64, 0 * 64, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 27){
+            }else if(currentPlatform[index] == 27){
                 c.drawImage(woodsImage, 2 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 28){
+            }else if(currentPlatform[index] == 28){
                 c.drawImage(woodsImage, 3 * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 30){
+            }else if(currentPlatform[index] == 30){
                 c.drawImage(spDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 31){
+            }else if(currentPlatform[index] == 31){
                 c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 17){
+            }else if(currentPlatform[index] == 17){
                 c.drawImage(copperBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 67){
+            }else if(currentPlatform[index] == 67){
                 c.drawImage(brickBlockImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 26){
+            }else if(currentPlatform[index] == 26){
                 c.drawImage(ladderImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32);
-            }else if(platformLevel1[index] == 34){
+            }else if(currentPlatform[index] == 34){
                 c.drawImage(spDoorImage, frameDoorFinal * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 72){
+            }else if(currentPlatform[index] == 72){
                 c.drawImage(ropeImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 82){
+            }else if(currentPlatform[index] == 82){
                 c.drawImage(ropeImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 83){
+            }else if(currentPlatform[index] == 83){
                 c.drawImage(ropeImage, 2 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 84){
+            }else if(currentPlatform[index] == 84){
                 c.drawImage(ropeImage, 3 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 85){
+            }else if(currentPlatform[index] == 85){
                 c.drawImage(ropeImage, 4 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 86){
+            }else if(currentPlatform[index] == 86){
                 c.drawImage(ropeImage, 5 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }
-            if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
-                c.drawImage(doorsImageSp, (platformLevel1[index] - 50) * 64, finished_steampunk[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            if (currentPlatform[index] >= 50 && currentPlatform[index] <= 64) {
+                c.drawImage(doorsImageSp, (currentPlatform[index] - 50) * 64, finished_steampunk[currentPlatform[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
             }
 //-----------------------------------------------------------
 // SPACE DUNGEON
 //-----------------------------------------------------------
         }else if(playingSpace){
-            if(platformLevel1[index] == 11){
+            if(currentPlatform[index] == 11){
                 cordsPortalX1 = xBlock - 32;
                 cordsPortalY1 = yBlock + 22;
                 c.drawImage(portal1Image, framePortal * 32, 2 * 32, 32, 64, xBlock, yBlock, 32, 64);
-            }else if(platformLevel1[index] == 12){
+            }else if(currentPlatform[index] == 12){
                 cordsPortalX2 = xBlock + 32;
                 cordsPortalY2 = yBlock + 22;
                 c.drawImage(portal2Image, framePortal * 32, 2 * 32, 32, 64, xBlock, yBlock, 32, 64);
-            }else if(platformLevel1[index] == 13){
+            }else if(currentPlatform[index] == 13){
                 c.drawImage(blockMetalImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 25){
+            }else if(currentPlatform[index] == 25){
                 c.drawImage(doorImage, 2 * 64, 0 * 64, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 26){
+            }else if(currentPlatform[index] == 26){
                 c.drawImage(ladderImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 30){
+            }else if(currentPlatform[index] == 30){
                 c.drawImage(spaceshipDoorImage, frameDoor * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 31){
+            }else if(currentPlatform[index] == 31){
                 c.drawImage(keyImage, 0 * 64, 0 * 32, 64, 64, xBlock, yBlock, 64, 64);
-            }else if(platformLevel1[index] == 39){
+            }else if(currentPlatform[index] == 39){
                 c.drawImage(spacePipesImage, 0 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 40){
+            }else if(currentPlatform[index] == 40){
                 c.drawImage(spacePipesImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 42){
+            }else if(currentPlatform[index] == 42){
                 c.drawImage(blockMetalSimpleImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 43){
+            }else if(currentPlatform[index] == 43){
                 c.drawImage(windowImage, frameWindow * 128, 0 * 128, 128, 128, xBlock + 2, yBlock - 8, 120, 120)
-            }else if(platformLevel1[index] == 49){
+            }else if(currentPlatform[index] == 49){
                 c.drawImage(buttonsImage, frameButton * 32, 0 * 32, 32, 32, xBlock, yBlock + 22, 32, 32)
-            }else if(platformLevel1[index] == 87){
+            }else if(currentPlatform[index] == 87){
                 c.drawImage(hologramImage, frameHologram * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 88){
+            }else if(currentPlatform[index] == 88){
                 c.drawImage(transparentBlockImage, 0* 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 89){
+            }else if(currentPlatform[index] == 89){
                 c.drawImage(computerImage, frameComputer * 32, 1 * 32, 32, 32, xBlock, yBlock, 32, 32)
-            }else if(platformLevel1[index] == 67){
+            }else if(currentPlatform[index] == 67){
                 c.drawImage(drawerImage, 1 * 32, 0 * 32, 32, 32, xBlock, yBlock, 32, 32)
             }
-            if (platformLevel1[index] >= 50 && platformLevel1[index] <= 64) {
-                c.drawImage(doorsImageFuture, (platformLevel1[index] - 50) * 64, finished_spaceship[platformLevel1[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
+            if (currentPlatform[index] >= 50 && currentPlatform[index] <= 64) {
+                c.drawImage(doorsImageFuture, (currentPlatform[index] - 50) * 64, finished_spaceship[currentPlatform[index] - 50] * 64, 64, 64, xBlock, yBlock, 64, 64);
             }
         }
         if((index + 1) % 32 == 0){
@@ -898,8 +898,8 @@ const drawGhost = () => {
     }else{
         c.drawImage(ghostImage, ghostFrame2 * 30, 0 * 40, 30, 40, xGhost, yGhost, 30, 40);
     }
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (platformLevel1[i] == 1 || platformLevel1[i] == 2 || platformLevel1[i] == 6 || platformLevel1[i] == 7 || platformLevel1[i] == 9 || platformLevel1[i] == 18 || platformLevel1[i] == 19) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (currentPlatform[i] == 1 || currentPlatform[i] == 2 || currentPlatform[i] == 6 || currentPlatform[i] == 7 || currentPlatform[i] == 9 || currentPlatform[i] == 18 || currentPlatform[i] == 19) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -1133,8 +1133,8 @@ const drawMovingPlatform = () => {
     }else{
         c.drawImage(movingPlatformImage, 1 * 64, frameOrb * 32, 64, 32, xMovingPlatform, yMovingPlatform, 64, 32);
     }
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (solidBlocks.includes(platformLevel1[i]) || [83, 84, 85, 86].includes(platformLevel1[i])) {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (solidBlocks.includes(currentPlatform[i]) || [83, 84, 85, 86].includes(currentPlatform[i])) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -1142,7 +1142,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY + 32 &&
                 xMovingPlatform + player1.width + movingPlatformVelocity >= platformX - 32 &&
                 xMovingPlatform <= platformX + 32
-                && ![83, 84, 85, 86].includes(platformLevel1[i])
+                && ![83, 84, 85, 86].includes(currentPlatform[i])
             ) {
                 movingPlatformVelocity = -1;
             } else if (
@@ -1150,7 +1150,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY + 32 &&
                 xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
                 xMovingPlatform >= platformX
-                && ![83, 84, 85, 86].includes(platformLevel1[i])
+                && ![83, 84, 85, 86].includes(currentPlatform[i])
             ) {
                 movingPlatformVelocity = 1;
             } else if (
@@ -1158,7 +1158,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY + 32 &&
                 xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
                 xMovingPlatform >= platformX - 16
-                && platformLevel1[i] == 83
+                && currentPlatform[i] == 83
             ){
                 movingPlatformVelocity = 0;
                 movingPlatformVelocityY = -1;
@@ -1167,7 +1167,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY - 6 &&
                 xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
                 xMovingPlatform >= platformX - 16
-                && platformLevel1[i] == 84
+                && currentPlatform[i] == 84
             ){
                 movingPlatformVelocity = 1;
                 movingPlatformVelocityY = 0;
@@ -1176,7 +1176,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY - 6 &&
                 xMovingPlatform + movingPlatformVelocity <= platformX + 32 &&
                 xMovingPlatform >= platformX - 16
-                && platformLevel1[i] == 85
+                && currentPlatform[i] == 85
             ){
                 movingPlatformVelocity =  0;
                 movingPlatformVelocityY = 1;
@@ -1185,7 +1185,7 @@ const drawMovingPlatform = () => {
                 yMovingPlatform <= platformY + 32 &&
                 xMovingPlatform + movingPlatformVelocity <= platformX - 16 &&
                 xMovingPlatform >= platformX - 16
-                && platformLevel1[i] == 86
+                && currentPlatform[i] == 86
             ){
                 movingPlatformVelocity = 1;
                 movingPlatformVelocityY = 0;
@@ -1245,8 +1245,8 @@ const drawSaw = () => {
     c.drawImage(sawImage, -32, -32, 64, 64);
     c.restore();
 
-    for (let i = 0; i < platformLevel1.length; i++) {
-        if (solidBlocks.includes(platformLevel1[i]))  {
+    for (let i = 0; i < currentPlatform.length; i++) {
+        if (solidBlocks.includes(currentPlatform[i]))  {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
@@ -1846,9 +1846,9 @@ const drawing = () => {
         if(laserCannonActivated){
             frameLaserCannon = (frameLaserCannon + 1) % 24;
             if(frameLaserCannon == 2){
-                for (let i = 0; i < platformLevel1.length; i++) {
-                    if (platformLevel1[i] == 92) {
-                        platformLevel1[i] = 93;
+                for (let i = 0; i < currentPlatform.length; i++) {
+                    if (currentPlatform[i] == 92) {
+                        currentPlatform[i] = 93;
                     }
                 }
             }
@@ -1857,9 +1857,9 @@ const drawing = () => {
                 sfx_laser.play();
             }
             if(frameLaserCannon == 23){
-                for (let i = 0; i < platformLevel1.length; i++) {
-                    if (platformLevel1[i] == 93) {
-                        platformLevel1[i] = 92;
+                for (let i = 0; i < currentPlatform.length; i++) {
+                    if (currentPlatform[i] == 93) {
+                        currentPlatform[i] = 92;
                     }
                 }
                 frameLaserCannon = 0;

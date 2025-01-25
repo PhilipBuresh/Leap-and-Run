@@ -108,9 +108,9 @@ const bossLevel = () => {
         }, 1200);
     }, 4000);
     breakBottom = setTimeout(() => {
-        for (let index = 0; index < platformLevel1.length; index++) {
-            if(platformLevel1[index] == 6){
-                platformLevel1[index] = 0;
+        for (let index = 0; index < currentPlatform.length; index++) {
+            if(currentPlatform[index] == 6){
+                currentPlatform[index] = 0;
             }
         }
         shake();
@@ -575,7 +575,7 @@ const alienBossLevel = () => {
 
     alienTimeouts.push(setTimeout(() => {
         shake();
-        //platformLevel1 = [...map[15]];
+        //currentPlatform = [...map[15]];
         smallDarknessAlienBoss = false;
         inGame = true;
         risingLavaActivated = true;
@@ -604,7 +604,7 @@ const alienBossLevel = () => {
         black.style.transition = "opacity 0s"
         black.style.opacity = "1";
         shake();
-        platformLevel1 = [...map[15]];
+        currentPlatform = [...map[15]];
         gravity(player1);
         if(playingMultiplayer){
             gravity(player2);
@@ -999,7 +999,7 @@ const alienBossLevel = () => {
         shake();
         resetGravity();
         alienInUfo = true;
-        platformLevel1 = [];
+        currentPlatform = [];
         hps.style.display = "flex";
         player1.flying = true;
         player1.velocityJump = 0;
@@ -1520,8 +1520,8 @@ const deadBoss = () => {
             darkness = false;
             clearBossTimeouts();
             spawnCords();
-            platformLevel1 = [...map[14]];
-            originalPlatform1 = [...platformLevel1];
+            currentPlatform = [...map[14]];
+            originalPlatform1 = [...currentPlatform];
         }, 1500)
     }else if(playingSteamPunk){
         inGame = false;
@@ -1575,9 +1575,9 @@ const deadBoss = () => {
             cancelAnimationFrame(wallSpiderMovingId);
             rightWallX = canvas.width;
             leftWallX = -160;
-            for (let index = 0; index < platformLevel1.length; index++) {
-                if(platformLevel1[index] == 2){
-                    platformLevel1[index] = 0;
+            for (let index = 0; index < currentPlatform.length; index++) {
+                if(currentPlatform[index] == 2){
+                    currentPlatform[index] = 0;
                 }
             }
             setTimeout(() => {
