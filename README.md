@@ -9,6 +9,7 @@ __________________________
 __________________________
 - <h3>Fixed BUGS (07.02.2025)</h3>
 - Fixed Achievement Egg
+- Fixed phone button bug in boss scenes
 __________________________
 - <h3>Fixed BUGS (25.01.2025)</h3>
 - Fixed shining bug effect
