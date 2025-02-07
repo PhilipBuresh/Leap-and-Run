@@ -164,7 +164,7 @@ const go_down_return = () => {
 const go_right = () => {
     button_right.style.filter = "invert(0)";
     afkAchievementProgress();
-    if (player1.isMovingRight == false) {
+    if (player1.isMovingRight == false && inGame) {
         player1.isMovingRight = true;
         player1.turnedRight = true;
         player1.turnedLeft = false;
@@ -186,7 +186,7 @@ const go_right_return = () => {
 const go_left = () => {
     button_left.style.filter = "invert(0)";
     afkAchievementProgress();
-    if (player1.isMovingLeft == false) {
+    if (player1.isMovingLeft == false && inGame) {
         player1.isMovingLeft = true;
         player1.turnedRight = false;
         player1.turnedLeft = true;
