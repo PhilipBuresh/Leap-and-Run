@@ -7,9 +7,11 @@ __________________________
 - Progress is being saved.
 - The game still has bugs and will be gradually fixed.
 __________________________
+- <h3>Fixed BUGS (07.02.2025)</h3>
+- Fixed Achievement Egg
+__________________________
 - <h3>Fixed BUGS (25.01.2025)</h3>
 - Fixed shining bug effect
-- Fixed Achievement Egg on mobile
 - Fixed Achievement Jump Orb counter
 - Fixed SKIN Changer bug
 - Fixed a bug where you couldn't click the buttons
