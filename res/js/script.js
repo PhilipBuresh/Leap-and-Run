@@ -136,6 +136,8 @@ let defaultLocationCreditsY = 100;
 let locationCreditsY = 100;
 let movingCreditsInterval
 
+let phoneCreditsValue = 1;
+
 const movingCredits = () => {
     if(!btnBackUsedinAlienLevel){
         canvas_transition.style.display = "none";
@@ -149,7 +151,7 @@ const movingCredits = () => {
         skip_credits.style.animationPlayState = "running"
         skip_credits.style.pointerEvents = "auto";
         movingCreditsInterval = setInterval(() => {
-            locationCreditsY -= 1.05;
+            locationCreditsY -= 1.05 * phoneCreditsValue;
             credits_boss.style.top = locationCreditsY + "%";
             if(music.currentTime >= 103){
                 alienLevelCompleted()
@@ -2602,7 +2604,6 @@ const calculateDoorsLocation = () => {
                     if(helpNum + 50 == doorsNumbers[i]){
                         player1.x = doorLocationXCalc - 15;
                         player1.y = doorLocationYCalc - 8;
-                        console.log(player1.x, player1.y)
                         if(playingMultiplayer){
                             player2.x = doorLocationXCalc - 15;
                             player2.y = doorLocationYCalc - 8;
@@ -3462,6 +3463,8 @@ window.onload =  () => {
     achievementEggCompleted = localStorage.getItem('achievementEggCompleted') === 'true';
 
     loadAchievementsFromStorage();
+
+    loadCreditsInAlienBoss();
     
     updateHats()
     setHats();

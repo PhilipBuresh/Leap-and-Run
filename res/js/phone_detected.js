@@ -26,6 +26,7 @@ if (deviceDetect) {
     playButton.innerHTML = "PLAY!";
     playButtonMulti.style.display = "none";
     clock.style.display = "none";
+    phoneCreditsValue = 1.5;
 }
 
 document.body.onclick = () => {

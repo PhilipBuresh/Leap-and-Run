@@ -50,21 +50,21 @@ const loadCreditsInAlienBoss = async () => {
         creditsList.appendChild(creditDiv);
     });
     //EASTER EGG
-    let goldenEgg = document.createElement("img");
-    goldenEgg.id = "golden_egg";
-    goldenEgg.src = "./res/img/egg.png";
-    goldenEgg.alt = "egg";
-    goldenEgg.draggable = false;
-    goldenEgg.zIndex = 3;
-    creditsList.appendChild(goldenEgg);
-
-    goldenEgg.onclick = () => {
-        achievementGoldenEgg()
-        goldenEgg.style.display = "none";
-    };
+    if(!achievementEggCompleted){
+        let goldenEgg = document.createElement("img");
+        goldenEgg.id = "golden_egg";
+        goldenEgg.src = "./res/img/egg.png";
+        goldenEgg.alt = "egg";
+        goldenEgg.draggable = false;
+        goldenEgg.zIndex = 3;
+        creditsList.appendChild(goldenEgg);
+    
+        goldenEgg.onclick = () => {
+            achievementGoldenEgg()
+            goldenEgg.style.display = "none";
+        };
+    }
 }
-
-loadCreditsInAlienBoss();
 
 //------------------------------------------------------------ LOAD TUTORIALS
 const loadTutorials = async () => {
