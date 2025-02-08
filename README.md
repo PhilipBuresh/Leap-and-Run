@@ -25,12 +25,12 @@ __________________________
 [![l&r](https://github.com/user-attachments/assets/501390e8-e0c3-452d-8d29-55c63af017ea)](https://www.youtube.com/watch?v=kd-UTLe-sew&ab_channel=Leap%26Run)<br>
 <b><h2>You can also play on your PHONE/TABLET (Singleplayer only)</h2></b><br>
 ![phone](https://github.com/user-attachments/assets/0cab2a52-942d-41ae-ad1a-47686ab18640)<br>
-<b><h2>You can DOWNLOAD Apk version for ANDROID</h2></b><br>
-- Link: https://www.mediafire.com/file/24uv5fsge1em105/Leap%2526Run.apk/file <br>
+<b><h2>You can DOWNLOAD Apk version for ANDROID (link below)</h2></b><br>
+<b><h2>[DOWNLOAD here!](https://www.mediafire.com/file/24uv5fsge1em105/Leap%2526Run.apk/file)</h2></b><br>
 
-![app download](https://github.com/user-attachments/assets/8e9a3a36-e18b-4933-a8b7-4ff39f58d839)<br>
+![app download](https://github.com/user-attachments/assets/ac6624a0-41c0-40de-a18d-f78c892861bc)
 <b><h1>What does the game look like?</h1></b><br>
-![collage](https://github.com/user-attachments/assets/b5c78ba6-0517-43b8-964d-e41b0a0cf4c9)<br>
+![collage](https://github.com/user-attachments/assets/b5c78ba6-0517-43b8-964d-e41b0a0cf4c9)</h2></b><br>
 <b><h1>What is NEW?</h1></b><br>
  - Multiplayer (PC only)<br>
  - Skin Changer and HATS<br>
