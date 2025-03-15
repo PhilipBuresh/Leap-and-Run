@@ -3,9 +3,12 @@
 - Complete 45 unique levels across 3 dungeons and defeat all Bosses.
 - You can style your own character however you want.
 - While playing, you can complete up to 30 achievements and unlock rare skins.
+- You can play with your friend.
+- <b>Progress is being SAVED</b>
 __________________________
-- Progress is being saved.
-- The game still has bugs and will be gradually fixed.
+- <h3>Update (15.03.2025)</h3>
+- Automatic spawn point location fixed
+- Maps rewrited to JSON format
 __________________________
 - <h3>Update (08.02.2025)</h3>
 - Made APK Version for Android (link below in the repository)
