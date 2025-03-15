@@ -102,4 +102,38 @@ const loadTutorials = async () => {
 
 loadTutorials();
 
+//------------------------------------------------------------ LOAD Castle MAPS
 
+const loadCastleMaps = async () => {
+    const response = await fetch("./res/json/castleMaps.json");
+    const castleMaps = await response.json();
+
+    for (let index = 0; index < castleMaps.length; index++) {
+        const key = "map" + index;
+        map[index] = castleMaps[index][key];
+    } 
+}
+
+//------------------------------------------------------------ LOAD Steampunk MAPS
+
+const loadSteampunkMaps = async () => {
+    const response = await fetch("./res/json/steampunkMaps.json");
+    const steampunkMaps = await response.json();
+
+    for (let index = 0; index < steampunkMaps.length; index++) {
+        const key = "map" + index;
+        map[index] = steampunkMaps[index][key];
+    } 
+}
+
+//------------------------------------------------------------ LOAD Space MAPS
+
+const loadSpaceMaps = async () => {
+    const response = await fetch("./res/json/spaceMaps.json");
+    const spaceMaps = await response.json();
+
+    for (let index = 0; index < spaceMaps.length; index++) {
+        const key = "map" + index;
+        map[index] = spaceMaps[index][key];
+    } 
+}

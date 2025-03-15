@@ -20,7 +20,6 @@ const  goFullScreen = () => {
     }
 }
 
-
 const deviceDetect = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 if (deviceDetect) {
     playButton.innerHTML = "PLAY!";

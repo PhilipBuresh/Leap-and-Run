@@ -1001,29 +1001,13 @@ const enterFunction = () => {
                 }
                 spawnGhostCords();
             }else if(helpNum == 2){ //Level 3
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 390;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 390;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 darkness = true;
                 music.src = "./res/music_castle/song3_castle.mp3";
                 doorsTime = 37000;
                 music.play();
             }else if(helpNum == 3){ //Level 4
-                spawnCords = () =>{
-                    player1.x = 40;
-                    player1.y = 515;
-                    if(playingMultiplayer){
-                        player2.x = 40;
-                        player2.y = 515;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song4_castle.mp3";
                 doorsTime = 31000;
                 music.play();
@@ -1035,28 +1019,12 @@ const enterFunction = () => {
             }else if(helpNum == 4){ //Level 5
                 rising.style.display = "block";
                 risingLavaActivated = true;
-                spawnCords = () =>{
-                    player1.x = 512;
-                    player1.y = 485;
-                    if(playingMultiplayer){
-                        player2.x = 512;
-                        player2.y = 485;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song5_castle.mp3";
                 doorsTime = 23000;
                 music.play();
             }else if(helpNum == 5){ //Level 6
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y= 485;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y= 485;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song6_castle.mp3";
                 doorsTime = 30000;
                 music.play();
@@ -1066,70 +1034,30 @@ const enterFunction = () => {
                 }
                 spawnGhostCords();
             }else if(helpNum == 6){ //Level 7
-                spawnCords = () =>{
-                    player1.x = 500;
-                    player1.y = 485;
-                    if(playingMultiplayer){
-                        player2.x = 500;
-                        player2.y = 485;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song7_castle.mp3";
                 doorsTime = 39000;
                 music.play();
             }else if(helpNum == 7){ //Level 8
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 515;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 515;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 darkness = true;
                 music.src = "./res/music_castle/song8_castle.mp3";
                 doorsTime = 48000;
                 music.play();
             }else if(helpNum == 8){ //Level 9
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 420;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 420;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song9_castle.mp3";
                 doorsTime = 40000;
                 music.play();
             }else if(helpNum == 9){ //Level 10
                 rising.style.display = "block";
                 risingLavaActivated = true;
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 485;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 485;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song10_castle.mp3";
                 doorsTime = 28000;
                 music.play();
             }else if(helpNum == 10){ //Level 11
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 515;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 515;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song11_castle.mp3";
                 doorsTime = 30000;
                 music.play();
@@ -1139,28 +1067,12 @@ const enterFunction = () => {
                 }
                 spawnGhostCords();
             }else if(helpNum == 11){ //Level 12
-                spawnCords = () =>{
-                    player1.x = 500;
-                    player1.y = 70;
-                    if(playingMultiplayer){
-                        player2.x = 500;
-                        player2.y = 70;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song12_castle.mp3";
                 doorsTime = 36000;
                 music.play();
             }else if(helpNum == 12){ //Level 13
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 515;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 515;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 darkness = true;
                 music.src = "./res/music_castle/song13_castle.mp3";
                 doorsTime = 36000;
@@ -1171,15 +1083,7 @@ const enterFunction = () => {
                 }
                 spawnGhostCords();
             }else if(helpNum == 13){ //Level 14
-                spawnCords = () =>{
-                    player1.x = 40;
-                    player1.y = 515;
-                    if(playingMultiplayer){
-                        player2.x = 40;
-                        player2.y = 515;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 music.src = "./res/music_castle/song14_castle.mp3";
                 doorsTime = 54000;
                 music.play();
@@ -1193,33 +1097,17 @@ const enterFunction = () => {
             }
         }else if(playingSteamPunk){
             if(helpNum == 0){ //Level 1 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 520;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 520;
-                    }
-                }
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
                 }
                 spawnMovingPlatformCords();
-                spawnCords();
                 music.src = "./res/music_steampunk/song1_steampunk.mp3";
                 doorsTime = 31000;
                 music.play();
             }else if(helpNum == 1){ //Level 2 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 520;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 520;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 720
                     yMovingPlatform = 346;
@@ -1236,15 +1124,7 @@ const enterFunction = () => {
                 doorsTime = 30000;
                 music.play();
             }else if(helpNum == 2){ //Level 3 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 520;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 520;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1255,15 +1135,7 @@ const enterFunction = () => {
                 music.play();
                 darkness = true;
             }else if(helpNum == 3){ //Level 4 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = canvas.width / 2 - player1.width / 2;
-                    player1.y = 460;
-                    if(playingMultiplayer){
-                        player2.x = canvas.width / 2 - player2.width / 2;
-                        player2.y = 460;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1280,15 +1152,7 @@ const enterFunction = () => {
                 doorsTime = 30000;
                 music.play();
             }else if(helpNum == 4){ //Level 5 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 60;
-                    player1.y = 390;
-                    if(playingMultiplayer){
-                        player2.x = 60;
-                        player2.y = 390;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     yMovingPlatform = 474;
                     xMovingPlatform = -40;
@@ -1298,15 +1162,7 @@ const enterFunction = () => {
                 doorsTime = 50000;
                 music.play();
             }else if(helpNum == 5){ //Level 6 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 60;
-                    player1.y = 500;
-                    if(playingMultiplayer){
-                        player2.x = 60;
-                        player2.y = 500;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     yMovingPlatform = 346;
                     xMovingPlatform = 260;
@@ -1320,15 +1176,7 @@ const enterFunction = () => {
                 doorsTime = 30000;
                 music.play();
             }else if(helpNum == 6){ //Level 7 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 60;
-                    player1.y = 340;
-                    if(playingMultiplayer){
-                        player2.x = 60;
-                        player2.y = 340;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1338,15 +1186,7 @@ const enterFunction = () => {
                 doorsTime = 32000;
                 music.play();
             }else if(helpNum == 7){ //Level 8 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 50;
-                    player1.y = 500;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 500;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1362,15 +1202,7 @@ const enterFunction = () => {
                 music.play();
                 darkness = true;
             }else if(helpNum == 8){ //Level 9 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = canvas.width / 2 - 15;
-                    player1.y = 400;
-                    if(playingMultiplayer){
-                        player2.x = canvas.width / 2 - 15;
-                        player2.y = 400;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1387,15 +1219,7 @@ const enterFunction = () => {
                 doorsTime = 34000;
                 music.play();
             }else if(helpNum == 9){ //Level 10 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 374;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 374;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     yMovingPlatform = 474;
                     xMovingPlatform = -40;
@@ -1405,15 +1229,7 @@ const enterFunction = () => {
                 doorsTime = 58000;
                 music.play();
             }else if(helpNum == 10){ //Level 11 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 500;
-                    player1.y = 374;
-                    if(playingMultiplayer){
-                        player2.x = 500;
-                        player2.y = 374;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1428,15 +1244,7 @@ const enterFunction = () => {
                 doorsTime = 44000;
                 music.play();
             }else if(helpNum == 11){ //Level 12 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 210;
-                    player1.y = 434;
-                    if(playingMultiplayer){
-                        player2.x = 210;
-                        player2.y = 434;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1446,15 +1254,7 @@ const enterFunction = () => {
                 doorsTime = 57000;
                 music.play();
             }else if(helpNum == 12){ //Level 13 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 60;
-                    player1.y = 520;
-                    if(playingMultiplayer){
-                        player2.x = 60;
-                        player2.y = 520;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000
                     yMovingPlatform = 10000;
@@ -1465,15 +1265,7 @@ const enterFunction = () => {
                 music.play();
                 darkness = true;
             }else if(helpNum == 13){ //Level 14 STEAMPUNK
-                spawnCords = () =>{
-                    player1.x = 20;
-                    player1.y = 435;
-                    if(playingMultiplayer){
-                        player2.x = 20;
-                        player2.y = 435;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 630
                     yMovingPlatform = 506;
@@ -1494,15 +1286,7 @@ const enterFunction = () => {
             }
         }else{
             if(helpNum == 0){ //Level 1 SPACESHIP
-                spawnCords = () =>{
-                    player1.x = 80;
-                    player1.y = 425;
-                    if(playingMultiplayer){
-                        player2.x = 80;
-                        player2.y = 425;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 200;
                     yMovingPlatform = 160;
@@ -1512,15 +1296,7 @@ const enterFunction = () => {
                 doorsTime = 32000;
                 music.play(); 
             }else if(helpNum == 1){ //Level 2 SPACESHIP
-                spawnCords = () =>{
-                    player1.x = 80;
-                    player1.y = 476;
-                    if(playingMultiplayer){
-                        player2.x = 80;
-                        player2.y = 476;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1531,15 +1307,7 @@ const enterFunction = () => {
                 music.play(); 
             }else if(helpNum == 2){ //Level 3 SPACESHIP
                 darkness = true;
-                spawnCords = () =>{
-                    player1.x = canvas.width / 2 - 15;
-                    player1.y = 408;
-                    if(playingMultiplayer){
-                        player2.x = canvas.width / 2 - 15;
-                        player2.y = 408;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1549,15 +1317,7 @@ const enterFunction = () => {
                 doorsTime = 31000;
                 music.play(); 
             }else if(helpNum == 3){ //Level 4 SPACESHIP
-                spawnCords = () =>{
-                    player1.x = 80;
-                    player1.y = 544;
-                    if(playingMultiplayer){
-                        player2.x = 80;
-                        player2.y = 544;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 700;
                     yMovingPlatform = 288;
@@ -1573,15 +1333,7 @@ const enterFunction = () => {
                     player2.flying = true;
                     flyUpAndDown(player2);
                 }
-                spawnCords = () =>{
-                    player1.x = 17;
-                    player1.y = 472;
-                    if(playingMultiplayer){
-                        player2.x = 17;
-                        player2.y = 472;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1591,15 +1343,7 @@ const enterFunction = () => {
                 doorsTime = 43000;
                 music.play(); 
             }else if(helpNum == 5){ //Level 6 SPACESHIP
-                spawnCords = () =>{
-                    player1.x = 50;
-                    player1.y = 512;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 512;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1609,15 +1353,7 @@ const enterFunction = () => {
                 doorsTime = 43000;
                 music.play(); 
             }else if(helpNum == 6){ //Level 7 SPACESHIP
-                spawnCords = () => {
-                    player1.x = canvas.width / 2 - 15;
-                    player1.y = 344;
-                    if(playingMultiplayer){
-                        player2.x = canvas.width / 2 - 15;
-                        player2.y = 344;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 250;
                     yMovingPlatform = 288;
@@ -1628,15 +1364,7 @@ const enterFunction = () => {
                 music.play(); 
             }else if(helpNum == 7){ //Level 8 SPACESHIP
                 darkness = true;
-                spawnCords = () => {
-                    player1.x = 50;
-                    player1.y = 504;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 504;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1646,15 +1374,7 @@ const enterFunction = () => {
                 doorsTime = 35000;
                 music.play(); 
             }else if(helpNum == 8){ //Level 9 SPACESHIP
-                spawnCords = () => {
-                    player1.x = 50;
-                    player1.y = 416;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 416;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 800;
                     yMovingPlatform = 384;
@@ -1670,15 +1390,7 @@ const enterFunction = () => {
                     player2.flying = true;
                     flyUpAndDown(player2);
                 }
-                spawnCords = () =>{
-                    player1.x = 50;
-                    player1.y = 408;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 408;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1688,15 +1400,7 @@ const enterFunction = () => {
                 doorsTime = 49000;
                 music.play(); 
             }else if(helpNum == 10){ //Level 11 SPACESHIP
-                spawnCords = () => {
-                    player1.x = 50;
-                    player1.y = 128;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 128;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1706,15 +1410,7 @@ const enterFunction = () => {
                 doorsTime = 37000;
                 music.play(); 
             }else if(helpNum == 11){ //Level 12 SPACESHIP
-                spawnCords = () => {
-                    player1.x = 50;
-                    player1.y = 512;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 512;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 500;
                     yMovingPlatform = 320;
@@ -1725,15 +1421,7 @@ const enterFunction = () => {
                 music.play(); 
             }else if(helpNum == 12){ //Level 13 SPACESHIP
                 darkness = true;
-                spawnCords = () => {
-                    player1.x = 150;
-                    player1.y = 512;
-                    if(playingMultiplayer){
-                        player2.x = 150;
-                        player2.y = 512;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -1743,15 +1431,7 @@ const enterFunction = () => {
                 doorsTime = 55000;
                 music.play(); 
             }else if(helpNum == 13){ //Level 14 SPACESHIP
-                spawnCords = () => {
-                    player1.x = 50;
-                    player1.y = 512;
-                    if(playingMultiplayer){
-                        player2.x = 50;
-                        player2.y = 512;
-                    }
-                }
-                spawnCords();
+                calculateSpawnpointLocation();
                 spawnMovingPlatformCords = () => {
                     xMovingPlatform = 10000;
                     yMovingPlatform = 10000;
@@ -2615,6 +2295,7 @@ const calculateDoorsLocation = () => {
     }
 }
 
+//Calculate spawn location
 const calculateSpawnpointLocation = () => {
 
     let doorLocationXCalc = 0
@@ -2631,10 +2312,10 @@ const calculateSpawnpointLocation = () => {
 
         if (25 == currentPlatform[index]) {
             spawnCords = () =>{
-                player1.x = doorLocationXCalc - 15;
+                player1.x = doorLocationXCalc - 25;
                 player1.y = doorLocationYCalc + 8;
                 if(playingMultiplayer){
-                    player2.x = doorLocationXCalc - 15;
+                    player2.x = doorLocationXCalc - 5;
                     player2.y = doorLocationYCalc + 8;
                 }
             }
@@ -3317,185 +2998,6 @@ const howManyLevelsDoneFunction = () => {
     steampunkLevelsDone.innerHTML = doneSteampunkLevels + " / 15"
     spaceshipLevelsDone.innerHTML = doneSpaceshipLevels + " / 15"
 }
-
-window.onload =  () => {
-
-    window.scrollTo(0, 0);
-
-    //This will load you progress which was saved
-    //Load Levels
-    for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("unlocked_castle_" + i);
-        if (savedValue !== null) {
-            finished_castle[i + 1] = parseInt(savedValue); // Convert to numbers
-        }
-    }
-    for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("finished_castle_" + i);
-        if (savedValue !== null) {
-            finished_castle[i] = parseInt(savedValue); // Convert to numbers
-        }
-    }
-    for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("unlocked_steampunk_" + i);
-        if (savedValue !== null) {
-            finished_steampunk[i + 1] = parseInt(savedValue); // Convert to numbers
-        }
-    }
-    for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("finished_steampunk_" + i);
-        if (savedValue !== null) {
-            finished_steampunk[i] = parseInt(savedValue); // Convert to numbers
-        }
-    }
-    for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("unlocked_spaceship_" + i);
-        if (savedValue !== null) {
-            finished_spaceship[i + 1] = parseInt(savedValue); // Convert to numbers
-        }
-    }
-    for (let i = 0; i <= 15; i++) {
-        let savedValue = localStorage.getItem("finished_spaceship_" + i);
-        if (savedValue !== null) {
-            finished_spaceship[i] = parseInt(savedValue); // Convert to numbers
-        }
-    }
-
-    howManyLevelsDoneFunction();
-    
-    //Load Skins
-    selectedRioter = true;
-    selectedRuby = true;
-    /*
-    let savedValueRioter = localStorage.getItem('currentIndexSkinsRioter');
-    if (savedValueRioter !== null) {
-        currentIndexSkinsRioter = parseInt(savedValueRioter);
-    }
-    let savedValueRuby = localStorage.getItem('currentIndexSkinsRuby');
-    if (savedValueRuby !== null) {
-        currentIndexSkinsRuby = parseInt(savedValueRuby);
-    }
-    */
-    const rioterValue = localStorage.getItem('equippedCurrentIndexSkinsRioter');
-    const rubyValue = localStorage.getItem('equippedCurrentIndexSkinsRuby');
-    const hatP1Value = localStorage.getItem('equippedHatP1');
-    const hatP2Value = localStorage.getItem('equippedHatP2');
-    
-    currentIndexSkinsRioter = rioterValue !== null ? parseInt(rioterValue) : 0;
-    currentIndexSkinsRuby = rubyValue !== null ? parseInt(rubyValue) : 0;
-    currentIndexHatsRioter = hatP1Value !== null ? parseInt(hatP1Value) : 0;
-    currentIndexHatsRuby = hatP2Value !== null ? parseInt(hatP2Value) : 0;
-
-    updateSkins()
-    setSkins();
-
-    //Load Hats
-    /*
-    let savedValueRioterHat = localStorage.getItem('currentIndexHatsRioter');
-    if (savedValueRioterHat !== null) {
-        currentIndexHatsRioter = parseInt(savedValueRioterHat);
-    }
-    let savedValueRubyHat = localStorage.getItem('currentIndexHatsRuby');
-    if (savedValueRubyHat !== null) {
-        currentIndexHatsRuby = parseInt(savedValueRubyHat);
-    }*/
-
-    //Load Achievements progress
-    player1.portalCounter = parseInt(localStorage.getItem('portalCounterP1')) || 0;
-    player2.portalCounter = parseInt(localStorage.getItem('portalCounterP2')) || 0;
-
-    player1.punchWallCounter = parseInt(localStorage.getItem('punchWallCounterP1')) || 0;
-    player2.punchWallCounter = parseInt(localStorage.getItem('punchWallCounterP2')) || 0;
-
-    player1.pipeCounter = parseInt(localStorage.getItem('pipeCounterP1')) || 0;
-    player2.pipeCounter = parseInt(localStorage.getItem('pipeCounterP2')) || 0;
-
-    player1.jumpPadCounter = parseInt(localStorage.getItem('jumpPadCounterP1')) || 0;
-    player2.jumpPadCounter = parseInt(localStorage.getItem('jumpPadCounterP2')) || 0;
-
-    player1.orbGravityCounter = parseInt(localStorage.getItem('orbGravityCounterP1')) || 0;
-    player2.orbGravityCounter = parseInt(localStorage.getItem('orbGravityCounterP2')) || 0;
-
-    player1.orbCounter = parseInt(localStorage.getItem('orbCounterP1')) || 0;
-    player2.orbCounter = parseInt(localStorage.getItem('orbCounterP2')) || 0;
-
-    deathCounter = parseInt(localStorage.getItem('deathCounter')) || 0;
-    deathCounterShow.innerHTML = deathCounter + "x";;
-
-    castleDungeonCompleted = localStorage.getItem('castleDungeonCompleted') === 'true';
-    steampunkDungeonCompleted = localStorage.getItem('steampunkDungeonCompleted') === 'true';
-    spaceshipDungeonCompleted = localStorage.getItem('spaceshipDungeonCompleted') === 'true';
-
-    achievementsDoneCounter = parseInt(localStorage.getItem('achievementsDoneCounter')) || 0;
-    achievements_counter.innerHTML = achievementsDoneCounter + " / 30";
-    achievement_counter_in_right.innerHTML = achievementsDoneCounter + " / 30";
-
-    //Load Achievements
-    achievementHotCompleted = localStorage.getItem('achievementHotCompleted') === 'true';
-    achievementMarioCompleted = localStorage.getItem('achievementMarioCompleted') === 'true';
-    achievementShiftCompleted = localStorage.getItem('achievementShiftCompleted') === 'true';
-    achievementGiveUpCompleted = localStorage.getItem('achievementGiveUpCompleted') === 'true';
-    achievementMovingSpikeCompleted = localStorage.getItem('achievementMovingSpikeCompleted') === 'true';
-    achievementShipCompleted = localStorage.getItem('achievementShipCompleted') === 'true';
-    achievementNoobCompleted = localStorage.getItem('achievementNoobCompleted') === 'true';
-    achievementPinkCompleted = localStorage.getItem('achievementPinkCompleted') === 'true';
-    achievementTimerCompleted = localStorage.getItem('achievementTimerCompleted') === 'true';
-    achievementShieldCompleted = localStorage.getItem('achievementShieldCompleted') === 'true';
-    achievementHeadCompleted = localStorage.getItem('achievementHeadCompleted') === 'true';
-    achievementDraezlyrWielderCompleted = localStorage.getItem('achievementDraezlyrWielderCompleted') === 'true';
-    achievementPortalCompleted = localStorage.getItem('achievementPortalCompleted') === 'true';
-    achievementPunchWallCompleted = localStorage.getItem('achievementPunchWallCompleted') === 'true';
-    achievementAfkCompleted = localStorage.getItem('achievementAfkCompleted') === 'true';
-    achievementThatWasCloseCompleted = localStorage.getItem('achievementThatWasCloseCompleted') === 'true';
-    achievementPipeCompleted = localStorage.getItem('achievementPipeCompleted') === 'true';
-    achievementShoesCompleted = localStorage.getItem('achievementShoesCompleted') === 'true';
-    achievementJumpPadCompleted = localStorage.getItem('achievementJumpPadCompleted') === 'true';
-    achievementGravityOrbCompleted = localStorage.getItem('achievementGravityOrbCompleted') === 'true';
-    achievementCastleCompleted = localStorage.getItem('achievementCastleCompleted') === 'true';
-    achievementSteampunkCompleted = localStorage.getItem('achievementSteampunkCompleted') === 'true';
-    achievementSpaceshipCompleted = localStorage.getItem('achievementSpaceshipCompleted') === 'true';
-    achievementSoMuchTimeCompleted = localStorage.getItem('achievementSoMuchTimeCompleted') === 'true';
-    achievementJumpOrbCompleted = localStorage.getItem('achievementJumpOrbCompleted') === 'true';
-    achievementHundredCompleted = localStorage.getItem('achievementHundredCompleted') === 'true';
-    achievementKingCompleted = localStorage.getItem('achievementKingCompleted') === 'true';
-    achievementFriendCompleted = localStorage.getItem('achievementFriendCompleted') === 'true';
-    achievementGodCompleted = localStorage.getItem('achievementGodCompleted') === 'true';
-    achievementEggCompleted = localStorage.getItem('achievementEggCompleted') === 'true';
-
-    loadAchievementsFromStorage();
-
-    loadCreditsInAlienBoss();
-    
-    updateHats()
-    setHats();
-    selectedRuby = false;
-
-    preloadItems();
-
-}
-
-//Reset Local Storage Function
-const resetLocalStorage = () => {
-    for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("finished_castle_" + i);
-    }
-    for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("unlocked_castle_" + i);
-    }
-    for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("finished_steampunk_" + i);
-    }
-    for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("unlocked_steampunk_" + i);
-    }for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("finished_spaceship_" + i);
-    }
-    for (let i = 0; i <= 15; i++) {
-        localStorage.removeItem("unlocked_spaceship_" + i);
-    }
-}
-
-//resetLocalStorage();
 
 //---------------------------------------- ORB Collision
 
@@ -4281,7 +3783,6 @@ const boostCollision = (PLAYER) => {
         PLAYER.reversedGravityValue = 1.4;
     }
 }
-
 
 const ladderCollision = (PLAYER) => {
     for (let i = 0; i < currentPlatform.length; i++) {
@@ -5826,7 +5327,7 @@ doorsTime = 10000000;
         yMovingPlatform = 100000;
     }
     spawnMovingPlatformCords();
-    //music.volume = 0;
+    music.volume = 0;
     
     setTimeout(() => {
         player1.hatNumber = 0;
