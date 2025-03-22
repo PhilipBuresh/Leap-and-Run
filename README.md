@@ -6,6 +6,10 @@
 - You can play with your friend.
 - <b>Progress is being SAVED</b>
 __________________________
+- <h3>Update (22.03.2025)</h3>
+- Player animation bugs fixed
+- Fixed Achievement Crouch
+__________________________
 - <h3>Update (15.03.2025)</h3>
 - Automatic spawn point location fixed
 - Maps rewrited to JSON format
