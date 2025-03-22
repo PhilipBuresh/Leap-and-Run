@@ -3131,7 +3131,7 @@ const stopSlideDetection = (PLAYER) => {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
             if (
-                PLAYER.y + PLAYER.height > platformY + 10 &&
+                (PLAYER.y + PLAYER.height > platformY + 10 &&
                 PLAYER.y < platformY + 10 &&
                 PLAYER.x < platformX + 32.5 &&
                 PLAYER.x > platformX
@@ -3139,7 +3139,9 @@ const stopSlideDetection = (PLAYER) => {
                 PLAYER.y + PLAYER.height > platformY + 10 &&
                 PLAYER.y < platformY + 10 &&
                 PLAYER.x + PLAYER.width > platformX - 1 &&
-                PLAYER.x < platformX + 32
+                PLAYER.x < platformX + 32)
+                &&
+                !PLAYER.punched
             ) {
                 PLAYER.canSlideOnWall = true;
                 break;
@@ -3505,7 +3507,6 @@ let crouch = (PLAYER) => {
         if(!PLAYER.reversedGravity){
             PLAYER.y += 20;
         }
-        achievementShift(PLAYER);
         aboveHeadCollision(PLAYER);
     };
 }
@@ -5064,7 +5065,8 @@ window.addEventListener("keydown", (event) => {
     // S - Crouching / Climbing Down
     } else if ((event.key == down || event.key == DOWN) && !player1.punched) {
         if(!player1.crouched && !player1.downPressed && !player1.ladderCol && inGame){
-            crouch(player1);     
+            crouch(player1);
+            achievementShift(player1);
         } else if (player1.ladderCol && !player1.alreadyGoingDown){
             sfx_climb.pause();
             goingDown(player1);
@@ -5072,8 +5074,9 @@ window.addEventListener("keydown", (event) => {
         player1.downPressed = true;
     // SPACE - Punching BOSS / Breaking Cracked Blocks
     } else if (event.key == space) {
-        if(!player1.alreadyPunched && !player1.ladderCol && !player1.inPipe && inGame){
+        if(!player1.alreadyPunched && !player1.ladderCol && !player1.inPipe && !player1.canSlideOnWall && inGame){
             punch(player1);
+            player1.downPressed = false;
         }
         player1.alreadyPunched = true;
     } else if (event.key == "Escape" && inGame) {
@@ -5162,14 +5165,16 @@ window.addEventListener("keydown", (event) => {
             moveLeft(player2);
         // Enter - Punching BOSS / Breaking Cracked Blocks
         } else if (event.key == "Enter") {
-            if(!player2.alreadyPunched && !player2.ladderCol && !player2.inPipe && inGame){
+            if(!player2.alreadyPunched && !player2.ladderCol && !player2.inPipe && !player2.canSlideOnWall && inGame){
                 punch(player2);
+                player2.downPressed = false;
             }
             player2.alreadyPunched = true;
         // ArrowDown - Crouching / Climbing Down
         } else if (event.key == "ArrowDown" && !player2.punched) {
             if(!player2.crouched && !player2.downPressed && !player2.ladderCol && inGame){
-                crouch(player2);     
+                crouch(player2);
+                achievementShift(player2);  
             } else if (player2.ladderCol && !player2.alreadyGoingDown){
                 sfx_climb2.pause();
                 goingDown(player2);
