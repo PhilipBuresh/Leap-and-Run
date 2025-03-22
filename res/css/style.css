@@ -1489,8 +1489,8 @@ p{
 }
 @media (max-height: 650px) {
     #canvas_container{
-        width: 60%;
-        padding-bottom: 33%;
+        width: 65%;
+        padding-bottom: 36%;
     }
     #hp_bar{
         height: 15px;
@@ -1531,7 +1531,7 @@ p{
         padding-bottom: 27%;
     }
 }
-@media (max-height: 950px) {
+@media (max-height: 940px) {
     #myHp img{
         margin-top:-0.3em;
         width: 35px;
