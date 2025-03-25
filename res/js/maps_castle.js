@@ -100,10 +100,10 @@ const setDungeonToCastle = () => {
 originalPlatform1 = [...currentPlatform];
 lobby = [...currentPlatform];
 
-}
-
 setTimeout(() => {
     loadCastleMaps();
 }, 200);
+    
+}
 
 setDungeonToCastle();
