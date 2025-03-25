@@ -6,6 +6,9 @@
 - You can play with your friend.
 - <b>Progress is being SAVED</b>
 __________________________
+- <h3>Update (25.03.2025)</h3>
+- Fixed loading castle dungeon bug
+__________________________
 - <h3>Update (22.03.2025)</h3>
 - Player animation bugs fixed
 - Fixed Achievement Crouch
