@@ -1919,9 +1919,11 @@ let godMode = false;
 let resetAlienBossLevel = () => {
     clearAllAlienTimeouts();
     cancelAnimationFrame(wallSpiderMovingId);
+    /*
     if(usedRetry){
         usedRetry = false;
     }
+    */
     cancelPlayerMovement();
     playerOneImage.src = playerSkin1;
     playerTwoImage.src = playerSkin2;
