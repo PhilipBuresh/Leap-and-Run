@@ -799,7 +799,7 @@ const doorsCollision = (PLAYER) => {
                 }
                 PLAYER.doorCol = true;
                 c.font = "20px VT323, monospace";
-                if((finished_castle[helpNum] == 2 && playingCastle) || (finished_steampunk[helpNum] == 2 && playingSteamPunk) || (finished_spaceship[helpNum] == 2 && playingSpace) || !finalDoorUnlocked && currentPlatform[i] != 34){
+                if((finished_castle[helpNum] == 2 && playingCastle) || (finished_steampunk[helpNum] == 2 && playingSteamPunk) || (finished_spaceship[helpNum] == 2 && playingSpace) || !finalDoorUnlocked && currentPlatform[i] != 34 && helpNum != 14){
                     c.fillStyle = "red";
                     c.fillText("LOCKED", platformX + 7, platformY);
                 }else{
@@ -1919,11 +1919,9 @@ let godMode = false;
 let resetAlienBossLevel = () => {
     clearAllAlienTimeouts();
     cancelAnimationFrame(wallSpiderMovingId);
-    /*
     if(usedRetry){
         usedRetry = false;
     }
-    */
     cancelPlayerMovement();
     playerOneImage.src = playerSkin1;
     playerTwoImage.src = playerSkin2;
@@ -1964,10 +1962,11 @@ const deathCounterEffect = () => {
 }
 
 const dead = () => {
-    if(!godMode){
+    if(!godMode || (helpNum == 14 && currentHp > 0)){
         if(!goingBackToTheLobby){
             if(!playingBossFight || (!alienBossMode && playingSpace)){ //You are not playing BOSS FIGHT
                 if(escShowed || usedRetry){
+                    usedRetry = false
                     escFunction();
                 }
                 if(playingSpace && helpNum == 14){
@@ -2354,6 +2353,17 @@ const backToLobby = () => {
     if(playingMultiplayer){
         player2.canAttack = false;
     }
+
+    if(helpNum == 14){
+        clearBossTimeouts();
+        clearSpiderBossTimeouts();
+        clearAllAlienTimeouts();
+        cameraSizeCount = 0;
+        cameraMoveXCount = 0;
+        cancelAnimationFrame(CameraMovingId)
+        cancelAnimationFrame(cameraScalingId);
+        c.restore();
+    }
     
     myHp.style.display = "none";
     hps.style.display = "none";
@@ -2573,6 +2583,13 @@ button_retry.onclick = () => {
     usedRetry = true;
     if(playingMultiplayer){
         clearInterval(targetInterval);
+    }
+    if(helpNum == 14){
+        cameraSizeCount = 0;
+        cameraMoveXCount = 0;
+        cancelAnimationFrame(CameraMovingId)
+        cancelAnimationFrame(cameraScalingId);
+        c.restore();
     }
     dead();
 }

@@ -126,6 +126,8 @@ let cameraSizeCount = 0;
 
 let cameraScalingId;
 
+let cameraIsMoving = false;
+
 const cameraScale = () => {
     const cameraScaling = () => {
         cameraScalingId = requestAnimationFrame(() => cameraScaling());

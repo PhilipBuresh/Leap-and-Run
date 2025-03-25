@@ -103,7 +103,7 @@ lobby = [...currentPlatform];
 setTimeout(() => {
     loadCastleMaps();
 }, 200);
-    
+
 }
 
 setDungeonToCastle();

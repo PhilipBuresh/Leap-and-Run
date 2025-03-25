@@ -308,6 +308,8 @@ const spiderBossLevel = () => {
         bossX = canvas.width/2 - 40;
         bossY = -100;
         spiderBossJumping = true;
+        velocitySpiderJump = 8;
+        velocitySpiderDrop = 1;
         spiderJump();
     }, 2200);
 
