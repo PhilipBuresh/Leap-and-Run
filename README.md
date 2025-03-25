@@ -8,6 +8,8 @@
 __________________________
 - <h3>Update (25.03.2025)</h3>
 - Fixed loading castle dungeon bug
+- Fixed escape button bug
+- Fixed camera bug
 __________________________
 - <h3>Update (22.03.2025)</h3>
 - Player animation bugs fixed
