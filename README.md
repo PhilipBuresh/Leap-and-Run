@@ -7,7 +7,8 @@
 - <b>Progress is being SAVED</b>
 __________________________
 - <h3>Update (26.03.2025)</h3>
-- Fixed entering level 15 in Spaceship when you have completed the Egg Achievement
+- Fixed entering Boss Fight in Spaceship when you have completed the Egg Achievement
+- Fixed Gravity/Jump orb bug in Spaceship Boss Fight
 __________________________
 - <h3>Update (25.03.2025)</h3>
 - Fixed loading castle dungeon bug
