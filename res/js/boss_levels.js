@@ -1270,7 +1270,7 @@ const alienBossLevel = () => {
         lasersVerticalInSpace[15].frameLaserVertical = 0;
         lasersVerticalInSpace[16].frameLaserVertical = 0;
         lasersVerticalInSpace[30].frameLaserVertical = 0;
-        lasersHorizontalInSpace[3].frameLaserHorizontal = 0;
+        lasersHorizontalInSpace[2].frameLaserHorizontal = 0;
         lasersHorizontalInSpace[15].frameLaserHorizontal = 0;
     }, 90900));
 

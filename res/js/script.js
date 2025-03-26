@@ -1983,6 +1983,7 @@ const dead = () => {
                 }
                 if(playingSpace && helpNum == 14){
                     resetAlienBossLevel();
+                    resetPlayerFlashing();
                     unCrouch(player1);
                     player1.downPressed = false;
                     player1.isMovingRight = false;
@@ -2581,6 +2582,7 @@ button_menu.onclick = () => {
         first_col.style.filter = "invert(0)";
         second_col.style.filter = "invert(0)";
         setTimeout(() => {
+            //skins.style.animationDuration = "0s";
             fullBlack.style.display = "none";
             note_button.style.zIndex = "11";
             escape_button.style.zIndex = "11";
@@ -2813,6 +2815,8 @@ const objectsCollision = (PLAYER) => {
     }
 
     PLAYER.canUseButton = false;
+    PLAYER.inHologram = false;
+    PLAYER.OnHologram = false;
 
     for (let i = 0; i < currentPlatform.length; i++) {
         //Spikes and Moving Spikes
@@ -2968,6 +2972,7 @@ const objectsCollision = (PLAYER) => {
             }
         }
         //Final Trophy
+        /*
         if (currentPlatform[i] == 35) {
             let platformX = (i % 32) * 32;
             let platformY = Math.floor(i / 32) * 32;
@@ -2985,6 +2990,7 @@ const objectsCollision = (PLAYER) => {
                 c.fillText("Game By: Philip B.", 30, 160);
             }
         }
+        */
         // Button
         if (currentPlatform[i] == 49) {
             let platformX = (i % 32) * 32;
@@ -2996,6 +3002,34 @@ const objectsCollision = (PLAYER) => {
                 PLAYER.x <= platformX + 32
             ) {
                 PLAYER.canUseButton = true;
+            }
+        }
+        //Hologram
+        if (currentPlatform[i] == 88) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+    
+            if (
+                PLAYER.y + PLAYER.height - 1 >= platformY &&
+                PLAYER.y <= platformY + 32 &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
+            ) {
+                PLAYER.inHologram = true;
+            }
+        }
+        //On Active Hologram
+        if (currentPlatform[i] == 87) {
+            let platformX = (i % 32) * 32;
+            let platformY = Math.floor(i / 32) * 32;
+    
+            if (
+                PLAYER.y + PLAYER.height >= platformY &&
+                PLAYER.y + PLAYER.height <= platformY &&
+                PLAYER.x + PLAYER.width >= platformX &&
+                PLAYER.x <= platformX + 32
+            ) {
+                PLAYER.OnHologram = true;
             }
         }
     }
@@ -4903,18 +4937,25 @@ const punch = (PLAYER) => {
                 finalDoorUnlocked = true;
             }
         }else if(PLAYER.canUseButton){ // Button and Hologram
-            if(frameButton == 0){
+            if(frameButton == 0 && (!player1.inHologram && !player2.inHologram)){
                 frameButton = 1;
-            }else{
+            }else if(frameButton == 1 && (!player1.inHologram && !player2.inHologram)){
                 frameButton = 0;
             }
             for (let i = 0; i < currentPlatform.length; i++) {
-                if (currentPlatform[i] == 87) {
+                if (currentPlatform[i] == 87 && (!player1.inHologram && !player2.inHologram)) {
                     currentPlatform[i] = 88;
-                }else if(currentPlatform[i] == 88){
+                }else if(currentPlatform[i] == 88 && (!player1.inHologram && !player2.inHologram)){
                     frameHologram = 0;
                     currentPlatform[i] = 87;
                 }
+            }
+            if(player1.OnHologram && player1.velocityLeft <= 0.09 && player1.velocityRight <= 0.09 && player1.velocity <= 0.5 && !player1.inHologram){
+                gravity(player1);
+            }
+            if(player2.OnHologram && player2.velocityLeft <= 0.09 && player2.velocityRight <= 0.09 && player2.velocity <= 0.5 && !player2.inHologram){
+                gravity(player2);
+                console.log(player2.OnHologram, player2.velocityLeft, player2.velocityRight, player2.velocity)
             }
             if(PLAYER == player1){
                 sfx.src = "./res/sfx/button.mp3";
@@ -5336,6 +5377,7 @@ window.addEventListener("keyup", (event) => {
     }
     }
 });
+
 /*
 doorsTime = 10000000;
     timer.style.top = "-5%"
@@ -5346,7 +5388,7 @@ doorsTime = 10000000;
     playingAsRioter = true;
     playingAsRuby = false;
     
-    //playingMultiplayer = true;
+    playingMultiplayer = true;
     selectedRioter = true;
     selectedRuby = false;
     currentIndexHatsRioter = 0;
@@ -5364,12 +5406,4 @@ doorsTime = 10000000;
     }
     spawnMovingPlatformCords();
     music.volume = 0;
-    
-    setTimeout(() => {
-        player1.hatNumber = 0;
-        playerOneImage.src = "./res/skins/rioter.png"
-        setSkins();
-        helpNum = 14
-        enterFunction()
-    }, 200);
-    */
+*/

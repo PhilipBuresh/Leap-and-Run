@@ -36,6 +36,7 @@ choose_rioter.onclick = () => {
     skinChangerBox.style.animationName = "bottomToMid";
     skinChangerBox.style.animationPlayState = "running";
     skinChangerBox.style.display = "flex";
+    skins.style.animationDuration = "1s";
     skins.style.animationName = "midToRightSkins";
     skins.style.animationPlayState = "running";
     skins.style.pointerEvents = "none";
@@ -49,6 +50,7 @@ choose_ruby.onclick = () => {
     skinChangerBox.style.display = "flex";
     skinChangerBox.style.animationName = "bottomToMid";
     skinChangerBox.style.animationPlayState = "running";
+    skins.style.animationDuration = "1s";
     skins.style.animationName = "midToRightSkins";
     skins.style.animationPlayState = "running";
     skins.style.pointerEvents = "none";
@@ -671,13 +673,17 @@ const playerFlashing = () => {
         }
     }, 100);
     setTimeout(() => {
-        playerOneImage.src = playerSkin1;
-        playerTwoImage.src = playerSkin2;
-        shipImage.src = "./res/img/ship.png";
-        shineImage.src = "./res/img/shine.png"
-        player1.hatNumber = player1.saveHatNumber;
-        player2.hatNumber = player2.saveHatNumber;
-        playerNowFlashing = false;
-        clearInterval(flashingInterval) 
+        resetPlayerFlashing()
     }, 2000);
+}
+
+const resetPlayerFlashing = () => {
+    clearInterval(flashingInterval)
+    playerOneImage.src = playerSkin1;
+    playerTwoImage.src = playerSkin2;
+    shipImage.src = "./res/img/ship.png";
+    shineImage.src = "./res/img/shine.png"
+    player1.hatNumber = player1.saveHatNumber;
+    player2.hatNumber = player2.saveHatNumber;
+    playerNowFlashing = false;
 }

@@ -117,6 +117,8 @@ const player1 = {
     pipeShake : null,
     // Button
     canUseSwitch : false,
+    onHologram : false,
+    inHologram : false,
     // Boost
     boostCollision : false,
     reversedGravityValue : 0,
@@ -277,6 +279,8 @@ const player2 = {
     pipeShake : null,
     // Button
     canUseSwitch : false,
+    onHologram : false,
+    inHologram : false,
     // Boost
     boostCollision : false,
     reversedGravityValue : 0,
@@ -401,6 +405,9 @@ const loadCords = () => {
                 player2.castleY = data.player2Y;
                 player2.x = player2.castleX;
                 player2.y = player2.castleY;
+            }else{
+                player2.x = 10000;
+                player2.y = 10000;
             }
         }
     }else if(playingSteamPunk){
@@ -415,6 +422,9 @@ const loadCords = () => {
                 player2.steampunkY = data.player2Y;
                 player2.x = player2.steampunkX;
                 player2.y = player2.steampunkY;
+            }else{
+                player2.x = 10000;
+                player2.y = 10000;
             }
         }
     }else if(playingSpace){
@@ -429,6 +439,9 @@ const loadCords = () => {
                 player2.spaceshipY = data.player2Y;
                 player2.x = player2.spaceshipX;
                 player2.y = player2.spaceshipY;
+            }else{
+                player2.x = 10000;
+                player2.y = 10000;
             }
         }
     }
