@@ -78,6 +78,7 @@ const player1 = {
     orbCounter : 0,
     orbGravityCounter : 0,
     portalCounter : 0,
+    isTouchingGravityOrb : false,
     // Ladder
     ladderCol : false,
     canGravityActivate : false,
@@ -231,6 +232,7 @@ const player2 = {
     orbCounter : 0,
     orbGravityCounter : 0,
     portalCounter : 0,
+    isTouchingGravityOrb : false,
     // Ladder
     ladderCol : false,
     canGravityActivate : false,

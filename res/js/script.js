@@ -1443,9 +1443,7 @@ const enterFunction = () => {
             }else if(helpNum == 14){ //Level 15 SPACESHIP - Alien Boss
                 /*
                 let golden_egg = document.getElementById("golden_egg");
-                if(achievementEggCompleted){
-                    golden_egg.style.display = "none";
-                }
+                golden_egg.style.display = "none";
                 */
                 alienBossLevel();
             }
@@ -1920,6 +1918,7 @@ let godMode = false;
 
 let resetAlienBossLevel = () => {
     clearAllAlienTimeouts();
+    resetGravity();
     cancelAnimationFrame(wallSpiderMovingId);
     if(usedRetry){
         usedRetry = false;
@@ -1964,8 +1963,18 @@ const deathCounterEffect = () => {
 }
 
 const dead = () => {
-    if(!godMode || (helpNum == 14 && currentHp > 0)){
+    if(!godMode || (helpNum == 14 && currentHp > 0 && !godMode)){
         if(!goingBackToTheLobby){
+            player1.isTouchingGravityOrb = false;
+            player1.canOrbGravity = false;
+            player1.canOrbJump = false;
+            player1.canGravityActivate = false;
+            if(playingMultiplayer){
+                player2.isTouchingGravityOrb = false;
+                player2.canOrbGravity = false;
+                player2.canOrbJump = false;
+                player2.canGravityActivate = false;
+            }
             if(!playingBossFight || (!alienBossMode && playingSpace)){ //You are not playing BOSS FIGHT
                 if(escShowed || usedRetry){
                     usedRetry = false
@@ -3023,7 +3032,7 @@ const howManyLevelsDoneFunction = () => {
 //---------------------------------------- ORB Collision
 
 const orbCollision = (PLAYER) => {
-    let isTouchingGravityOrb = false;
+    PLAYER.isTouchingGravityOrb = false;
     for (let i = 0; i < currentPlatform.length; i++) {
         if (currentPlatform[i] == 5) { // Jump Orb
             let platformX = (i % 32) * 32;
@@ -3051,7 +3060,7 @@ const orbCollision = (PLAYER) => {
                 PLAYER.x <= platformX + 32
             ) {
                 PLAYER.canOrbGravity = true;
-                isTouchingGravityOrb = true;
+                PLAYER.isTouchingGravityOrb = true;
                 break;
             } else {
                 PLAYER.canOrbGravity = false; 
@@ -3059,7 +3068,7 @@ const orbCollision = (PLAYER) => {
         }
     }
 
-    if (!isTouchingGravityOrb) {
+    if (!PLAYER.isTouchingGravityOrb) {
         PLAYER.gravityOrbUsed = false;
     }
 }
@@ -5142,8 +5151,8 @@ window.addEventListener("keydown", (event) => {
                             player2.reversedGravityHat = 0;
                         }
                         achievementGravityOrb(player2);
-                        sfx.src = "./res/sfx/gravity_orb.mp3";
-                        sfx.play();
+                        sfx2.src = "./res/sfx/gravity_orb.mp3";
+                        sfx2.play();
                         player2.velocity = 0;
                         player2.gravityOrbUsed = true;
                         setTimeout(() => {
