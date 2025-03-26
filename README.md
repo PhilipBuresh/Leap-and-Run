@@ -9,6 +9,8 @@ __________________________
 - <h3>Update (26.03.2025)</h3>
 - Fixed entering Boss Fight in Spaceship when you have completed the Egg Achievement
 - Fixed Gravity/Jump orb bug in Spaceship Boss Fight
+- Fixed Fixed SKIN Changer bug
+- ADDED "Saving coordinates in lobby" via Local Storage
 __________________________
 - <h3>Update (25.03.2025)</h3>
 - Fixed loading castle dungeon bug
