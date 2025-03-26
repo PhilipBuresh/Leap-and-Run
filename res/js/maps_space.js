@@ -15,10 +15,7 @@ const setDungeonToSpace = () => {
      rising.src = "./res/gif/rising_slime.gif"
 
      let spawnCords = () => {
-          player1.x = 40;
-          player1.y = 500;
-          player2.x = 70;
-          player2.y = 500;
+          loadCords()
      }
      spawnCords();
 

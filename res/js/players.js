@@ -5,6 +5,12 @@ const player1 = {
     y : 500,
     height : 40,
     width : 30,
+    castleX : 35,
+    steampunkX : 35,
+    spaceshipX : 40,
+    castleY : 500,
+    steampunkY : 500,
+    spaceshipY : 500,
     // Frames
     currentFrameStand : 0,
     currentFramePunch : 0,
@@ -159,6 +165,12 @@ const player2 = {
     y : 500,
     height : 40,
     width : 30,
+    castleX : 70,
+    steampunkX : 70,
+    spaceshipX : 70,
+    castleY : 500,
+    steampunkY : 500,
+    spaceshipY : 500,
     // Frames
     currentFrameStand : 0,
     currentFramePunch : 0,
@@ -329,4 +341,95 @@ const afkTimer = () => {
             achievementAfk();
         }
     }, 1000);
+}
+
+// SAVE CORDS
+const saveCords = () => {
+    if(playingCastle){
+        player1.castleX = player1.x;
+        player1.castleY = player1.y;
+        if(playingMultiplayer){
+            player2.castleX = player2.x;
+            player2.castleY = player2.y;
+        }
+        localStorage.setItem("castleCords", JSON.stringify({
+            player1X: player1.castleX,
+            player1Y: player1.castleY,
+            player2X: player2.castleX,
+            player2Y: player2.castleY
+        }));
+    }else if(playingSteamPunk){
+        player1.steampunkX = player1.x;
+        player1.steampunkY = player1.y;
+        if(playingMultiplayer){
+            player2.steampunkX = player2.x;
+            player2.steampunkY = player2.y;
+        }
+        localStorage.setItem("steampunkCords", JSON.stringify({
+            player1X: player1.steampunkX,
+            player1Y: player1.steampunkY,
+            player2X: player2.steampunkX,
+            player2Y: player2.steampunkY
+        }));
+    }else if(playingSpace){
+        player1.spaceshipX = player1.x;
+        player1.spaceshipY = player1.y;
+        if(playingMultiplayer){
+            player2.spaceshipX = player2.x;
+            player2.spaceshipY = player2.y;
+        }
+        localStorage.setItem("spaceCords", JSON.stringify({
+            player1X: player1.spaceshipX,
+            player1Y: player1.spaceshipY,
+            player2X: player2.spaceshipX,
+            player2Y: player2.spaceshipY
+        }));
+    }
+}
+
+// LOAD CORDS
+const loadCords = () => {
+    if(playingCastle){
+        let data = JSON.parse(localStorage.getItem("castleCords"));
+        if(data){
+            player1.castleX = data.player1X;
+            player1.castleY = data.player1Y;
+            player1.x = player1.castleX;
+            player1.y = player1.castleY;
+            if(playingMultiplayer){
+                player2.castleX = data.player2X;
+                player2.castleY = data.player2Y;
+                player2.x = player2.castleX;
+                player2.y = player2.castleY;
+            }
+        }
+    }else if(playingSteamPunk){
+        let data = JSON.parse(localStorage.getItem("steampunkCords"));
+        if(data){
+            player1.steampunkX = data.player1X;
+            player1.steampunkY = data.player1Y;
+            player1.x = player1.steampunkX;
+            player1.y = player1.steampunkY;
+            if(playingMultiplayer){
+                player2.steampunkX = data.player2X;
+                player2.steampunkY = data.player2Y;
+                player2.x = player2.steampunkX;
+                player2.y = player2.steampunkY;
+            }
+        }
+    }else if(playingSpace){
+        let data = JSON.parse(localStorage.getItem("spaceCords"));
+        if(data){
+            player1.spaceshipX = data.player1X;
+            player1.spaceshipY = data.player1Y;
+            player1.x = player1.spaceshipX;
+            player1.y = player1.spaceshipY;
+            if(playingMultiplayer){
+                player2.spaceshipX = data.player2X;
+                player2.spaceshipY = data.player2Y;
+                player2.x = player2.spaceshipX;
+                player2.y = player2.spaceshipY;
+            }
+        }
+    }
 }

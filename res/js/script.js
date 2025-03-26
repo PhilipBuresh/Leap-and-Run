@@ -979,6 +979,7 @@ const enterFunction = () => {
         currentPlatform = [...map[helpNum]];
         originalPlatform1 = [...currentPlatform];
         movingPlatformVelocity = 1;
+        saveCords()
         if(playingCastle){
             if(helpNum == 0){ //Level 1
                 calculateSpawnpointLocation();
@@ -2550,6 +2551,7 @@ button_menu.onclick = () => {
     music.currentTime = 0; //OFF Lobby Music 
     music.pause();
     setTimeout(() => {
+        saveCords()
         backgroundVideo.style.opacity = 1;
         game.style.display = "none";
         startMenu.style.display = "block";
@@ -2564,7 +2566,7 @@ button_menu.onclick = () => {
         }
         creditsButton.style.display = "block";
         achievementsButton.style.display = "block";
-        skins.style.animationDuration = "0s";
+        skins.style.animationDuration = "1s";
         skins.style.animationPlayState = "running";
         skins.style.animationName = "rightToMidSkins";
         skins.style.pointerEvents = "auto";
@@ -2579,7 +2581,6 @@ button_menu.onclick = () => {
         first_col.style.filter = "invert(0)";
         second_col.style.filter = "invert(0)";
         setTimeout(() => {
-            skins.style.animationDuration = "1s";
             fullBlack.style.display = "none";
             note_button.style.zIndex = "11";
             escape_button.style.zIndex = "11";

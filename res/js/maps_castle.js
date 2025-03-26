@@ -58,10 +58,7 @@ const setDungeonToCastle = () => {
     rising.src = "./res/gif/rising.gif";
 
     let spawnCords = () => {
-        player1.x = 35;
-        player1.y = 500;
-        player2.x = 70;
-        player2.y = 500;
+        loadCords()
     }
     spawnCords();
 
@@ -97,12 +94,12 @@ const setDungeonToCastle = () => {
 //1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
 //0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 
-originalPlatform1 = [...currentPlatform];
-lobby = [...currentPlatform];
+    originalPlatform1 = [...currentPlatform];
+    lobby = [...currentPlatform];
 
-setTimeout(() => {
-    loadCastleMaps();
-}, 200);
+    setTimeout(() => {
+        loadCastleMaps();
+    }, 200);
 
 }
 
