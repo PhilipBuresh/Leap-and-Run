@@ -1441,10 +1441,12 @@ const enterFunction = () => {
                 doorsTime = 56000;
                 music.play(); 
             }else if(helpNum == 14){ //Level 15 SPACESHIP - Alien Boss
+                /*
                 let golden_egg = document.getElementById("golden_egg");
                 if(achievementEggCompleted){
                     golden_egg.style.display = "none";
                 }
+                */
                 alienBossLevel();
             }
         }
