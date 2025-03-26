@@ -10,6 +10,7 @@ __________________________
 - Fixed entering Boss Fight in Spaceship when you have completed the Egg Achievement
 - Fixed Gravity/Jump orb bug in Spaceship Boss Fight
 - Fixed Fixed SKIN Changer bug
+- Fixed hologram bug in Multiplayer
 - ADDED "Saving coordinates in lobby" via Local Storage
 __________________________
 - <h3>Update (25.03.2025)</h3>
