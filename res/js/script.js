@@ -167,84 +167,79 @@ skip_credits.onclick = () => {
 
 
 //Setting default volume
-let musicVolume = 0.5;
-let sfxVolume = 0.5; 
 let currentMusicValue = 50;
 let currentSfxValue = 50;
 
 //Adjust Music Volume
 const setMusicVolume = () => {
-    music.volume = musicVolume;
+    music.volume = currentMusicValue / 100;
 }
 
 //Adjust SFX volume
 const setSfxVolume = () => {
     //PLAYER 1
-    sfx.volume = sfxVolume;
-    sfx_dead.volume = sfxVolume;
-    sfx_player.volume = sfxVolume;
-    sfx_walk.volume = sfxVolume;
-    sfx_climb.volume = sfxVolume;
-    sfx_miss.volume = sfxVolume;
-    sfx_jump.volume = sfxVolume;
-    sfx_punch.volume = sfxVolume;
-    sfx_land.volume = sfxVolume;
-    sfx_extra_jump.volume = sfxVolume;
+    sfx.volume = currentSfxValue / 100;
+    sfx_dead.volume = currentSfxValue / 100;
+    sfx_player.volume = currentSfxValue / 100;
+    sfx_walk.volume = currentSfxValue / 100;
+    sfx_climb.volume = currentSfxValue / 100;
+    sfx_miss.volume = currentSfxValue / 100;
+    sfx_jump.volume = currentSfxValue / 100;
+    sfx_punch.volume = currentSfxValue / 100;
+    sfx_land.volume = currentSfxValue / 100;
+    sfx_extra_jump.volume = currentSfxValue / 100;
     //PLAYER 2
-    sfx2.volume = sfxVolume;
-    sfx_dead2.volume = sfxVolume;
-    sfx_player2.volume = sfxVolume;
-    sfx_walk2.volume = sfxVolume;
-    sfx_climb2.volume = sfxVolume;
-    sfx_miss2.volume = sfxVolume;
-    sfx_jump2.volume = sfxVolume;
-    sfx_punch2.volume = sfxVolume;
-    sfx_extra_jump2.volume = sfxVolume;
-    sfx_land2.volume = sfxVolume;
+    sfx2.volume = currentSfxValue / 100;
+    sfx_dead2.volume = currentSfxValue / 100;
+    sfx_player2.volume = currentSfxValue / 100;
+    sfx_walk2.volume = currentSfxValue / 100;
+    sfx_climb2.volume = currentSfxValue / 100;
+    sfx_miss2.volume = currentSfxValue / 100;
+    sfx_jump2.volume = currentSfxValue / 100;
+    sfx_punch2.volume = currentSfxValue / 100;
+    sfx_extra_jump2.volume = currentSfxValue / 100;
+    sfx_land2.volume = currentSfxValue / 100;
     //EXTRA
-    sfx_boss_talk.volume = sfxVolume;
-    sfx_boss_laugh.volume = sfxVolume;
-    sfx_laser.volume = sfxVolume;
-    sfx_achievement.volume = sfxVolume;
+    sfx_boss_talk.volume = currentSfxValue / 100;
+    sfx_boss_laugh.volume = currentSfxValue / 100;
+    sfx_laser.volume = currentSfxValue / 100;
+    sfx_achievement.volume = currentSfxValue / 100;
 }
-
-setMusicVolume();
-setSfxVolume();
 
 //Turn Music UP by 5%
 notInvertArrow1.onclick = () => {
     if(currentMusicValue >= 0 && currentMusicValue < 100){
-        musicVolume += 0.05
         currentMusicValue += 5;
         music_value.innerHTML = currentMusicValue + "%";
-        setMusicVolume(musicVolume);
+        setMusicVolume(currentMusicValue / 100);
+        saveAudioSettings();
     }
 }
 //Turn SFX UP by 5%
 notInvertArrow2.onclick = () => {
     if(currentSfxValue >= 0 && currentSfxValue < 100){
-        sfxVolume += 0.05
         currentSfxValue += 5;
         sfx_value.innerHTML = currentSfxValue + "%";
-        setSfxVolume(sfxVolume);
+        setSfxVolume(currentSfxValue / 100);
+        saveAudioSettings();
     }
 }
 //Turn Music DOWN by 5%
 invertArrow1.onclick = () => {
     if(currentMusicValue > 0 && currentMusicValue <= 100){
-        musicVolume -= 0.05
         currentMusicValue -= 5;
         music_value.innerHTML = currentMusicValue + "%";
-        setMusicVolume(musicVolume);
+        setMusicVolume(currentMusicValue / 100);
+        saveAudioSettings();
     }
 }
 //Turn SFX DOWN by 5%
 invertArrow2.onclick = () => {
     if(currentSfxValue > 0 && currentSfxValue <= 100){
-        sfxVolume -= 0.05
         currentSfxValue -= 5;
         sfx_value.innerHTML = currentSfxValue + "%";
-        setSfxVolume(sfxVolume);
+        setSfxVolume(currentSfxValue / 100);
+        saveAudioSettings();
     }
 }
 
@@ -722,6 +717,7 @@ spaceshipDungeon.onclick = () => {
 //If you choose a character -> Transition will be activated and you will be send to the game by function menuToLobby()
 const movingCharactersAndFullBlack = () => {
     resetGravity();
+    loadAudioSettings()
     fullBlack.style.display = "block";
     note_button.style.zIndex = "3";
     escape_button.style.zIndex = "3";
@@ -799,7 +795,10 @@ const doorsCollision = (PLAYER) => {
                 }
                 PLAYER.doorCol = true;
                 c.font = "20px VT323, monospace";
-                if((finished_castle[helpNum] == 2 && playingCastle) || (finished_steampunk[helpNum] == 2 && playingSteamPunk) || (finished_spaceship[helpNum] == 2 && playingSpace) || !finalDoorUnlocked && currentPlatform[i] != 34 && helpNum != 14){
+                if((finished_castle[helpNum] == 2 && playingCastle && currentPlatform[i] != 34) 
+                    || (finished_steampunk[helpNum] == 2 && playingSteamPunk && currentPlatform[i] != 34) 
+                    || (finished_spaceship[helpNum] == 2 && playingSpace) 
+                    || !finalDoorUnlocked && currentPlatform[i] != 34){
                     c.fillStyle = "red";
                     c.fillText("LOCKED", platformX + 7, platformY);
                 }else{
@@ -2543,6 +2542,7 @@ button_menu.onclick = () => {
     note_button.style.zIndex = "3";
     escape_button.style.zIndex = "3";
     achievement_button.style.zIndex = "3";
+    fullBlack.style.display = "auto";
     fullBlack.style.opacity = "1";
     black.style.opacity = "1";
     esc.style.display = "none"; 
@@ -2612,6 +2612,7 @@ button_retry.onclick = () => {
 //----------------------------------------ESC Button Function
  
 const escFunction = () => {
+    fullBlack.style.display = "block";
     if(JSON.stringify(lobby) !== JSON.stringify(currentPlatform)){ //When Lobby and current level are not same
         button_back.style.display = "block";
         button_resume.style.display = "block";
@@ -4955,7 +4956,6 @@ const punch = (PLAYER) => {
             }
             if(player2.OnHologram && player2.velocityLeft <= 0.09 && player2.velocityRight <= 0.09 && player2.velocity <= 0.5 && !player2.inHologram){
                 gravity(player2);
-                console.log(player2.OnHologram, player2.velocityLeft, player2.velocityRight, player2.velocity)
             }
             if(PLAYER == player1){
                 sfx.src = "./res/sfx/button.mp3";
@@ -5152,10 +5152,22 @@ window.addEventListener("keydown", (event) => {
         }
         player1.alreadyPunched = true;
     } else if (event.key == "Escape" && inGame) {
-        if(musicEditorOpened){
+        if(musicEditorOpened && !achievementListOpened){
             music_editor.style.display = "none";
             musicEditorOpened = false;
             black.style.opacity = "0";
+            note_button.style.border = "3px solid white";
+            note.style.filter = "invert(1)";
+        }else if(achievementListOpened && !musicEditorOpened){
+            achievementsButtonOffFun();
+            achievementListOpened = false;
+            black.style.opacity = "0";
+            achievement_button.style.pointerEvents = "none";
+            setTimeout(() => {
+                achievement_button.style.border = "3px solid white"
+                achievement_button.style.pointerEvents = "auto";
+                trophy.style.filter = "invert(1)";
+            }, 800);
         }else{
             escFunction();
         }

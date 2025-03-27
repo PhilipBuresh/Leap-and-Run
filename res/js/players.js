@@ -1,7 +1,7 @@
 //Player 1
 const player1 = {
     // Coordinates
-    x : 0,
+    x : 40,
     y : 500,
     height : 40,
     width : 30,
@@ -163,7 +163,7 @@ const player1 = {
 //Player 2
 const player2 = {
     // Coordinates
-    x : 0,
+    x : 70,
     y : 500,
     height : 40,
     width : 30,
@@ -349,6 +349,7 @@ const afkTimer = () => {
 
 // SAVE CORDS
 const saveCords = () => {
+    //console.log("SAVE ", playingCastle, playingSteamPunk, playingSpace)
     if(playingCastle){
         player1.castleX = player1.x;
         player1.castleY = player1.y;
@@ -393,6 +394,7 @@ const saveCords = () => {
 
 // LOAD CORDS
 const loadCords = () => {
+    //console.log("LOAD ", playingCastle, playingSteamPunk, playingSpace)
     if(playingCastle){
         let data = JSON.parse(localStorage.getItem("castleCords"));
         if(data){
@@ -409,6 +411,16 @@ const loadCords = () => {
                 player2.x = 10000;
                 player2.y = 10000;
             }
+        }else{
+            player1.x = player1.castleX;
+            player1.y = player1.castleY;
+            if(playingMultiplayer){
+                player2.x = player2.castleX;
+                player2.y = player2.castleY;
+            }else{
+                player2.x = 10000;
+                player2.y = 10000;
+            } 
         }
     }else if(playingSteamPunk){
         let data = JSON.parse(localStorage.getItem("steampunkCords"));
@@ -426,6 +438,16 @@ const loadCords = () => {
                 player2.x = 10000;
                 player2.y = 10000;
             }
+        }else{
+            player1.x = player1.steampunkX;
+            player1.y = player1.steampunkY;
+            if(playingMultiplayer){
+                player2.x = player2.steampunkX;
+                player2.y = player2.steampunkY;
+            }else{
+                player2.x = 10000;
+                player2.y = 10000;
+            }   
         }
     }else if(playingSpace){
         let data = JSON.parse(localStorage.getItem("spaceCords"));
@@ -437,6 +459,16 @@ const loadCords = () => {
             if(playingMultiplayer){
                 player2.spaceshipX = data.player2X;
                 player2.spaceshipY = data.player2Y;
+                player2.x = player2.spaceshipX;
+                player2.y = player2.spaceshipY;
+            }else{
+                player2.x = 10000;
+                player2.y = 10000;
+            }
+        }else{
+            player1.x = player1.spaceshipX;
+            player1.y = player1.spaceshipY;
+            if(playingMultiplayer){
                 player2.x = player2.spaceshipX;
                 player2.y = player2.spaceshipY;
             }else{

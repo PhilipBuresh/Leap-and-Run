@@ -176,3 +176,19 @@ const resetLocalStorage = () => {
 }
 
 //resetLocalStorage();
+
+//Audio Local Storage Functions
+const loadAudioSettings = () => {
+    currentMusicValue = parseInt(localStorage.getItem("currentMusicValue")) || 50;
+    currentSfxValue = parseInt(localStorage.getItem("currentSfxValue")) || 50;
+    
+    music_value.innerHTML = currentMusicValue + "%";
+    sfx_value.innerHTML = currentSfxValue + "%";
+    setMusicVolume(currentMusicValue / 100);
+    setSfxVolume(currentSfxValue / 100);
+}
+
+const saveAudioSettings = () => {
+    localStorage.setItem("currentMusicValue", currentMusicValue);
+    localStorage.setItem("currentSfxValue", currentSfxValue);
+}
