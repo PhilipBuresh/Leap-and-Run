@@ -475,6 +475,7 @@ let playingAsRioter;
 let playingAsRuby;
 
 const achievementsButtonOnFun = () => {
+    clearTimeout(achievementButtonTimeout);
     turnOffButtons();
     achievements_list.style.display = "block";
     achievements_list.style.animationName = "bottomToUp_Achievement"
@@ -500,6 +501,8 @@ achievementsButton.onclick = () => {
     achievementsButtonOnFun();
 }
 
+let achievementButtonTimeout
+
 const achievementsButtonOffFun = () => {
     achievements_list.style.animationName = "upToBottom_Achievement"
     achievements_list.style.animationPlayState = "running";
@@ -516,7 +519,7 @@ const achievementsButtonOffFun = () => {
 
     fullBlack.style.display = "auto";
 
-    setTimeout(() => {
+    achievementButtonTimeout = setTimeout(() => {
         achievements_list.style.display = "none";
         gate.style.display = "none";
         red_cross_achievements.style.display = "none";
@@ -2248,8 +2251,7 @@ const dead = () => {
                 setTimeout(() => {
                     deadSoundCanBeUse = true;
                 }, 2000);
-            }
-            */
+            }*/
             sfx_dead.src = "./res/sfx/died.mp3";
             sfx_dead.play();
             gravity(player1);
