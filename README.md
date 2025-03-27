@@ -6,12 +6,16 @@
 - You can play with your friend.
 - <b>Progress is being SAVED</b>
 __________________________
+- <h3>Update (27.03.2025)</h3>
+- Fixed saving coordinates
+- ADDED "Saving Volume/SFX value"
+__________________________
 - <h3>Update (26.03.2025)</h3>
 - Fixed entering Boss Fight in Spaceship when you have completed the Egg Achievement
 - Fixed Gravity/Jump orb bug in Spaceship Boss Fight
 - Fixed SKIN Changer bug
 - Fixed hologram bug in Multiplayer
-- ADDED "Saving coordinates in lobby" via Local Storage
+- ADDED "Saving coordinates in lobby"
 __________________________
 - <h3>Update (25.03.2025)</h3>
 - Fixed loading castle dungeon bug
