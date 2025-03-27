@@ -1895,7 +1895,7 @@ let playingBossFight = false;
 let hearts = 3;
 
 let resistence = false;
-let deadSoundCanBeUse = true;
+//let deadSoundCanBeUse = true;
 
 const grayScaleEffect = () => {
     canvas.style.filter = "grayscale(1)";
@@ -2240,6 +2240,7 @@ const dead = () => {
                     frameDoor = 0;
                 }
             }
+            /*
             if(deadSoundCanBeUse){
                 sfx_dead.src = "./res/sfx/died.mp3";
                 sfx_dead.play();
@@ -2248,6 +2249,9 @@ const dead = () => {
                     deadSoundCanBeUse = true;
                 }, 2000);
             }
+            */
+            sfx_dead.src = "./res/sfx/died.mp3";
+            sfx_dead.play();
             gravity(player1);
             if(playingMultiplayer){
                 gravity(player2)
