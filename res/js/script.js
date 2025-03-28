@@ -4743,14 +4743,10 @@ let moveLeft = (PLAYER) => {
     movingLeft();
 };
 
-let sidesCol = false;
-let sideRightCol = false;
-let sideLeftCol = false;
-
 const sidesCollision = (PLAYER) => {
-    sidesCol = false;
-    sideRightCol = false;
-    sideLeftCol = false;
+    PLAYER.sidesCol = false;
+    PLAYER.sideRightCol = false;
+    PLAYER.sideLeftCol = false;
 
     for (let i = 0; i < currentPlatform.length; i++) {
         if (solidBlocks.includes(currentPlatform[i])) {
@@ -4762,8 +4758,8 @@ const sidesCollision = (PLAYER) => {
                 PLAYER.x + PLAYER.width + 2 > platformX &&
                 PLAYER.x < platformX + 32
             ) {
-                sidesCol = true;
-                sideLeftCol = true;
+                PLAYER.sidesCol = true;
+                PLAYER.sideLeftCol = true;
             }
             if (
                 PLAYER.y + PLAYER.height > platformY &&
@@ -4771,8 +4767,8 @@ const sidesCollision = (PLAYER) => {
                 PLAYER.x < platformX + 32 + 2 &&
                 PLAYER.x > platformX
             ) {
-                sidesCol = true;
-                sideRightCol = true;
+                PLAYER.sidesCol = true;
+                PLAYER.sideRightCol = true;
             }
         }
     }

@@ -2017,24 +2017,24 @@ const drawing = () => {
         thenMP = now - (deltaMP % 25);
         xMovingPlatform += movingPlatformVelocity;
         yMovingPlatform += movingPlatformVelocityY;
-        if(!sidesCol){
+        if(!player1.sidesCol){
             if(player1.onMovingPlatform){
                 player1.x += movingPlatformVelocity
             }
-            if(playingMultiplayer){
-                if(player2.onMovingPlatform){
-                    player2.x += movingPlatformVelocity
-                }
+        }
+        if(!player2.sidesCol){
+            if(player2.onMovingPlatform){
+                player2.x += movingPlatformVelocity
             }
         }
         if(player1.onMovingPlatform){
-            if((sideRightCol && movingPlatformVelocity == 1) || (sideLeftCol && movingPlatformVelocity == -1) || movingPlatformVelocity == 0){
+            if((player1.sideRightCol && movingPlatformVelocity == 1) || (player1.sideLeftCol && movingPlatformVelocity == -1) || movingPlatformVelocity == 0){
                 player1.x += movingPlatformVelocity
                 player1.y += movingPlatformVelocityY
             }
         }
         if(player2.onMovingPlatform){
-            if((sideRightCol && movingPlatformVelocity == 1) || (sideLeftCol && movingPlatformVelocity == -1) || movingPlatformVelocity == 0){
+            if((player2.sideRightCol && movingPlatformVelocity == 1) || (player2.sideLeftCol && movingPlatformVelocity == -1) || movingPlatformVelocity == 0){
                 player2.x += movingPlatformVelocity
                 player2.y += movingPlatformVelocityY
             }

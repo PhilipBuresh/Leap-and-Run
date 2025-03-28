@@ -110,6 +110,9 @@ const player1 = {
     //Moving platform
     onMovingPlatform : false,
     onMovingPlatformDelaySet : false,
+    sidesCol : false,
+    sideRightCol : false,
+    sideLeftCol : false,
     // Pipe
     inPipe : false,
     pipeCounter : 0,
@@ -272,6 +275,9 @@ const player2 = {
     //Moving platform
     onMovingPlatform : false,
     onMovingPlatformDelaySet : false,
+    sidesCol : false,
+    sideRightCol : false,
+    sideLeftCol : false,
     // Pipe
     inPipe : false,
     pipeCounter : 0,
